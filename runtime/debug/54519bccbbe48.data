@@ -1,0 +1,1982 @@
+a:8:{s:6:"config";a:5:{s:10:"phpVersion";s:5:"5.4.7";s:10:"yiiVersion";s:5:"2.0.0";s:11:"application";a:4:{s:3:"yii";s:5:"2.0.0";s:4:"name";s:14:"My Application";s:3:"env";s:3:"dev";s:5:"debug";b:1;}s:3:"php";a:4:{s:7:"version";s:5:"5.4.7";s:6:"xdebug";b:0;s:3:"apc";b:0;s:8:"memcache";b:0;}s:10:"extensions";a:6:{s:24:"yiisoft/yii2-swiftmailer";a:3:{s:4:"name";s:24:"yiisoft/yii2-swiftmailer";s:7:"version";s:7:"2.0.0.0";s:5:"alias";a:1:{s:16:"@yii/swiftmailer";s:64:"C:\xampp\htdocs\OpenERP-Services\vendor/yiisoft/yii2-swiftmailer";}}s:24:"yiisoft/yii2-codeception";a:3:{s:4:"name";s:24:"yiisoft/yii2-codeception";s:7:"version";s:7:"2.0.0.0";s:5:"alias";a:1:{s:16:"@yii/codeception";s:64:"C:\xampp\htdocs\OpenERP-Services\vendor/yiisoft/yii2-codeception";}}s:22:"yiisoft/yii2-bootstrap";a:3:{s:4:"name";s:22:"yiisoft/yii2-bootstrap";s:7:"version";s:7:"2.0.0.0";s:5:"alias";a:1:{s:14:"@yii/bootstrap";s:62:"C:\xampp\htdocs\OpenERP-Services\vendor/yiisoft/yii2-bootstrap";}}s:18:"yiisoft/yii2-debug";a:3:{s:4:"name";s:18:"yiisoft/yii2-debug";s:7:"version";s:7:"2.0.0.0";s:5:"alias";a:1:{s:10:"@yii/debug";s:58:"C:\xampp\htdocs\OpenERP-Services\vendor/yiisoft/yii2-debug";}}s:16:"yiisoft/yii2-gii";a:3:{s:4:"name";s:16:"yiisoft/yii2-gii";s:7:"version";s:7:"2.0.0.0";s:5:"alias";a:1:{s:8:"@yii/gii";s:56:"C:\xampp\htdocs\OpenERP-Services\vendor/yiisoft/yii2-gii";}}s:18:"yiisoft/yii2-faker";a:3:{s:4:"name";s:18:"yiisoft/yii2-faker";s:7:"version";s:7:"2.0.0.0";s:5:"alias";a:1:{s:10:"@yii/faker";s:58:"C:\xampp\htdocs\OpenERP-Services\vendor/yiisoft/yii2-faker";}}}}s:7:"request";a:14:{s:7:"flashes";a:0:{}s:10:"statusCode";i:200;s:14:"requestHeaders";a:8:{s:4:"host";s:9:"localhost";s:10:"user-agent";s:72:"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:33.0) Gecko/20100101 Firefox/33.0";s:6:"accept";s:63:"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8";s:15:"accept-language";s:14:"en-US,en;q=0.5";s:15:"accept-encoding";s:13:"gzip, deflate";s:6:"cookie";s:375:"instance0|session_id=%2235e78e20198343db8fe5d41a44e7cb60%22; last_used_database=erp_pgusr; __utma=111872281.349676250.1410353563.1410353563.1410353563.1; __utmz=111872281.1410353563.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); instance0|ab=%22c%22; _csrf=2df8fa4218592a09af1b18211b8871ea5c4a1fe4438e90cd4d84063c2cfa56f2s%3A32%3A%22be8MQ4gtky4nhjsWNmjflhueZqVfPL72%22%3B";s:10:"connection";s:10:"keep-alive";s:13:"cache-control";s:9:"max-age=0";}s:15:"responseHeaders";a:2:{s:12:"X-Powered-By";s:9:"PHP/5.4.7";s:12:"Content-Type";s:24:"text/html; charset=UTF-8";}s:5:"route";s:11:"moves/print";s:6:"action";s:46:"app\controllers\MovesController::actionPrint()";s:12:"actionParams";a:3:{i:0;s:4:"5911";i:1;i:1;i:2;i:17;}s:11:"requestBody";a:0:{}s:6:"SERVER";a:41:{s:7:"MIBDIRS";s:24:"C:/xampp/php/extras/mibs";s:10:"MYSQL_HOME";s:16:"\xampp\mysql\bin";s:12:"OPENSSL_CONF";s:31:"C:/xampp/apache/bin/openssl.cnf";s:20:"PHP_PEAR_SYSCONF_DIR";s:10:"\xampp\php";s:5:"PHPRC";s:10:"\xampp\php";s:3:"TMP";s:10:"\xampp\tmp";s:9:"HTTP_HOST";s:9:"localhost";s:15:"HTTP_USER_AGENT";s:72:"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:33.0) Gecko/20100101 Firefox/33.0";s:11:"HTTP_ACCEPT";s:63:"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8";s:20:"HTTP_ACCEPT_LANGUAGE";s:14:"en-US,en;q=0.5";s:20:"HTTP_ACCEPT_ENCODING";s:13:"gzip, deflate";s:11:"HTTP_COOKIE";s:375:"instance0|session_id=%2235e78e20198343db8fe5d41a44e7cb60%22; last_used_database=erp_pgusr; __utma=111872281.349676250.1410353563.1410353563.1410353563.1; __utmz=111872281.1410353563.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); instance0|ab=%22c%22; _csrf=2df8fa4218592a09af1b18211b8871ea5c4a1fe4438e90cd4d84063c2cfa56f2s%3A32%3A%22be8MQ4gtky4nhjsWNmjflhueZqVfPL72%22%3B";s:15:"HTTP_CONNECTION";s:10:"keep-alive";s:18:"HTTP_CACHE_CONTROL";s:9:"max-age=0";s:4:"PATH";s:1045:"C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\Sencha\Cmd\3.1.2.342;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\PROGRA~2\IBM\SQLLIB\BIN;C:\PROGRA~2\IBM\SQLLIB\FUNCTION;C:\Program Files (x86)\Zend\MySQL55\bin;C:\Program Files (x86)\Zend\ZendServer\share\ZendFramework\bin;C:\ProgramData\ComposerSetup\bin;C:\xampp\php;C:\Program Files (x86)\Microsoft ASP.NET\ASP.NET Web Pages\v1.0\;C:\Program Files (x86)\Windows Kits\8.0\Windows Performance Toolkit\;C:\Program Files\Microsoft SQL Server\110\Tools\Binn\;C:\Development\sdk\platform-tools;C:\Development\sdk\tools;C:\Program Files (x86)\Zend\ZendServer\bin\PEAR";s:10:"SystemRoot";s:10:"C:\Windows";s:7:"COMSPEC";s:27:"C:\Windows\system32\cmd.exe";s:7:"PATHEXT";s:53:".COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC";s:6:"WINDIR";s:10:"C:\Windows";s:16:"SERVER_SIGNATURE";s:93:"<address>Apache/2.4.3 (Win32) OpenSSL/1.0.1c PHP/5.4.7 Server at localhost Port 80</address>
+";s:15:"SERVER_SOFTWARE";s:45:"Apache/2.4.3 (Win32) OpenSSL/1.0.1c PHP/5.4.7";s:11:"SERVER_NAME";s:9:"localhost";s:11:"SERVER_ADDR";s:3:"::1";s:11:"SERVER_PORT";s:2:"80";s:11:"REMOTE_ADDR";s:3:"::1";s:13:"DOCUMENT_ROOT";s:15:"C:/xampp/htdocs";s:14:"REQUEST_SCHEME";s:4:"http";s:14:"CONTEXT_PREFIX";s:0:"";s:21:"CONTEXT_DOCUMENT_ROOT";s:15:"C:/xampp/htdocs";s:12:"SERVER_ADMIN";s:20:"postmaster@localhost";s:15:"SCRIPT_FILENAME";s:46:"C:/xampp/htdocs/OpenERP-Services/web/index.php";s:11:"REMOTE_PORT";s:5:"51796";s:17:"GATEWAY_INTERFACE";s:7:"CGI/1.1";s:15:"SERVER_PROTOCOL";s:8:"HTTP/1.1";s:14:"REQUEST_METHOD";s:3:"GET";s:12:"QUERY_STRING";s:21:"r=moves/print&id=5911";s:11:"REQUEST_URI";s:53:"/OpenERP-Services/web/index.php?r=moves/print&id=5911";s:11:"SCRIPT_NAME";s:31:"/OpenERP-Services/web/index.php";s:8:"PHP_SELF";s:31:"/OpenERP-Services/web/index.php";s:18:"REQUEST_TIME_FLOAT";d:1414634444.742000102996826171875;s:12:"REQUEST_TIME";i:1414634444;}s:3:"GET";a:2:{s:1:"r";s:11:"moves/print";s:2:"id";s:4:"5911";}s:4:"POST";a:0:{}s:6:"COOKIE";a:6:{s:20:"instance0|session_id";s:34:""35e78e20198343db8fe5d41a44e7cb60"";s:18:"last_used_database";s:9:"erp_pgusr";s:6:"__utma";s:54:"111872281.349676250.1410353563.1410353563.1410353563.1";s:6:"__utmz";s:70:"111872281.1410353563.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none)";s:12:"instance0|ab";s:3:""c"";s:5:"_csrf";s:104:"2df8fa4218592a09af1b18211b8871ea5c4a1fe4438e90cd4d84063c2cfa56f2s:32:"be8MQ4gtky4nhjsWNmjflhueZqVfPL72";";}s:5:"FILES";a:0:{}s:7:"SESSION";a:0:{}}s:3:"log";a:1:{s:8:"messages";a:41:{i:0;a:5:{i:0;s:33:"Bootstrap with yii\log\Dispatcher";i:1;i:8;i:2;s:31:"yii\base\Application::bootstrap";i:3;d:1414634444.761641025543212890625;i:4;a:0:{}}i:1;a:5:{i:0;s:21:"Loading module: debug";i:1;i:8;i:2;s:26:"yii\base\Module::getModule";i:3;d:1414634444.761702060699462890625;i:4;a:0:{}}i:2;a:5:{i:0;s:44:"Bootstrap with yii\debug\Module::bootstrap()";i:1;i:8;i:2;s:31:"yii\base\Application::bootstrap";i:3;d:1414634444.769011974334716796875;i:4;a:0:{}}i:3;a:5:{i:0;s:19:"Loading module: gii";i:1;i:8;i:2;s:26:"yii\base\Module::getModule";i:3;d:1414634444.770587921142578125;i:4;a:0:{}}i:4;a:5:{i:0;s:42:"Bootstrap with yii\gii\Module::bootstrap()";i:1;i:8;i:2;s:31:"yii\base\Application::bootstrap";i:3;d:1414634444.77114009857177734375;i:4;a:0:{}}i:5;a:5:{i:0;s:56:"Pretty URL not enabled. Using default URL parsing logic.";i:1;i:8;i:2;s:32:"yii\web\UrlManager::parseRequest";i:3;d:1414634444.7733299732208251953125;i:4;a:0:{}}i:6;a:5:{i:0;s:30:"Route requested: 'moves/print'";i:1;i:8;i:2;s:34:"yii\web\Application::handleRequest";i:3;d:1414634444.7733829021453857421875;i:4;a:0:{}}i:7;a:5:{i:0;s:25:"Route to run: moves/print";i:1;i:8;i:2;s:30:"yii\base\Controller::runAction";i:3;d:1414634444.77544307708740234375;i:4;a:0:{}}i:8;a:5:{i:0;s:62:"Running action: app\controllers\MovesController::actionPrint()";i:1;i:8;i:2;s:36:"yii\base\InlineAction::runWithParams";i:3;d:1414634444.77606105804443359375;i:4;a:0:{}}i:9;a:5:{i:0;s:73:"Opening DB connection: pgsql:host=192.168.9.26;dbname=LIVE_2014;port=5432";i:1;i:4;i:2;s:23:"yii\db\Connection::open";i:3;d:1414634444.7899711132049560546875;i:4;a:2:{i:0;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:146;s:8:"function";s:7:"findOne";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"::";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:51;s:8:"function";s:9:"findModel";s:5:"class";s:31:"app\controllers\MovesController";s:4:"type";s:2:"->";}}}i:12;a:5:{i:0;s:1959:"SELECT
+    d.nspname AS table_schema,
+    c.relname AS table_name,
+    a.attname AS column_name,
+    t.typname AS data_type,
+    a.attlen AS character_maximum_length,
+    pg_catalog.col_description(c.oid, a.attnum) AS column_comment,
+    a.atttypmod AS modifier,
+    a.attnotnull = false AS is_nullable,
+    CAST(pg_get_expr(ad.adbin, ad.adrelid) AS varchar) AS column_default,
+    coalesce(pg_get_expr(ad.adbin, ad.adrelid) ~ 'nextval',false) AS is_autoinc,
+    array_to_string((select array_agg(enumlabel) from pg_enum where enumtypid=a.atttypid)::varchar[],',') as enum_values,
+    CASE atttypid
+         WHEN 21 /*int2*/ THEN 16
+         WHEN 23 /*int4*/ THEN 32
+         WHEN 20 /*int8*/ THEN 64
+         WHEN 1700 /*numeric*/ THEN
+              CASE WHEN atttypmod = -1
+               THEN null
+               ELSE ((atttypmod - 4) >> 16) & 65535
+               END
+         WHEN 700 /*float4*/ THEN 24 /*FLT_MANT_DIG*/
+         WHEN 701 /*float8*/ THEN 53 /*DBL_MANT_DIG*/
+         ELSE null
+      END   AS numeric_precision,
+      CASE
+        WHEN atttypid IN (21, 23, 20) THEN 0
+        WHEN atttypid IN (1700) THEN
+        CASE
+            WHEN atttypmod = -1 THEN null
+            ELSE (atttypmod - 4) & 65535
+        END
+           ELSE null
+      END AS numeric_scale,
+    CAST(
+             information_schema._pg_char_max_length(information_schema._pg_truetypid(a, t), information_schema._pg_truetypmod(a, t))
+             AS numeric
+    ) AS size,
+    a.attnum = any (ct.conkey) as is_pkey
+FROM
+    pg_class c
+    LEFT JOIN pg_attribute a ON a.attrelid = c.oid
+    LEFT JOIN pg_attrdef ad ON a.attrelid = ad.adrelid AND a.attnum = ad.adnum
+    LEFT JOIN pg_type t ON a.atttypid = t.oid
+    LEFT JOIN pg_namespace d ON d.oid = c.relnamespace
+    LEFT join pg_constraint ct on ct.conrelid=c.oid and ct.contype='p'
+WHERE
+    a.attnum > 0 and t.typname != ''
+    and c.relname = 'stock_picking'
+    and d.nspname = 'public'
+ORDER BY
+    a.attnum;";i:1;i:4;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.79806995391845703125;i:4;a:2:{i:0;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:146;s:8:"function";s:7:"findOne";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"::";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:51;s:8:"function";s:9:"findModel";s:5:"class";s:31:"app\controllers\MovesController";s:4:"type";s:2:"->";}}}i:15;a:5:{i:0;s:678:"select
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.conrelid and attnum = any(ct.conkey)) as columns,
+    fc.relname as foreign_table_name,
+    fns.nspname as foreign_table_schema,
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.confrelid and attnum = any(ct.confkey)) as foreign_columns
+from
+    pg_constraint ct
+    inner join pg_class c on c.oid=ct.conrelid
+    inner join pg_namespace ns on c.relnamespace=ns.oid
+    left join pg_class fc on fc.oid=ct.confrelid
+    left join pg_namespace fns on fc.relnamespace=fns.oid
+
+where
+    ct.contype='f'
+    and c.relname='stock_picking'
+    and ns.nspname='public'";i:1;i:4;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.8182890415191650390625;i:4;a:2:{i:0;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:146;s:8:"function";s:7:"findOne";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"::";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:51;s:8:"function";s:9:"findModel";s:5:"class";s:31:"app\controllers\MovesController";s:4:"type";s:2:"->";}}}i:18;a:5:{i:0;s:47:"SELECT * FROM "stock_picking" WHERE "id"='5911'";i:1;i:4;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.82839107513427734375;i:4;a:2:{i:0;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:146;s:8:"function";s:7:"findOne";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"::";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:51;s:8:"function";s:9:"findModel";s:5:"class";s:31:"app\controllers\MovesController";s:4:"type";s:2:"->";}}}i:21;a:5:{i:0;s:50:"SELECT * FROM "stock_move" WHERE "picking_id"=5911";i:1;i:4;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.8361198902130126953125;i:4;a:1:{i:0;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:55;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}}i:24;a:5:{i:0;s:1956:"SELECT
+    d.nspname AS table_schema,
+    c.relname AS table_name,
+    a.attname AS column_name,
+    t.typname AS data_type,
+    a.attlen AS character_maximum_length,
+    pg_catalog.col_description(c.oid, a.attnum) AS column_comment,
+    a.atttypmod AS modifier,
+    a.attnotnull = false AS is_nullable,
+    CAST(pg_get_expr(ad.adbin, ad.adrelid) AS varchar) AS column_default,
+    coalesce(pg_get_expr(ad.adbin, ad.adrelid) ~ 'nextval',false) AS is_autoinc,
+    array_to_string((select array_agg(enumlabel) from pg_enum where enumtypid=a.atttypid)::varchar[],',') as enum_values,
+    CASE atttypid
+         WHEN 21 /*int2*/ THEN 16
+         WHEN 23 /*int4*/ THEN 32
+         WHEN 20 /*int8*/ THEN 64
+         WHEN 1700 /*numeric*/ THEN
+              CASE WHEN atttypmod = -1
+               THEN null
+               ELSE ((atttypmod - 4) >> 16) & 65535
+               END
+         WHEN 700 /*float4*/ THEN 24 /*FLT_MANT_DIG*/
+         WHEN 701 /*float8*/ THEN 53 /*DBL_MANT_DIG*/
+         ELSE null
+      END   AS numeric_precision,
+      CASE
+        WHEN atttypid IN (21, 23, 20) THEN 0
+        WHEN atttypid IN (1700) THEN
+        CASE
+            WHEN atttypmod = -1 THEN null
+            ELSE (atttypmod - 4) & 65535
+        END
+           ELSE null
+      END AS numeric_scale,
+    CAST(
+             information_schema._pg_char_max_length(information_schema._pg_truetypid(a, t), information_schema._pg_truetypmod(a, t))
+             AS numeric
+    ) AS size,
+    a.attnum = any (ct.conkey) as is_pkey
+FROM
+    pg_class c
+    LEFT JOIN pg_attribute a ON a.attrelid = c.oid
+    LEFT JOIN pg_attrdef ad ON a.attrelid = ad.adrelid AND a.attnum = ad.adnum
+    LEFT JOIN pg_type t ON a.atttypid = t.oid
+    LEFT JOIN pg_namespace d ON d.oid = c.relnamespace
+    LEFT join pg_constraint ct on ct.conrelid=c.oid and ct.contype='p'
+WHERE
+    a.attnum > 0 and t.typname != ''
+    and c.relname = 'stock_move'
+    and d.nspname = 'public'
+ORDER BY
+    a.attnum;";i:1;i:4;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.84467792510986328125;i:4;a:1:{i:0;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:55;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}}i:27;a:5:{i:0;s:675:"select
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.conrelid and attnum = any(ct.conkey)) as columns,
+    fc.relname as foreign_table_name,
+    fns.nspname as foreign_table_schema,
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.confrelid and attnum = any(ct.confkey)) as foreign_columns
+from
+    pg_constraint ct
+    inner join pg_class c on c.oid=ct.conrelid
+    inner join pg_namespace ns on c.relnamespace=ns.oid
+    left join pg_class fc on fc.oid=ct.confrelid
+    left join pg_namespace fns on fc.relnamespace=fns.oid
+
+where
+    ct.contype='f'
+    and c.relname='stock_move'
+    and ns.nspname='public'";i:1;i:4;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.858295917510986328125;i:4;a:1:{i:0;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:55;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}}i:30;a:5:{i:0;s:44:"SELECT * FROM "stock_location" WHERE "id"=14";i:1;i:4;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.86695003509521484375;i:4;a:1:{i:0;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:57;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}}i:33;a:5:{i:0;s:1960:"SELECT
+    d.nspname AS table_schema,
+    c.relname AS table_name,
+    a.attname AS column_name,
+    t.typname AS data_type,
+    a.attlen AS character_maximum_length,
+    pg_catalog.col_description(c.oid, a.attnum) AS column_comment,
+    a.atttypmod AS modifier,
+    a.attnotnull = false AS is_nullable,
+    CAST(pg_get_expr(ad.adbin, ad.adrelid) AS varchar) AS column_default,
+    coalesce(pg_get_expr(ad.adbin, ad.adrelid) ~ 'nextval',false) AS is_autoinc,
+    array_to_string((select array_agg(enumlabel) from pg_enum where enumtypid=a.atttypid)::varchar[],',') as enum_values,
+    CASE atttypid
+         WHEN 21 /*int2*/ THEN 16
+         WHEN 23 /*int4*/ THEN 32
+         WHEN 20 /*int8*/ THEN 64
+         WHEN 1700 /*numeric*/ THEN
+              CASE WHEN atttypmod = -1
+               THEN null
+               ELSE ((atttypmod - 4) >> 16) & 65535
+               END
+         WHEN 700 /*float4*/ THEN 24 /*FLT_MANT_DIG*/
+         WHEN 701 /*float8*/ THEN 53 /*DBL_MANT_DIG*/
+         ELSE null
+      END   AS numeric_precision,
+      CASE
+        WHEN atttypid IN (21, 23, 20) THEN 0
+        WHEN atttypid IN (1700) THEN
+        CASE
+            WHEN atttypmod = -1 THEN null
+            ELSE (atttypmod - 4) & 65535
+        END
+           ELSE null
+      END AS numeric_scale,
+    CAST(
+             information_schema._pg_char_max_length(information_schema._pg_truetypid(a, t), information_schema._pg_truetypmod(a, t))
+             AS numeric
+    ) AS size,
+    a.attnum = any (ct.conkey) as is_pkey
+FROM
+    pg_class c
+    LEFT JOIN pg_attribute a ON a.attrelid = c.oid
+    LEFT JOIN pg_attrdef ad ON a.attrelid = ad.adrelid AND a.attnum = ad.adnum
+    LEFT JOIN pg_type t ON a.atttypid = t.oid
+    LEFT JOIN pg_namespace d ON d.oid = c.relnamespace
+    LEFT join pg_constraint ct on ct.conrelid=c.oid and ct.contype='p'
+WHERE
+    a.attnum > 0 and t.typname != ''
+    and c.relname = 'stock_location'
+    and d.nspname = 'public'
+ORDER BY
+    a.attnum;";i:1;i:4;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.8731520175933837890625;i:4;a:1:{i:0;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:57;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}}i:36;a:5:{i:0;s:679:"select
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.conrelid and attnum = any(ct.conkey)) as columns,
+    fc.relname as foreign_table_name,
+    fns.nspname as foreign_table_schema,
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.confrelid and attnum = any(ct.confkey)) as foreign_columns
+from
+    pg_constraint ct
+    inner join pg_class c on c.oid=ct.conrelid
+    inner join pg_namespace ns on c.relnamespace=ns.oid
+    left join pg_class fc on fc.oid=ct.confrelid
+    left join pg_namespace fns on fc.relnamespace=fns.oid
+
+where
+    ct.contype='f'
+    and c.relname='stock_location'
+    and ns.nspname='public'";i:1;i:4;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.88556194305419921875;i:4;a:1:{i:0;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:57;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}}i:39;a:5:{i:0;s:44:"SELECT * FROM "stock_location" WHERE "id"=14";i:1;i:4;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.8951320648193359375;i:4;a:1:{i:0;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:69;s:8:"function";s:7:"findOne";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"::";}}}i:42;a:5:{i:0;s:75:"Rendering view file: C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";i:1;i:8;i:2;s:25:"yii\base\View::renderFile";i:3;d:1414634444.903747081756591796875;i:4;a:1:{i:0;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:43;a:5:{i:0;s:42:"SELECT * FROM "move_set_data" WHERE "id"=1";i:1;i:4;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.90651798248291015625;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:154;s:8:"function";s:7:"__isset";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:46;a:5:{i:0;s:1959:"SELECT
+    d.nspname AS table_schema,
+    c.relname AS table_name,
+    a.attname AS column_name,
+    t.typname AS data_type,
+    a.attlen AS character_maximum_length,
+    pg_catalog.col_description(c.oid, a.attnum) AS column_comment,
+    a.atttypmod AS modifier,
+    a.attnotnull = false AS is_nullable,
+    CAST(pg_get_expr(ad.adbin, ad.adrelid) AS varchar) AS column_default,
+    coalesce(pg_get_expr(ad.adbin, ad.adrelid) ~ 'nextval',false) AS is_autoinc,
+    array_to_string((select array_agg(enumlabel) from pg_enum where enumtypid=a.atttypid)::varchar[],',') as enum_values,
+    CASE atttypid
+         WHEN 21 /*int2*/ THEN 16
+         WHEN 23 /*int4*/ THEN 32
+         WHEN 20 /*int8*/ THEN 64
+         WHEN 1700 /*numeric*/ THEN
+              CASE WHEN atttypmod = -1
+               THEN null
+               ELSE ((atttypmod - 4) >> 16) & 65535
+               END
+         WHEN 700 /*float4*/ THEN 24 /*FLT_MANT_DIG*/
+         WHEN 701 /*float8*/ THEN 53 /*DBL_MANT_DIG*/
+         ELSE null
+      END   AS numeric_precision,
+      CASE
+        WHEN atttypid IN (21, 23, 20) THEN 0
+        WHEN atttypid IN (1700) THEN
+        CASE
+            WHEN atttypmod = -1 THEN null
+            ELSE (atttypmod - 4) & 65535
+        END
+           ELSE null
+      END AS numeric_scale,
+    CAST(
+             information_schema._pg_char_max_length(information_schema._pg_truetypid(a, t), information_schema._pg_truetypmod(a, t))
+             AS numeric
+    ) AS size,
+    a.attnum = any (ct.conkey) as is_pkey
+FROM
+    pg_class c
+    LEFT JOIN pg_attribute a ON a.attrelid = c.oid
+    LEFT JOIN pg_attrdef ad ON a.attrelid = ad.adrelid AND a.attnum = ad.adnum
+    LEFT JOIN pg_type t ON a.atttypid = t.oid
+    LEFT JOIN pg_namespace d ON d.oid = c.relnamespace
+    LEFT join pg_constraint ct on ct.conrelid=c.oid and ct.contype='p'
+WHERE
+    a.attnum > 0 and t.typname != ''
+    and c.relname = 'move_set_data'
+    and d.nspname = 'public'
+ORDER BY
+    a.attnum;";i:1;i:4;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.9133999347686767578125;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:154;s:8:"function";s:7:"__isset";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:49;a:5:{i:0;s:678:"select
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.conrelid and attnum = any(ct.conkey)) as columns,
+    fc.relname as foreign_table_name,
+    fns.nspname as foreign_table_schema,
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.confrelid and attnum = any(ct.confkey)) as foreign_columns
+from
+    pg_constraint ct
+    inner join pg_class c on c.oid=ct.conrelid
+    inner join pg_namespace ns on c.relnamespace=ns.oid
+    left join pg_class fc on fc.oid=ct.confrelid
+    left join pg_namespace fns on fc.relnamespace=fns.oid
+
+where
+    ct.contype='f'
+    and c.relname='move_set_data'
+    and ns.nspname='public'";i:1;i:4;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.92455005645751953125;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:154;s:8:"function";s:7:"__isset";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:52;a:5:{i:0;s:40:"SELECT * FROM "product_uom" WHERE "id"=1";i:1;i:4;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.93282604217529296875;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:158;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:55;a:5:{i:0;s:1957:"SELECT
+    d.nspname AS table_schema,
+    c.relname AS table_name,
+    a.attname AS column_name,
+    t.typname AS data_type,
+    a.attlen AS character_maximum_length,
+    pg_catalog.col_description(c.oid, a.attnum) AS column_comment,
+    a.atttypmod AS modifier,
+    a.attnotnull = false AS is_nullable,
+    CAST(pg_get_expr(ad.adbin, ad.adrelid) AS varchar) AS column_default,
+    coalesce(pg_get_expr(ad.adbin, ad.adrelid) ~ 'nextval',false) AS is_autoinc,
+    array_to_string((select array_agg(enumlabel) from pg_enum where enumtypid=a.atttypid)::varchar[],',') as enum_values,
+    CASE atttypid
+         WHEN 21 /*int2*/ THEN 16
+         WHEN 23 /*int4*/ THEN 32
+         WHEN 20 /*int8*/ THEN 64
+         WHEN 1700 /*numeric*/ THEN
+              CASE WHEN atttypmod = -1
+               THEN null
+               ELSE ((atttypmod - 4) >> 16) & 65535
+               END
+         WHEN 700 /*float4*/ THEN 24 /*FLT_MANT_DIG*/
+         WHEN 701 /*float8*/ THEN 53 /*DBL_MANT_DIG*/
+         ELSE null
+      END   AS numeric_precision,
+      CASE
+        WHEN atttypid IN (21, 23, 20) THEN 0
+        WHEN atttypid IN (1700) THEN
+        CASE
+            WHEN atttypmod = -1 THEN null
+            ELSE (atttypmod - 4) & 65535
+        END
+           ELSE null
+      END AS numeric_scale,
+    CAST(
+             information_schema._pg_char_max_length(information_schema._pg_truetypid(a, t), information_schema._pg_truetypmod(a, t))
+             AS numeric
+    ) AS size,
+    a.attnum = any (ct.conkey) as is_pkey
+FROM
+    pg_class c
+    LEFT JOIN pg_attribute a ON a.attrelid = c.oid
+    LEFT JOIN pg_attrdef ad ON a.attrelid = ad.adrelid AND a.attnum = ad.adnum
+    LEFT JOIN pg_type t ON a.atttypid = t.oid
+    LEFT JOIN pg_namespace d ON d.oid = c.relnamespace
+    LEFT join pg_constraint ct on ct.conrelid=c.oid and ct.contype='p'
+WHERE
+    a.attnum > 0 and t.typname != ''
+    and c.relname = 'product_uom'
+    and d.nspname = 'public'
+ORDER BY
+    a.attnum;";i:1;i:4;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.93887805938720703125;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:158;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:58;a:5:{i:0;s:676:"select
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.conrelid and attnum = any(ct.conkey)) as columns,
+    fc.relname as foreign_table_name,
+    fns.nspname as foreign_table_schema,
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.confrelid and attnum = any(ct.confkey)) as foreign_columns
+from
+    pg_constraint ct
+    inner join pg_class c on c.oid=ct.conrelid
+    inner join pg_namespace ns on c.relnamespace=ns.oid
+    left join pg_class fc on fc.oid=ct.confrelid
+    left join pg_namespace fns on fc.relnamespace=fns.oid
+
+where
+    ct.contype='f'
+    and c.relname='product_uom'
+    and ns.nspname='public'";i:1;i:4;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.9496018886566162109375;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:158;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:61;a:5:{i:0;s:47:"SELECT * FROM "product_product" WHERE "id"=8892";i:1;i:4;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.9595520496368408203125;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:161;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:64;a:5:{i:0;s:1961:"SELECT
+    d.nspname AS table_schema,
+    c.relname AS table_name,
+    a.attname AS column_name,
+    t.typname AS data_type,
+    a.attlen AS character_maximum_length,
+    pg_catalog.col_description(c.oid, a.attnum) AS column_comment,
+    a.atttypmod AS modifier,
+    a.attnotnull = false AS is_nullable,
+    CAST(pg_get_expr(ad.adbin, ad.adrelid) AS varchar) AS column_default,
+    coalesce(pg_get_expr(ad.adbin, ad.adrelid) ~ 'nextval',false) AS is_autoinc,
+    array_to_string((select array_agg(enumlabel) from pg_enum where enumtypid=a.atttypid)::varchar[],',') as enum_values,
+    CASE atttypid
+         WHEN 21 /*int2*/ THEN 16
+         WHEN 23 /*int4*/ THEN 32
+         WHEN 20 /*int8*/ THEN 64
+         WHEN 1700 /*numeric*/ THEN
+              CASE WHEN atttypmod = -1
+               THEN null
+               ELSE ((atttypmod - 4) >> 16) & 65535
+               END
+         WHEN 700 /*float4*/ THEN 24 /*FLT_MANT_DIG*/
+         WHEN 701 /*float8*/ THEN 53 /*DBL_MANT_DIG*/
+         ELSE null
+      END   AS numeric_precision,
+      CASE
+        WHEN atttypid IN (21, 23, 20) THEN 0
+        WHEN atttypid IN (1700) THEN
+        CASE
+            WHEN atttypmod = -1 THEN null
+            ELSE (atttypmod - 4) & 65535
+        END
+           ELSE null
+      END AS numeric_scale,
+    CAST(
+             information_schema._pg_char_max_length(information_schema._pg_truetypid(a, t), information_schema._pg_truetypmod(a, t))
+             AS numeric
+    ) AS size,
+    a.attnum = any (ct.conkey) as is_pkey
+FROM
+    pg_class c
+    LEFT JOIN pg_attribute a ON a.attrelid = c.oid
+    LEFT JOIN pg_attrdef ad ON a.attrelid = ad.adrelid AND a.attnum = ad.adnum
+    LEFT JOIN pg_type t ON a.atttypid = t.oid
+    LEFT JOIN pg_namespace d ON d.oid = c.relnamespace
+    LEFT join pg_constraint ct on ct.conrelid=c.oid and ct.contype='p'
+WHERE
+    a.attnum > 0 and t.typname != ''
+    and c.relname = 'product_product'
+    and d.nspname = 'public'
+ORDER BY
+    a.attnum;";i:1;i:4;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.9658679962158203125;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:161;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:67;a:5:{i:0;s:680:"select
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.conrelid and attnum = any(ct.conkey)) as columns,
+    fc.relname as foreign_table_name,
+    fns.nspname as foreign_table_schema,
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.confrelid and attnum = any(ct.confkey)) as foreign_columns
+from
+    pg_constraint ct
+    inner join pg_class c on c.oid=ct.conrelid
+    inner join pg_namespace ns on c.relnamespace=ns.oid
+    left join pg_class fc on fc.oid=ct.confrelid
+    left join pg_namespace fns on fc.relnamespace=fns.oid
+
+where
+    ct.contype='f'
+    and c.relname='product_product'
+    and ns.nspname='public'";i:1;i:4;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.978024005889892578125;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:161;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:70;a:5:{i:0;s:42:"SELECT * FROM "move_set_data" WHERE "id"=1";i:1;i:4;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.9865329265594482421875;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:154;s:8:"function";s:7:"__isset";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:73;a:5:{i:0;s:39:"SELECT * FROM "move_set_data" WHERE 0=1";i:1;i:4;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.9923961162567138671875;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:154;s:8:"function";s:7:"__isset";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:76;a:5:{i:0;s:41:"SELECT * FROM "product_uom" WHERE "id"=23";i:1;i:4;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.99689006805419921875;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:176;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:79;a:5:{i:0;s:46:"SELECT * FROM "product_product" WHERE "id"=586";i:1;i:4;i:2;s:21:"yii\db\Command::query";i:3;d:1414634445.0020420551300048828125;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:178;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:82;a:5:{i:0;s:43:"SELECT * FROM "stock_move" WHERE "id"=19775";i:1;i:4;i:2;s:21:"yii\db\Command::query";i:3;d:1414634445.0072081089019775390625;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:253;s:8:"function";s:7:"findOne";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"::";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:85;a:5:{i:0;s:44:"SELECT * FROM "product_product" WHERE "id"=4";i:1;i:4;i:2;s:21:"yii\db\Command::query";i:3;d:1414634445.01554393768310546875;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:255;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:88;a:5:{i:0;s:41:"SELECT * FROM "product_uom" WHERE "id"=49";i:1;i:4;i:2;s:21:"yii\db\Command::query";i:3;d:1414634445.02072906494140625;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:255;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:91;a:5:{i:0;s:43:"SELECT * FROM "stock_move" WHERE "id"=19774";i:1;i:4;i:2;s:21:"yii\db\Command::query";i:3;d:1414634445.0248959064483642578125;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:253;s:8:"function";s:7:"findOne";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"::";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:94;a:5:{i:0;s:44:"SELECT * FROM "product_product" WHERE "id"=5";i:1;i:4;i:2;s:21:"yii\db\Command::query";i:3;d:1414634445.0304958820343017578125;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:255;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:97;a:5:{i:0;s:41:"SELECT * FROM "product_uom" WHERE "id"=23";i:1;i:4;i:2;s:21:"yii\db\Command::query";i:3;d:1414634445.035789012908935546875;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:255;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:100;a:5:{i:0;s:80:"Rendering view file: C:\xampp\htdocs\OpenERP-Services\views\layouts\printout.php";i:1;i:8;i:2;s:25:"yii\base\View::renderFile";i:3;d:1414634445.0414960384368896484375;i:4;a:1:{i:0;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}}}s:9:"profiling";a:3:{s:6:"memory";i:5338032;s:4:"time";d:0.3239591121673583984375;s:8:"messages";a:60:{i:10;a:5:{i:0;s:73:"Opening DB connection: pgsql:host=192.168.9.26;dbname=LIVE_2014;port=5432";i:1;i:80;i:2;s:23:"yii\db\Connection::open";i:3;d:1414634444.7900440692901611328125;i:4;a:2:{i:0;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:146;s:8:"function";s:7:"findOne";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"::";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:51;s:8:"function";s:9:"findModel";s:5:"class";s:31:"app\controllers\MovesController";s:4:"type";s:2:"->";}}}i:11;a:5:{i:0;s:73:"Opening DB connection: pgsql:host=192.168.9.26;dbname=LIVE_2014;port=5432";i:1;i:96;i:2;s:23:"yii\db\Connection::open";i:3;d:1414634444.796722888946533203125;i:4;a:2:{i:0;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:146;s:8:"function";s:7:"findOne";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"::";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:51;s:8:"function";s:9:"findModel";s:5:"class";s:31:"app\controllers\MovesController";s:4:"type";s:2:"->";}}}i:13;a:5:{i:0;s:1959:"SELECT
+    d.nspname AS table_schema,
+    c.relname AS table_name,
+    a.attname AS column_name,
+    t.typname AS data_type,
+    a.attlen AS character_maximum_length,
+    pg_catalog.col_description(c.oid, a.attnum) AS column_comment,
+    a.atttypmod AS modifier,
+    a.attnotnull = false AS is_nullable,
+    CAST(pg_get_expr(ad.adbin, ad.adrelid) AS varchar) AS column_default,
+    coalesce(pg_get_expr(ad.adbin, ad.adrelid) ~ 'nextval',false) AS is_autoinc,
+    array_to_string((select array_agg(enumlabel) from pg_enum where enumtypid=a.atttypid)::varchar[],',') as enum_values,
+    CASE atttypid
+         WHEN 21 /*int2*/ THEN 16
+         WHEN 23 /*int4*/ THEN 32
+         WHEN 20 /*int8*/ THEN 64
+         WHEN 1700 /*numeric*/ THEN
+              CASE WHEN atttypmod = -1
+               THEN null
+               ELSE ((atttypmod - 4) >> 16) & 65535
+               END
+         WHEN 700 /*float4*/ THEN 24 /*FLT_MANT_DIG*/
+         WHEN 701 /*float8*/ THEN 53 /*DBL_MANT_DIG*/
+         ELSE null
+      END   AS numeric_precision,
+      CASE
+        WHEN atttypid IN (21, 23, 20) THEN 0
+        WHEN atttypid IN (1700) THEN
+        CASE
+            WHEN atttypmod = -1 THEN null
+            ELSE (atttypmod - 4) & 65535
+        END
+           ELSE null
+      END AS numeric_scale,
+    CAST(
+             information_schema._pg_char_max_length(information_schema._pg_truetypid(a, t), information_schema._pg_truetypmod(a, t))
+             AS numeric
+    ) AS size,
+    a.attnum = any (ct.conkey) as is_pkey
+FROM
+    pg_class c
+    LEFT JOIN pg_attribute a ON a.attrelid = c.oid
+    LEFT JOIN pg_attrdef ad ON a.attrelid = ad.adrelid AND a.attnum = ad.adnum
+    LEFT JOIN pg_type t ON a.atttypid = t.oid
+    LEFT JOIN pg_namespace d ON d.oid = c.relnamespace
+    LEFT join pg_constraint ct on ct.conrelid=c.oid and ct.contype='p'
+WHERE
+    a.attnum > 0 and t.typname != ''
+    and c.relname = 'stock_picking'
+    and d.nspname = 'public'
+ORDER BY
+    a.attnum;";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.7981569766998291015625;i:4;a:2:{i:0;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:146;s:8:"function";s:7:"findOne";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"::";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:51;s:8:"function";s:9:"findModel";s:5:"class";s:31:"app\controllers\MovesController";s:4:"type";s:2:"->";}}}i:14;a:5:{i:0;s:1959:"SELECT
+    d.nspname AS table_schema,
+    c.relname AS table_name,
+    a.attname AS column_name,
+    t.typname AS data_type,
+    a.attlen AS character_maximum_length,
+    pg_catalog.col_description(c.oid, a.attnum) AS column_comment,
+    a.atttypmod AS modifier,
+    a.attnotnull = false AS is_nullable,
+    CAST(pg_get_expr(ad.adbin, ad.adrelid) AS varchar) AS column_default,
+    coalesce(pg_get_expr(ad.adbin, ad.adrelid) ~ 'nextval',false) AS is_autoinc,
+    array_to_string((select array_agg(enumlabel) from pg_enum where enumtypid=a.atttypid)::varchar[],',') as enum_values,
+    CASE atttypid
+         WHEN 21 /*int2*/ THEN 16
+         WHEN 23 /*int4*/ THEN 32
+         WHEN 20 /*int8*/ THEN 64
+         WHEN 1700 /*numeric*/ THEN
+              CASE WHEN atttypmod = -1
+               THEN null
+               ELSE ((atttypmod - 4) >> 16) & 65535
+               END
+         WHEN 700 /*float4*/ THEN 24 /*FLT_MANT_DIG*/
+         WHEN 701 /*float8*/ THEN 53 /*DBL_MANT_DIG*/
+         ELSE null
+      END   AS numeric_precision,
+      CASE
+        WHEN atttypid IN (21, 23, 20) THEN 0
+        WHEN atttypid IN (1700) THEN
+        CASE
+            WHEN atttypmod = -1 THEN null
+            ELSE (atttypmod - 4) & 65535
+        END
+           ELSE null
+      END AS numeric_scale,
+    CAST(
+             information_schema._pg_char_max_length(information_schema._pg_truetypid(a, t), information_schema._pg_truetypmod(a, t))
+             AS numeric
+    ) AS size,
+    a.attnum = any (ct.conkey) as is_pkey
+FROM
+    pg_class c
+    LEFT JOIN pg_attribute a ON a.attrelid = c.oid
+    LEFT JOIN pg_attrdef ad ON a.attrelid = ad.adrelid AND a.attnum = ad.adnum
+    LEFT JOIN pg_type t ON a.atttypid = t.oid
+    LEFT JOIN pg_namespace d ON d.oid = c.relnamespace
+    LEFT join pg_constraint ct on ct.conrelid=c.oid and ct.contype='p'
+WHERE
+    a.attnum > 0 and t.typname != ''
+    and c.relname = 'stock_picking'
+    and d.nspname = 'public'
+ORDER BY
+    a.attnum;";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.8152000904083251953125;i:4;a:2:{i:0;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:146;s:8:"function";s:7:"findOne";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"::";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:51;s:8:"function";s:9:"findModel";s:5:"class";s:31:"app\controllers\MovesController";s:4:"type";s:2:"->";}}}i:16;a:5:{i:0;s:678:"select
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.conrelid and attnum = any(ct.conkey)) as columns,
+    fc.relname as foreign_table_name,
+    fns.nspname as foreign_table_schema,
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.confrelid and attnum = any(ct.confkey)) as foreign_columns
+from
+    pg_constraint ct
+    inner join pg_class c on c.oid=ct.conrelid
+    inner join pg_namespace ns on c.relnamespace=ns.oid
+    left join pg_class fc on fc.oid=ct.confrelid
+    left join pg_namespace fns on fc.relnamespace=fns.oid
+
+where
+    ct.contype='f'
+    and c.relname='stock_picking'
+    and ns.nspname='public'";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.8183538913726806640625;i:4;a:2:{i:0;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:146;s:8:"function";s:7:"findOne";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"::";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:51;s:8:"function";s:9:"findModel";s:5:"class";s:31:"app\controllers\MovesController";s:4:"type";s:2:"->";}}}i:17;a:5:{i:0;s:678:"select
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.conrelid and attnum = any(ct.conkey)) as columns,
+    fc.relname as foreign_table_name,
+    fns.nspname as foreign_table_schema,
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.confrelid and attnum = any(ct.confkey)) as foreign_columns
+from
+    pg_constraint ct
+    inner join pg_class c on c.oid=ct.conrelid
+    inner join pg_namespace ns on c.relnamespace=ns.oid
+    left join pg_class fc on fc.oid=ct.confrelid
+    left join pg_namespace fns on fc.relnamespace=fns.oid
+
+where
+    ct.contype='f'
+    and c.relname='stock_picking'
+    and ns.nspname='public'";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.824287891387939453125;i:4;a:2:{i:0;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:146;s:8:"function";s:7:"findOne";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"::";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:51;s:8:"function";s:9:"findModel";s:5:"class";s:31:"app\controllers\MovesController";s:4:"type";s:2:"->";}}}i:19;a:5:{i:0;s:47:"SELECT * FROM "stock_picking" WHERE "id"='5911'";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.8284690380096435546875;i:4;a:2:{i:0;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:146;s:8:"function";s:7:"findOne";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"::";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:51;s:8:"function";s:9:"findModel";s:5:"class";s:31:"app\controllers\MovesController";s:4:"type";s:2:"->";}}}i:20;a:5:{i:0;s:47:"SELECT * FROM "stock_picking" WHERE "id"='5911'";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.83415508270263671875;i:4;a:2:{i:0;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:146;s:8:"function";s:7:"findOne";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"::";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:51;s:8:"function";s:9:"findModel";s:5:"class";s:31:"app\controllers\MovesController";s:4:"type";s:2:"->";}}}i:22;a:5:{i:0;s:50:"SELECT * FROM "stock_move" WHERE "picking_id"=5911";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.8361918926239013671875;i:4;a:1:{i:0;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:55;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}}i:23;a:5:{i:0;s:50:"SELECT * FROM "stock_move" WHERE "picking_id"=5911";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.8429028987884521484375;i:4;a:1:{i:0;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:55;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}}i:25;a:5:{i:0;s:1956:"SELECT
+    d.nspname AS table_schema,
+    c.relname AS table_name,
+    a.attname AS column_name,
+    t.typname AS data_type,
+    a.attlen AS character_maximum_length,
+    pg_catalog.col_description(c.oid, a.attnum) AS column_comment,
+    a.atttypmod AS modifier,
+    a.attnotnull = false AS is_nullable,
+    CAST(pg_get_expr(ad.adbin, ad.adrelid) AS varchar) AS column_default,
+    coalesce(pg_get_expr(ad.adbin, ad.adrelid) ~ 'nextval',false) AS is_autoinc,
+    array_to_string((select array_agg(enumlabel) from pg_enum where enumtypid=a.atttypid)::varchar[],',') as enum_values,
+    CASE atttypid
+         WHEN 21 /*int2*/ THEN 16
+         WHEN 23 /*int4*/ THEN 32
+         WHEN 20 /*int8*/ THEN 64
+         WHEN 1700 /*numeric*/ THEN
+              CASE WHEN atttypmod = -1
+               THEN null
+               ELSE ((atttypmod - 4) >> 16) & 65535
+               END
+         WHEN 700 /*float4*/ THEN 24 /*FLT_MANT_DIG*/
+         WHEN 701 /*float8*/ THEN 53 /*DBL_MANT_DIG*/
+         ELSE null
+      END   AS numeric_precision,
+      CASE
+        WHEN atttypid IN (21, 23, 20) THEN 0
+        WHEN atttypid IN (1700) THEN
+        CASE
+            WHEN atttypmod = -1 THEN null
+            ELSE (atttypmod - 4) & 65535
+        END
+           ELSE null
+      END AS numeric_scale,
+    CAST(
+             information_schema._pg_char_max_length(information_schema._pg_truetypid(a, t), information_schema._pg_truetypmod(a, t))
+             AS numeric
+    ) AS size,
+    a.attnum = any (ct.conkey) as is_pkey
+FROM
+    pg_class c
+    LEFT JOIN pg_attribute a ON a.attrelid = c.oid
+    LEFT JOIN pg_attrdef ad ON a.attrelid = ad.adrelid AND a.attnum = ad.adnum
+    LEFT JOIN pg_type t ON a.atttypid = t.oid
+    LEFT JOIN pg_namespace d ON d.oid = c.relnamespace
+    LEFT join pg_constraint ct on ct.conrelid=c.oid and ct.contype='p'
+WHERE
+    a.attnum > 0 and t.typname != ''
+    and c.relname = 'stock_move'
+    and d.nspname = 'public'
+ORDER BY
+    a.attnum;";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.8447589874267578125;i:4;a:1:{i:0;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:55;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}}i:26;a:5:{i:0;s:1956:"SELECT
+    d.nspname AS table_schema,
+    c.relname AS table_name,
+    a.attname AS column_name,
+    t.typname AS data_type,
+    a.attlen AS character_maximum_length,
+    pg_catalog.col_description(c.oid, a.attnum) AS column_comment,
+    a.atttypmod AS modifier,
+    a.attnotnull = false AS is_nullable,
+    CAST(pg_get_expr(ad.adbin, ad.adrelid) AS varchar) AS column_default,
+    coalesce(pg_get_expr(ad.adbin, ad.adrelid) ~ 'nextval',false) AS is_autoinc,
+    array_to_string((select array_agg(enumlabel) from pg_enum where enumtypid=a.atttypid)::varchar[],',') as enum_values,
+    CASE atttypid
+         WHEN 21 /*int2*/ THEN 16
+         WHEN 23 /*int4*/ THEN 32
+         WHEN 20 /*int8*/ THEN 64
+         WHEN 1700 /*numeric*/ THEN
+              CASE WHEN atttypmod = -1
+               THEN null
+               ELSE ((atttypmod - 4) >> 16) & 65535
+               END
+         WHEN 700 /*float4*/ THEN 24 /*FLT_MANT_DIG*/
+         WHEN 701 /*float8*/ THEN 53 /*DBL_MANT_DIG*/
+         ELSE null
+      END   AS numeric_precision,
+      CASE
+        WHEN atttypid IN (21, 23, 20) THEN 0
+        WHEN atttypid IN (1700) THEN
+        CASE
+            WHEN atttypmod = -1 THEN null
+            ELSE (atttypmod - 4) & 65535
+        END
+           ELSE null
+      END AS numeric_scale,
+    CAST(
+             information_schema._pg_char_max_length(information_schema._pg_truetypid(a, t), information_schema._pg_truetypmod(a, t))
+             AS numeric
+    ) AS size,
+    a.attnum = any (ct.conkey) as is_pkey
+FROM
+    pg_class c
+    LEFT JOIN pg_attribute a ON a.attrelid = c.oid
+    LEFT JOIN pg_attrdef ad ON a.attrelid = ad.adrelid AND a.attnum = ad.adnum
+    LEFT JOIN pg_type t ON a.atttypid = t.oid
+    LEFT JOIN pg_namespace d ON d.oid = c.relnamespace
+    LEFT join pg_constraint ct on ct.conrelid=c.oid and ct.contype='p'
+WHERE
+    a.attnum > 0 and t.typname != ''
+    and c.relname = 'stock_move'
+    and d.nspname = 'public'
+ORDER BY
+    a.attnum;";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.8566319942474365234375;i:4;a:1:{i:0;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:55;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}}i:28;a:5:{i:0;s:675:"select
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.conrelid and attnum = any(ct.conkey)) as columns,
+    fc.relname as foreign_table_name,
+    fns.nspname as foreign_table_schema,
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.confrelid and attnum = any(ct.confkey)) as foreign_columns
+from
+    pg_constraint ct
+    inner join pg_class c on c.oid=ct.conrelid
+    inner join pg_namespace ns on c.relnamespace=ns.oid
+    left join pg_class fc on fc.oid=ct.confrelid
+    left join pg_namespace fns on fc.relnamespace=fns.oid
+
+where
+    ct.contype='f'
+    and c.relname='stock_move'
+    and ns.nspname='public'";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.8583629131317138671875;i:4;a:1:{i:0;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:55;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}}i:29;a:5:{i:0;s:675:"select
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.conrelid and attnum = any(ct.conkey)) as columns,
+    fc.relname as foreign_table_name,
+    fns.nspname as foreign_table_schema,
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.confrelid and attnum = any(ct.confkey)) as foreign_columns
+from
+    pg_constraint ct
+    inner join pg_class c on c.oid=ct.conrelid
+    inner join pg_namespace ns on c.relnamespace=ns.oid
+    left join pg_class fc on fc.oid=ct.confrelid
+    left join pg_namespace fns on fc.relnamespace=fns.oid
+
+where
+    ct.contype='f'
+    and c.relname='stock_move'
+    and ns.nspname='public'";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.8646709918975830078125;i:4;a:1:{i:0;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:55;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}}i:31;a:5:{i:0;s:44:"SELECT * FROM "stock_location" WHERE "id"=14";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.86701488494873046875;i:4;a:1:{i:0;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:57;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}}i:32;a:5:{i:0;s:44:"SELECT * FROM "stock_location" WHERE "id"=14";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.8708670139312744140625;i:4;a:1:{i:0;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:57;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}}i:34;a:5:{i:0;s:1960:"SELECT
+    d.nspname AS table_schema,
+    c.relname AS table_name,
+    a.attname AS column_name,
+    t.typname AS data_type,
+    a.attlen AS character_maximum_length,
+    pg_catalog.col_description(c.oid, a.attnum) AS column_comment,
+    a.atttypmod AS modifier,
+    a.attnotnull = false AS is_nullable,
+    CAST(pg_get_expr(ad.adbin, ad.adrelid) AS varchar) AS column_default,
+    coalesce(pg_get_expr(ad.adbin, ad.adrelid) ~ 'nextval',false) AS is_autoinc,
+    array_to_string((select array_agg(enumlabel) from pg_enum where enumtypid=a.atttypid)::varchar[],',') as enum_values,
+    CASE atttypid
+         WHEN 21 /*int2*/ THEN 16
+         WHEN 23 /*int4*/ THEN 32
+         WHEN 20 /*int8*/ THEN 64
+         WHEN 1700 /*numeric*/ THEN
+              CASE WHEN atttypmod = -1
+               THEN null
+               ELSE ((atttypmod - 4) >> 16) & 65535
+               END
+         WHEN 700 /*float4*/ THEN 24 /*FLT_MANT_DIG*/
+         WHEN 701 /*float8*/ THEN 53 /*DBL_MANT_DIG*/
+         ELSE null
+      END   AS numeric_precision,
+      CASE
+        WHEN atttypid IN (21, 23, 20) THEN 0
+        WHEN atttypid IN (1700) THEN
+        CASE
+            WHEN atttypmod = -1 THEN null
+            ELSE (atttypmod - 4) & 65535
+        END
+           ELSE null
+      END AS numeric_scale,
+    CAST(
+             information_schema._pg_char_max_length(information_schema._pg_truetypid(a, t), information_schema._pg_truetypmod(a, t))
+             AS numeric
+    ) AS size,
+    a.attnum = any (ct.conkey) as is_pkey
+FROM
+    pg_class c
+    LEFT JOIN pg_attribute a ON a.attrelid = c.oid
+    LEFT JOIN pg_attrdef ad ON a.attrelid = ad.adrelid AND a.attnum = ad.adnum
+    LEFT JOIN pg_type t ON a.atttypid = t.oid
+    LEFT JOIN pg_namespace d ON d.oid = c.relnamespace
+    LEFT join pg_constraint ct on ct.conrelid=c.oid and ct.contype='p'
+WHERE
+    a.attnum > 0 and t.typname != ''
+    and c.relname = 'stock_location'
+    and d.nspname = 'public'
+ORDER BY
+    a.attnum;";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.8732221126556396484375;i:4;a:1:{i:0;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:57;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}}i:35;a:5:{i:0;s:1960:"SELECT
+    d.nspname AS table_schema,
+    c.relname AS table_name,
+    a.attname AS column_name,
+    t.typname AS data_type,
+    a.attlen AS character_maximum_length,
+    pg_catalog.col_description(c.oid, a.attnum) AS column_comment,
+    a.atttypmod AS modifier,
+    a.attnotnull = false AS is_nullable,
+    CAST(pg_get_expr(ad.adbin, ad.adrelid) AS varchar) AS column_default,
+    coalesce(pg_get_expr(ad.adbin, ad.adrelid) ~ 'nextval',false) AS is_autoinc,
+    array_to_string((select array_agg(enumlabel) from pg_enum where enumtypid=a.atttypid)::varchar[],',') as enum_values,
+    CASE atttypid
+         WHEN 21 /*int2*/ THEN 16
+         WHEN 23 /*int4*/ THEN 32
+         WHEN 20 /*int8*/ THEN 64
+         WHEN 1700 /*numeric*/ THEN
+              CASE WHEN atttypmod = -1
+               THEN null
+               ELSE ((atttypmod - 4) >> 16) & 65535
+               END
+         WHEN 700 /*float4*/ THEN 24 /*FLT_MANT_DIG*/
+         WHEN 701 /*float8*/ THEN 53 /*DBL_MANT_DIG*/
+         ELSE null
+      END   AS numeric_precision,
+      CASE
+        WHEN atttypid IN (21, 23, 20) THEN 0
+        WHEN atttypid IN (1700) THEN
+        CASE
+            WHEN atttypmod = -1 THEN null
+            ELSE (atttypmod - 4) & 65535
+        END
+           ELSE null
+      END AS numeric_scale,
+    CAST(
+             information_schema._pg_char_max_length(information_schema._pg_truetypid(a, t), information_schema._pg_truetypmod(a, t))
+             AS numeric
+    ) AS size,
+    a.attnum = any (ct.conkey) as is_pkey
+FROM
+    pg_class c
+    LEFT JOIN pg_attribute a ON a.attrelid = c.oid
+    LEFT JOIN pg_attrdef ad ON a.attrelid = ad.adrelid AND a.attnum = ad.adnum
+    LEFT JOIN pg_type t ON a.atttypid = t.oid
+    LEFT JOIN pg_namespace d ON d.oid = c.relnamespace
+    LEFT join pg_constraint ct on ct.conrelid=c.oid and ct.contype='p'
+WHERE
+    a.attnum > 0 and t.typname != ''
+    and c.relname = 'stock_location'
+    and d.nspname = 'public'
+ORDER BY
+    a.attnum;";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.8830509185791015625;i:4;a:1:{i:0;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:57;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}}i:37;a:5:{i:0;s:679:"select
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.conrelid and attnum = any(ct.conkey)) as columns,
+    fc.relname as foreign_table_name,
+    fns.nspname as foreign_table_schema,
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.confrelid and attnum = any(ct.confkey)) as foreign_columns
+from
+    pg_constraint ct
+    inner join pg_class c on c.oid=ct.conrelid
+    inner join pg_namespace ns on c.relnamespace=ns.oid
+    left join pg_class fc on fc.oid=ct.confrelid
+    left join pg_namespace fns on fc.relnamespace=fns.oid
+
+where
+    ct.contype='f'
+    and c.relname='stock_location'
+    and ns.nspname='public'";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.885714054107666015625;i:4;a:1:{i:0;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:57;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}}i:38;a:5:{i:0;s:679:"select
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.conrelid and attnum = any(ct.conkey)) as columns,
+    fc.relname as foreign_table_name,
+    fns.nspname as foreign_table_schema,
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.confrelid and attnum = any(ct.confkey)) as foreign_columns
+from
+    pg_constraint ct
+    inner join pg_class c on c.oid=ct.conrelid
+    inner join pg_namespace ns on c.relnamespace=ns.oid
+    left join pg_class fc on fc.oid=ct.confrelid
+    left join pg_namespace fns on fc.relnamespace=fns.oid
+
+where
+    ct.contype='f'
+    and c.relname='stock_location'
+    and ns.nspname='public'";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.8934109210968017578125;i:4;a:1:{i:0;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:57;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}}i:40;a:5:{i:0;s:44:"SELECT * FROM "stock_location" WHERE "id"=14";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.8952438831329345703125;i:4;a:1:{i:0;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:69;s:8:"function";s:7:"findOne";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"::";}}}i:41;a:5:{i:0;s:44:"SELECT * FROM "stock_location" WHERE "id"=14";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.898994922637939453125;i:4;a:1:{i:0;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:69;s:8:"function";s:7:"findOne";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"::";}}}i:44;a:5:{i:0;s:42:"SELECT * FROM "move_set_data" WHERE "id"=1";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.9066760540008544921875;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:154;s:8:"function";s:7:"__isset";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:45;a:5:{i:0;s:42:"SELECT * FROM "move_set_data" WHERE "id"=1";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.9117929935455322265625;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:154;s:8:"function";s:7:"__isset";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:47;a:5:{i:0;s:1959:"SELECT
+    d.nspname AS table_schema,
+    c.relname AS table_name,
+    a.attname AS column_name,
+    t.typname AS data_type,
+    a.attlen AS character_maximum_length,
+    pg_catalog.col_description(c.oid, a.attnum) AS column_comment,
+    a.atttypmod AS modifier,
+    a.attnotnull = false AS is_nullable,
+    CAST(pg_get_expr(ad.adbin, ad.adrelid) AS varchar) AS column_default,
+    coalesce(pg_get_expr(ad.adbin, ad.adrelid) ~ 'nextval',false) AS is_autoinc,
+    array_to_string((select array_agg(enumlabel) from pg_enum where enumtypid=a.atttypid)::varchar[],',') as enum_values,
+    CASE atttypid
+         WHEN 21 /*int2*/ THEN 16
+         WHEN 23 /*int4*/ THEN 32
+         WHEN 20 /*int8*/ THEN 64
+         WHEN 1700 /*numeric*/ THEN
+              CASE WHEN atttypmod = -1
+               THEN null
+               ELSE ((atttypmod - 4) >> 16) & 65535
+               END
+         WHEN 700 /*float4*/ THEN 24 /*FLT_MANT_DIG*/
+         WHEN 701 /*float8*/ THEN 53 /*DBL_MANT_DIG*/
+         ELSE null
+      END   AS numeric_precision,
+      CASE
+        WHEN atttypid IN (21, 23, 20) THEN 0
+        WHEN atttypid IN (1700) THEN
+        CASE
+            WHEN atttypmod = -1 THEN null
+            ELSE (atttypmod - 4) & 65535
+        END
+           ELSE null
+      END AS numeric_scale,
+    CAST(
+             information_schema._pg_char_max_length(information_schema._pg_truetypid(a, t), information_schema._pg_truetypmod(a, t))
+             AS numeric
+    ) AS size,
+    a.attnum = any (ct.conkey) as is_pkey
+FROM
+    pg_class c
+    LEFT JOIN pg_attribute a ON a.attrelid = c.oid
+    LEFT JOIN pg_attrdef ad ON a.attrelid = ad.adrelid AND a.attnum = ad.adnum
+    LEFT JOIN pg_type t ON a.atttypid = t.oid
+    LEFT JOIN pg_namespace d ON d.oid = c.relnamespace
+    LEFT join pg_constraint ct on ct.conrelid=c.oid and ct.contype='p'
+WHERE
+    a.attnum > 0 and t.typname != ''
+    and c.relname = 'move_set_data'
+    and d.nspname = 'public'
+ORDER BY
+    a.attnum;";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.9135720729827880859375;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:154;s:8:"function";s:7:"__isset";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:48;a:5:{i:0;s:1959:"SELECT
+    d.nspname AS table_schema,
+    c.relname AS table_name,
+    a.attname AS column_name,
+    t.typname AS data_type,
+    a.attlen AS character_maximum_length,
+    pg_catalog.col_description(c.oid, a.attnum) AS column_comment,
+    a.atttypmod AS modifier,
+    a.attnotnull = false AS is_nullable,
+    CAST(pg_get_expr(ad.adbin, ad.adrelid) AS varchar) AS column_default,
+    coalesce(pg_get_expr(ad.adbin, ad.adrelid) ~ 'nextval',false) AS is_autoinc,
+    array_to_string((select array_agg(enumlabel) from pg_enum where enumtypid=a.atttypid)::varchar[],',') as enum_values,
+    CASE atttypid
+         WHEN 21 /*int2*/ THEN 16
+         WHEN 23 /*int4*/ THEN 32
+         WHEN 20 /*int8*/ THEN 64
+         WHEN 1700 /*numeric*/ THEN
+              CASE WHEN atttypmod = -1
+               THEN null
+               ELSE ((atttypmod - 4) >> 16) & 65535
+               END
+         WHEN 700 /*float4*/ THEN 24 /*FLT_MANT_DIG*/
+         WHEN 701 /*float8*/ THEN 53 /*DBL_MANT_DIG*/
+         ELSE null
+      END   AS numeric_precision,
+      CASE
+        WHEN atttypid IN (21, 23, 20) THEN 0
+        WHEN atttypid IN (1700) THEN
+        CASE
+            WHEN atttypmod = -1 THEN null
+            ELSE (atttypmod - 4) & 65535
+        END
+           ELSE null
+      END AS numeric_scale,
+    CAST(
+             information_schema._pg_char_max_length(information_schema._pg_truetypid(a, t), information_schema._pg_truetypmod(a, t))
+             AS numeric
+    ) AS size,
+    a.attnum = any (ct.conkey) as is_pkey
+FROM
+    pg_class c
+    LEFT JOIN pg_attribute a ON a.attrelid = c.oid
+    LEFT JOIN pg_attrdef ad ON a.attrelid = ad.adrelid AND a.attnum = ad.adnum
+    LEFT JOIN pg_type t ON a.atttypid = t.oid
+    LEFT JOIN pg_namespace d ON d.oid = c.relnamespace
+    LEFT join pg_constraint ct on ct.conrelid=c.oid and ct.contype='p'
+WHERE
+    a.attnum > 0 and t.typname != ''
+    and c.relname = 'move_set_data'
+    and d.nspname = 'public'
+ORDER BY
+    a.attnum;";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.922710895538330078125;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:154;s:8:"function";s:7:"__isset";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:50;a:5:{i:0;s:678:"select
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.conrelid and attnum = any(ct.conkey)) as columns,
+    fc.relname as foreign_table_name,
+    fns.nspname as foreign_table_schema,
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.confrelid and attnum = any(ct.confkey)) as foreign_columns
+from
+    pg_constraint ct
+    inner join pg_class c on c.oid=ct.conrelid
+    inner join pg_namespace ns on c.relnamespace=ns.oid
+    left join pg_class fc on fc.oid=ct.confrelid
+    left join pg_namespace fns on fc.relnamespace=fns.oid
+
+where
+    ct.contype='f'
+    and c.relname='move_set_data'
+    and ns.nspname='public'";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.9246919155120849609375;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:154;s:8:"function";s:7:"__isset";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:51;a:5:{i:0;s:678:"select
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.conrelid and attnum = any(ct.conkey)) as columns,
+    fc.relname as foreign_table_name,
+    fns.nspname as foreign_table_schema,
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.confrelid and attnum = any(ct.confkey)) as foreign_columns
+from
+    pg_constraint ct
+    inner join pg_class c on c.oid=ct.conrelid
+    inner join pg_namespace ns on c.relnamespace=ns.oid
+    left join pg_class fc on fc.oid=ct.confrelid
+    left join pg_namespace fns on fc.relnamespace=fns.oid
+
+where
+    ct.contype='f'
+    and c.relname='move_set_data'
+    and ns.nspname='public'";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.929543972015380859375;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:154;s:8:"function";s:7:"__isset";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:53;a:5:{i:0;s:40:"SELECT * FROM "product_uom" WHERE "id"=1";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.9329950809478759765625;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:158;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:54;a:5:{i:0;s:40:"SELECT * FROM "product_uom" WHERE "id"=1";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.93721103668212890625;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:158;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:56;a:5:{i:0;s:1957:"SELECT
+    d.nspname AS table_schema,
+    c.relname AS table_name,
+    a.attname AS column_name,
+    t.typname AS data_type,
+    a.attlen AS character_maximum_length,
+    pg_catalog.col_description(c.oid, a.attnum) AS column_comment,
+    a.atttypmod AS modifier,
+    a.attnotnull = false AS is_nullable,
+    CAST(pg_get_expr(ad.adbin, ad.adrelid) AS varchar) AS column_default,
+    coalesce(pg_get_expr(ad.adbin, ad.adrelid) ~ 'nextval',false) AS is_autoinc,
+    array_to_string((select array_agg(enumlabel) from pg_enum where enumtypid=a.atttypid)::varchar[],',') as enum_values,
+    CASE atttypid
+         WHEN 21 /*int2*/ THEN 16
+         WHEN 23 /*int4*/ THEN 32
+         WHEN 20 /*int8*/ THEN 64
+         WHEN 1700 /*numeric*/ THEN
+              CASE WHEN atttypmod = -1
+               THEN null
+               ELSE ((atttypmod - 4) >> 16) & 65535
+               END
+         WHEN 700 /*float4*/ THEN 24 /*FLT_MANT_DIG*/
+         WHEN 701 /*float8*/ THEN 53 /*DBL_MANT_DIG*/
+         ELSE null
+      END   AS numeric_precision,
+      CASE
+        WHEN atttypid IN (21, 23, 20) THEN 0
+        WHEN atttypid IN (1700) THEN
+        CASE
+            WHEN atttypmod = -1 THEN null
+            ELSE (atttypmod - 4) & 65535
+        END
+           ELSE null
+      END AS numeric_scale,
+    CAST(
+             information_schema._pg_char_max_length(information_schema._pg_truetypid(a, t), information_schema._pg_truetypmod(a, t))
+             AS numeric
+    ) AS size,
+    a.attnum = any (ct.conkey) as is_pkey
+FROM
+    pg_class c
+    LEFT JOIN pg_attribute a ON a.attrelid = c.oid
+    LEFT JOIN pg_attrdef ad ON a.attrelid = ad.adrelid AND a.attnum = ad.adnum
+    LEFT JOIN pg_type t ON a.atttypid = t.oid
+    LEFT JOIN pg_namespace d ON d.oid = c.relnamespace
+    LEFT join pg_constraint ct on ct.conrelid=c.oid and ct.contype='p'
+WHERE
+    a.attnum > 0 and t.typname != ''
+    and c.relname = 'product_uom'
+    and d.nspname = 'public'
+ORDER BY
+    a.attnum;";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.939054965972900390625;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:158;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:57;a:5:{i:0;s:1957:"SELECT
+    d.nspname AS table_schema,
+    c.relname AS table_name,
+    a.attname AS column_name,
+    t.typname AS data_type,
+    a.attlen AS character_maximum_length,
+    pg_catalog.col_description(c.oid, a.attnum) AS column_comment,
+    a.atttypmod AS modifier,
+    a.attnotnull = false AS is_nullable,
+    CAST(pg_get_expr(ad.adbin, ad.adrelid) AS varchar) AS column_default,
+    coalesce(pg_get_expr(ad.adbin, ad.adrelid) ~ 'nextval',false) AS is_autoinc,
+    array_to_string((select array_agg(enumlabel) from pg_enum where enumtypid=a.atttypid)::varchar[],',') as enum_values,
+    CASE atttypid
+         WHEN 21 /*int2*/ THEN 16
+         WHEN 23 /*int4*/ THEN 32
+         WHEN 20 /*int8*/ THEN 64
+         WHEN 1700 /*numeric*/ THEN
+              CASE WHEN atttypmod = -1
+               THEN null
+               ELSE ((atttypmod - 4) >> 16) & 65535
+               END
+         WHEN 700 /*float4*/ THEN 24 /*FLT_MANT_DIG*/
+         WHEN 701 /*float8*/ THEN 53 /*DBL_MANT_DIG*/
+         ELSE null
+      END   AS numeric_precision,
+      CASE
+        WHEN atttypid IN (21, 23, 20) THEN 0
+        WHEN atttypid IN (1700) THEN
+        CASE
+            WHEN atttypmod = -1 THEN null
+            ELSE (atttypmod - 4) & 65535
+        END
+           ELSE null
+      END AS numeric_scale,
+    CAST(
+             information_schema._pg_char_max_length(information_schema._pg_truetypid(a, t), information_schema._pg_truetypmod(a, t))
+             AS numeric
+    ) AS size,
+    a.attnum = any (ct.conkey) as is_pkey
+FROM
+    pg_class c
+    LEFT JOIN pg_attribute a ON a.attrelid = c.oid
+    LEFT JOIN pg_attrdef ad ON a.attrelid = ad.adrelid AND a.attnum = ad.adnum
+    LEFT JOIN pg_type t ON a.atttypid = t.oid
+    LEFT JOIN pg_namespace d ON d.oid = c.relnamespace
+    LEFT join pg_constraint ct on ct.conrelid=c.oid and ct.contype='p'
+WHERE
+    a.attnum > 0 and t.typname != ''
+    and c.relname = 'product_uom'
+    and d.nspname = 'public'
+ORDER BY
+    a.attnum;";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.9478271007537841796875;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:158;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:59;a:5:{i:0;s:676:"select
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.conrelid and attnum = any(ct.conkey)) as columns,
+    fc.relname as foreign_table_name,
+    fns.nspname as foreign_table_schema,
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.confrelid and attnum = any(ct.confkey)) as foreign_columns
+from
+    pg_constraint ct
+    inner join pg_class c on c.oid=ct.conrelid
+    inner join pg_namespace ns on c.relnamespace=ns.oid
+    left join pg_class fc on fc.oid=ct.confrelid
+    left join pg_namespace fns on fc.relnamespace=fns.oid
+
+where
+    ct.contype='f'
+    and c.relname='product_uom'
+    and ns.nspname='public'";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.9497439861297607421875;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:158;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:60;a:5:{i:0;s:676:"select
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.conrelid and attnum = any(ct.conkey)) as columns,
+    fc.relname as foreign_table_name,
+    fns.nspname as foreign_table_schema,
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.confrelid and attnum = any(ct.confkey)) as foreign_columns
+from
+    pg_constraint ct
+    inner join pg_class c on c.oid=ct.conrelid
+    inner join pg_namespace ns on c.relnamespace=ns.oid
+    left join pg_class fc on fc.oid=ct.confrelid
+    left join pg_namespace fns on fc.relnamespace=fns.oid
+
+where
+    ct.contype='f'
+    and c.relname='product_uom'
+    and ns.nspname='public'";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.956367015838623046875;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:158;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:62;a:5:{i:0;s:47:"SELECT * FROM "product_product" WHERE "id"=8892";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.95969104766845703125;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:161;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:63;a:5:{i:0;s:47:"SELECT * FROM "product_product" WHERE "id"=8892";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.9640600681304931640625;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:161;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:65;a:5:{i:0;s:1961:"SELECT
+    d.nspname AS table_schema,
+    c.relname AS table_name,
+    a.attname AS column_name,
+    t.typname AS data_type,
+    a.attlen AS character_maximum_length,
+    pg_catalog.col_description(c.oid, a.attnum) AS column_comment,
+    a.atttypmod AS modifier,
+    a.attnotnull = false AS is_nullable,
+    CAST(pg_get_expr(ad.adbin, ad.adrelid) AS varchar) AS column_default,
+    coalesce(pg_get_expr(ad.adbin, ad.adrelid) ~ 'nextval',false) AS is_autoinc,
+    array_to_string((select array_agg(enumlabel) from pg_enum where enumtypid=a.atttypid)::varchar[],',') as enum_values,
+    CASE atttypid
+         WHEN 21 /*int2*/ THEN 16
+         WHEN 23 /*int4*/ THEN 32
+         WHEN 20 /*int8*/ THEN 64
+         WHEN 1700 /*numeric*/ THEN
+              CASE WHEN atttypmod = -1
+               THEN null
+               ELSE ((atttypmod - 4) >> 16) & 65535
+               END
+         WHEN 700 /*float4*/ THEN 24 /*FLT_MANT_DIG*/
+         WHEN 701 /*float8*/ THEN 53 /*DBL_MANT_DIG*/
+         ELSE null
+      END   AS numeric_precision,
+      CASE
+        WHEN atttypid IN (21, 23, 20) THEN 0
+        WHEN atttypid IN (1700) THEN
+        CASE
+            WHEN atttypmod = -1 THEN null
+            ELSE (atttypmod - 4) & 65535
+        END
+           ELSE null
+      END AS numeric_scale,
+    CAST(
+             information_schema._pg_char_max_length(information_schema._pg_truetypid(a, t), information_schema._pg_truetypmod(a, t))
+             AS numeric
+    ) AS size,
+    a.attnum = any (ct.conkey) as is_pkey
+FROM
+    pg_class c
+    LEFT JOIN pg_attribute a ON a.attrelid = c.oid
+    LEFT JOIN pg_attrdef ad ON a.attrelid = ad.adrelid AND a.attnum = ad.adnum
+    LEFT JOIN pg_type t ON a.atttypid = t.oid
+    LEFT JOIN pg_namespace d ON d.oid = c.relnamespace
+    LEFT join pg_constraint ct on ct.conrelid=c.oid and ct.contype='p'
+WHERE
+    a.attnum > 0 and t.typname != ''
+    and c.relname = 'product_product'
+    and d.nspname = 'public'
+ORDER BY
+    a.attnum;";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.96603488922119140625;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:161;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:66;a:5:{i:0;s:1961:"SELECT
+    d.nspname AS table_schema,
+    c.relname AS table_name,
+    a.attname AS column_name,
+    t.typname AS data_type,
+    a.attlen AS character_maximum_length,
+    pg_catalog.col_description(c.oid, a.attnum) AS column_comment,
+    a.atttypmod AS modifier,
+    a.attnotnull = false AS is_nullable,
+    CAST(pg_get_expr(ad.adbin, ad.adrelid) AS varchar) AS column_default,
+    coalesce(pg_get_expr(ad.adbin, ad.adrelid) ~ 'nextval',false) AS is_autoinc,
+    array_to_string((select array_agg(enumlabel) from pg_enum where enumtypid=a.atttypid)::varchar[],',') as enum_values,
+    CASE atttypid
+         WHEN 21 /*int2*/ THEN 16
+         WHEN 23 /*int4*/ THEN 32
+         WHEN 20 /*int8*/ THEN 64
+         WHEN 1700 /*numeric*/ THEN
+              CASE WHEN atttypmod = -1
+               THEN null
+               ELSE ((atttypmod - 4) >> 16) & 65535
+               END
+         WHEN 700 /*float4*/ THEN 24 /*FLT_MANT_DIG*/
+         WHEN 701 /*float8*/ THEN 53 /*DBL_MANT_DIG*/
+         ELSE null
+      END   AS numeric_precision,
+      CASE
+        WHEN atttypid IN (21, 23, 20) THEN 0
+        WHEN atttypid IN (1700) THEN
+        CASE
+            WHEN atttypmod = -1 THEN null
+            ELSE (atttypmod - 4) & 65535
+        END
+           ELSE null
+      END AS numeric_scale,
+    CAST(
+             information_schema._pg_char_max_length(information_schema._pg_truetypid(a, t), information_schema._pg_truetypmod(a, t))
+             AS numeric
+    ) AS size,
+    a.attnum = any (ct.conkey) as is_pkey
+FROM
+    pg_class c
+    LEFT JOIN pg_attribute a ON a.attrelid = c.oid
+    LEFT JOIN pg_attrdef ad ON a.attrelid = ad.adrelid AND a.attnum = ad.adnum
+    LEFT JOIN pg_type t ON a.atttypid = t.oid
+    LEFT JOIN pg_namespace d ON d.oid = c.relnamespace
+    LEFT join pg_constraint ct on ct.conrelid=c.oid and ct.contype='p'
+WHERE
+    a.attnum > 0 and t.typname != ''
+    and c.relname = 'product_product'
+    and d.nspname = 'public'
+ORDER BY
+    a.attnum;";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.975966930389404296875;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:161;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:68;a:5:{i:0;s:680:"select
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.conrelid and attnum = any(ct.conkey)) as columns,
+    fc.relname as foreign_table_name,
+    fns.nspname as foreign_table_schema,
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.confrelid and attnum = any(ct.confkey)) as foreign_columns
+from
+    pg_constraint ct
+    inner join pg_class c on c.oid=ct.conrelid
+    inner join pg_namespace ns on c.relnamespace=ns.oid
+    left join pg_class fc on fc.oid=ct.confrelid
+    left join pg_namespace fns on fc.relnamespace=fns.oid
+
+where
+    ct.contype='f'
+    and c.relname='product_product'
+    and ns.nspname='public'";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.97815608978271484375;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:161;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:69;a:5:{i:0;s:680:"select
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.conrelid and attnum = any(ct.conkey)) as columns,
+    fc.relname as foreign_table_name,
+    fns.nspname as foreign_table_schema,
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.confrelid and attnum = any(ct.confkey)) as foreign_columns
+from
+    pg_constraint ct
+    inner join pg_class c on c.oid=ct.conrelid
+    inner join pg_namespace ns on c.relnamespace=ns.oid
+    left join pg_class fc on fc.oid=ct.confrelid
+    left join pg_namespace fns on fc.relnamespace=fns.oid
+
+where
+    ct.contype='f'
+    and c.relname='product_product'
+    and ns.nspname='public'";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.9837639331817626953125;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:161;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:71;a:5:{i:0;s:42:"SELECT * FROM "move_set_data" WHERE "id"=1";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.986752033233642578125;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:154;s:8:"function";s:7:"__isset";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:72;a:5:{i:0;s:42:"SELECT * FROM "move_set_data" WHERE "id"=1";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.99040508270263671875;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:154;s:8:"function";s:7:"__isset";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:74;a:5:{i:0;s:39:"SELECT * FROM "move_set_data" WHERE 0=1";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.992559909820556640625;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:154;s:8:"function";s:7:"__isset";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:75;a:5:{i:0;s:39:"SELECT * FROM "move_set_data" WHERE 0=1";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.9951460361480712890625;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:154;s:8:"function";s:7:"__isset";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:77;a:5:{i:0;s:41:"SELECT * FROM "product_uom" WHERE "id"=23";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.997025966644287109375;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:176;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:78;a:5:{i:0;s:41:"SELECT * FROM "product_uom" WHERE "id"=23";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1414634445.0001590251922607421875;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:176;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:80;a:5:{i:0;s:46:"SELECT * FROM "product_product" WHERE "id"=586";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1414634445.002172946929931640625;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:178;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:81;a:5:{i:0;s:46:"SELECT * FROM "product_product" WHERE "id"=586";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1414634445.005630970001220703125;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:178;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:83;a:5:{i:0;s:43:"SELECT * FROM "stock_move" WHERE "id"=19775";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1414634445.007318019866943359375;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:253;s:8:"function";s:7:"findOne";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"::";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:84;a:5:{i:0;s:43:"SELECT * FROM "stock_move" WHERE "id"=19775";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1414634445.0136330127716064453125;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:253;s:8:"function";s:7:"findOne";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"::";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:86;a:5:{i:0;s:44:"SELECT * FROM "product_product" WHERE "id"=4";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1414634445.015674114227294921875;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:255;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:87;a:5:{i:0;s:44:"SELECT * FROM "product_product" WHERE "id"=4";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1414634445.0185110569000244140625;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:255;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:89;a:5:{i:0;s:41:"SELECT * FROM "product_uom" WHERE "id"=49";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1414634445.0208480358123779296875;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:255;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:90;a:5:{i:0;s:41:"SELECT * FROM "product_uom" WHERE "id"=49";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1414634445.0232260227203369140625;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:255;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:92;a:5:{i:0;s:43:"SELECT * FROM "stock_move" WHERE "id"=19774";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1414634445.0250051021575927734375;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:253;s:8:"function";s:7:"findOne";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"::";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:93;a:5:{i:0;s:43:"SELECT * FROM "stock_move" WHERE "id"=19774";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1414634445.0287449359893798828125;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:253;s:8:"function";s:7:"findOne";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"::";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:95;a:5:{i:0;s:44:"SELECT * FROM "product_product" WHERE "id"=5";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1414634445.030622959136962890625;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:255;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:96;a:5:{i:0;s:44:"SELECT * FROM "product_product" WHERE "id"=5";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1414634445.033607006072998046875;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:255;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:98;a:5:{i:0;s:41:"SELECT * FROM "product_uom" WHERE "id"=23";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1414634445.0359261035919189453125;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:255;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:99;a:5:{i:0;s:41:"SELECT * FROM "product_uom" WHERE "id"=23";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1414634445.039267063140869140625;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:255;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}}}s:2:"db";a:1:{s:8:"messages";a:58:{i:13;a:5:{i:0;s:1959:"SELECT
+    d.nspname AS table_schema,
+    c.relname AS table_name,
+    a.attname AS column_name,
+    t.typname AS data_type,
+    a.attlen AS character_maximum_length,
+    pg_catalog.col_description(c.oid, a.attnum) AS column_comment,
+    a.atttypmod AS modifier,
+    a.attnotnull = false AS is_nullable,
+    CAST(pg_get_expr(ad.adbin, ad.adrelid) AS varchar) AS column_default,
+    coalesce(pg_get_expr(ad.adbin, ad.adrelid) ~ 'nextval',false) AS is_autoinc,
+    array_to_string((select array_agg(enumlabel) from pg_enum where enumtypid=a.atttypid)::varchar[],',') as enum_values,
+    CASE atttypid
+         WHEN 21 /*int2*/ THEN 16
+         WHEN 23 /*int4*/ THEN 32
+         WHEN 20 /*int8*/ THEN 64
+         WHEN 1700 /*numeric*/ THEN
+              CASE WHEN atttypmod = -1
+               THEN null
+               ELSE ((atttypmod - 4) >> 16) & 65535
+               END
+         WHEN 700 /*float4*/ THEN 24 /*FLT_MANT_DIG*/
+         WHEN 701 /*float8*/ THEN 53 /*DBL_MANT_DIG*/
+         ELSE null
+      END   AS numeric_precision,
+      CASE
+        WHEN atttypid IN (21, 23, 20) THEN 0
+        WHEN atttypid IN (1700) THEN
+        CASE
+            WHEN atttypmod = -1 THEN null
+            ELSE (atttypmod - 4) & 65535
+        END
+           ELSE null
+      END AS numeric_scale,
+    CAST(
+             information_schema._pg_char_max_length(information_schema._pg_truetypid(a, t), information_schema._pg_truetypmod(a, t))
+             AS numeric
+    ) AS size,
+    a.attnum = any (ct.conkey) as is_pkey
+FROM
+    pg_class c
+    LEFT JOIN pg_attribute a ON a.attrelid = c.oid
+    LEFT JOIN pg_attrdef ad ON a.attrelid = ad.adrelid AND a.attnum = ad.adnum
+    LEFT JOIN pg_type t ON a.atttypid = t.oid
+    LEFT JOIN pg_namespace d ON d.oid = c.relnamespace
+    LEFT join pg_constraint ct on ct.conrelid=c.oid and ct.contype='p'
+WHERE
+    a.attnum > 0 and t.typname != ''
+    and c.relname = 'stock_picking'
+    and d.nspname = 'public'
+ORDER BY
+    a.attnum;";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.7981569766998291015625;i:4;a:2:{i:0;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:146;s:8:"function";s:7:"findOne";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"::";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:51;s:8:"function";s:9:"findModel";s:5:"class";s:31:"app\controllers\MovesController";s:4:"type";s:2:"->";}}}i:14;a:5:{i:0;s:1959:"SELECT
+    d.nspname AS table_schema,
+    c.relname AS table_name,
+    a.attname AS column_name,
+    t.typname AS data_type,
+    a.attlen AS character_maximum_length,
+    pg_catalog.col_description(c.oid, a.attnum) AS column_comment,
+    a.atttypmod AS modifier,
+    a.attnotnull = false AS is_nullable,
+    CAST(pg_get_expr(ad.adbin, ad.adrelid) AS varchar) AS column_default,
+    coalesce(pg_get_expr(ad.adbin, ad.adrelid) ~ 'nextval',false) AS is_autoinc,
+    array_to_string((select array_agg(enumlabel) from pg_enum where enumtypid=a.atttypid)::varchar[],',') as enum_values,
+    CASE atttypid
+         WHEN 21 /*int2*/ THEN 16
+         WHEN 23 /*int4*/ THEN 32
+         WHEN 20 /*int8*/ THEN 64
+         WHEN 1700 /*numeric*/ THEN
+              CASE WHEN atttypmod = -1
+               THEN null
+               ELSE ((atttypmod - 4) >> 16) & 65535
+               END
+         WHEN 700 /*float4*/ THEN 24 /*FLT_MANT_DIG*/
+         WHEN 701 /*float8*/ THEN 53 /*DBL_MANT_DIG*/
+         ELSE null
+      END   AS numeric_precision,
+      CASE
+        WHEN atttypid IN (21, 23, 20) THEN 0
+        WHEN atttypid IN (1700) THEN
+        CASE
+            WHEN atttypmod = -1 THEN null
+            ELSE (atttypmod - 4) & 65535
+        END
+           ELSE null
+      END AS numeric_scale,
+    CAST(
+             information_schema._pg_char_max_length(information_schema._pg_truetypid(a, t), information_schema._pg_truetypmod(a, t))
+             AS numeric
+    ) AS size,
+    a.attnum = any (ct.conkey) as is_pkey
+FROM
+    pg_class c
+    LEFT JOIN pg_attribute a ON a.attrelid = c.oid
+    LEFT JOIN pg_attrdef ad ON a.attrelid = ad.adrelid AND a.attnum = ad.adnum
+    LEFT JOIN pg_type t ON a.atttypid = t.oid
+    LEFT JOIN pg_namespace d ON d.oid = c.relnamespace
+    LEFT join pg_constraint ct on ct.conrelid=c.oid and ct.contype='p'
+WHERE
+    a.attnum > 0 and t.typname != ''
+    and c.relname = 'stock_picking'
+    and d.nspname = 'public'
+ORDER BY
+    a.attnum;";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.8152000904083251953125;i:4;a:2:{i:0;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:146;s:8:"function";s:7:"findOne";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"::";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:51;s:8:"function";s:9:"findModel";s:5:"class";s:31:"app\controllers\MovesController";s:4:"type";s:2:"->";}}}i:16;a:5:{i:0;s:678:"select
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.conrelid and attnum = any(ct.conkey)) as columns,
+    fc.relname as foreign_table_name,
+    fns.nspname as foreign_table_schema,
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.confrelid and attnum = any(ct.confkey)) as foreign_columns
+from
+    pg_constraint ct
+    inner join pg_class c on c.oid=ct.conrelid
+    inner join pg_namespace ns on c.relnamespace=ns.oid
+    left join pg_class fc on fc.oid=ct.confrelid
+    left join pg_namespace fns on fc.relnamespace=fns.oid
+
+where
+    ct.contype='f'
+    and c.relname='stock_picking'
+    and ns.nspname='public'";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.8183538913726806640625;i:4;a:2:{i:0;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:146;s:8:"function";s:7:"findOne";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"::";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:51;s:8:"function";s:9:"findModel";s:5:"class";s:31:"app\controllers\MovesController";s:4:"type";s:2:"->";}}}i:17;a:5:{i:0;s:678:"select
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.conrelid and attnum = any(ct.conkey)) as columns,
+    fc.relname as foreign_table_name,
+    fns.nspname as foreign_table_schema,
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.confrelid and attnum = any(ct.confkey)) as foreign_columns
+from
+    pg_constraint ct
+    inner join pg_class c on c.oid=ct.conrelid
+    inner join pg_namespace ns on c.relnamespace=ns.oid
+    left join pg_class fc on fc.oid=ct.confrelid
+    left join pg_namespace fns on fc.relnamespace=fns.oid
+
+where
+    ct.contype='f'
+    and c.relname='stock_picking'
+    and ns.nspname='public'";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.824287891387939453125;i:4;a:2:{i:0;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:146;s:8:"function";s:7:"findOne";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"::";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:51;s:8:"function";s:9:"findModel";s:5:"class";s:31:"app\controllers\MovesController";s:4:"type";s:2:"->";}}}i:19;a:5:{i:0;s:47:"SELECT * FROM "stock_picking" WHERE "id"='5911'";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.8284690380096435546875;i:4;a:2:{i:0;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:146;s:8:"function";s:7:"findOne";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"::";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:51;s:8:"function";s:9:"findModel";s:5:"class";s:31:"app\controllers\MovesController";s:4:"type";s:2:"->";}}}i:20;a:5:{i:0;s:47:"SELECT * FROM "stock_picking" WHERE "id"='5911'";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.83415508270263671875;i:4;a:2:{i:0;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:146;s:8:"function";s:7:"findOne";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"::";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:51;s:8:"function";s:9:"findModel";s:5:"class";s:31:"app\controllers\MovesController";s:4:"type";s:2:"->";}}}i:22;a:5:{i:0;s:50:"SELECT * FROM "stock_move" WHERE "picking_id"=5911";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.8361918926239013671875;i:4;a:1:{i:0;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:55;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}}i:23;a:5:{i:0;s:50:"SELECT * FROM "stock_move" WHERE "picking_id"=5911";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.8429028987884521484375;i:4;a:1:{i:0;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:55;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}}i:25;a:5:{i:0;s:1956:"SELECT
+    d.nspname AS table_schema,
+    c.relname AS table_name,
+    a.attname AS column_name,
+    t.typname AS data_type,
+    a.attlen AS character_maximum_length,
+    pg_catalog.col_description(c.oid, a.attnum) AS column_comment,
+    a.atttypmod AS modifier,
+    a.attnotnull = false AS is_nullable,
+    CAST(pg_get_expr(ad.adbin, ad.adrelid) AS varchar) AS column_default,
+    coalesce(pg_get_expr(ad.adbin, ad.adrelid) ~ 'nextval',false) AS is_autoinc,
+    array_to_string((select array_agg(enumlabel) from pg_enum where enumtypid=a.atttypid)::varchar[],',') as enum_values,
+    CASE atttypid
+         WHEN 21 /*int2*/ THEN 16
+         WHEN 23 /*int4*/ THEN 32
+         WHEN 20 /*int8*/ THEN 64
+         WHEN 1700 /*numeric*/ THEN
+              CASE WHEN atttypmod = -1
+               THEN null
+               ELSE ((atttypmod - 4) >> 16) & 65535
+               END
+         WHEN 700 /*float4*/ THEN 24 /*FLT_MANT_DIG*/
+         WHEN 701 /*float8*/ THEN 53 /*DBL_MANT_DIG*/
+         ELSE null
+      END   AS numeric_precision,
+      CASE
+        WHEN atttypid IN (21, 23, 20) THEN 0
+        WHEN atttypid IN (1700) THEN
+        CASE
+            WHEN atttypmod = -1 THEN null
+            ELSE (atttypmod - 4) & 65535
+        END
+           ELSE null
+      END AS numeric_scale,
+    CAST(
+             information_schema._pg_char_max_length(information_schema._pg_truetypid(a, t), information_schema._pg_truetypmod(a, t))
+             AS numeric
+    ) AS size,
+    a.attnum = any (ct.conkey) as is_pkey
+FROM
+    pg_class c
+    LEFT JOIN pg_attribute a ON a.attrelid = c.oid
+    LEFT JOIN pg_attrdef ad ON a.attrelid = ad.adrelid AND a.attnum = ad.adnum
+    LEFT JOIN pg_type t ON a.atttypid = t.oid
+    LEFT JOIN pg_namespace d ON d.oid = c.relnamespace
+    LEFT join pg_constraint ct on ct.conrelid=c.oid and ct.contype='p'
+WHERE
+    a.attnum > 0 and t.typname != ''
+    and c.relname = 'stock_move'
+    and d.nspname = 'public'
+ORDER BY
+    a.attnum;";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.8447589874267578125;i:4;a:1:{i:0;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:55;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}}i:26;a:5:{i:0;s:1956:"SELECT
+    d.nspname AS table_schema,
+    c.relname AS table_name,
+    a.attname AS column_name,
+    t.typname AS data_type,
+    a.attlen AS character_maximum_length,
+    pg_catalog.col_description(c.oid, a.attnum) AS column_comment,
+    a.atttypmod AS modifier,
+    a.attnotnull = false AS is_nullable,
+    CAST(pg_get_expr(ad.adbin, ad.adrelid) AS varchar) AS column_default,
+    coalesce(pg_get_expr(ad.adbin, ad.adrelid) ~ 'nextval',false) AS is_autoinc,
+    array_to_string((select array_agg(enumlabel) from pg_enum where enumtypid=a.atttypid)::varchar[],',') as enum_values,
+    CASE atttypid
+         WHEN 21 /*int2*/ THEN 16
+         WHEN 23 /*int4*/ THEN 32
+         WHEN 20 /*int8*/ THEN 64
+         WHEN 1700 /*numeric*/ THEN
+              CASE WHEN atttypmod = -1
+               THEN null
+               ELSE ((atttypmod - 4) >> 16) & 65535
+               END
+         WHEN 700 /*float4*/ THEN 24 /*FLT_MANT_DIG*/
+         WHEN 701 /*float8*/ THEN 53 /*DBL_MANT_DIG*/
+         ELSE null
+      END   AS numeric_precision,
+      CASE
+        WHEN atttypid IN (21, 23, 20) THEN 0
+        WHEN atttypid IN (1700) THEN
+        CASE
+            WHEN atttypmod = -1 THEN null
+            ELSE (atttypmod - 4) & 65535
+        END
+           ELSE null
+      END AS numeric_scale,
+    CAST(
+             information_schema._pg_char_max_length(information_schema._pg_truetypid(a, t), information_schema._pg_truetypmod(a, t))
+             AS numeric
+    ) AS size,
+    a.attnum = any (ct.conkey) as is_pkey
+FROM
+    pg_class c
+    LEFT JOIN pg_attribute a ON a.attrelid = c.oid
+    LEFT JOIN pg_attrdef ad ON a.attrelid = ad.adrelid AND a.attnum = ad.adnum
+    LEFT JOIN pg_type t ON a.atttypid = t.oid
+    LEFT JOIN pg_namespace d ON d.oid = c.relnamespace
+    LEFT join pg_constraint ct on ct.conrelid=c.oid and ct.contype='p'
+WHERE
+    a.attnum > 0 and t.typname != ''
+    and c.relname = 'stock_move'
+    and d.nspname = 'public'
+ORDER BY
+    a.attnum;";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.8566319942474365234375;i:4;a:1:{i:0;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:55;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}}i:28;a:5:{i:0;s:675:"select
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.conrelid and attnum = any(ct.conkey)) as columns,
+    fc.relname as foreign_table_name,
+    fns.nspname as foreign_table_schema,
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.confrelid and attnum = any(ct.confkey)) as foreign_columns
+from
+    pg_constraint ct
+    inner join pg_class c on c.oid=ct.conrelid
+    inner join pg_namespace ns on c.relnamespace=ns.oid
+    left join pg_class fc on fc.oid=ct.confrelid
+    left join pg_namespace fns on fc.relnamespace=fns.oid
+
+where
+    ct.contype='f'
+    and c.relname='stock_move'
+    and ns.nspname='public'";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.8583629131317138671875;i:4;a:1:{i:0;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:55;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}}i:29;a:5:{i:0;s:675:"select
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.conrelid and attnum = any(ct.conkey)) as columns,
+    fc.relname as foreign_table_name,
+    fns.nspname as foreign_table_schema,
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.confrelid and attnum = any(ct.confkey)) as foreign_columns
+from
+    pg_constraint ct
+    inner join pg_class c on c.oid=ct.conrelid
+    inner join pg_namespace ns on c.relnamespace=ns.oid
+    left join pg_class fc on fc.oid=ct.confrelid
+    left join pg_namespace fns on fc.relnamespace=fns.oid
+
+where
+    ct.contype='f'
+    and c.relname='stock_move'
+    and ns.nspname='public'";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.8646709918975830078125;i:4;a:1:{i:0;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:55;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}}i:31;a:5:{i:0;s:44:"SELECT * FROM "stock_location" WHERE "id"=14";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.86701488494873046875;i:4;a:1:{i:0;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:57;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}}i:32;a:5:{i:0;s:44:"SELECT * FROM "stock_location" WHERE "id"=14";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.8708670139312744140625;i:4;a:1:{i:0;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:57;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}}i:34;a:5:{i:0;s:1960:"SELECT
+    d.nspname AS table_schema,
+    c.relname AS table_name,
+    a.attname AS column_name,
+    t.typname AS data_type,
+    a.attlen AS character_maximum_length,
+    pg_catalog.col_description(c.oid, a.attnum) AS column_comment,
+    a.atttypmod AS modifier,
+    a.attnotnull = false AS is_nullable,
+    CAST(pg_get_expr(ad.adbin, ad.adrelid) AS varchar) AS column_default,
+    coalesce(pg_get_expr(ad.adbin, ad.adrelid) ~ 'nextval',false) AS is_autoinc,
+    array_to_string((select array_agg(enumlabel) from pg_enum where enumtypid=a.atttypid)::varchar[],',') as enum_values,
+    CASE atttypid
+         WHEN 21 /*int2*/ THEN 16
+         WHEN 23 /*int4*/ THEN 32
+         WHEN 20 /*int8*/ THEN 64
+         WHEN 1700 /*numeric*/ THEN
+              CASE WHEN atttypmod = -1
+               THEN null
+               ELSE ((atttypmod - 4) >> 16) & 65535
+               END
+         WHEN 700 /*float4*/ THEN 24 /*FLT_MANT_DIG*/
+         WHEN 701 /*float8*/ THEN 53 /*DBL_MANT_DIG*/
+         ELSE null
+      END   AS numeric_precision,
+      CASE
+        WHEN atttypid IN (21, 23, 20) THEN 0
+        WHEN atttypid IN (1700) THEN
+        CASE
+            WHEN atttypmod = -1 THEN null
+            ELSE (atttypmod - 4) & 65535
+        END
+           ELSE null
+      END AS numeric_scale,
+    CAST(
+             information_schema._pg_char_max_length(information_schema._pg_truetypid(a, t), information_schema._pg_truetypmod(a, t))
+             AS numeric
+    ) AS size,
+    a.attnum = any (ct.conkey) as is_pkey
+FROM
+    pg_class c
+    LEFT JOIN pg_attribute a ON a.attrelid = c.oid
+    LEFT JOIN pg_attrdef ad ON a.attrelid = ad.adrelid AND a.attnum = ad.adnum
+    LEFT JOIN pg_type t ON a.atttypid = t.oid
+    LEFT JOIN pg_namespace d ON d.oid = c.relnamespace
+    LEFT join pg_constraint ct on ct.conrelid=c.oid and ct.contype='p'
+WHERE
+    a.attnum > 0 and t.typname != ''
+    and c.relname = 'stock_location'
+    and d.nspname = 'public'
+ORDER BY
+    a.attnum;";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.8732221126556396484375;i:4;a:1:{i:0;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:57;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}}i:35;a:5:{i:0;s:1960:"SELECT
+    d.nspname AS table_schema,
+    c.relname AS table_name,
+    a.attname AS column_name,
+    t.typname AS data_type,
+    a.attlen AS character_maximum_length,
+    pg_catalog.col_description(c.oid, a.attnum) AS column_comment,
+    a.atttypmod AS modifier,
+    a.attnotnull = false AS is_nullable,
+    CAST(pg_get_expr(ad.adbin, ad.adrelid) AS varchar) AS column_default,
+    coalesce(pg_get_expr(ad.adbin, ad.adrelid) ~ 'nextval',false) AS is_autoinc,
+    array_to_string((select array_agg(enumlabel) from pg_enum where enumtypid=a.atttypid)::varchar[],',') as enum_values,
+    CASE atttypid
+         WHEN 21 /*int2*/ THEN 16
+         WHEN 23 /*int4*/ THEN 32
+         WHEN 20 /*int8*/ THEN 64
+         WHEN 1700 /*numeric*/ THEN
+              CASE WHEN atttypmod = -1
+               THEN null
+               ELSE ((atttypmod - 4) >> 16) & 65535
+               END
+         WHEN 700 /*float4*/ THEN 24 /*FLT_MANT_DIG*/
+         WHEN 701 /*float8*/ THEN 53 /*DBL_MANT_DIG*/
+         ELSE null
+      END   AS numeric_precision,
+      CASE
+        WHEN atttypid IN (21, 23, 20) THEN 0
+        WHEN atttypid IN (1700) THEN
+        CASE
+            WHEN atttypmod = -1 THEN null
+            ELSE (atttypmod - 4) & 65535
+        END
+           ELSE null
+      END AS numeric_scale,
+    CAST(
+             information_schema._pg_char_max_length(information_schema._pg_truetypid(a, t), information_schema._pg_truetypmod(a, t))
+             AS numeric
+    ) AS size,
+    a.attnum = any (ct.conkey) as is_pkey
+FROM
+    pg_class c
+    LEFT JOIN pg_attribute a ON a.attrelid = c.oid
+    LEFT JOIN pg_attrdef ad ON a.attrelid = ad.adrelid AND a.attnum = ad.adnum
+    LEFT JOIN pg_type t ON a.atttypid = t.oid
+    LEFT JOIN pg_namespace d ON d.oid = c.relnamespace
+    LEFT join pg_constraint ct on ct.conrelid=c.oid and ct.contype='p'
+WHERE
+    a.attnum > 0 and t.typname != ''
+    and c.relname = 'stock_location'
+    and d.nspname = 'public'
+ORDER BY
+    a.attnum;";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.8830509185791015625;i:4;a:1:{i:0;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:57;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}}i:37;a:5:{i:0;s:679:"select
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.conrelid and attnum = any(ct.conkey)) as columns,
+    fc.relname as foreign_table_name,
+    fns.nspname as foreign_table_schema,
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.confrelid and attnum = any(ct.confkey)) as foreign_columns
+from
+    pg_constraint ct
+    inner join pg_class c on c.oid=ct.conrelid
+    inner join pg_namespace ns on c.relnamespace=ns.oid
+    left join pg_class fc on fc.oid=ct.confrelid
+    left join pg_namespace fns on fc.relnamespace=fns.oid
+
+where
+    ct.contype='f'
+    and c.relname='stock_location'
+    and ns.nspname='public'";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.885714054107666015625;i:4;a:1:{i:0;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:57;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}}i:38;a:5:{i:0;s:679:"select
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.conrelid and attnum = any(ct.conkey)) as columns,
+    fc.relname as foreign_table_name,
+    fns.nspname as foreign_table_schema,
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.confrelid and attnum = any(ct.confkey)) as foreign_columns
+from
+    pg_constraint ct
+    inner join pg_class c on c.oid=ct.conrelid
+    inner join pg_namespace ns on c.relnamespace=ns.oid
+    left join pg_class fc on fc.oid=ct.confrelid
+    left join pg_namespace fns on fc.relnamespace=fns.oid
+
+where
+    ct.contype='f'
+    and c.relname='stock_location'
+    and ns.nspname='public'";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.8934109210968017578125;i:4;a:1:{i:0;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:57;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}}}i:40;a:5:{i:0;s:44:"SELECT * FROM "stock_location" WHERE "id"=14";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.8952438831329345703125;i:4;a:1:{i:0;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:69;s:8:"function";s:7:"findOne";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"::";}}}i:41;a:5:{i:0;s:44:"SELECT * FROM "stock_location" WHERE "id"=14";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.898994922637939453125;i:4;a:1:{i:0;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:69;s:8:"function";s:7:"findOne";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"::";}}}i:44;a:5:{i:0;s:42:"SELECT * FROM "move_set_data" WHERE "id"=1";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.9066760540008544921875;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:154;s:8:"function";s:7:"__isset";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:45;a:5:{i:0;s:42:"SELECT * FROM "move_set_data" WHERE "id"=1";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.9117929935455322265625;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:154;s:8:"function";s:7:"__isset";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:47;a:5:{i:0;s:1959:"SELECT
+    d.nspname AS table_schema,
+    c.relname AS table_name,
+    a.attname AS column_name,
+    t.typname AS data_type,
+    a.attlen AS character_maximum_length,
+    pg_catalog.col_description(c.oid, a.attnum) AS column_comment,
+    a.atttypmod AS modifier,
+    a.attnotnull = false AS is_nullable,
+    CAST(pg_get_expr(ad.adbin, ad.adrelid) AS varchar) AS column_default,
+    coalesce(pg_get_expr(ad.adbin, ad.adrelid) ~ 'nextval',false) AS is_autoinc,
+    array_to_string((select array_agg(enumlabel) from pg_enum where enumtypid=a.atttypid)::varchar[],',') as enum_values,
+    CASE atttypid
+         WHEN 21 /*int2*/ THEN 16
+         WHEN 23 /*int4*/ THEN 32
+         WHEN 20 /*int8*/ THEN 64
+         WHEN 1700 /*numeric*/ THEN
+              CASE WHEN atttypmod = -1
+               THEN null
+               ELSE ((atttypmod - 4) >> 16) & 65535
+               END
+         WHEN 700 /*float4*/ THEN 24 /*FLT_MANT_DIG*/
+         WHEN 701 /*float8*/ THEN 53 /*DBL_MANT_DIG*/
+         ELSE null
+      END   AS numeric_precision,
+      CASE
+        WHEN atttypid IN (21, 23, 20) THEN 0
+        WHEN atttypid IN (1700) THEN
+        CASE
+            WHEN atttypmod = -1 THEN null
+            ELSE (atttypmod - 4) & 65535
+        END
+           ELSE null
+      END AS numeric_scale,
+    CAST(
+             information_schema._pg_char_max_length(information_schema._pg_truetypid(a, t), information_schema._pg_truetypmod(a, t))
+             AS numeric
+    ) AS size,
+    a.attnum = any (ct.conkey) as is_pkey
+FROM
+    pg_class c
+    LEFT JOIN pg_attribute a ON a.attrelid = c.oid
+    LEFT JOIN pg_attrdef ad ON a.attrelid = ad.adrelid AND a.attnum = ad.adnum
+    LEFT JOIN pg_type t ON a.atttypid = t.oid
+    LEFT JOIN pg_namespace d ON d.oid = c.relnamespace
+    LEFT join pg_constraint ct on ct.conrelid=c.oid and ct.contype='p'
+WHERE
+    a.attnum > 0 and t.typname != ''
+    and c.relname = 'move_set_data'
+    and d.nspname = 'public'
+ORDER BY
+    a.attnum;";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.9135720729827880859375;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:154;s:8:"function";s:7:"__isset";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:48;a:5:{i:0;s:1959:"SELECT
+    d.nspname AS table_schema,
+    c.relname AS table_name,
+    a.attname AS column_name,
+    t.typname AS data_type,
+    a.attlen AS character_maximum_length,
+    pg_catalog.col_description(c.oid, a.attnum) AS column_comment,
+    a.atttypmod AS modifier,
+    a.attnotnull = false AS is_nullable,
+    CAST(pg_get_expr(ad.adbin, ad.adrelid) AS varchar) AS column_default,
+    coalesce(pg_get_expr(ad.adbin, ad.adrelid) ~ 'nextval',false) AS is_autoinc,
+    array_to_string((select array_agg(enumlabel) from pg_enum where enumtypid=a.atttypid)::varchar[],',') as enum_values,
+    CASE atttypid
+         WHEN 21 /*int2*/ THEN 16
+         WHEN 23 /*int4*/ THEN 32
+         WHEN 20 /*int8*/ THEN 64
+         WHEN 1700 /*numeric*/ THEN
+              CASE WHEN atttypmod = -1
+               THEN null
+               ELSE ((atttypmod - 4) >> 16) & 65535
+               END
+         WHEN 700 /*float4*/ THEN 24 /*FLT_MANT_DIG*/
+         WHEN 701 /*float8*/ THEN 53 /*DBL_MANT_DIG*/
+         ELSE null
+      END   AS numeric_precision,
+      CASE
+        WHEN atttypid IN (21, 23, 20) THEN 0
+        WHEN atttypid IN (1700) THEN
+        CASE
+            WHEN atttypmod = -1 THEN null
+            ELSE (atttypmod - 4) & 65535
+        END
+           ELSE null
+      END AS numeric_scale,
+    CAST(
+             information_schema._pg_char_max_length(information_schema._pg_truetypid(a, t), information_schema._pg_truetypmod(a, t))
+             AS numeric
+    ) AS size,
+    a.attnum = any (ct.conkey) as is_pkey
+FROM
+    pg_class c
+    LEFT JOIN pg_attribute a ON a.attrelid = c.oid
+    LEFT JOIN pg_attrdef ad ON a.attrelid = ad.adrelid AND a.attnum = ad.adnum
+    LEFT JOIN pg_type t ON a.atttypid = t.oid
+    LEFT JOIN pg_namespace d ON d.oid = c.relnamespace
+    LEFT join pg_constraint ct on ct.conrelid=c.oid and ct.contype='p'
+WHERE
+    a.attnum > 0 and t.typname != ''
+    and c.relname = 'move_set_data'
+    and d.nspname = 'public'
+ORDER BY
+    a.attnum;";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.922710895538330078125;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:154;s:8:"function";s:7:"__isset";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:50;a:5:{i:0;s:678:"select
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.conrelid and attnum = any(ct.conkey)) as columns,
+    fc.relname as foreign_table_name,
+    fns.nspname as foreign_table_schema,
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.confrelid and attnum = any(ct.confkey)) as foreign_columns
+from
+    pg_constraint ct
+    inner join pg_class c on c.oid=ct.conrelid
+    inner join pg_namespace ns on c.relnamespace=ns.oid
+    left join pg_class fc on fc.oid=ct.confrelid
+    left join pg_namespace fns on fc.relnamespace=fns.oid
+
+where
+    ct.contype='f'
+    and c.relname='move_set_data'
+    and ns.nspname='public'";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.9246919155120849609375;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:154;s:8:"function";s:7:"__isset";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:51;a:5:{i:0;s:678:"select
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.conrelid and attnum = any(ct.conkey)) as columns,
+    fc.relname as foreign_table_name,
+    fns.nspname as foreign_table_schema,
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.confrelid and attnum = any(ct.confkey)) as foreign_columns
+from
+    pg_constraint ct
+    inner join pg_class c on c.oid=ct.conrelid
+    inner join pg_namespace ns on c.relnamespace=ns.oid
+    left join pg_class fc on fc.oid=ct.confrelid
+    left join pg_namespace fns on fc.relnamespace=fns.oid
+
+where
+    ct.contype='f'
+    and c.relname='move_set_data'
+    and ns.nspname='public'";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.929543972015380859375;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:154;s:8:"function";s:7:"__isset";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:53;a:5:{i:0;s:40:"SELECT * FROM "product_uom" WHERE "id"=1";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.9329950809478759765625;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:158;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:54;a:5:{i:0;s:40:"SELECT * FROM "product_uom" WHERE "id"=1";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.93721103668212890625;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:158;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:56;a:5:{i:0;s:1957:"SELECT
+    d.nspname AS table_schema,
+    c.relname AS table_name,
+    a.attname AS column_name,
+    t.typname AS data_type,
+    a.attlen AS character_maximum_length,
+    pg_catalog.col_description(c.oid, a.attnum) AS column_comment,
+    a.atttypmod AS modifier,
+    a.attnotnull = false AS is_nullable,
+    CAST(pg_get_expr(ad.adbin, ad.adrelid) AS varchar) AS column_default,
+    coalesce(pg_get_expr(ad.adbin, ad.adrelid) ~ 'nextval',false) AS is_autoinc,
+    array_to_string((select array_agg(enumlabel) from pg_enum where enumtypid=a.atttypid)::varchar[],',') as enum_values,
+    CASE atttypid
+         WHEN 21 /*int2*/ THEN 16
+         WHEN 23 /*int4*/ THEN 32
+         WHEN 20 /*int8*/ THEN 64
+         WHEN 1700 /*numeric*/ THEN
+              CASE WHEN atttypmod = -1
+               THEN null
+               ELSE ((atttypmod - 4) >> 16) & 65535
+               END
+         WHEN 700 /*float4*/ THEN 24 /*FLT_MANT_DIG*/
+         WHEN 701 /*float8*/ THEN 53 /*DBL_MANT_DIG*/
+         ELSE null
+      END   AS numeric_precision,
+      CASE
+        WHEN atttypid IN (21, 23, 20) THEN 0
+        WHEN atttypid IN (1700) THEN
+        CASE
+            WHEN atttypmod = -1 THEN null
+            ELSE (atttypmod - 4) & 65535
+        END
+           ELSE null
+      END AS numeric_scale,
+    CAST(
+             information_schema._pg_char_max_length(information_schema._pg_truetypid(a, t), information_schema._pg_truetypmod(a, t))
+             AS numeric
+    ) AS size,
+    a.attnum = any (ct.conkey) as is_pkey
+FROM
+    pg_class c
+    LEFT JOIN pg_attribute a ON a.attrelid = c.oid
+    LEFT JOIN pg_attrdef ad ON a.attrelid = ad.adrelid AND a.attnum = ad.adnum
+    LEFT JOIN pg_type t ON a.atttypid = t.oid
+    LEFT JOIN pg_namespace d ON d.oid = c.relnamespace
+    LEFT join pg_constraint ct on ct.conrelid=c.oid and ct.contype='p'
+WHERE
+    a.attnum > 0 and t.typname != ''
+    and c.relname = 'product_uom'
+    and d.nspname = 'public'
+ORDER BY
+    a.attnum;";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.939054965972900390625;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:158;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:57;a:5:{i:0;s:1957:"SELECT
+    d.nspname AS table_schema,
+    c.relname AS table_name,
+    a.attname AS column_name,
+    t.typname AS data_type,
+    a.attlen AS character_maximum_length,
+    pg_catalog.col_description(c.oid, a.attnum) AS column_comment,
+    a.atttypmod AS modifier,
+    a.attnotnull = false AS is_nullable,
+    CAST(pg_get_expr(ad.adbin, ad.adrelid) AS varchar) AS column_default,
+    coalesce(pg_get_expr(ad.adbin, ad.adrelid) ~ 'nextval',false) AS is_autoinc,
+    array_to_string((select array_agg(enumlabel) from pg_enum where enumtypid=a.atttypid)::varchar[],',') as enum_values,
+    CASE atttypid
+         WHEN 21 /*int2*/ THEN 16
+         WHEN 23 /*int4*/ THEN 32
+         WHEN 20 /*int8*/ THEN 64
+         WHEN 1700 /*numeric*/ THEN
+              CASE WHEN atttypmod = -1
+               THEN null
+               ELSE ((atttypmod - 4) >> 16) & 65535
+               END
+         WHEN 700 /*float4*/ THEN 24 /*FLT_MANT_DIG*/
+         WHEN 701 /*float8*/ THEN 53 /*DBL_MANT_DIG*/
+         ELSE null
+      END   AS numeric_precision,
+      CASE
+        WHEN atttypid IN (21, 23, 20) THEN 0
+        WHEN atttypid IN (1700) THEN
+        CASE
+            WHEN atttypmod = -1 THEN null
+            ELSE (atttypmod - 4) & 65535
+        END
+           ELSE null
+      END AS numeric_scale,
+    CAST(
+             information_schema._pg_char_max_length(information_schema._pg_truetypid(a, t), information_schema._pg_truetypmod(a, t))
+             AS numeric
+    ) AS size,
+    a.attnum = any (ct.conkey) as is_pkey
+FROM
+    pg_class c
+    LEFT JOIN pg_attribute a ON a.attrelid = c.oid
+    LEFT JOIN pg_attrdef ad ON a.attrelid = ad.adrelid AND a.attnum = ad.adnum
+    LEFT JOIN pg_type t ON a.atttypid = t.oid
+    LEFT JOIN pg_namespace d ON d.oid = c.relnamespace
+    LEFT join pg_constraint ct on ct.conrelid=c.oid and ct.contype='p'
+WHERE
+    a.attnum > 0 and t.typname != ''
+    and c.relname = 'product_uom'
+    and d.nspname = 'public'
+ORDER BY
+    a.attnum;";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.9478271007537841796875;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:158;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:59;a:5:{i:0;s:676:"select
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.conrelid and attnum = any(ct.conkey)) as columns,
+    fc.relname as foreign_table_name,
+    fns.nspname as foreign_table_schema,
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.confrelid and attnum = any(ct.confkey)) as foreign_columns
+from
+    pg_constraint ct
+    inner join pg_class c on c.oid=ct.conrelid
+    inner join pg_namespace ns on c.relnamespace=ns.oid
+    left join pg_class fc on fc.oid=ct.confrelid
+    left join pg_namespace fns on fc.relnamespace=fns.oid
+
+where
+    ct.contype='f'
+    and c.relname='product_uom'
+    and ns.nspname='public'";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.9497439861297607421875;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:158;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:60;a:5:{i:0;s:676:"select
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.conrelid and attnum = any(ct.conkey)) as columns,
+    fc.relname as foreign_table_name,
+    fns.nspname as foreign_table_schema,
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.confrelid and attnum = any(ct.confkey)) as foreign_columns
+from
+    pg_constraint ct
+    inner join pg_class c on c.oid=ct.conrelid
+    inner join pg_namespace ns on c.relnamespace=ns.oid
+    left join pg_class fc on fc.oid=ct.confrelid
+    left join pg_namespace fns on fc.relnamespace=fns.oid
+
+where
+    ct.contype='f'
+    and c.relname='product_uom'
+    and ns.nspname='public'";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.956367015838623046875;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:158;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:62;a:5:{i:0;s:47:"SELECT * FROM "product_product" WHERE "id"=8892";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.95969104766845703125;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:161;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:63;a:5:{i:0;s:47:"SELECT * FROM "product_product" WHERE "id"=8892";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.9640600681304931640625;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:161;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:65;a:5:{i:0;s:1961:"SELECT
+    d.nspname AS table_schema,
+    c.relname AS table_name,
+    a.attname AS column_name,
+    t.typname AS data_type,
+    a.attlen AS character_maximum_length,
+    pg_catalog.col_description(c.oid, a.attnum) AS column_comment,
+    a.atttypmod AS modifier,
+    a.attnotnull = false AS is_nullable,
+    CAST(pg_get_expr(ad.adbin, ad.adrelid) AS varchar) AS column_default,
+    coalesce(pg_get_expr(ad.adbin, ad.adrelid) ~ 'nextval',false) AS is_autoinc,
+    array_to_string((select array_agg(enumlabel) from pg_enum where enumtypid=a.atttypid)::varchar[],',') as enum_values,
+    CASE atttypid
+         WHEN 21 /*int2*/ THEN 16
+         WHEN 23 /*int4*/ THEN 32
+         WHEN 20 /*int8*/ THEN 64
+         WHEN 1700 /*numeric*/ THEN
+              CASE WHEN atttypmod = -1
+               THEN null
+               ELSE ((atttypmod - 4) >> 16) & 65535
+               END
+         WHEN 700 /*float4*/ THEN 24 /*FLT_MANT_DIG*/
+         WHEN 701 /*float8*/ THEN 53 /*DBL_MANT_DIG*/
+         ELSE null
+      END   AS numeric_precision,
+      CASE
+        WHEN atttypid IN (21, 23, 20) THEN 0
+        WHEN atttypid IN (1700) THEN
+        CASE
+            WHEN atttypmod = -1 THEN null
+            ELSE (atttypmod - 4) & 65535
+        END
+           ELSE null
+      END AS numeric_scale,
+    CAST(
+             information_schema._pg_char_max_length(information_schema._pg_truetypid(a, t), information_schema._pg_truetypmod(a, t))
+             AS numeric
+    ) AS size,
+    a.attnum = any (ct.conkey) as is_pkey
+FROM
+    pg_class c
+    LEFT JOIN pg_attribute a ON a.attrelid = c.oid
+    LEFT JOIN pg_attrdef ad ON a.attrelid = ad.adrelid AND a.attnum = ad.adnum
+    LEFT JOIN pg_type t ON a.atttypid = t.oid
+    LEFT JOIN pg_namespace d ON d.oid = c.relnamespace
+    LEFT join pg_constraint ct on ct.conrelid=c.oid and ct.contype='p'
+WHERE
+    a.attnum > 0 and t.typname != ''
+    and c.relname = 'product_product'
+    and d.nspname = 'public'
+ORDER BY
+    a.attnum;";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.96603488922119140625;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:161;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:66;a:5:{i:0;s:1961:"SELECT
+    d.nspname AS table_schema,
+    c.relname AS table_name,
+    a.attname AS column_name,
+    t.typname AS data_type,
+    a.attlen AS character_maximum_length,
+    pg_catalog.col_description(c.oid, a.attnum) AS column_comment,
+    a.atttypmod AS modifier,
+    a.attnotnull = false AS is_nullable,
+    CAST(pg_get_expr(ad.adbin, ad.adrelid) AS varchar) AS column_default,
+    coalesce(pg_get_expr(ad.adbin, ad.adrelid) ~ 'nextval',false) AS is_autoinc,
+    array_to_string((select array_agg(enumlabel) from pg_enum where enumtypid=a.atttypid)::varchar[],',') as enum_values,
+    CASE atttypid
+         WHEN 21 /*int2*/ THEN 16
+         WHEN 23 /*int4*/ THEN 32
+         WHEN 20 /*int8*/ THEN 64
+         WHEN 1700 /*numeric*/ THEN
+              CASE WHEN atttypmod = -1
+               THEN null
+               ELSE ((atttypmod - 4) >> 16) & 65535
+               END
+         WHEN 700 /*float4*/ THEN 24 /*FLT_MANT_DIG*/
+         WHEN 701 /*float8*/ THEN 53 /*DBL_MANT_DIG*/
+         ELSE null
+      END   AS numeric_precision,
+      CASE
+        WHEN atttypid IN (21, 23, 20) THEN 0
+        WHEN atttypid IN (1700) THEN
+        CASE
+            WHEN atttypmod = -1 THEN null
+            ELSE (atttypmod - 4) & 65535
+        END
+           ELSE null
+      END AS numeric_scale,
+    CAST(
+             information_schema._pg_char_max_length(information_schema._pg_truetypid(a, t), information_schema._pg_truetypmod(a, t))
+             AS numeric
+    ) AS size,
+    a.attnum = any (ct.conkey) as is_pkey
+FROM
+    pg_class c
+    LEFT JOIN pg_attribute a ON a.attrelid = c.oid
+    LEFT JOIN pg_attrdef ad ON a.attrelid = ad.adrelid AND a.attnum = ad.adnum
+    LEFT JOIN pg_type t ON a.atttypid = t.oid
+    LEFT JOIN pg_namespace d ON d.oid = c.relnamespace
+    LEFT join pg_constraint ct on ct.conrelid=c.oid and ct.contype='p'
+WHERE
+    a.attnum > 0 and t.typname != ''
+    and c.relname = 'product_product'
+    and d.nspname = 'public'
+ORDER BY
+    a.attnum;";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.975966930389404296875;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:161;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:68;a:5:{i:0;s:680:"select
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.conrelid and attnum = any(ct.conkey)) as columns,
+    fc.relname as foreign_table_name,
+    fns.nspname as foreign_table_schema,
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.confrelid and attnum = any(ct.confkey)) as foreign_columns
+from
+    pg_constraint ct
+    inner join pg_class c on c.oid=ct.conrelid
+    inner join pg_namespace ns on c.relnamespace=ns.oid
+    left join pg_class fc on fc.oid=ct.confrelid
+    left join pg_namespace fns on fc.relnamespace=fns.oid
+
+where
+    ct.contype='f'
+    and c.relname='product_product'
+    and ns.nspname='public'";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.97815608978271484375;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:161;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:69;a:5:{i:0;s:680:"select
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.conrelid and attnum = any(ct.conkey)) as columns,
+    fc.relname as foreign_table_name,
+    fns.nspname as foreign_table_schema,
+    (select string_agg(attname,',') attname from pg_attribute where attrelid=ct.confrelid and attnum = any(ct.confkey)) as foreign_columns
+from
+    pg_constraint ct
+    inner join pg_class c on c.oid=ct.conrelid
+    inner join pg_namespace ns on c.relnamespace=ns.oid
+    left join pg_class fc on fc.oid=ct.confrelid
+    left join pg_namespace fns on fc.relnamespace=fns.oid
+
+where
+    ct.contype='f'
+    and c.relname='product_product'
+    and ns.nspname='public'";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.9837639331817626953125;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:161;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:71;a:5:{i:0;s:42:"SELECT * FROM "move_set_data" WHERE "id"=1";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.986752033233642578125;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:154;s:8:"function";s:7:"__isset";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:72;a:5:{i:0;s:42:"SELECT * FROM "move_set_data" WHERE "id"=1";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.99040508270263671875;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:154;s:8:"function";s:7:"__isset";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:74;a:5:{i:0;s:39:"SELECT * FROM "move_set_data" WHERE 0=1";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.992559909820556640625;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:154;s:8:"function";s:7:"__isset";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:75;a:5:{i:0;s:39:"SELECT * FROM "move_set_data" WHERE 0=1";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.9951460361480712890625;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:154;s:8:"function";s:7:"__isset";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:77;a:5:{i:0;s:41:"SELECT * FROM "product_uom" WHERE "id"=23";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1414634444.997025966644287109375;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:176;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:78;a:5:{i:0;s:41:"SELECT * FROM "product_uom" WHERE "id"=23";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1414634445.0001590251922607421875;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:176;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:80;a:5:{i:0;s:46:"SELECT * FROM "product_product" WHERE "id"=586";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1414634445.002172946929931640625;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:178;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:81;a:5:{i:0;s:46:"SELECT * FROM "product_product" WHERE "id"=586";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1414634445.005630970001220703125;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:178;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:83;a:5:{i:0;s:43:"SELECT * FROM "stock_move" WHERE "id"=19775";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1414634445.007318019866943359375;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:253;s:8:"function";s:7:"findOne";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"::";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:84;a:5:{i:0;s:43:"SELECT * FROM "stock_move" WHERE "id"=19775";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1414634445.0136330127716064453125;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:253;s:8:"function";s:7:"findOne";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"::";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:86;a:5:{i:0;s:44:"SELECT * FROM "product_product" WHERE "id"=4";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1414634445.015674114227294921875;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:255;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:87;a:5:{i:0;s:44:"SELECT * FROM "product_product" WHERE "id"=4";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1414634445.0185110569000244140625;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:255;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:89;a:5:{i:0;s:41:"SELECT * FROM "product_uom" WHERE "id"=49";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1414634445.0208480358123779296875;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:255;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:90;a:5:{i:0;s:41:"SELECT * FROM "product_uom" WHERE "id"=49";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1414634445.0232260227203369140625;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:255;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:92;a:5:{i:0;s:43:"SELECT * FROM "stock_move" WHERE "id"=19774";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1414634445.0250051021575927734375;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:253;s:8:"function";s:7:"findOne";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"::";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:93;a:5:{i:0;s:43:"SELECT * FROM "stock_move" WHERE "id"=19774";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1414634445.0287449359893798828125;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:253;s:8:"function";s:7:"findOne";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"::";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:95;a:5:{i:0;s:44:"SELECT * FROM "product_product" WHERE "id"=5";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1414634445.030622959136962890625;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:255;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:96;a:5:{i:0;s:44:"SELECT * FROM "product_product" WHERE "id"=5";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1414634445.033607006072998046875;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:255;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:98;a:5:{i:0;s:41:"SELECT * FROM "product_uom" WHERE "id"=23";i:1;i:80;i:2;s:21:"yii\db\Command::query";i:3;d:1414634445.0359261035919189453125;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:255;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}i:99;a:5:{i:0;s:41:"SELECT * FROM "product_uom" WHERE "id"=23";i:1;i:96;i:2;s:21:"yii\db\Command::query";i:3;d:1414634445.039267063140869140625;i:4;a:2:{i:0;a:5:{s:4:"file";s:54:"C:\xampp\htdocs\OpenERP-Services\views\moves\print.php";s:4:"line";i:255;s:8:"function";s:5:"__get";s:5:"class";s:23:"yii\db\BaseActiveRecord";s:4:"type";s:2:"->";}i:1;a:5:{s:4:"file";s:64:"C:\xampp\htdocs\OpenERP-Services\controllers\MovesController.php";s:4:"line";i:72;s:8:"function";s:6:"render";s:5:"class";s:19:"yii\base\Controller";s:4:"type";s:2:"->";}}}}}s:6:"assets";a:1:{s:19:"yii\web\JqueryAsset";a:9:{s:10:"sourcePath";s:57:"C:\xampp\htdocs\OpenERP-Services\vendor\bower/jquery/dist";s:2:"js";a:1:{i:0;s:9:"jquery.js";}s:8:"basePath";s:52:"C:\xampp\htdocs\OpenERP-Services\web\assets\f672065c";s:7:"baseUrl";s:37:"/OpenERP-Services/web/assets/f672065c";s:7:"depends";a:0:{}s:3:"css";a:0:{}s:9:"jsOptions";a:0:{}s:10:"cssOptions";a:0:{}s:14:"publishOptions";a:0:{}}}s:4:"mail";a:0:{}s:7:"summary";a:9:{s:3:"tag";s:13:"54519bccbbe48";s:3:"url";s:69:"http://localhost/OpenERP-Services/web/index.php?r=moves/print&id=5911";s:4:"ajax";i:0;s:6:"method";s:3:"GET";s:2:"ip";s:3:"::1";s:4:"time";i:1414634445;s:10:"statusCode";i:200;s:8:"sqlCount";i:29;s:9:"mailCount";i:0;}}

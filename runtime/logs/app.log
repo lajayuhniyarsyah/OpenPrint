@@ -1,0 +1,2038 @@
+2014-11-17 08:48:09 [127.0.0.1][][-][error][yii\web\HttpException:404] exception 'yii\web\NotFoundHttpException' with message 'The requested page does not exist.' in C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\controllers\MovesController.php:193
+Stack trace:
+#0 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\controllers\MovesController.php(51): app\controllers\MovesController->findModel('6464')
+#1 [internal function]: app\controllers\MovesController->actionPrint('6464', '1', 1, 17)
+#2 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\InlineAction.php(55): call_user_func_array(Array, Array)
+#3 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#4 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Module.php(455): yii\base\Controller->runAction('print', Array)
+#5 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\web\Application.php(83): yii\base\Module->runAction('moves/print', Array)
+#6 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#7 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\web\index.php(12): yii\base\Application->run()
+#8 {main}
+2014-11-17 08:48:09 [127.0.0.1][][-][info][application] $_GET = [
+    'r' => 'moves/print'
+    'id' => '6464'
+    'uid' => '1'
+]
+
+$_COOKIE = [
+    'ZDEDebuggerPresent' => 'php,phtml,php3'
+    '_csrf' => 'a2032afda195311f6daa9b4a07f009bf89ebd20a08e8727d63c3cb04f5ddd75es:32:\"Ou9I_iAVTw9t_p-FyzkvbYKqdtLxU2Y5\";'
+    'ZS6SESSID' => 'frr2msi0871eeh43o0s7jukch7'
+]
+
+$_SERVER = [
+    'ALLUSERSPROFILE' => 'C:\\ProgramData'
+    'APPDATA' => 'C:\\Windows\\system32\\config\\systemprofile\\AppData\\Roaming'
+    'CommonProgramFiles' => 'C:\\Program Files (x86)\\Common Files'
+    'CommonProgramFiles(x86)' => 'C:\\Program Files (x86)\\Common Files'
+    'CommonProgramW6432' => 'C:\\Program Files\\Common Files'
+    'COMPUTERNAME' => 'SUPRA-TS01'
+    'ComSpec' => 'C:\\Windows\\system32\\cmd.exe'
+    'FP_NO_HOST_CHECK' => 'NO'
+    'LOCALAPPDATA' => 'C:\\Windows\\system32\\config\\systemprofile\\AppData\\Local'
+    'NUMBER_OF_PROCESSORS' => '16'
+    'OS' => 'Windows_NT'
+    'Path' => 'C:\\Program Files\\Common Files\\Microsoft Shared\\Windows Live;C:\\Program Files (x86)\\Common Files\\Microsoft Shared\\Windows Live;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\Windows Live\\Shared;C:\\Program Files (x86)\\Zend\\ZendServer\\bin'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'PHPRC' => 'C:\\Program Files (x86)\\Zend\\ZendServer\\etc'
+    'PHP_FCGI_MAX_REQUESTS' => '10000'
+    'PROCESSOR_ARCHITECTURE' => 'x86'
+    'PROCESSOR_ARCHITEW6432' => 'AMD64'
+    'PROCESSOR_IDENTIFIER' => 'Intel64 Family 6 Model 26 Stepping 5, GenuineIntel'
+    'PROCESSOR_LEVEL' => '6'
+    'PROCESSOR_REVISION' => '1a05'
+    'ProgramData' => 'C:\\ProgramData'
+    'ProgramFiles' => 'C:\\Program Files (x86)'
+    'ProgramFiles(x86)' => 'C:\\Program Files (x86)'
+    'ProgramW6432' => 'C:\\Program Files'
+    'PSModulePath' => 'C:\\Windows\\system32\\WindowsPowerShell\\v1.0\\Modules\\'
+    'PUBLIC' => 'C:\\Users\\Public'
+    'QT_PLUGIN_PATH' => 'C:\\Program Files (x86)\\Zend\\ZendServer\\bin'
+    'SystemDrive' => 'C:'
+    'SystemRoot' => 'C:\\Windows'
+    'TEMP' => 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp'
+    'TMP' => 'C:\\Windows\\TEMP'
+    'USERDOMAIN' => 'SUPRA'
+    'USERNAME' => 'SUPRA-TS01$'
+    'USERPROFILE' => 'C:\\Windows\\system32\\config\\systemprofile'
+    'windir' => 'C:\\Windows'
+    'windows_tracing_flags' => '3'
+    'windows_tracing_logfile' => 'C:\\BVTBin\\Tests\\installpackage\\csilogfile.log'
+    'AP_PARENT_PID' => '21568'
+    '_FCGI_CLIENT_PID_' => '26288'
+    '_FCGI_MUTEX_' => '1452'
+    '_FCGI_NTAUTH_IMPERSONATE_' => '1'
+    '_FCGI_SHUTDOWN_EVENT_' => '1448'
+    'SCRIPT_NAME' => '/OpenPrint/web/index.php'
+    'REQUEST_URI' => '/OpenPrint/web/index.php?r=moves/print&id=6464&uid=1'
+    'QUERY_STRING' => 'r=moves/print&id=6464&uid=1'
+    'REQUEST_METHOD' => 'GET'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'REMOTE_PORT' => '36024'
+    'SCRIPT_FILENAME' => 'C:/Program Files (x86)/Zend/Apache2/htdocs/OpenPrint/web/index.php'
+    'SERVER_ADMIN' => 'admin@example.com'
+    'DOCUMENT_ROOT' => 'C:/Program Files (x86)/Zend/Apache2/htdocs'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '8080'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_SOFTWARE' => 'Apache/2.2.25 (Win32) mod_ssl/2.2.25 OpenSSL/0.9.8zb'
+    'SERVER_SIGNATURE' => ''
+    'WINDIR' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATH' => 'C:\\Program Files\\Common Files\\Microsoft Shared\\Windows Live;C:\\Program Files (x86)\\Common Files\\Microsoft Shared\\Windows Live;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\Windows Live\\Shared;C:\\Program Files (x86)\\Zend\\ZendServer\\share\\ZendFramework\\bin;C:\\Program Files (x86)\\Zend\\ZendServer\\bin'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_COOKIE' => 'ZDEDebuggerPresent=php,phtml,php3; _csrf=a2032afda195311f6daa9b4a07f009bf89ebd20a08e8727d63c3cb04f5ddd75es%3A32%3A%22Ou9I_iAVTw9t_p-FyzkvbYKqdtLxU2Y5%22%3B; ZS6SESSID=frr2msi0871eeh43o0s7jukch7'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.5'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:33.0) Gecko/20100101 Firefox/33.0'
+    'HTTP_HOST' => 'localhost:8080'
+    'FCGI_ROLE' => 'RESPONDER'
+    'PHP_SELF' => '/OpenPrint/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1416188889.3302
+    'REQUEST_TIME' => 1416188889
+]
+2014-11-17 08:56:50 [192.168.9.10][-][-][error][yii\base\ErrorException:4] exception 'yii\base\ErrorException' with message 'syntax error, unexpected '.'' in C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\views\delivery-note\print\dn_batch.php:192
+Stack trace:
+#0 [internal function]: yii\base\ErrorHandler->handleFatalError()
+#1 {main}
+2014-11-17 08:56:50 [192.168.9.10][-][-][info][application] $_GET = [
+    'r' => 'delivery-note/print'
+    'id' => '1325'
+    'uid' => '1'
+]
+
+$_COOKIE = [
+    '_csrf' => '226af8f53e11b1612cabe44241210fb7272858ceadae44f631c8d9d7e9a15e6cs:32:\"o5oUjmhnjJsf4ETDO97yOn3fzFY-Jis7\";'
+]
+
+$_SERVER = [
+    'ALLUSERSPROFILE' => 'C:\\ProgramData'
+    'APPDATA' => 'C:\\Windows\\system32\\config\\systemprofile\\AppData\\Roaming'
+    'CommonProgramFiles' => 'C:\\Program Files (x86)\\Common Files'
+    'CommonProgramFiles(x86)' => 'C:\\Program Files (x86)\\Common Files'
+    'CommonProgramW6432' => 'C:\\Program Files\\Common Files'
+    'COMPUTERNAME' => 'SUPRA-TS01'
+    'ComSpec' => 'C:\\Windows\\system32\\cmd.exe'
+    'FP_NO_HOST_CHECK' => 'NO'
+    'LOCALAPPDATA' => 'C:\\Windows\\system32\\config\\systemprofile\\AppData\\Local'
+    'NUMBER_OF_PROCESSORS' => '16'
+    'OS' => 'Windows_NT'
+    'Path' => 'C:\\Program Files\\Common Files\\Microsoft Shared\\Windows Live;C:\\Program Files (x86)\\Common Files\\Microsoft Shared\\Windows Live;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\Windows Live\\Shared;C:\\Program Files (x86)\\Zend\\ZendServer\\bin'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'PHPRC' => 'C:\\Program Files (x86)\\Zend\\ZendServer\\etc'
+    'PHP_FCGI_MAX_REQUESTS' => '10000'
+    'PROCESSOR_ARCHITECTURE' => 'x86'
+    'PROCESSOR_ARCHITEW6432' => 'AMD64'
+    'PROCESSOR_IDENTIFIER' => 'Intel64 Family 6 Model 26 Stepping 5, GenuineIntel'
+    'PROCESSOR_LEVEL' => '6'
+    'PROCESSOR_REVISION' => '1a05'
+    'ProgramData' => 'C:\\ProgramData'
+    'ProgramFiles' => 'C:\\Program Files (x86)'
+    'ProgramFiles(x86)' => 'C:\\Program Files (x86)'
+    'ProgramW6432' => 'C:\\Program Files'
+    'PSModulePath' => 'C:\\Windows\\system32\\WindowsPowerShell\\v1.0\\Modules\\'
+    'PUBLIC' => 'C:\\Users\\Public'
+    'QT_PLUGIN_PATH' => 'C:\\Program Files (x86)\\Zend\\ZendServer\\bin'
+    'SystemDrive' => 'C:'
+    'SystemRoot' => 'C:\\Windows'
+    'TEMP' => 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp'
+    'TMP' => 'C:\\Windows\\TEMP'
+    'USERDOMAIN' => 'SUPRA'
+    'USERNAME' => 'SUPRA-TS01$'
+    'USERPROFILE' => 'C:\\Windows\\system32\\config\\systemprofile'
+    'windir' => 'C:\\Windows'
+    'windows_tracing_flags' => '3'
+    'windows_tracing_logfile' => 'C:\\BVTBin\\Tests\\installpackage\\csilogfile.log'
+    'AP_PARENT_PID' => '21568'
+    '_FCGI_CLIENT_PID_' => '26288'
+    '_FCGI_MUTEX_' => '1496'
+    '_FCGI_NTAUTH_IMPERSONATE_' => '1'
+    '_FCGI_SHUTDOWN_EVENT_' => '1492'
+    'SCRIPT_NAME' => '/OpenPrint/web/index.php'
+    'REQUEST_URI' => '/OpenPrint/web/index.php?r=delivery-note/print&id=1325&uid=1'
+    'QUERY_STRING' => 'r=delivery-note/print&id=1325&uid=1'
+    'REQUEST_METHOD' => 'GET'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'REMOTE_PORT' => '37704'
+    'SCRIPT_FILENAME' => 'C:/Program Files (x86)/Zend/Apache2/htdocs/OpenPrint/web/index.php'
+    'SERVER_ADMIN' => 'admin@example.com'
+    'DOCUMENT_ROOT' => 'C:/Program Files (x86)/Zend/Apache2/htdocs'
+    'REMOTE_ADDR' => '192.168.9.10'
+    'SERVER_PORT' => '8080'
+    'SERVER_ADDR' => '192.168.9.10'
+    'SERVER_NAME' => '192.168.9.10'
+    'SERVER_SOFTWARE' => 'Apache/2.2.25 (Win32) mod_ssl/2.2.25 OpenSSL/0.9.8zb'
+    'SERVER_SIGNATURE' => ''
+    'WINDIR' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATH' => 'C:\\Program Files\\Common Files\\Microsoft Shared\\Windows Live;C:\\Program Files (x86)\\Common Files\\Microsoft Shared\\Windows Live;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\Windows Live\\Shared;C:\\Program Files (x86)\\Zend\\ZendServer\\share\\ZendFramework\\bin;C:\\Program Files (x86)\\Zend\\ZendServer\\bin'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_COOKIE' => '_csrf=226af8f53e11b1612cabe44241210fb7272858ceadae44f631c8d9d7e9a15e6cs%3A32%3A%22o5oUjmhnjJsf4ETDO97yOn3fzFY-Jis7%22%3B'
+    'HTTP_REFERER' => 'http://192.168.9.26:10001/?db=LIVE_2014'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.5'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:33.0) Gecko/20100101 Firefox/33.0'
+    'HTTP_HOST' => '192.168.9.10:8080'
+    'FCGI_ROLE' => 'RESPONDER'
+    'PHP_SELF' => '/OpenPrint/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1416189410.265
+    'REQUEST_TIME' => 1416189410
+]
+2014-11-18 09:24:11 [192.168.9.10][-][-][error][yii\base\ErrorException:4] exception 'yii\base\ErrorException' with message 'syntax error, unexpected '.'' in C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\views\delivery-note\print\dn_batch.php:192
+Stack trace:
+#0 [internal function]: yii\base\ErrorHandler->handleFatalError()
+#1 {main}
+2014-11-18 09:24:10 [192.168.9.10][-][-][info][application] $_GET = [
+    'r' => 'delivery-note/print'
+    'id' => '1343'
+    'uid' => '23'
+]
+
+$_SERVER = [
+    'ALLUSERSPROFILE' => 'C:\\ProgramData'
+    'APPDATA' => 'C:\\Windows\\system32\\config\\systemprofile\\AppData\\Roaming'
+    'CommonProgramFiles' => 'C:\\Program Files (x86)\\Common Files'
+    'CommonProgramFiles(x86)' => 'C:\\Program Files (x86)\\Common Files'
+    'CommonProgramW6432' => 'C:\\Program Files\\Common Files'
+    'COMPUTERNAME' => 'SUPRA-TS01'
+    'ComSpec' => 'C:\\Windows\\system32\\cmd.exe'
+    'FP_NO_HOST_CHECK' => 'NO'
+    'LOCALAPPDATA' => 'C:\\Windows\\system32\\config\\systemprofile\\AppData\\Local'
+    'NUMBER_OF_PROCESSORS' => '16'
+    'OS' => 'Windows_NT'
+    'Path' => 'C:\\Program Files\\Common Files\\Microsoft Shared\\Windows Live;C:\\Program Files (x86)\\Common Files\\Microsoft Shared\\Windows Live;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\Windows Live\\Shared;C:\\Program Files (x86)\\Zend\\ZendServer\\bin'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'PHPRC' => 'C:\\Program Files (x86)\\Zend\\ZendServer\\etc'
+    'PHP_FCGI_MAX_REQUESTS' => '10000'
+    'PROCESSOR_ARCHITECTURE' => 'x86'
+    'PROCESSOR_ARCHITEW6432' => 'AMD64'
+    'PROCESSOR_IDENTIFIER' => 'Intel64 Family 6 Model 26 Stepping 5, GenuineIntel'
+    'PROCESSOR_LEVEL' => '6'
+    'PROCESSOR_REVISION' => '1a05'
+    'ProgramData' => 'C:\\ProgramData'
+    'ProgramFiles' => 'C:\\Program Files (x86)'
+    'ProgramFiles(x86)' => 'C:\\Program Files (x86)'
+    'ProgramW6432' => 'C:\\Program Files'
+    'PSModulePath' => 'C:\\Windows\\system32\\WindowsPowerShell\\v1.0\\Modules\\'
+    'PUBLIC' => 'C:\\Users\\Public'
+    'QT_PLUGIN_PATH' => 'C:\\Program Files (x86)\\Zend\\ZendServer\\bin'
+    'SystemDrive' => 'C:'
+    'SystemRoot' => 'C:\\Windows'
+    'TEMP' => 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp'
+    'TMP' => 'C:\\Windows\\TEMP'
+    'USERDOMAIN' => 'SUPRA'
+    'USERNAME' => 'SUPRA-TS01$'
+    'USERPROFILE' => 'C:\\Windows\\system32\\config\\systemprofile'
+    'windir' => 'C:\\Windows'
+    'windows_tracing_flags' => '3'
+    'windows_tracing_logfile' => 'C:\\BVTBin\\Tests\\installpackage\\csilogfile.log'
+    'AP_PARENT_PID' => '21568'
+    '_FCGI_CLIENT_PID_' => '26288'
+    '_FCGI_MUTEX_' => '1452'
+    '_FCGI_NTAUTH_IMPERSONATE_' => '1'
+    '_FCGI_SHUTDOWN_EVENT_' => '1448'
+    'SCRIPT_NAME' => '/OpenPrint/web/index.php'
+    'REQUEST_URI' => '/OpenPrint/web/index.php?r=delivery-note/print&id=1343&uid=23'
+    'QUERY_STRING' => 'r=delivery-note/print&id=1343&uid=23'
+    'REQUEST_METHOD' => 'GET'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'REMOTE_PORT' => '22734'
+    'SCRIPT_FILENAME' => 'C:/Program Files (x86)/Zend/Apache2/htdocs/OpenPrint/web/index.php'
+    'SERVER_ADMIN' => 'admin@example.com'
+    'DOCUMENT_ROOT' => 'C:/Program Files (x86)/Zend/Apache2/htdocs'
+    'REMOTE_ADDR' => '192.168.9.10'
+    'SERVER_PORT' => '8080'
+    'SERVER_ADDR' => '192.168.9.10'
+    'SERVER_NAME' => '192.168.9.10'
+    'SERVER_SOFTWARE' => 'Apache/2.2.25 (Win32) mod_ssl/2.2.25 OpenSSL/0.9.8zb'
+    'SERVER_SIGNATURE' => ''
+    'WINDIR' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATH' => 'C:\\Program Files\\Common Files\\Microsoft Shared\\Windows Live;C:\\Program Files (x86)\\Common Files\\Microsoft Shared\\Windows Live;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\Windows Live\\Shared;C:\\Program Files (x86)\\Zend\\ZendServer\\share\\ZendFramework\\bin;C:\\Program Files (x86)\\Zend\\ZendServer\\bin'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_REFERER' => 'http://192.168.9.26:10001/?db=SUPRA'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.5'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:33.0) Gecko/20100101 Firefox/33.0'
+    'HTTP_HOST' => '192.168.9.10:8080'
+    'FCGI_ROLE' => 'RESPONDER'
+    'PHP_SELF' => '/OpenPrint/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1416277450.1416
+    'REQUEST_TIME' => 1416277450
+]
+2014-11-18 09:38:33 [192.168.9.10][-][-][error][yii\base\ErrorException:4] exception 'yii\base\ErrorException' with message 'syntax error, unexpected '.'' in C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\views\delivery-note\print\dn_batch.php:192
+Stack trace:
+#0 [internal function]: yii\base\ErrorHandler->handleFatalError()
+#1 {main}
+2014-11-18 09:38:33 [192.168.9.10][-][-][info][application] $_GET = [
+    'r' => 'delivery-note/print'
+    'id' => '1344'
+    'uid' => '23'
+]
+
+$_SERVER = [
+    'ALLUSERSPROFILE' => 'C:\\ProgramData'
+    'APPDATA' => 'C:\\Windows\\system32\\config\\systemprofile\\AppData\\Roaming'
+    'CommonProgramFiles' => 'C:\\Program Files (x86)\\Common Files'
+    'CommonProgramFiles(x86)' => 'C:\\Program Files (x86)\\Common Files'
+    'CommonProgramW6432' => 'C:\\Program Files\\Common Files'
+    'COMPUTERNAME' => 'SUPRA-TS01'
+    'ComSpec' => 'C:\\Windows\\system32\\cmd.exe'
+    'FP_NO_HOST_CHECK' => 'NO'
+    'LOCALAPPDATA' => 'C:\\Windows\\system32\\config\\systemprofile\\AppData\\Local'
+    'NUMBER_OF_PROCESSORS' => '16'
+    'OS' => 'Windows_NT'
+    'Path' => 'C:\\Program Files\\Common Files\\Microsoft Shared\\Windows Live;C:\\Program Files (x86)\\Common Files\\Microsoft Shared\\Windows Live;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\Windows Live\\Shared;C:\\Program Files (x86)\\Zend\\ZendServer\\bin'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'PHPRC' => 'C:\\Program Files (x86)\\Zend\\ZendServer\\etc'
+    'PHP_FCGI_MAX_REQUESTS' => '10000'
+    'PROCESSOR_ARCHITECTURE' => 'x86'
+    'PROCESSOR_ARCHITEW6432' => 'AMD64'
+    'PROCESSOR_IDENTIFIER' => 'Intel64 Family 6 Model 26 Stepping 5, GenuineIntel'
+    'PROCESSOR_LEVEL' => '6'
+    'PROCESSOR_REVISION' => '1a05'
+    'ProgramData' => 'C:\\ProgramData'
+    'ProgramFiles' => 'C:\\Program Files (x86)'
+    'ProgramFiles(x86)' => 'C:\\Program Files (x86)'
+    'ProgramW6432' => 'C:\\Program Files'
+    'PSModulePath' => 'C:\\Windows\\system32\\WindowsPowerShell\\v1.0\\Modules\\'
+    'PUBLIC' => 'C:\\Users\\Public'
+    'QT_PLUGIN_PATH' => 'C:\\Program Files (x86)\\Zend\\ZendServer\\bin'
+    'SystemDrive' => 'C:'
+    'SystemRoot' => 'C:\\Windows'
+    'TEMP' => 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp'
+    'TMP' => 'C:\\Windows\\TEMP'
+    'USERDOMAIN' => 'SUPRA'
+    'USERNAME' => 'SUPRA-TS01$'
+    'USERPROFILE' => 'C:\\Windows\\system32\\config\\systemprofile'
+    'windir' => 'C:\\Windows'
+    'windows_tracing_flags' => '3'
+    'windows_tracing_logfile' => 'C:\\BVTBin\\Tests\\installpackage\\csilogfile.log'
+    'AP_PARENT_PID' => '21568'
+    '_FCGI_CLIENT_PID_' => '26288'
+    '_FCGI_MUTEX_' => '884'
+    '_FCGI_NTAUTH_IMPERSONATE_' => '1'
+    '_FCGI_SHUTDOWN_EVENT_' => '880'
+    'SCRIPT_NAME' => '/OpenPrint/web/index.php'
+    'REQUEST_URI' => '/OpenPrint/web/index.php?r=delivery-note/print&id=1344&uid=23'
+    'QUERY_STRING' => 'r=delivery-note/print&id=1344&uid=23'
+    'REQUEST_METHOD' => 'GET'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'REMOTE_PORT' => '24361'
+    'SCRIPT_FILENAME' => 'C:/Program Files (x86)/Zend/Apache2/htdocs/OpenPrint/web/index.php'
+    'SERVER_ADMIN' => 'admin@example.com'
+    'DOCUMENT_ROOT' => 'C:/Program Files (x86)/Zend/Apache2/htdocs'
+    'REMOTE_ADDR' => '192.168.9.10'
+    'SERVER_PORT' => '8080'
+    'SERVER_ADDR' => '192.168.9.10'
+    'SERVER_NAME' => '192.168.9.10'
+    'SERVER_SOFTWARE' => 'Apache/2.2.25 (Win32) mod_ssl/2.2.25 OpenSSL/0.9.8zb'
+    'SERVER_SIGNATURE' => ''
+    'WINDIR' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATH' => 'C:\\Program Files\\Common Files\\Microsoft Shared\\Windows Live;C:\\Program Files (x86)\\Common Files\\Microsoft Shared\\Windows Live;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\Windows Live\\Shared;C:\\Program Files (x86)\\Zend\\ZendServer\\share\\ZendFramework\\bin;C:\\Program Files (x86)\\Zend\\ZendServer\\bin'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_REFERER' => 'http://192.168.9.26:10001/?db=SUPRA'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.5'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:33.0) Gecko/20100101 Firefox/33.0'
+    'HTTP_HOST' => '192.168.9.10:8080'
+    'FCGI_ROLE' => 'RESPONDER'
+    'PHP_SELF' => '/OpenPrint/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1416278313.404
+    'REQUEST_TIME' => 1416278313
+]
+2014-11-19 13:46:52 [192.168.9.10][-][-][error][yii\base\UnknownMethodException] exception 'yii\base\UnknownMethodException' with message 'Calling unknown method: yii\db\ActiveQuery::order()' in C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Component.php:282
+Stack trace:
+#0 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\models\OrderPreparation.php(91): yii\base\Component->__call('order', Array)
+#1 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\models\OrderPreparation.php(91): yii\db\ActiveQuery->order('no ASC')
+#2 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Component.php(130): app\models\OrderPreparation->getOrderPreparationLines()
+#3 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\db\BaseActiveRecord.php(246): yii\base\Component->__get('orderPreparatio...')
+#4 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\views\order-preparation\print\op.php(251): yii\db\BaseActiveRecord->__get('orderPreparatio...')
+#5 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\View.php(325): require('C:\\Program File...')
+#6 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\View.php(247): yii\base\View->renderPhpFile('C:\\Program File...', Array)
+#7 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\View.php(149): yii\base\View->renderFile('C:\\Program File...', Array, Object(app\controllers\OrderPreparationController))
+#8 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Controller.php(367): yii\base\View->render('print/op', Array, Object(app\controllers\OrderPreparationController))
+#9 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\controllers\OrderPreparationController.php(61): yii\base\Controller->render('print/op', Array)
+#10 [internal function]: app\controllers\OrderPreparationController->actionPrint('1394', 1)
+#11 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\InlineAction.php(55): call_user_func_array(Array, Array)
+#12 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#13 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Module.php(455): yii\base\Controller->runAction('print', Array)
+#14 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\web\Application.php(83): yii\base\Module->runAction('order-preparati...', Array)
+#15 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#16 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\web\index.php(12): yii\base\Application->run()
+#17 {main}
+2014-11-19 13:46:52 [192.168.9.10][-][-][info][application] $_GET = [
+    'r' => 'order-preparation/print'
+    'id' => '1394'
+    'uid' => '1'
+]
+
+$_COOKIE = [
+    '_csrf' => '226af8f53e11b1612cabe44241210fb7272858ceadae44f631c8d9d7e9a15e6cs:32:\"o5oUjmhnjJsf4ETDO97yOn3fzFY-Jis7\";'
+]
+
+$_SERVER = [
+    'ALLUSERSPROFILE' => 'C:\\ProgramData'
+    'APPDATA' => 'C:\\Windows\\system32\\config\\systemprofile\\AppData\\Roaming'
+    'CommonProgramFiles' => 'C:\\Program Files (x86)\\Common Files'
+    'CommonProgramFiles(x86)' => 'C:\\Program Files (x86)\\Common Files'
+    'CommonProgramW6432' => 'C:\\Program Files\\Common Files'
+    'COMPUTERNAME' => 'SUPRA-TS01'
+    'ComSpec' => 'C:\\Windows\\system32\\cmd.exe'
+    'FP_NO_HOST_CHECK' => 'NO'
+    'LOCALAPPDATA' => 'C:\\Windows\\system32\\config\\systemprofile\\AppData\\Local'
+    'NUMBER_OF_PROCESSORS' => '16'
+    'OS' => 'Windows_NT'
+    'Path' => 'C:\\Program Files\\Common Files\\Microsoft Shared\\Windows Live;C:\\Program Files (x86)\\Common Files\\Microsoft Shared\\Windows Live;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\Windows Live\\Shared;C:\\Program Files (x86)\\Zend\\ZendServer\\bin'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'PHPRC' => 'C:\\Program Files (x86)\\Zend\\ZendServer\\etc'
+    'PHP_FCGI_MAX_REQUESTS' => '10000'
+    'PROCESSOR_ARCHITECTURE' => 'x86'
+    'PROCESSOR_ARCHITEW6432' => 'AMD64'
+    'PROCESSOR_IDENTIFIER' => 'Intel64 Family 6 Model 26 Stepping 5, GenuineIntel'
+    'PROCESSOR_LEVEL' => '6'
+    'PROCESSOR_REVISION' => '1a05'
+    'ProgramData' => 'C:\\ProgramData'
+    'ProgramFiles' => 'C:\\Program Files (x86)'
+    'ProgramFiles(x86)' => 'C:\\Program Files (x86)'
+    'ProgramW6432' => 'C:\\Program Files'
+    'PSModulePath' => 'C:\\Windows\\system32\\WindowsPowerShell\\v1.0\\Modules\\'
+    'PUBLIC' => 'C:\\Users\\Public'
+    'QT_PLUGIN_PATH' => 'C:\\Program Files (x86)\\Zend\\ZendServer\\bin'
+    'SystemDrive' => 'C:'
+    'SystemRoot' => 'C:\\Windows'
+    'TEMP' => 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp'
+    'TMP' => 'C:\\Windows\\TEMP'
+    'USERDOMAIN' => 'SUPRA'
+    'USERNAME' => 'SUPRA-TS01$'
+    'USERPROFILE' => 'C:\\Windows\\system32\\config\\systemprofile'
+    'windir' => 'C:\\Windows'
+    'windows_tracing_flags' => '3'
+    'windows_tracing_logfile' => 'C:\\BVTBin\\Tests\\installpackage\\csilogfile.log'
+    'AP_PARENT_PID' => '21568'
+    '_FCGI_CLIENT_PID_' => '26288'
+    '_FCGI_MUTEX_' => '1508'
+    '_FCGI_NTAUTH_IMPERSONATE_' => '1'
+    '_FCGI_SHUTDOWN_EVENT_' => '1512'
+    'SCRIPT_NAME' => '/OpenPrint/web/index.php'
+    'REQUEST_URI' => '/OpenPrint/web/index.php?r=order-preparation/print&id=1394&uid=1'
+    'QUERY_STRING' => 'r=order-preparation/print&id=1394&uid=1'
+    'REQUEST_METHOD' => 'GET'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'REMOTE_PORT' => '44393'
+    'SCRIPT_FILENAME' => 'C:/Program Files (x86)/Zend/Apache2/htdocs/OpenPrint/web/index.php'
+    'SERVER_ADMIN' => 'admin@example.com'
+    'DOCUMENT_ROOT' => 'C:/Program Files (x86)/Zend/Apache2/htdocs'
+    'REMOTE_ADDR' => '192.168.9.10'
+    'SERVER_PORT' => '8080'
+    'SERVER_ADDR' => '192.168.9.10'
+    'SERVER_NAME' => '192.168.9.10'
+    'SERVER_SOFTWARE' => 'Apache/2.2.25 (Win32) mod_ssl/2.2.25 OpenSSL/0.9.8zb'
+    'SERVER_SIGNATURE' => ''
+    'WINDIR' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATH' => 'C:\\Program Files\\Common Files\\Microsoft Shared\\Windows Live;C:\\Program Files (x86)\\Common Files\\Microsoft Shared\\Windows Live;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\Windows Live\\Shared;C:\\Program Files (x86)\\Zend\\ZendServer\\share\\ZendFramework\\bin;C:\\Program Files (x86)\\Zend\\ZendServer\\bin'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_COOKIE' => '_csrf=226af8f53e11b1612cabe44241210fb7272858ceadae44f631c8d9d7e9a15e6cs%3A32%3A%22o5oUjmhnjJsf4ETDO97yOn3fzFY-Jis7%22%3B'
+    'HTTP_REFERER' => 'http://192.168.9.26:10001/?db=LIVE_2014'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.5'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:33.0) Gecko/20100101 Firefox/33.0'
+    'HTTP_HOST' => '192.168.9.10:8080'
+    'FCGI_ROLE' => 'RESPONDER'
+    'PHP_SELF' => '/OpenPrint/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1416379612.188
+    'REQUEST_TIME' => 1416379612
+]
+2014-11-19 15:59:59 [192.168.9.10][][-][error][yii\web\HttpException:404] exception 'yii\base\InvalidRouteException' with message 'Unable to resolve the request: account-invoice/print-invoice' in C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Controller.php:122
+Stack trace:
+#0 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Module.php(455): yii\base\Controller->runAction('print-invoice', Array)
+#1 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\web\Application.php(83): yii\base\Module->runAction('account-invoice...', Array)
+#2 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#3 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\web\index.php(12): yii\base\Application->run()
+#4 {main}
+
+Next exception 'yii\web\NotFoundHttpException' with message 'Unable to resolve the request: account-invoice/print-invoice' in C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\web\Application.php:95
+Stack trace:
+#0 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\web\index.php(12): yii\base\Application->run()
+#2 {main}
+2014-11-19 15:59:59 [192.168.9.10][][-][info][application] $_GET = [
+    'r' => 'account-invoice/print-invoice'
+    'id' => '5266'
+]
+
+$_COOKIE = [
+    '_csrf' => '226af8f53e11b1612cabe44241210fb7272858ceadae44f631c8d9d7e9a15e6cs:32:\"o5oUjmhnjJsf4ETDO97yOn3fzFY-Jis7\";'
+]
+
+$_SERVER = [
+    'ALLUSERSPROFILE' => 'C:\\ProgramData'
+    'APPDATA' => 'C:\\Windows\\system32\\config\\systemprofile\\AppData\\Roaming'
+    'CommonProgramFiles' => 'C:\\Program Files (x86)\\Common Files'
+    'CommonProgramFiles(x86)' => 'C:\\Program Files (x86)\\Common Files'
+    'CommonProgramW6432' => 'C:\\Program Files\\Common Files'
+    'COMPUTERNAME' => 'SUPRA-TS01'
+    'ComSpec' => 'C:\\Windows\\system32\\cmd.exe'
+    'FP_NO_HOST_CHECK' => 'NO'
+    'LOCALAPPDATA' => 'C:\\Windows\\system32\\config\\systemprofile\\AppData\\Local'
+    'NUMBER_OF_PROCESSORS' => '16'
+    'OS' => 'Windows_NT'
+    'Path' => 'C:\\Program Files\\Common Files\\Microsoft Shared\\Windows Live;C:\\Program Files (x86)\\Common Files\\Microsoft Shared\\Windows Live;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\Windows Live\\Shared;C:\\Program Files (x86)\\Zend\\ZendServer\\bin'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'PHPRC' => 'C:\\Program Files (x86)\\Zend\\ZendServer\\etc'
+    'PHP_FCGI_MAX_REQUESTS' => '10000'
+    'PROCESSOR_ARCHITECTURE' => 'x86'
+    'PROCESSOR_ARCHITEW6432' => 'AMD64'
+    'PROCESSOR_IDENTIFIER' => 'Intel64 Family 6 Model 26 Stepping 5, GenuineIntel'
+    'PROCESSOR_LEVEL' => '6'
+    'PROCESSOR_REVISION' => '1a05'
+    'ProgramData' => 'C:\\ProgramData'
+    'ProgramFiles' => 'C:\\Program Files (x86)'
+    'ProgramFiles(x86)' => 'C:\\Program Files (x86)'
+    'ProgramW6432' => 'C:\\Program Files'
+    'PSModulePath' => 'C:\\Windows\\system32\\WindowsPowerShell\\v1.0\\Modules\\'
+    'PUBLIC' => 'C:\\Users\\Public'
+    'QT_PLUGIN_PATH' => 'C:\\Program Files (x86)\\Zend\\ZendServer\\bin'
+    'SystemDrive' => 'C:'
+    'SystemRoot' => 'C:\\Windows'
+    'TEMP' => 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp'
+    'TMP' => 'C:\\Windows\\TEMP'
+    'USERDOMAIN' => 'SUPRA'
+    'USERNAME' => 'SUPRA-TS01$'
+    'USERPROFILE' => 'C:\\Windows\\system32\\config\\systemprofile'
+    'windir' => 'C:\\Windows'
+    'windows_tracing_flags' => '3'
+    'windows_tracing_logfile' => 'C:\\BVTBin\\Tests\\installpackage\\csilogfile.log'
+    'AP_PARENT_PID' => '21568'
+    '_FCGI_CLIENT_PID_' => '26288'
+    '_FCGI_MUTEX_' => '1400'
+    '_FCGI_NTAUTH_IMPERSONATE_' => '1'
+    '_FCGI_SHUTDOWN_EVENT_' => '1408'
+    'SCRIPT_NAME' => '/OpenPrint/web/index.php'
+    'REQUEST_URI' => '/OpenPrint/web/index.php?r=account-invoice/print-invoice&id=5266'
+    'QUERY_STRING' => 'r=account-invoice/print-invoice&id=5266'
+    'REQUEST_METHOD' => 'GET'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'REMOTE_PORT' => '4111'
+    'SCRIPT_FILENAME' => 'C:/Program Files (x86)/Zend/Apache2/htdocs/OpenPrint/web/index.php'
+    'SERVER_ADMIN' => 'admin@example.com'
+    'DOCUMENT_ROOT' => 'C:/Program Files (x86)/Zend/Apache2/htdocs'
+    'REMOTE_ADDR' => '192.168.9.10'
+    'SERVER_PORT' => '8080'
+    'SERVER_ADDR' => '192.168.9.10'
+    'SERVER_NAME' => '192.168.9.10'
+    'SERVER_SOFTWARE' => 'Apache/2.2.25 (Win32) mod_ssl/2.2.25 OpenSSL/0.9.8zb'
+    'SERVER_SIGNATURE' => ''
+    'WINDIR' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATH' => 'C:\\Program Files\\Common Files\\Microsoft Shared\\Windows Live;C:\\Program Files (x86)\\Common Files\\Microsoft Shared\\Windows Live;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\Windows Live\\Shared;C:\\Program Files (x86)\\Zend\\ZendServer\\share\\ZendFramework\\bin;C:\\Program Files (x86)\\Zend\\ZendServer\\bin'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_COOKIE' => '_csrf=226af8f53e11b1612cabe44241210fb7272858ceadae44f631c8d9d7e9a15e6cs%3A32%3A%22o5oUjmhnjJsf4ETDO97yOn3fzFY-Jis7%22%3B'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.5'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:33.0) Gecko/20100101 Firefox/33.0'
+    'HTTP_HOST' => '192.168.9.10:8080'
+    'FCGI_ROLE' => 'RESPONDER'
+    'PHP_SELF' => '/OpenPrint/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1416387599.4648
+    'REQUEST_TIME' => 1416387599
+]
+2014-11-19 16:01:29 [192.168.9.10][][-][error][yii\web\HttpException:404] exception 'yii\base\InvalidRouteException' with message 'Unable to resolve the request: account-invoice/print-invoice' in C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Controller.php:122
+Stack trace:
+#0 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Module.php(455): yii\base\Controller->runAction('print-invoice', Array)
+#1 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\web\Application.php(83): yii\base\Module->runAction('account-invoice...', Array)
+#2 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#3 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\web\index.php(12): yii\base\Application->run()
+#4 {main}
+
+Next exception 'yii\web\NotFoundHttpException' with message 'Unable to resolve the request: account-invoice/print-invoice' in C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\web\Application.php:95
+Stack trace:
+#0 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\web\index.php(12): yii\base\Application->run()
+#2 {main}
+2014-11-19 16:01:29 [192.168.9.10][][-][info][application] $_GET = [
+    'r' => 'account-invoice/print-invoice'
+    'id' => '5266'
+]
+
+$_COOKIE = [
+    '_csrf' => '226af8f53e11b1612cabe44241210fb7272858ceadae44f631c8d9d7e9a15e6cs:32:\"o5oUjmhnjJsf4ETDO97yOn3fzFY-Jis7\";'
+]
+
+$_SERVER = [
+    'ALLUSERSPROFILE' => 'C:\\ProgramData'
+    'APPDATA' => 'C:\\Windows\\system32\\config\\systemprofile\\AppData\\Roaming'
+    'CommonProgramFiles' => 'C:\\Program Files (x86)\\Common Files'
+    'CommonProgramFiles(x86)' => 'C:\\Program Files (x86)\\Common Files'
+    'CommonProgramW6432' => 'C:\\Program Files\\Common Files'
+    'COMPUTERNAME' => 'SUPRA-TS01'
+    'ComSpec' => 'C:\\Windows\\system32\\cmd.exe'
+    'FP_NO_HOST_CHECK' => 'NO'
+    'LOCALAPPDATA' => 'C:\\Windows\\system32\\config\\systemprofile\\AppData\\Local'
+    'NUMBER_OF_PROCESSORS' => '16'
+    'OS' => 'Windows_NT'
+    'Path' => 'C:\\Program Files\\Common Files\\Microsoft Shared\\Windows Live;C:\\Program Files (x86)\\Common Files\\Microsoft Shared\\Windows Live;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\Windows Live\\Shared;C:\\Program Files (x86)\\Zend\\ZendServer\\bin'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'PHPRC' => 'C:\\Program Files (x86)\\Zend\\ZendServer\\etc'
+    'PHP_FCGI_MAX_REQUESTS' => '10000'
+    'PROCESSOR_ARCHITECTURE' => 'x86'
+    'PROCESSOR_ARCHITEW6432' => 'AMD64'
+    'PROCESSOR_IDENTIFIER' => 'Intel64 Family 6 Model 26 Stepping 5, GenuineIntel'
+    'PROCESSOR_LEVEL' => '6'
+    'PROCESSOR_REVISION' => '1a05'
+    'ProgramData' => 'C:\\ProgramData'
+    'ProgramFiles' => 'C:\\Program Files (x86)'
+    'ProgramFiles(x86)' => 'C:\\Program Files (x86)'
+    'ProgramW6432' => 'C:\\Program Files'
+    'PSModulePath' => 'C:\\Windows\\system32\\WindowsPowerShell\\v1.0\\Modules\\'
+    'PUBLIC' => 'C:\\Users\\Public'
+    'QT_PLUGIN_PATH' => 'C:\\Program Files (x86)\\Zend\\ZendServer\\bin'
+    'SystemDrive' => 'C:'
+    'SystemRoot' => 'C:\\Windows'
+    'TEMP' => 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp'
+    'TMP' => 'C:\\Windows\\TEMP'
+    'USERDOMAIN' => 'SUPRA'
+    'USERNAME' => 'SUPRA-TS01$'
+    'USERPROFILE' => 'C:\\Windows\\system32\\config\\systemprofile'
+    'windir' => 'C:\\Windows'
+    'windows_tracing_flags' => '3'
+    'windows_tracing_logfile' => 'C:\\BVTBin\\Tests\\installpackage\\csilogfile.log'
+    'AP_PARENT_PID' => '21568'
+    '_FCGI_CLIENT_PID_' => '26288'
+    '_FCGI_MUTEX_' => '1496'
+    '_FCGI_NTAUTH_IMPERSONATE_' => '1'
+    '_FCGI_SHUTDOWN_EVENT_' => '1492'
+    'SCRIPT_NAME' => '/OpenPrint/web/index.php'
+    'REQUEST_URI' => '/OpenPrint/web/index.php?r=account-invoice/print-invoice&id=5266'
+    'QUERY_STRING' => 'r=account-invoice/print-invoice&id=5266'
+    'REQUEST_METHOD' => 'GET'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'REMOTE_PORT' => '4250'
+    'SCRIPT_FILENAME' => 'C:/Program Files (x86)/Zend/Apache2/htdocs/OpenPrint/web/index.php'
+    'SERVER_ADMIN' => 'admin@example.com'
+    'DOCUMENT_ROOT' => 'C:/Program Files (x86)/Zend/Apache2/htdocs'
+    'REMOTE_ADDR' => '192.168.9.10'
+    'SERVER_PORT' => '8080'
+    'SERVER_ADDR' => '192.168.9.10'
+    'SERVER_NAME' => '192.168.9.10'
+    'SERVER_SOFTWARE' => 'Apache/2.2.25 (Win32) mod_ssl/2.2.25 OpenSSL/0.9.8zb'
+    'SERVER_SIGNATURE' => ''
+    'WINDIR' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATH' => 'C:\\Program Files\\Common Files\\Microsoft Shared\\Windows Live;C:\\Program Files (x86)\\Common Files\\Microsoft Shared\\Windows Live;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\Windows Live\\Shared;C:\\Program Files (x86)\\Zend\\ZendServer\\share\\ZendFramework\\bin;C:\\Program Files (x86)\\Zend\\ZendServer\\bin'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_COOKIE' => '_csrf=226af8f53e11b1612cabe44241210fb7272858ceadae44f631c8d9d7e9a15e6cs%3A32%3A%22o5oUjmhnjJsf4ETDO97yOn3fzFY-Jis7%22%3B'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.5'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:33.0) Gecko/20100101 Firefox/33.0'
+    'HTTP_HOST' => '192.168.9.10:8080'
+    'FCGI_ROLE' => 'RESPONDER'
+    'PHP_SELF' => '/OpenPrint/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1416387689.658
+    'REQUEST_TIME' => 1416387689
+]
+2014-11-19 16:01:31 [192.168.9.10][][-][error][yii\web\HttpException:404] exception 'yii\base\InvalidRouteException' with message 'Unable to resolve the request: account-invoice/print-invoice' in C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Controller.php:122
+Stack trace:
+#0 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Module.php(455): yii\base\Controller->runAction('print-invoice', Array)
+#1 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\web\Application.php(83): yii\base\Module->runAction('account-invoice...', Array)
+#2 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#3 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\web\index.php(12): yii\base\Application->run()
+#4 {main}
+
+Next exception 'yii\web\NotFoundHttpException' with message 'Unable to resolve the request: account-invoice/print-invoice' in C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\web\Application.php:95
+Stack trace:
+#0 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\web\index.php(12): yii\base\Application->run()
+#2 {main}
+2014-11-19 16:01:31 [192.168.9.10][][-][info][application] $_GET = [
+    'r' => 'account-invoice/print-invoice'
+    'id' => '5266'
+]
+
+$_COOKIE = [
+    '_csrf' => '226af8f53e11b1612cabe44241210fb7272858ceadae44f631c8d9d7e9a15e6cs:32:\"o5oUjmhnjJsf4ETDO97yOn3fzFY-Jis7\";'
+]
+
+$_SERVER = [
+    'ALLUSERSPROFILE' => 'C:\\ProgramData'
+    'APPDATA' => 'C:\\Windows\\system32\\config\\systemprofile\\AppData\\Roaming'
+    'CommonProgramFiles' => 'C:\\Program Files (x86)\\Common Files'
+    'CommonProgramFiles(x86)' => 'C:\\Program Files (x86)\\Common Files'
+    'CommonProgramW6432' => 'C:\\Program Files\\Common Files'
+    'COMPUTERNAME' => 'SUPRA-TS01'
+    'ComSpec' => 'C:\\Windows\\system32\\cmd.exe'
+    'FP_NO_HOST_CHECK' => 'NO'
+    'LOCALAPPDATA' => 'C:\\Windows\\system32\\config\\systemprofile\\AppData\\Local'
+    'NUMBER_OF_PROCESSORS' => '16'
+    'OS' => 'Windows_NT'
+    'Path' => 'C:\\Program Files\\Common Files\\Microsoft Shared\\Windows Live;C:\\Program Files (x86)\\Common Files\\Microsoft Shared\\Windows Live;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\Windows Live\\Shared;C:\\Program Files (x86)\\Zend\\ZendServer\\bin'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'PHPRC' => 'C:\\Program Files (x86)\\Zend\\ZendServer\\etc'
+    'PHP_FCGI_MAX_REQUESTS' => '10000'
+    'PROCESSOR_ARCHITECTURE' => 'x86'
+    'PROCESSOR_ARCHITEW6432' => 'AMD64'
+    'PROCESSOR_IDENTIFIER' => 'Intel64 Family 6 Model 26 Stepping 5, GenuineIntel'
+    'PROCESSOR_LEVEL' => '6'
+    'PROCESSOR_REVISION' => '1a05'
+    'ProgramData' => 'C:\\ProgramData'
+    'ProgramFiles' => 'C:\\Program Files (x86)'
+    'ProgramFiles(x86)' => 'C:\\Program Files (x86)'
+    'ProgramW6432' => 'C:\\Program Files'
+    'PSModulePath' => 'C:\\Windows\\system32\\WindowsPowerShell\\v1.0\\Modules\\'
+    'PUBLIC' => 'C:\\Users\\Public'
+    'QT_PLUGIN_PATH' => 'C:\\Program Files (x86)\\Zend\\ZendServer\\bin'
+    'SystemDrive' => 'C:'
+    'SystemRoot' => 'C:\\Windows'
+    'TEMP' => 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp'
+    'TMP' => 'C:\\Windows\\TEMP'
+    'USERDOMAIN' => 'SUPRA'
+    'USERNAME' => 'SUPRA-TS01$'
+    'USERPROFILE' => 'C:\\Windows\\system32\\config\\systemprofile'
+    'windir' => 'C:\\Windows'
+    'windows_tracing_flags' => '3'
+    'windows_tracing_logfile' => 'C:\\BVTBin\\Tests\\installpackage\\csilogfile.log'
+    'AP_PARENT_PID' => '21568'
+    '_FCGI_CLIENT_PID_' => '26288'
+    '_FCGI_MUTEX_' => '1268'
+    '_FCGI_NTAUTH_IMPERSONATE_' => '1'
+    '_FCGI_SHUTDOWN_EVENT_' => '1264'
+    'SCRIPT_NAME' => '/OpenPrint/web/index.php'
+    'REQUEST_URI' => '/OpenPrint/web/index.php?r=account-invoice/print-invoice&id=5266'
+    'QUERY_STRING' => 'r=account-invoice/print-invoice&id=5266'
+    'REQUEST_METHOD' => 'GET'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'REMOTE_PORT' => '4250'
+    'SCRIPT_FILENAME' => 'C:/Program Files (x86)/Zend/Apache2/htdocs/OpenPrint/web/index.php'
+    'SERVER_ADMIN' => 'admin@example.com'
+    'DOCUMENT_ROOT' => 'C:/Program Files (x86)/Zend/Apache2/htdocs'
+    'REMOTE_ADDR' => '192.168.9.10'
+    'SERVER_PORT' => '8080'
+    'SERVER_ADDR' => '192.168.9.10'
+    'SERVER_NAME' => '192.168.9.10'
+    'SERVER_SOFTWARE' => 'Apache/2.2.25 (Win32) mod_ssl/2.2.25 OpenSSL/0.9.8zb'
+    'SERVER_SIGNATURE' => ''
+    'WINDIR' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATH' => 'C:\\Program Files\\Common Files\\Microsoft Shared\\Windows Live;C:\\Program Files (x86)\\Common Files\\Microsoft Shared\\Windows Live;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\Windows Live\\Shared;C:\\Program Files (x86)\\Zend\\ZendServer\\share\\ZendFramework\\bin;C:\\Program Files (x86)\\Zend\\ZendServer\\bin'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_COOKIE' => '_csrf=226af8f53e11b1612cabe44241210fb7272858ceadae44f631c8d9d7e9a15e6cs%3A32%3A%22o5oUjmhnjJsf4ETDO97yOn3fzFY-Jis7%22%3B'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.5'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:33.0) Gecko/20100101 Firefox/33.0'
+    'HTTP_HOST' => '192.168.9.10:8080'
+    'FCGI_ROLE' => 'RESPONDER'
+    'PHP_SELF' => '/OpenPrint/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1416387691.2061
+    'REQUEST_TIME' => 1416387691
+]
+2014-11-27 13:56:58 [192.168.9.10][][-][error][yii\web\HttpException:404] exception 'yii\base\InvalidRouteException' with message 'Unable to resolve the request: delivery-note/print-pack' in C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Controller.php:122
+Stack trace:
+#0 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Module.php(455): yii\base\Controller->runAction('print-pack', Array)
+#1 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\web\Application.php(83): yii\base\Module->runAction('delivery-note/p...', Array)
+#2 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#3 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\web\index.php(12): yii\base\Application->run()
+#4 {main}
+
+Next exception 'yii\web\NotFoundHttpException' with message 'Unable to resolve the request: delivery-note/print-pack' in C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\web\Application.php:95
+Stack trace:
+#0 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\web\index.php(12): yii\base\Application->run()
+#2 {main}
+2014-11-27 13:56:58 [192.168.9.10][][-][info][application] $_GET = [
+    'r' => 'delivery-note/print-pack'
+    'id' => '1428'
+    'uid' => '129'
+]
+
+$_COOKIE = [
+    '_csrf' => 'a35adffdf273c3440ac81b94ae0de54f2a2ebeb7202ae84efd08526531e87a05s:32:\"GWPPHK49XPUthF3J1gSZqtk6x2LcJCUx\";'
+]
+
+$_SERVER = [
+    'ALLUSERSPROFILE' => 'C:\\ProgramData'
+    'APPDATA' => 'C:\\Windows\\system32\\config\\systemprofile\\AppData\\Roaming'
+    'CommonProgramFiles' => 'C:\\Program Files (x86)\\Common Files'
+    'CommonProgramFiles(x86)' => 'C:\\Program Files (x86)\\Common Files'
+    'CommonProgramW6432' => 'C:\\Program Files\\Common Files'
+    'COMPUTERNAME' => 'SUPRA-TS01'
+    'ComSpec' => 'C:\\Windows\\system32\\cmd.exe'
+    'FP_NO_HOST_CHECK' => 'NO'
+    'LOCALAPPDATA' => 'C:\\Windows\\system32\\config\\systemprofile\\AppData\\Local'
+    'NUMBER_OF_PROCESSORS' => '16'
+    'OS' => 'Windows_NT'
+    'Path' => 'C:\\Program Files\\Common Files\\Microsoft Shared\\Windows Live;C:\\Program Files (x86)\\Common Files\\Microsoft Shared\\Windows Live;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\Windows Live\\Shared;C:\\Program Files (x86)\\Zend\\ZendServer\\bin'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'PHPRC' => 'C:\\Program Files (x86)\\Zend\\ZendServer\\etc'
+    'PHP_FCGI_MAX_REQUESTS' => '10000'
+    'PROCESSOR_ARCHITECTURE' => 'x86'
+    'PROCESSOR_ARCHITEW6432' => 'AMD64'
+    'PROCESSOR_IDENTIFIER' => 'Intel64 Family 6 Model 26 Stepping 5, GenuineIntel'
+    'PROCESSOR_LEVEL' => '6'
+    'PROCESSOR_REVISION' => '1a05'
+    'ProgramData' => 'C:\\ProgramData'
+    'ProgramFiles' => 'C:\\Program Files (x86)'
+    'ProgramFiles(x86)' => 'C:\\Program Files (x86)'
+    'ProgramW6432' => 'C:\\Program Files'
+    'PSModulePath' => 'C:\\Windows\\system32\\WindowsPowerShell\\v1.0\\Modules\\'
+    'PUBLIC' => 'C:\\Users\\Public'
+    'QT_PLUGIN_PATH' => 'C:\\Program Files (x86)\\Zend\\ZendServer\\bin'
+    'SystemDrive' => 'C:'
+    'SystemRoot' => 'C:\\Windows'
+    'TEMP' => 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp'
+    'TMP' => 'C:\\Windows\\TEMP'
+    'USERDOMAIN' => 'SUPRA'
+    'USERNAME' => 'SUPRA-TS01$'
+    'USERPROFILE' => 'C:\\Windows\\system32\\config\\systemprofile'
+    'windir' => 'C:\\Windows'
+    'windows_tracing_flags' => '3'
+    'windows_tracing_logfile' => 'C:\\BVTBin\\Tests\\installpackage\\csilogfile.log'
+    'AP_PARENT_PID' => '1200'
+    '_FCGI_CLIENT_PID_' => '1412'
+    '_FCGI_MUTEX_' => '872'
+    '_FCGI_NTAUTH_IMPERSONATE_' => '1'
+    '_FCGI_SHUTDOWN_EVENT_' => '868'
+    'SCRIPT_NAME' => '/OpenPrint/web/index.php'
+    'REQUEST_URI' => '/OpenPrint/web/index.php?r=delivery-note/print-pack&id=1428&uid=129'
+    'QUERY_STRING' => 'r=delivery-note/print-pack&id=1428&uid=129'
+    'REQUEST_METHOD' => 'GET'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'REMOTE_PORT' => '32861'
+    'SCRIPT_FILENAME' => 'C:/Program Files (x86)/Zend/Apache2/htdocs/OpenPrint/web/index.php'
+    'SERVER_ADMIN' => 'admin@example.com'
+    'DOCUMENT_ROOT' => 'C:/Program Files (x86)/Zend/Apache2/htdocs'
+    'REMOTE_ADDR' => '192.168.9.10'
+    'SERVER_PORT' => '8080'
+    'SERVER_ADDR' => '192.168.9.10'
+    'SERVER_NAME' => '192.168.9.10'
+    'SERVER_SOFTWARE' => 'Apache/2.2.25 (Win32) mod_ssl/2.2.25 OpenSSL/0.9.8zb'
+    'SERVER_SIGNATURE' => ''
+    'WINDIR' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATH' => 'C:\\Program Files\\Common Files\\Microsoft Shared\\Windows Live;C:\\Program Files (x86)\\Common Files\\Microsoft Shared\\Windows Live;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\Windows Live\\Shared;C:\\Program Files (x86)\\Zend\\ZendServer\\share\\ZendFramework\\bin;C:\\Program Files (x86)\\Zend\\ZendServer\\bin;'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_COOKIE' => '_csrf=a35adffdf273c3440ac81b94ae0de54f2a2ebeb7202ae84efd08526531e87a05s%3A32%3A%22GWPPHK49XPUthF3J1gSZqtk6x2LcJCUx%22%3B'
+    'HTTP_REFERER' => 'http://192.168.9.26:10001/?db=LIVE_2014'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.5'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:33.0) Gecko/20100101 Firefox/33.0'
+    'HTTP_HOST' => '192.168.9.10:8080'
+    'FCGI_ROLE' => 'RESPONDER'
+    'PHP_SELF' => '/OpenPrint/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1417071418.413
+    'REQUEST_TIME' => 1417071418
+]
+2014-12-02 10:12:34 [192.168.9.10][-][-][error][yii\base\InvalidParamException] exception 'yii\base\InvalidParamException' with message 'The view file does not exist: C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\views\delivery-note\print/test/dn_batch.php' in C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\View.php:226
+Stack trace:
+#0 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\View.php(149): yii\base\View->renderFile('C:\\Program File...', Array, Object(app\controllers\DeliveryNoteController))
+#1 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Controller.php(367): yii\base\View->render('print/test/dn_b...', Array, Object(app\controllers\DeliveryNoteController))
+#2 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\controllers\DeliveryNoteController.php(140): yii\base\Controller->render('print/test/dn_b...', Array)
+#3 [internal function]: app\controllers\DeliveryNoteController->actionPrint('1406', '1')
+#4 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\InlineAction.php(55): call_user_func_array(Array, Array)
+#5 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#6 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Module.php(455): yii\base\Controller->runAction('print', Array)
+#7 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\web\Application.php(83): yii\base\Module->runAction('delivery-note/p...', Array)
+#8 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#9 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\web\index.php(12): yii\base\Application->run()
+#10 {main}
+2014-12-02 10:12:34 [192.168.9.10][-][-][info][application] $_GET = [
+    'r' => 'delivery-note/print'
+    'id' => '1406'
+    'uid' => '1'
+    'test' => '1'
+]
+
+$_COOKIE = [
+    '_csrf' => '5b0bff1cf7da2f2c351f397b21f35f694057e100274caaed8ebc9ee919af4ba6s:32:\"CPX8WuyqHdfXrxAzfm1EVAOM_yJnzM4T\";'
+]
+
+$_SERVER = [
+    'ALLUSERSPROFILE' => 'C:\\ProgramData'
+    'APPDATA' => 'C:\\Windows\\system32\\config\\systemprofile\\AppData\\Roaming'
+    'CommonProgramFiles' => 'C:\\Program Files (x86)\\Common Files'
+    'CommonProgramFiles(x86)' => 'C:\\Program Files (x86)\\Common Files'
+    'CommonProgramW6432' => 'C:\\Program Files\\Common Files'
+    'COMPUTERNAME' => 'SUPRA-TS01'
+    'ComSpec' => 'C:\\Windows\\system32\\cmd.exe'
+    'FP_NO_HOST_CHECK' => 'NO'
+    'LOCALAPPDATA' => 'C:\\Windows\\system32\\config\\systemprofile\\AppData\\Local'
+    'NUMBER_OF_PROCESSORS' => '16'
+    'OS' => 'Windows_NT'
+    'Path' => 'C:\\Program Files\\Common Files\\Microsoft Shared\\Windows Live;C:\\Program Files (x86)\\Common Files\\Microsoft Shared\\Windows Live;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\Windows Live\\Shared;C:\\Program Files (x86)\\Zend\\ZendServer\\bin'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'PHPRC' => 'C:\\Program Files (x86)\\Zend\\ZendServer\\etc'
+    'PHP_FCGI_MAX_REQUESTS' => '10000'
+    'PROCESSOR_ARCHITECTURE' => 'x86'
+    'PROCESSOR_ARCHITEW6432' => 'AMD64'
+    'PROCESSOR_IDENTIFIER' => 'Intel64 Family 6 Model 26 Stepping 5, GenuineIntel'
+    'PROCESSOR_LEVEL' => '6'
+    'PROCESSOR_REVISION' => '1a05'
+    'ProgramData' => 'C:\\ProgramData'
+    'ProgramFiles' => 'C:\\Program Files (x86)'
+    'ProgramFiles(x86)' => 'C:\\Program Files (x86)'
+    'ProgramW6432' => 'C:\\Program Files'
+    'PSModulePath' => 'C:\\Windows\\system32\\WindowsPowerShell\\v1.0\\Modules\\'
+    'PUBLIC' => 'C:\\Users\\Public'
+    'QT_PLUGIN_PATH' => 'C:\\Program Files (x86)\\Zend\\ZendServer\\bin'
+    'SystemDrive' => 'C:'
+    'SystemRoot' => 'C:\\Windows'
+    'TEMP' => 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp'
+    'TMP' => 'C:\\Windows\\TEMP'
+    'USERDOMAIN' => 'SUPRA'
+    'USERNAME' => 'SUPRA-TS01$'
+    'USERPROFILE' => 'C:\\Windows\\system32\\config\\systemprofile'
+    'windir' => 'C:\\Windows'
+    'windows_tracing_flags' => '3'
+    'windows_tracing_logfile' => 'C:\\BVTBin\\Tests\\installpackage\\csilogfile.log'
+    'AP_PARENT_PID' => '1200'
+    '_FCGI_CLIENT_PID_' => '1412'
+    '_FCGI_MUTEX_' => '1284'
+    '_FCGI_NTAUTH_IMPERSONATE_' => '1'
+    '_FCGI_SHUTDOWN_EVENT_' => '1292'
+    'SCRIPT_NAME' => '/OpenPrint/web/index.php'
+    'REQUEST_URI' => '/OpenPrint/web/index.php?r=delivery-note/print&id=1406&uid=1&test=1'
+    'QUERY_STRING' => 'r=delivery-note/print&id=1406&uid=1&test=1'
+    'REQUEST_METHOD' => 'GET'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'REMOTE_PORT' => '30662'
+    'SCRIPT_FILENAME' => 'C:/Program Files (x86)/Zend/Apache2/htdocs/OpenPrint/web/index.php'
+    'SERVER_ADMIN' => 'admin@example.com'
+    'DOCUMENT_ROOT' => 'C:/Program Files (x86)/Zend/Apache2/htdocs'
+    'REMOTE_ADDR' => '192.168.9.10'
+    'SERVER_PORT' => '8080'
+    'SERVER_ADDR' => '192.168.9.10'
+    'SERVER_NAME' => '192.168.9.10'
+    'SERVER_SOFTWARE' => 'Apache/2.2.25 (Win32) mod_ssl/2.2.25 OpenSSL/0.9.8zb'
+    'SERVER_SIGNATURE' => ''
+    'WINDIR' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATH' => 'C:\\Program Files\\Common Files\\Microsoft Shared\\Windows Live;C:\\Program Files (x86)\\Common Files\\Microsoft Shared\\Windows Live;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\Windows Live\\Shared;C:\\Program Files (x86)\\Zend\\ZendServer\\share\\ZendFramework\\bin;C:\\Program Files (x86)\\Zend\\ZendServer\\bin;'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_COOKIE' => '_csrf=5b0bff1cf7da2f2c351f397b21f35f694057e100274caaed8ebc9ee919af4ba6s%3A32%3A%22CPX8WuyqHdfXrxAzfm1EVAOM_yJnzM4T%22%3B'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.5'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:33.0) Gecko/20100101 Firefox/33.0'
+    'HTTP_HOST' => '192.168.9.10:8080'
+    'FCGI_ROLE' => 'RESPONDER'
+    'PHP_SELF' => '/OpenPrint/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1417489954.4808
+    'REQUEST_TIME' => 1417489954
+]
+2014-12-02 10:24:58 [192.168.9.10][-][-][error][yii\base\ErrorException:4] exception 'yii\base\ErrorException' with message 'syntax error, unexpected '' => , );, params)'' (T_CONSTANT_ENCAPSED_STRING), expecting ',' or ';'' in C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\views\delivery-note\print\test\dn_batch_test.php:9
+Stack trace:
+#0 [internal function]: yii\base\ErrorHandler->handleFatalError()
+#1 {main}
+2014-12-02 10:24:58 [192.168.9.10][-][-][info][application] $_GET = [
+    'r' => 'delivery-note/print'
+    'id' => '1407'
+    'uid' => '23'
+    'test' => '1'
+]
+
+$_COOKIE = [
+    '_csrf' => '5b0bff1cf7da2f2c351f397b21f35f694057e100274caaed8ebc9ee919af4ba6s:32:\"CPX8WuyqHdfXrxAzfm1EVAOM_yJnzM4T\";'
+]
+
+$_SERVER = [
+    'ALLUSERSPROFILE' => 'C:\\ProgramData'
+    'APPDATA' => 'C:\\Windows\\system32\\config\\systemprofile\\AppData\\Roaming'
+    'CommonProgramFiles' => 'C:\\Program Files (x86)\\Common Files'
+    'CommonProgramFiles(x86)' => 'C:\\Program Files (x86)\\Common Files'
+    'CommonProgramW6432' => 'C:\\Program Files\\Common Files'
+    'COMPUTERNAME' => 'SUPRA-TS01'
+    'ComSpec' => 'C:\\Windows\\system32\\cmd.exe'
+    'FP_NO_HOST_CHECK' => 'NO'
+    'LOCALAPPDATA' => 'C:\\Windows\\system32\\config\\systemprofile\\AppData\\Local'
+    'NUMBER_OF_PROCESSORS' => '16'
+    'OS' => 'Windows_NT'
+    'Path' => 'C:\\Program Files\\Common Files\\Microsoft Shared\\Windows Live;C:\\Program Files (x86)\\Common Files\\Microsoft Shared\\Windows Live;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\Windows Live\\Shared;C:\\Program Files (x86)\\Zend\\ZendServer\\bin'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'PHPRC' => 'C:\\Program Files (x86)\\Zend\\ZendServer\\etc'
+    'PHP_FCGI_MAX_REQUESTS' => '10000'
+    'PROCESSOR_ARCHITECTURE' => 'x86'
+    'PROCESSOR_ARCHITEW6432' => 'AMD64'
+    'PROCESSOR_IDENTIFIER' => 'Intel64 Family 6 Model 26 Stepping 5, GenuineIntel'
+    'PROCESSOR_LEVEL' => '6'
+    'PROCESSOR_REVISION' => '1a05'
+    'ProgramData' => 'C:\\ProgramData'
+    'ProgramFiles' => 'C:\\Program Files (x86)'
+    'ProgramFiles(x86)' => 'C:\\Program Files (x86)'
+    'ProgramW6432' => 'C:\\Program Files'
+    'PSModulePath' => 'C:\\Windows\\system32\\WindowsPowerShell\\v1.0\\Modules\\'
+    'PUBLIC' => 'C:\\Users\\Public'
+    'QT_PLUGIN_PATH' => 'C:\\Program Files (x86)\\Zend\\ZendServer\\bin'
+    'SystemDrive' => 'C:'
+    'SystemRoot' => 'C:\\Windows'
+    'TEMP' => 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp'
+    'TMP' => 'C:\\Windows\\TEMP'
+    'USERDOMAIN' => 'SUPRA'
+    'USERNAME' => 'SUPRA-TS01$'
+    'USERPROFILE' => 'C:\\Windows\\system32\\config\\systemprofile'
+    'windir' => 'C:\\Windows'
+    'windows_tracing_flags' => '3'
+    'windows_tracing_logfile' => 'C:\\BVTBin\\Tests\\installpackage\\csilogfile.log'
+    'AP_PARENT_PID' => '1200'
+    '_FCGI_CLIENT_PID_' => '1412'
+    '_FCGI_MUTEX_' => '1284'
+    '_FCGI_NTAUTH_IMPERSONATE_' => '1'
+    '_FCGI_SHUTDOWN_EVENT_' => '1292'
+    'SCRIPT_NAME' => '/OpenPrint/web/index.php'
+    'REQUEST_URI' => '/OpenPrint/web/index.php?r=delivery-note/print&id=1407&uid=23&test=1'
+    'QUERY_STRING' => 'r=delivery-note/print&id=1407&uid=23&test=1'
+    'REQUEST_METHOD' => 'GET'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'REMOTE_PORT' => '33315'
+    'SCRIPT_FILENAME' => 'C:/Program Files (x86)/Zend/Apache2/htdocs/OpenPrint/web/index.php'
+    'SERVER_ADMIN' => 'admin@example.com'
+    'DOCUMENT_ROOT' => 'C:/Program Files (x86)/Zend/Apache2/htdocs'
+    'REMOTE_ADDR' => '192.168.9.10'
+    'SERVER_PORT' => '8080'
+    'SERVER_ADDR' => '192.168.9.10'
+    'SERVER_NAME' => '192.168.9.10'
+    'SERVER_SOFTWARE' => 'Apache/2.2.25 (Win32) mod_ssl/2.2.25 OpenSSL/0.9.8zb'
+    'SERVER_SIGNATURE' => ''
+    'WINDIR' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATH' => 'C:\\Program Files\\Common Files\\Microsoft Shared\\Windows Live;C:\\Program Files (x86)\\Common Files\\Microsoft Shared\\Windows Live;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\Windows Live\\Shared;C:\\Program Files (x86)\\Zend\\ZendServer\\share\\ZendFramework\\bin;C:\\Program Files (x86)\\Zend\\ZendServer\\bin;'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_COOKIE' => '_csrf=5b0bff1cf7da2f2c351f397b21f35f694057e100274caaed8ebc9ee919af4ba6s%3A32%3A%22CPX8WuyqHdfXrxAzfm1EVAOM_yJnzM4T%22%3B'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.5'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:33.0) Gecko/20100101 Firefox/33.0'
+    'HTTP_HOST' => '192.168.9.10:8080'
+    'FCGI_ROLE' => 'RESPONDER'
+    'PHP_SELF' => '/OpenPrint/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1417490698.3293
+    'REQUEST_TIME' => 1417490698
+]
+2014-12-02 15:34:53 [192.168.9.10][-][-][error][yii\base\UnknownPropertyException] exception 'yii\base\UnknownPropertyException' with message 'Getting unknown property: app\models\DeliveryNote::color' in C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Component.php:143
+Stack trace:
+#0 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\db\BaseActiveRecord.php(246): yii\base\Component->__get('color')
+#1 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\views\delivery-note\print\pack.php(173): yii\db\BaseActiveRecord->__get('color')
+#2 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\View.php(325): require('C:\\Program File...')
+#3 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\View.php(247): yii\base\View->renderPhpFile('C:\\Program File...', Array)
+#4 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\View.php(149): yii\base\View->renderFile('C:\\Program File...', Array, Object(app\controllers\DeliveryNoteController))
+#5 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Controller.php(367): yii\base\View->render('print/pack', Array, Object(app\controllers\DeliveryNoteController))
+#6 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\controllers\DeliveryNoteController.php(178): yii\base\Controller->render('print/pack', Array)
+#7 [internal function]: app\controllers\DeliveryNoteController->actionPrintPack('930', 1)
+#8 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\InlineAction.php(55): call_user_func_array(Array, Array)
+#9 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#10 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Module.php(455): yii\base\Controller->runAction('print-pack', Array)
+#11 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\web\Application.php(83): yii\base\Module->runAction('delivery-note/p...', Array)
+#12 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#13 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\web\index.php(12): yii\base\Application->run()
+#14 {main}
+2014-12-02 15:34:52 [192.168.9.10][-][-][info][application] $_GET = [
+    'r' => 'delivery-note/print-pack'
+    'id' => '930'
+    'uid' => '1'
+]
+
+$_COOKIE = [
+    '_csrf' => '5b0bff1cf7da2f2c351f397b21f35f694057e100274caaed8ebc9ee919af4ba6s:32:\"CPX8WuyqHdfXrxAzfm1EVAOM_yJnzM4T\";'
+]
+
+$_SERVER = [
+    'ALLUSERSPROFILE' => 'C:\\ProgramData'
+    'APPDATA' => 'C:\\Windows\\system32\\config\\systemprofile\\AppData\\Roaming'
+    'CommonProgramFiles' => 'C:\\Program Files (x86)\\Common Files'
+    'CommonProgramFiles(x86)' => 'C:\\Program Files (x86)\\Common Files'
+    'CommonProgramW6432' => 'C:\\Program Files\\Common Files'
+    'COMPUTERNAME' => 'SUPRA-TS01'
+    'ComSpec' => 'C:\\Windows\\system32\\cmd.exe'
+    'FP_NO_HOST_CHECK' => 'NO'
+    'LOCALAPPDATA' => 'C:\\Windows\\system32\\config\\systemprofile\\AppData\\Local'
+    'NUMBER_OF_PROCESSORS' => '16'
+    'OS' => 'Windows_NT'
+    'Path' => 'C:\\Program Files\\Common Files\\Microsoft Shared\\Windows Live;C:\\Program Files (x86)\\Common Files\\Microsoft Shared\\Windows Live;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\Windows Live\\Shared;C:\\Program Files (x86)\\Zend\\ZendServer\\bin'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'PHPRC' => 'C:\\Program Files (x86)\\Zend\\ZendServer\\etc'
+    'PHP_FCGI_MAX_REQUESTS' => '10000'
+    'PROCESSOR_ARCHITECTURE' => 'x86'
+    'PROCESSOR_ARCHITEW6432' => 'AMD64'
+    'PROCESSOR_IDENTIFIER' => 'Intel64 Family 6 Model 26 Stepping 5, GenuineIntel'
+    'PROCESSOR_LEVEL' => '6'
+    'PROCESSOR_REVISION' => '1a05'
+    'ProgramData' => 'C:\\ProgramData'
+    'ProgramFiles' => 'C:\\Program Files (x86)'
+    'ProgramFiles(x86)' => 'C:\\Program Files (x86)'
+    'ProgramW6432' => 'C:\\Program Files'
+    'PSModulePath' => 'C:\\Windows\\system32\\WindowsPowerShell\\v1.0\\Modules\\'
+    'PUBLIC' => 'C:\\Users\\Public'
+    'QT_PLUGIN_PATH' => 'C:\\Program Files (x86)\\Zend\\ZendServer\\bin'
+    'SystemDrive' => 'C:'
+    'SystemRoot' => 'C:\\Windows'
+    'TEMP' => 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp'
+    'TMP' => 'C:\\Windows\\TEMP'
+    'USERDOMAIN' => 'SUPRA'
+    'USERNAME' => 'SUPRA-TS01$'
+    'USERPROFILE' => 'C:\\Windows\\system32\\config\\systemprofile'
+    'windir' => 'C:\\Windows'
+    'windows_tracing_flags' => '3'
+    'windows_tracing_logfile' => 'C:\\BVTBin\\Tests\\installpackage\\csilogfile.log'
+    'AP_PARENT_PID' => '1200'
+    '_FCGI_CLIENT_PID_' => '1412'
+    '_FCGI_MUTEX_' => '1284'
+    '_FCGI_NTAUTH_IMPERSONATE_' => '1'
+    '_FCGI_SHUTDOWN_EVENT_' => '1292'
+    'SCRIPT_NAME' => '/OpenPrint/web/index.php'
+    'REQUEST_URI' => '/OpenPrint/web/index.php?r=delivery-note/print-pack&id=930&uid=1'
+    'QUERY_STRING' => 'r=delivery-note/print-pack&id=930&uid=1'
+    'REQUEST_METHOD' => 'GET'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'REMOTE_PORT' => '16790'
+    'SCRIPT_FILENAME' => 'C:/Program Files (x86)/Zend/Apache2/htdocs/OpenPrint/web/index.php'
+    'SERVER_ADMIN' => 'admin@example.com'
+    'DOCUMENT_ROOT' => 'C:/Program Files (x86)/Zend/Apache2/htdocs'
+    'REMOTE_ADDR' => '192.168.9.10'
+    'SERVER_PORT' => '8080'
+    'SERVER_ADDR' => '192.168.9.10'
+    'SERVER_NAME' => '192.168.9.10'
+    'SERVER_SOFTWARE' => 'Apache/2.2.25 (Win32) mod_ssl/2.2.25 OpenSSL/0.9.8zb'
+    'SERVER_SIGNATURE' => ''
+    'WINDIR' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATH' => 'C:\\Program Files\\Common Files\\Microsoft Shared\\Windows Live;C:\\Program Files (x86)\\Common Files\\Microsoft Shared\\Windows Live;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\Windows Live\\Shared;C:\\Program Files (x86)\\Zend\\ZendServer\\share\\ZendFramework\\bin;C:\\Program Files (x86)\\Zend\\ZendServer\\bin;'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_COOKIE' => '_csrf=5b0bff1cf7da2f2c351f397b21f35f694057e100274caaed8ebc9ee919af4ba6s%3A32%3A%22CPX8WuyqHdfXrxAzfm1EVAOM_yJnzM4T%22%3B'
+    'HTTP_REFERER' => 'http://192.168.9.26:10001/?db=LIVE_2014'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.5'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:33.0) Gecko/20100101 Firefox/33.0'
+    'HTTP_HOST' => '192.168.9.10:8080'
+    'FCGI_ROLE' => 'RESPONDER'
+    'PHP_SELF' => '/OpenPrint/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1417509292.6349
+    'REQUEST_TIME' => 1417509292
+]
+2014-12-04 09:00:05 [192.168.9.10][-][-][error][yii\base\ErrorException:8] exception 'yii\base\ErrorException' with message 'Trying to get property of non-object' in C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\views\delivery-note\print\pack.php:184
+Stack trace:
+#0 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\views\delivery-note\print\pack.php(184): yii\base\ErrorHandler->handleError(8, 'Trying to get p...', 'C:\\Program File...', 184, Array)
+#1 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\View.php(325): require('C:\\Program File...')
+#2 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\View.php(247): yii\base\View->renderPhpFile('C:\\Program File...', Array)
+#3 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\View.php(149): yii\base\View->renderFile('C:\\Program File...', Array, Object(app\controllers\DeliveryNoteController))
+#4 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Controller.php(367): yii\base\View->render('print/pack', Array, Object(app\controllers\DeliveryNoteController))
+#5 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\controllers\DeliveryNoteController.php(180): yii\base\Controller->render('print/pack', Array)
+#6 [internal function]: app\controllers\DeliveryNoteController->actionPrintPack('930', 'lq300')
+#7 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\InlineAction.php(55): call_user_func_array(Array, Array)
+#8 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#9 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Module.php(455): yii\base\Controller->runAction('print-pack', Array)
+#10 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\web\Application.php(83): yii\base\Module->runAction('delivery-note/p...', Array)
+#11 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#12 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\web\index.php(12): yii\base\Application->run()
+#13 {main}
+2014-12-04 09:00:05 [192.168.9.10][-][-][info][application] $_GET = [
+    'r' => 'delivery-note/print-pack'
+    'id' => '930'
+    'uid' => '1'
+    'printer' => 'lq300'
+]
+
+$_COOKIE = [
+    '_csrf' => '01845bd80cbb61fb6b3ab75fb8954146fca395a4868337ce8b077e1a2103e1bbs:32:\"GHUvk25N_6Ism0Mu4_uvdjIdjo-qJLlh\";'
+]
+
+$_SERVER = [
+    'ALLUSERSPROFILE' => 'C:\\ProgramData'
+    'APPDATA' => 'C:\\Windows\\system32\\config\\systemprofile\\AppData\\Roaming'
+    'CommonProgramFiles' => 'C:\\Program Files (x86)\\Common Files'
+    'CommonProgramFiles(x86)' => 'C:\\Program Files (x86)\\Common Files'
+    'CommonProgramW6432' => 'C:\\Program Files\\Common Files'
+    'COMPUTERNAME' => 'SUPRA-TS01'
+    'ComSpec' => 'C:\\Windows\\system32\\cmd.exe'
+    'FP_NO_HOST_CHECK' => 'NO'
+    'LOCALAPPDATA' => 'C:\\Windows\\system32\\config\\systemprofile\\AppData\\Local'
+    'NUMBER_OF_PROCESSORS' => '16'
+    'OS' => 'Windows_NT'
+    'Path' => 'C:\\Program Files\\Common Files\\Microsoft Shared\\Windows Live;C:\\Program Files (x86)\\Common Files\\Microsoft Shared\\Windows Live;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\Windows Live\\Shared;C:\\Program Files (x86)\\Zend\\ZendServer\\bin'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'PHPRC' => 'C:\\Program Files (x86)\\Zend\\ZendServer\\etc'
+    'PHP_FCGI_MAX_REQUESTS' => '10000'
+    'PROCESSOR_ARCHITECTURE' => 'x86'
+    'PROCESSOR_ARCHITEW6432' => 'AMD64'
+    'PROCESSOR_IDENTIFIER' => 'Intel64 Family 6 Model 26 Stepping 5, GenuineIntel'
+    'PROCESSOR_LEVEL' => '6'
+    'PROCESSOR_REVISION' => '1a05'
+    'ProgramData' => 'C:\\ProgramData'
+    'ProgramFiles' => 'C:\\Program Files (x86)'
+    'ProgramFiles(x86)' => 'C:\\Program Files (x86)'
+    'ProgramW6432' => 'C:\\Program Files'
+    'PSModulePath' => 'C:\\Windows\\system32\\WindowsPowerShell\\v1.0\\Modules\\'
+    'PUBLIC' => 'C:\\Users\\Public'
+    'QT_PLUGIN_PATH' => 'C:\\Program Files (x86)\\Zend\\ZendServer\\bin'
+    'SystemDrive' => 'C:'
+    'SystemRoot' => 'C:\\Windows'
+    'TEMP' => 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp'
+    'TMP' => 'C:\\Windows\\TEMP'
+    'USERDOMAIN' => 'SUPRA'
+    'USERNAME' => 'SUPRA-TS01$'
+    'USERPROFILE' => 'C:\\Windows\\system32\\config\\systemprofile'
+    'windir' => 'C:\\Windows'
+    'windows_tracing_flags' => '3'
+    'windows_tracing_logfile' => 'C:\\BVTBin\\Tests\\installpackage\\csilogfile.log'
+    'AP_PARENT_PID' => '1200'
+    '_FCGI_CLIENT_PID_' => '1412'
+    '_FCGI_MUTEX_' => '1872'
+    '_FCGI_NTAUTH_IMPERSONATE_' => '1'
+    '_FCGI_SHUTDOWN_EVENT_' => '1864'
+    'SCRIPT_NAME' => '/OpenPrint/web/index.php'
+    'REQUEST_URI' => '/OpenPrint/web/index.php?r=delivery-note/print-pack&id=930&uid=1&printer=lq300'
+    'QUERY_STRING' => 'r=delivery-note/print-pack&id=930&uid=1&printer=lq300'
+    'REQUEST_METHOD' => 'GET'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'REMOTE_PORT' => '40447'
+    'SCRIPT_FILENAME' => 'C:/Program Files (x86)/Zend/Apache2/htdocs/OpenPrint/web/index.php'
+    'SERVER_ADMIN' => 'admin@example.com'
+    'DOCUMENT_ROOT' => 'C:/Program Files (x86)/Zend/Apache2/htdocs'
+    'REMOTE_ADDR' => '192.168.9.10'
+    'SERVER_PORT' => '8080'
+    'SERVER_ADDR' => '192.168.9.10'
+    'SERVER_NAME' => '192.168.9.10'
+    'SERVER_SOFTWARE' => 'Apache/2.2.25 (Win32) mod_ssl/2.2.25 OpenSSL/0.9.8zb'
+    'SERVER_SIGNATURE' => ''
+    'WINDIR' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATH' => 'C:\\Program Files\\Common Files\\Microsoft Shared\\Windows Live;C:\\Program Files (x86)\\Common Files\\Microsoft Shared\\Windows Live;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\Windows Live\\Shared;C:\\Program Files (x86)\\Zend\\ZendServer\\share\\ZendFramework\\bin;C:\\Program Files (x86)\\Zend\\ZendServer\\bin;'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_COOKIE' => '_csrf=01845bd80cbb61fb6b3ab75fb8954146fca395a4868337ce8b077e1a2103e1bbs%3A32%3A%22GHUvk25N_6Ism0Mu4_uvdjIdjo-qJLlh%22%3B'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.5'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:33.0) Gecko/20100101 Firefox/33.0'
+    'HTTP_HOST' => '192.168.9.10:8080'
+    'FCGI_ROLE' => 'RESPONDER'
+    'PHP_SELF' => '/OpenPrint/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1417658405.2233
+    'REQUEST_TIME' => 1417658405
+]
+2014-12-04 10:15:55 [192.168.9.10][-][-][error][yii\base\UnknownMethodException] exception 'yii\base\UnknownMethodException' with message 'Calling unknown method: yii\web\Application::createUrl()' in C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Component.php:282
+Stack trace:
+#0 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\views\delivery-note\print\pack.php(166): yii\base\Component->__call('createUrl', Array)
+#1 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\views\delivery-note\print\pack.php(166): yii\web\Application->createUrl(Array)
+#2 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\View.php(325): require('C:\\Program File...')
+#3 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\View.php(247): yii\base\View->renderPhpFile('C:\\Program File...', Array)
+#4 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\View.php(149): yii\base\View->renderFile('C:\\Program File...', Array, Object(app\controllers\DeliveryNoteController))
+#5 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Controller.php(367): yii\base\View->render('print/pack', Array, Object(app\controllers\DeliveryNoteController))
+#6 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\controllers\DeliveryNoteController.php(180): yii\base\Controller->render('print/pack', Array)
+#7 [internal function]: app\controllers\DeliveryNoteController->actionPrintPack('930', 'lq300-hadi')
+#8 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\InlineAction.php(55): call_user_func_array(Array, Array)
+#9 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#10 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Module.php(455): yii\base\Controller->runAction('print-pack', Array)
+#11 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\web\Application.php(83): yii\base\Module->runAction('delivery-note/p...', Array)
+#12 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#13 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\web\index.php(12): yii\base\Application->run()
+#14 {main}
+2014-12-04 10:15:55 [192.168.9.10][-][-][info][application] $_GET = [
+    'r' => 'delivery-note/print-pack'
+    'id' => '930'
+    'uid' => '1'
+]
+
+$_COOKIE = [
+    '_csrf' => '01845bd80cbb61fb6b3ab75fb8954146fca395a4868337ce8b077e1a2103e1bbs:32:\"GHUvk25N_6Ism0Mu4_uvdjIdjo-qJLlh\";'
+]
+
+$_SERVER = [
+    'ALLUSERSPROFILE' => 'C:\\ProgramData'
+    'APPDATA' => 'C:\\Windows\\system32\\config\\systemprofile\\AppData\\Roaming'
+    'CommonProgramFiles' => 'C:\\Program Files (x86)\\Common Files'
+    'CommonProgramFiles(x86)' => 'C:\\Program Files (x86)\\Common Files'
+    'CommonProgramW6432' => 'C:\\Program Files\\Common Files'
+    'COMPUTERNAME' => 'SUPRA-TS01'
+    'ComSpec' => 'C:\\Windows\\system32\\cmd.exe'
+    'FP_NO_HOST_CHECK' => 'NO'
+    'LOCALAPPDATA' => 'C:\\Windows\\system32\\config\\systemprofile\\AppData\\Local'
+    'NUMBER_OF_PROCESSORS' => '16'
+    'OS' => 'Windows_NT'
+    'Path' => 'C:\\Program Files\\Common Files\\Microsoft Shared\\Windows Live;C:\\Program Files (x86)\\Common Files\\Microsoft Shared\\Windows Live;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\Windows Live\\Shared;C:\\Program Files (x86)\\Zend\\ZendServer\\bin'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'PHPRC' => 'C:\\Program Files (x86)\\Zend\\ZendServer\\etc'
+    'PHP_FCGI_MAX_REQUESTS' => '10000'
+    'PROCESSOR_ARCHITECTURE' => 'x86'
+    'PROCESSOR_ARCHITEW6432' => 'AMD64'
+    'PROCESSOR_IDENTIFIER' => 'Intel64 Family 6 Model 26 Stepping 5, GenuineIntel'
+    'PROCESSOR_LEVEL' => '6'
+    'PROCESSOR_REVISION' => '1a05'
+    'ProgramData' => 'C:\\ProgramData'
+    'ProgramFiles' => 'C:\\Program Files (x86)'
+    'ProgramFiles(x86)' => 'C:\\Program Files (x86)'
+    'ProgramW6432' => 'C:\\Program Files'
+    'PSModulePath' => 'C:\\Windows\\system32\\WindowsPowerShell\\v1.0\\Modules\\'
+    'PUBLIC' => 'C:\\Users\\Public'
+    'QT_PLUGIN_PATH' => 'C:\\Program Files (x86)\\Zend\\ZendServer\\bin'
+    'SystemDrive' => 'C:'
+    'SystemRoot' => 'C:\\Windows'
+    'TEMP' => 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp'
+    'TMP' => 'C:\\Windows\\TEMP'
+    'USERDOMAIN' => 'SUPRA'
+    'USERNAME' => 'SUPRA-TS01$'
+    'USERPROFILE' => 'C:\\Windows\\system32\\config\\systemprofile'
+    'windir' => 'C:\\Windows'
+    'windows_tracing_flags' => '3'
+    'windows_tracing_logfile' => 'C:\\BVTBin\\Tests\\installpackage\\csilogfile.log'
+    'AP_PARENT_PID' => '1200'
+    '_FCGI_CLIENT_PID_' => '1412'
+    '_FCGI_MUTEX_' => '1244'
+    '_FCGI_NTAUTH_IMPERSONATE_' => '1'
+    '_FCGI_SHUTDOWN_EVENT_' => '1228'
+    'SCRIPT_NAME' => '/OpenPrint/web/index.php'
+    'REQUEST_URI' => '/OpenPrint/web/index.php?r=delivery-note/print-pack&id=930&uid=1'
+    'QUERY_STRING' => 'r=delivery-note/print-pack&id=930&uid=1'
+    'REQUEST_METHOD' => 'GET'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'REMOTE_PORT' => '52762'
+    'SCRIPT_FILENAME' => 'C:/Program Files (x86)/Zend/Apache2/htdocs/OpenPrint/web/index.php'
+    'SERVER_ADMIN' => 'admin@example.com'
+    'DOCUMENT_ROOT' => 'C:/Program Files (x86)/Zend/Apache2/htdocs'
+    'REMOTE_ADDR' => '192.168.9.10'
+    'SERVER_PORT' => '8080'
+    'SERVER_ADDR' => '192.168.9.10'
+    'SERVER_NAME' => '192.168.9.10'
+    'SERVER_SOFTWARE' => 'Apache/2.2.25 (Win32) mod_ssl/2.2.25 OpenSSL/0.9.8zb'
+    'SERVER_SIGNATURE' => ''
+    'WINDIR' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATH' => 'C:\\Program Files\\Common Files\\Microsoft Shared\\Windows Live;C:\\Program Files (x86)\\Common Files\\Microsoft Shared\\Windows Live;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\Windows Live\\Shared;C:\\Program Files (x86)\\Zend\\ZendServer\\share\\ZendFramework\\bin;C:\\Program Files (x86)\\Zend\\ZendServer\\bin;'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_COOKIE' => '_csrf=01845bd80cbb61fb6b3ab75fb8954146fca395a4868337ce8b077e1a2103e1bbs%3A32%3A%22GHUvk25N_6Ism0Mu4_uvdjIdjo-qJLlh%22%3B'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.5'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:33.0) Gecko/20100101 Firefox/33.0'
+    'HTTP_HOST' => '192.168.9.10:8080'
+    'FCGI_ROLE' => 'RESPONDER'
+    'PHP_SELF' => '/OpenPrint/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1417662955.7316
+    'REQUEST_TIME' => 1417662955
+]
+2014-12-04 10:20:56 [192.168.9.10][-][-][error][yii\base\UnknownMethodException] exception 'yii\base\UnknownMethodException' with message 'Calling unknown method: yii\web\Request::getParam()' in C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Component.php:282
+Stack trace:
+#0 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\views\delivery-note\print\pack.php(169): yii\base\Component->__call('getParam', Array)
+#1 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\views\delivery-note\print\pack.php(169): yii\web\Request->getParam('uid')
+#2 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\View.php(325): require('C:\\Program File...')
+#3 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\View.php(247): yii\base\View->renderPhpFile('C:\\Program File...', Array)
+#4 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\View.php(149): yii\base\View->renderFile('C:\\Program File...', Array, Object(app\controllers\DeliveryNoteController))
+#5 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Controller.php(367): yii\base\View->render('print/pack', Array, Object(app\controllers\DeliveryNoteController))
+#6 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\controllers\DeliveryNoteController.php(180): yii\base\Controller->render('print/pack', Array)
+#7 [internal function]: app\controllers\DeliveryNoteController->actionPrintPack('930', 'lq300-hadi')
+#8 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\InlineAction.php(55): call_user_func_array(Array, Array)
+#9 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#10 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Module.php(455): yii\base\Controller->runAction('print-pack', Array)
+#11 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\web\Application.php(83): yii\base\Module->runAction('delivery-note/p...', Array)
+#12 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#13 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\web\index.php(12): yii\base\Application->run()
+#14 {main}
+2014-12-04 10:20:56 [192.168.9.10][-][-][info][application] $_GET = [
+    'r' => 'delivery-note/print-pack'
+    'id' => '930'
+    'uid' => '1'
+]
+
+$_COOKIE = [
+    '_csrf' => '01845bd80cbb61fb6b3ab75fb8954146fca395a4868337ce8b077e1a2103e1bbs:32:\"GHUvk25N_6Ism0Mu4_uvdjIdjo-qJLlh\";'
+]
+
+$_SERVER = [
+    'ALLUSERSPROFILE' => 'C:\\ProgramData'
+    'APPDATA' => 'C:\\Windows\\system32\\config\\systemprofile\\AppData\\Roaming'
+    'CommonProgramFiles' => 'C:\\Program Files (x86)\\Common Files'
+    'CommonProgramFiles(x86)' => 'C:\\Program Files (x86)\\Common Files'
+    'CommonProgramW6432' => 'C:\\Program Files\\Common Files'
+    'COMPUTERNAME' => 'SUPRA-TS01'
+    'ComSpec' => 'C:\\Windows\\system32\\cmd.exe'
+    'FP_NO_HOST_CHECK' => 'NO'
+    'LOCALAPPDATA' => 'C:\\Windows\\system32\\config\\systemprofile\\AppData\\Local'
+    'NUMBER_OF_PROCESSORS' => '16'
+    'OS' => 'Windows_NT'
+    'Path' => 'C:\\Program Files\\Common Files\\Microsoft Shared\\Windows Live;C:\\Program Files (x86)\\Common Files\\Microsoft Shared\\Windows Live;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\Windows Live\\Shared;C:\\Program Files (x86)\\Zend\\ZendServer\\bin'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'PHPRC' => 'C:\\Program Files (x86)\\Zend\\ZendServer\\etc'
+    'PHP_FCGI_MAX_REQUESTS' => '10000'
+    'PROCESSOR_ARCHITECTURE' => 'x86'
+    'PROCESSOR_ARCHITEW6432' => 'AMD64'
+    'PROCESSOR_IDENTIFIER' => 'Intel64 Family 6 Model 26 Stepping 5, GenuineIntel'
+    'PROCESSOR_LEVEL' => '6'
+    'PROCESSOR_REVISION' => '1a05'
+    'ProgramData' => 'C:\\ProgramData'
+    'ProgramFiles' => 'C:\\Program Files (x86)'
+    'ProgramFiles(x86)' => 'C:\\Program Files (x86)'
+    'ProgramW6432' => 'C:\\Program Files'
+    'PSModulePath' => 'C:\\Windows\\system32\\WindowsPowerShell\\v1.0\\Modules\\'
+    'PUBLIC' => 'C:\\Users\\Public'
+    'QT_PLUGIN_PATH' => 'C:\\Program Files (x86)\\Zend\\ZendServer\\bin'
+    'SystemDrive' => 'C:'
+    'SystemRoot' => 'C:\\Windows'
+    'TEMP' => 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp'
+    'TMP' => 'C:\\Windows\\TEMP'
+    'USERDOMAIN' => 'SUPRA'
+    'USERNAME' => 'SUPRA-TS01$'
+    'USERPROFILE' => 'C:\\Windows\\system32\\config\\systemprofile'
+    'windir' => 'C:\\Windows'
+    'windows_tracing_flags' => '3'
+    'windows_tracing_logfile' => 'C:\\BVTBin\\Tests\\installpackage\\csilogfile.log'
+    'AP_PARENT_PID' => '1200'
+    '_FCGI_CLIENT_PID_' => '1412'
+    '_FCGI_MUTEX_' => '1912'
+    '_FCGI_NTAUTH_IMPERSONATE_' => '1'
+    '_FCGI_SHUTDOWN_EVENT_' => '1904'
+    'SCRIPT_NAME' => '/OpenPrint/web/index.php'
+    'REQUEST_URI' => '/OpenPrint/web/index.php?r=delivery-note/print-pack&id=930&uid=1'
+    'QUERY_STRING' => 'r=delivery-note/print-pack&id=930&uid=1'
+    'REQUEST_METHOD' => 'GET'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'REMOTE_PORT' => '53559'
+    'SCRIPT_FILENAME' => 'C:/Program Files (x86)/Zend/Apache2/htdocs/OpenPrint/web/index.php'
+    'SERVER_ADMIN' => 'admin@example.com'
+    'DOCUMENT_ROOT' => 'C:/Program Files (x86)/Zend/Apache2/htdocs'
+    'REMOTE_ADDR' => '192.168.9.10'
+    'SERVER_PORT' => '8080'
+    'SERVER_ADDR' => '192.168.9.10'
+    'SERVER_NAME' => '192.168.9.10'
+    'SERVER_SOFTWARE' => 'Apache/2.2.25 (Win32) mod_ssl/2.2.25 OpenSSL/0.9.8zb'
+    'SERVER_SIGNATURE' => ''
+    'WINDIR' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATH' => 'C:\\Program Files\\Common Files\\Microsoft Shared\\Windows Live;C:\\Program Files (x86)\\Common Files\\Microsoft Shared\\Windows Live;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\Windows Live\\Shared;C:\\Program Files (x86)\\Zend\\ZendServer\\share\\ZendFramework\\bin;C:\\Program Files (x86)\\Zend\\ZendServer\\bin;'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_COOKIE' => '_csrf=01845bd80cbb61fb6b3ab75fb8954146fca395a4868337ce8b077e1a2103e1bbs%3A32%3A%22GHUvk25N_6Ism0Mu4_uvdjIdjo-qJLlh%22%3B'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.5'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:33.0) Gecko/20100101 Firefox/33.0'
+    'HTTP_HOST' => '192.168.9.10:8080'
+    'FCGI_ROLE' => 'RESPONDER'
+    'PHP_SELF' => '/OpenPrint/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1417663256.3098
+    'REQUEST_TIME' => 1417663256
+]
+2014-12-04 10:23:52 [192.168.9.10][][-][error][yii\web\HttpException:400] exception 'yii\web\BadRequestHttpException' with message 'Unable to verify your data submission.' in C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\web\Controller.php:110
+Stack trace:
+#0 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Controller.php(149): yii\web\Controller->beforeAction(Object(yii\base\InlineAction))
+#1 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Module.php(455): yii\base\Controller->runAction('print-pack', Array)
+#2 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\web\Application.php(83): yii\base\Module->runAction('delivery-note/p...', Array)
+#3 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#4 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\web\index.php(12): yii\base\Application->run()
+#5 {main}
+2014-12-04 10:23:52 [192.168.9.10][][-][info][application] $_GET = [
+    'r' => 'delivery-note/print-pack'
+]
+
+$_POST = [
+    'id' => '930'
+    'uid' => '1'
+    'printer' => 'lx300-novri'
+]
+
+$_COOKIE = [
+    '_csrf' => '01845bd80cbb61fb6b3ab75fb8954146fca395a4868337ce8b077e1a2103e1bbs:32:\"GHUvk25N_6Ism0Mu4_uvdjIdjo-qJLlh\";'
+]
+
+$_SERVER = [
+    'ALLUSERSPROFILE' => 'C:\\ProgramData'
+    'APPDATA' => 'C:\\Windows\\system32\\config\\systemprofile\\AppData\\Roaming'
+    'CommonProgramFiles' => 'C:\\Program Files (x86)\\Common Files'
+    'CommonProgramFiles(x86)' => 'C:\\Program Files (x86)\\Common Files'
+    'CommonProgramW6432' => 'C:\\Program Files\\Common Files'
+    'COMPUTERNAME' => 'SUPRA-TS01'
+    'ComSpec' => 'C:\\Windows\\system32\\cmd.exe'
+    'FP_NO_HOST_CHECK' => 'NO'
+    'LOCALAPPDATA' => 'C:\\Windows\\system32\\config\\systemprofile\\AppData\\Local'
+    'NUMBER_OF_PROCESSORS' => '16'
+    'OS' => 'Windows_NT'
+    'Path' => 'C:\\Program Files\\Common Files\\Microsoft Shared\\Windows Live;C:\\Program Files (x86)\\Common Files\\Microsoft Shared\\Windows Live;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\Windows Live\\Shared;C:\\Program Files (x86)\\Zend\\ZendServer\\bin'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'PHPRC' => 'C:\\Program Files (x86)\\Zend\\ZendServer\\etc'
+    'PHP_FCGI_MAX_REQUESTS' => '10000'
+    'PROCESSOR_ARCHITECTURE' => 'x86'
+    'PROCESSOR_ARCHITEW6432' => 'AMD64'
+    'PROCESSOR_IDENTIFIER' => 'Intel64 Family 6 Model 26 Stepping 5, GenuineIntel'
+    'PROCESSOR_LEVEL' => '6'
+    'PROCESSOR_REVISION' => '1a05'
+    'ProgramData' => 'C:\\ProgramData'
+    'ProgramFiles' => 'C:\\Program Files (x86)'
+    'ProgramFiles(x86)' => 'C:\\Program Files (x86)'
+    'ProgramW6432' => 'C:\\Program Files'
+    'PSModulePath' => 'C:\\Windows\\system32\\WindowsPowerShell\\v1.0\\Modules\\'
+    'PUBLIC' => 'C:\\Users\\Public'
+    'QT_PLUGIN_PATH' => 'C:\\Program Files (x86)\\Zend\\ZendServer\\bin'
+    'SystemDrive' => 'C:'
+    'SystemRoot' => 'C:\\Windows'
+    'TEMP' => 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp'
+    'TMP' => 'C:\\Windows\\TEMP'
+    'USERDOMAIN' => 'SUPRA'
+    'USERNAME' => 'SUPRA-TS01$'
+    'USERPROFILE' => 'C:\\Windows\\system32\\config\\systemprofile'
+    'windir' => 'C:\\Windows'
+    'windows_tracing_flags' => '3'
+    'windows_tracing_logfile' => 'C:\\BVTBin\\Tests\\installpackage\\csilogfile.log'
+    'AP_PARENT_PID' => '1200'
+    '_FCGI_CLIENT_PID_' => '1412'
+    '_FCGI_MUTEX_' => '1244'
+    '_FCGI_NTAUTH_IMPERSONATE_' => '1'
+    '_FCGI_SHUTDOWN_EVENT_' => '1228'
+    'SCRIPT_NAME' => '/OpenPrint/web/index.php'
+    'REQUEST_URI' => '/OpenPrint/web/index.php?r=delivery-note%2Fprint-pack'
+    'QUERY_STRING' => 'r=delivery-note%2Fprint-pack'
+    'REQUEST_METHOD' => 'POST'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'REMOTE_PORT' => '53988'
+    'SCRIPT_FILENAME' => 'C:/Program Files (x86)/Zend/Apache2/htdocs/OpenPrint/web/index.php'
+    'SERVER_ADMIN' => 'admin@example.com'
+    'DOCUMENT_ROOT' => 'C:/Program Files (x86)/Zend/Apache2/htdocs'
+    'REMOTE_ADDR' => '192.168.9.10'
+    'SERVER_PORT' => '8080'
+    'SERVER_ADDR' => '192.168.9.10'
+    'SERVER_NAME' => '192.168.9.10'
+    'SERVER_SOFTWARE' => 'Apache/2.2.25 (Win32) mod_ssl/2.2.25 OpenSSL/0.9.8zb'
+    'SERVER_SIGNATURE' => ''
+    'WINDIR' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATH' => 'C:\\Program Files\\Common Files\\Microsoft Shared\\Windows Live;C:\\Program Files (x86)\\Common Files\\Microsoft Shared\\Windows Live;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\Windows Live\\Shared;C:\\Program Files (x86)\\Zend\\ZendServer\\share\\ZendFramework\\bin;C:\\Program Files (x86)\\Zend\\ZendServer\\bin;'
+    'CONTENT_LENGTH' => '32'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_COOKIE' => '_csrf=01845bd80cbb61fb6b3ab75fb8954146fca395a4868337ce8b077e1a2103e1bbs%3A32%3A%22GHUvk25N_6Ism0Mu4_uvdjIdjo-qJLlh%22%3B'
+    'HTTP_REFERER' => 'http://192.168.9.10:8080/OpenPrint/web/index.php?r=delivery-note/print-pack&id=930&uid=1'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.5'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:33.0) Gecko/20100101 Firefox/33.0'
+    'HTTP_HOST' => '192.168.9.10:8080'
+    'FCGI_ROLE' => 'RESPONDER'
+    'PHP_SELF' => '/OpenPrint/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1417663432.8049
+    'REQUEST_TIME' => 1417663432
+]
+2014-12-04 10:24:05 [192.168.9.10][][-][error][yii\web\HttpException:400] exception 'yii\web\BadRequestHttpException' with message 'Unable to verify your data submission.' in C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\web\Controller.php:110
+Stack trace:
+#0 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Controller.php(149): yii\web\Controller->beforeAction(Object(yii\base\InlineAction))
+#1 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Module.php(455): yii\base\Controller->runAction('print-pack', Array)
+#2 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\web\Application.php(83): yii\base\Module->runAction('delivery-note/p...', Array)
+#3 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#4 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\web\index.php(12): yii\base\Application->run()
+#5 {main}
+2014-12-04 10:24:05 [192.168.9.10][][-][info][application] $_GET = [
+    'r' => 'delivery-note/print-pack'
+]
+
+$_POST = [
+    'id' => '930'
+    'uid' => '1'
+    'printer' => 'lq300-hadi'
+]
+
+$_COOKIE = [
+    '_csrf' => '01845bd80cbb61fb6b3ab75fb8954146fca395a4868337ce8b077e1a2103e1bbs:32:\"GHUvk25N_6Ism0Mu4_uvdjIdjo-qJLlh\";'
+]
+
+$_SERVER = [
+    'ALLUSERSPROFILE' => 'C:\\ProgramData'
+    'APPDATA' => 'C:\\Windows\\system32\\config\\systemprofile\\AppData\\Roaming'
+    'CommonProgramFiles' => 'C:\\Program Files (x86)\\Common Files'
+    'CommonProgramFiles(x86)' => 'C:\\Program Files (x86)\\Common Files'
+    'CommonProgramW6432' => 'C:\\Program Files\\Common Files'
+    'COMPUTERNAME' => 'SUPRA-TS01'
+    'ComSpec' => 'C:\\Windows\\system32\\cmd.exe'
+    'FP_NO_HOST_CHECK' => 'NO'
+    'LOCALAPPDATA' => 'C:\\Windows\\system32\\config\\systemprofile\\AppData\\Local'
+    'NUMBER_OF_PROCESSORS' => '16'
+    'OS' => 'Windows_NT'
+    'Path' => 'C:\\Program Files\\Common Files\\Microsoft Shared\\Windows Live;C:\\Program Files (x86)\\Common Files\\Microsoft Shared\\Windows Live;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\Windows Live\\Shared;C:\\Program Files (x86)\\Zend\\ZendServer\\bin'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'PHPRC' => 'C:\\Program Files (x86)\\Zend\\ZendServer\\etc'
+    'PHP_FCGI_MAX_REQUESTS' => '10000'
+    'PROCESSOR_ARCHITECTURE' => 'x86'
+    'PROCESSOR_ARCHITEW6432' => 'AMD64'
+    'PROCESSOR_IDENTIFIER' => 'Intel64 Family 6 Model 26 Stepping 5, GenuineIntel'
+    'PROCESSOR_LEVEL' => '6'
+    'PROCESSOR_REVISION' => '1a05'
+    'ProgramData' => 'C:\\ProgramData'
+    'ProgramFiles' => 'C:\\Program Files (x86)'
+    'ProgramFiles(x86)' => 'C:\\Program Files (x86)'
+    'ProgramW6432' => 'C:\\Program Files'
+    'PSModulePath' => 'C:\\Windows\\system32\\WindowsPowerShell\\v1.0\\Modules\\'
+    'PUBLIC' => 'C:\\Users\\Public'
+    'QT_PLUGIN_PATH' => 'C:\\Program Files (x86)\\Zend\\ZendServer\\bin'
+    'SystemDrive' => 'C:'
+    'SystemRoot' => 'C:\\Windows'
+    'TEMP' => 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp'
+    'TMP' => 'C:\\Windows\\TEMP'
+    'USERDOMAIN' => 'SUPRA'
+    'USERNAME' => 'SUPRA-TS01$'
+    'USERPROFILE' => 'C:\\Windows\\system32\\config\\systemprofile'
+    'windir' => 'C:\\Windows'
+    'windows_tracing_flags' => '3'
+    'windows_tracing_logfile' => 'C:\\BVTBin\\Tests\\installpackage\\csilogfile.log'
+    'AP_PARENT_PID' => '1200'
+    '_FCGI_CLIENT_PID_' => '1412'
+    '_FCGI_MUTEX_' => '852'
+    '_FCGI_NTAUTH_IMPERSONATE_' => '1'
+    '_FCGI_SHUTDOWN_EVENT_' => '1776'
+    'SCRIPT_NAME' => '/OpenPrint/web/index.php'
+    'REQUEST_URI' => '/OpenPrint/web/index.php?r=delivery-note%2Fprint-pack'
+    'QUERY_STRING' => 'r=delivery-note%2Fprint-pack'
+    'REQUEST_METHOD' => 'POST'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'REMOTE_PORT' => '54124'
+    'SCRIPT_FILENAME' => 'C:/Program Files (x86)/Zend/Apache2/htdocs/OpenPrint/web/index.php'
+    'SERVER_ADMIN' => 'admin@example.com'
+    'DOCUMENT_ROOT' => 'C:/Program Files (x86)/Zend/Apache2/htdocs'
+    'REMOTE_ADDR' => '192.168.9.10'
+    'SERVER_PORT' => '8080'
+    'SERVER_ADDR' => '192.168.9.10'
+    'SERVER_NAME' => '192.168.9.10'
+    'SERVER_SOFTWARE' => 'Apache/2.2.25 (Win32) mod_ssl/2.2.25 OpenSSL/0.9.8zb'
+    'SERVER_SIGNATURE' => ''
+    'WINDIR' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATH' => 'C:\\Program Files\\Common Files\\Microsoft Shared\\Windows Live;C:\\Program Files (x86)\\Common Files\\Microsoft Shared\\Windows Live;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\Windows Live\\Shared;C:\\Program Files (x86)\\Zend\\ZendServer\\share\\ZendFramework\\bin;C:\\Program Files (x86)\\Zend\\ZendServer\\bin;'
+    'CONTENT_LENGTH' => '31'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_COOKIE' => '_csrf=01845bd80cbb61fb6b3ab75fb8954146fca395a4868337ce8b077e1a2103e1bbs%3A32%3A%22GHUvk25N_6Ism0Mu4_uvdjIdjo-qJLlh%22%3B'
+    'HTTP_REFERER' => 'http://192.168.9.10:8080/OpenPrint/web/index.php?r=delivery-note/print-pack&id=930&uid=1'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.5'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:33.0) Gecko/20100101 Firefox/33.0'
+    'HTTP_HOST' => '192.168.9.10:8080'
+    'FCGI_ROLE' => 'RESPONDER'
+    'PHP_SELF' => '/OpenPrint/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1417663445.0026
+    'REQUEST_TIME' => 1417663445
+]
+2014-12-04 10:26:45 [192.168.9.10][][-][error][yii\web\HttpException:400] exception 'yii\web\BadRequestHttpException' with message 'Unable to verify your data submission.' in C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\web\Controller.php:110
+Stack trace:
+#0 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Controller.php(149): yii\web\Controller->beforeAction(Object(yii\base\InlineAction))
+#1 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Module.php(455): yii\base\Controller->runAction('print-pack', Array)
+#2 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\web\Application.php(83): yii\base\Module->runAction('delivery-note/p...', Array)
+#3 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#4 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\web\index.php(12): yii\base\Application->run()
+#5 {main}
+2014-12-04 10:26:45 [192.168.9.10][][-][info][application] $_GET = [
+    'r' => 'delivery-note/print-pack'
+]
+
+$_POST = [
+    'id' => '930'
+    'uid' => '1'
+    'printer' => 'lx300-novri'
+]
+
+$_COOKIE = [
+    '_csrf' => '01845bd80cbb61fb6b3ab75fb8954146fca395a4868337ce8b077e1a2103e1bbs:32:\"GHUvk25N_6Ism0Mu4_uvdjIdjo-qJLlh\";'
+]
+
+$_SERVER = [
+    'ALLUSERSPROFILE' => 'C:\\ProgramData'
+    'APPDATA' => 'C:\\Windows\\system32\\config\\systemprofile\\AppData\\Roaming'
+    'CommonProgramFiles' => 'C:\\Program Files (x86)\\Common Files'
+    'CommonProgramFiles(x86)' => 'C:\\Program Files (x86)\\Common Files'
+    'CommonProgramW6432' => 'C:\\Program Files\\Common Files'
+    'COMPUTERNAME' => 'SUPRA-TS01'
+    'ComSpec' => 'C:\\Windows\\system32\\cmd.exe'
+    'FP_NO_HOST_CHECK' => 'NO'
+    'LOCALAPPDATA' => 'C:\\Windows\\system32\\config\\systemprofile\\AppData\\Local'
+    'NUMBER_OF_PROCESSORS' => '16'
+    'OS' => 'Windows_NT'
+    'Path' => 'C:\\Program Files\\Common Files\\Microsoft Shared\\Windows Live;C:\\Program Files (x86)\\Common Files\\Microsoft Shared\\Windows Live;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\Windows Live\\Shared;C:\\Program Files (x86)\\Zend\\ZendServer\\bin'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'PHPRC' => 'C:\\Program Files (x86)\\Zend\\ZendServer\\etc'
+    'PHP_FCGI_MAX_REQUESTS' => '10000'
+    'PROCESSOR_ARCHITECTURE' => 'x86'
+    'PROCESSOR_ARCHITEW6432' => 'AMD64'
+    'PROCESSOR_IDENTIFIER' => 'Intel64 Family 6 Model 26 Stepping 5, GenuineIntel'
+    'PROCESSOR_LEVEL' => '6'
+    'PROCESSOR_REVISION' => '1a05'
+    'ProgramData' => 'C:\\ProgramData'
+    'ProgramFiles' => 'C:\\Program Files (x86)'
+    'ProgramFiles(x86)' => 'C:\\Program Files (x86)'
+    'ProgramW6432' => 'C:\\Program Files'
+    'PSModulePath' => 'C:\\Windows\\system32\\WindowsPowerShell\\v1.0\\Modules\\'
+    'PUBLIC' => 'C:\\Users\\Public'
+    'QT_PLUGIN_PATH' => 'C:\\Program Files (x86)\\Zend\\ZendServer\\bin'
+    'SystemDrive' => 'C:'
+    'SystemRoot' => 'C:\\Windows'
+    'TEMP' => 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp'
+    'TMP' => 'C:\\Windows\\TEMP'
+    'USERDOMAIN' => 'SUPRA'
+    'USERNAME' => 'SUPRA-TS01$'
+    'USERPROFILE' => 'C:\\Windows\\system32\\config\\systemprofile'
+    'windir' => 'C:\\Windows'
+    'windows_tracing_flags' => '3'
+    'windows_tracing_logfile' => 'C:\\BVTBin\\Tests\\installpackage\\csilogfile.log'
+    'AP_PARENT_PID' => '1200'
+    '_FCGI_CLIENT_PID_' => '1412'
+    '_FCGI_MUTEX_' => '1892'
+    '_FCGI_NTAUTH_IMPERSONATE_' => '1'
+    '_FCGI_SHUTDOWN_EVENT_' => '1888'
+    'SCRIPT_NAME' => '/OpenPrint/web/index.php'
+    'REQUEST_URI' => '/OpenPrint/web/index.php?r=delivery-note%2Fprint-pack'
+    'QUERY_STRING' => 'r=delivery-note%2Fprint-pack'
+    'REQUEST_METHOD' => 'POST'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'REMOTE_PORT' => '54754'
+    'SCRIPT_FILENAME' => 'C:/Program Files (x86)/Zend/Apache2/htdocs/OpenPrint/web/index.php'
+    'SERVER_ADMIN' => 'admin@example.com'
+    'DOCUMENT_ROOT' => 'C:/Program Files (x86)/Zend/Apache2/htdocs'
+    'REMOTE_ADDR' => '192.168.9.10'
+    'SERVER_PORT' => '8080'
+    'SERVER_ADDR' => '192.168.9.10'
+    'SERVER_NAME' => '192.168.9.10'
+    'SERVER_SOFTWARE' => 'Apache/2.2.25 (Win32) mod_ssl/2.2.25 OpenSSL/0.9.8zb'
+    'SERVER_SIGNATURE' => ''
+    'WINDIR' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATH' => 'C:\\Program Files\\Common Files\\Microsoft Shared\\Windows Live;C:\\Program Files (x86)\\Common Files\\Microsoft Shared\\Windows Live;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\Windows Live\\Shared;C:\\Program Files (x86)\\Zend\\ZendServer\\share\\ZendFramework\\bin;C:\\Program Files (x86)\\Zend\\ZendServer\\bin;'
+    'CONTENT_LENGTH' => '32'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_COOKIE' => '_csrf=01845bd80cbb61fb6b3ab75fb8954146fca395a4868337ce8b077e1a2103e1bbs%3A32%3A%22GHUvk25N_6Ism0Mu4_uvdjIdjo-qJLlh%22%3B'
+    'HTTP_REFERER' => 'http://192.168.9.10:8080/OpenPrint/web/index.php?r=delivery-note/print-pack&id=930&uid=1'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.5'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:33.0) Gecko/20100101 Firefox/33.0'
+    'HTTP_HOST' => '192.168.9.10:8080'
+    'FCGI_ROLE' => 'RESPONDER'
+    'PHP_SELF' => '/OpenPrint/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1417663605.3418
+    'REQUEST_TIME' => 1417663605
+]
+2014-12-04 10:44:24 [192.168.9.10][-][-][error][yii\base\ErrorException:8] exception 'yii\base\ErrorException' with message 'Trying to get property of non-object' in C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\views\delivery-note\print\pack.php:213
+Stack trace:
+#0 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\views\delivery-note\print\pack.php(213): yii\base\ErrorHandler->handleError(8, 'Trying to get p...', 'C:\\Program File...', 213, Array)
+#1 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\View.php(325): require('C:\\Program File...')
+#2 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\View.php(247): yii\base\View->renderPhpFile('C:\\Program File...', Array)
+#3 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\View.php(149): yii\base\View->renderFile('C:\\Program File...', Array, Object(app\controllers\DeliveryNoteController))
+#4 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Controller.php(367): yii\base\View->render('print/pack', Array, Object(app\controllers\DeliveryNoteController))
+#5 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\controllers\DeliveryNoteController.php(182): yii\base\Controller->render('print/pack', Array)
+#6 [internal function]: app\controllers\DeliveryNoteController->actionPrintPack('1478', 'lq300-hadi')
+#7 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\InlineAction.php(55): call_user_func_array(Array, Array)
+#8 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#9 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Module.php(455): yii\base\Controller->runAction('print-pack', Array)
+#10 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\web\Application.php(83): yii\base\Module->runAction('delivery-note/p...', Array)
+#11 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#12 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\web\index.php(12): yii\base\Application->run()
+#13 {main}
+2014-12-04 10:44:24 [192.168.9.10][-][-][info][application] $_GET = [
+    'r' => 'delivery-note/print-pack'
+    'id' => '1478'
+    'uid' => '129'
+]
+
+$_COOKIE = [
+    '_csrf' => '42d5a5fdb965697672db8b9395738a7aceef7baf8e72a6355d6a5bd02dd3515as:32:\"EQFMAiuMuSBKY-4vIqALb6rFNq_1cyOp\";'
+]
+
+$_SERVER = [
+    'ALLUSERSPROFILE' => 'C:\\ProgramData'
+    'APPDATA' => 'C:\\Windows\\system32\\config\\systemprofile\\AppData\\Roaming'
+    'CommonProgramFiles' => 'C:\\Program Files (x86)\\Common Files'
+    'CommonProgramFiles(x86)' => 'C:\\Program Files (x86)\\Common Files'
+    'CommonProgramW6432' => 'C:\\Program Files\\Common Files'
+    'COMPUTERNAME' => 'SUPRA-TS01'
+    'ComSpec' => 'C:\\Windows\\system32\\cmd.exe'
+    'FP_NO_HOST_CHECK' => 'NO'
+    'LOCALAPPDATA' => 'C:\\Windows\\system32\\config\\systemprofile\\AppData\\Local'
+    'NUMBER_OF_PROCESSORS' => '16'
+    'OS' => 'Windows_NT'
+    'Path' => 'C:\\Program Files\\Common Files\\Microsoft Shared\\Windows Live;C:\\Program Files (x86)\\Common Files\\Microsoft Shared\\Windows Live;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\Windows Live\\Shared;C:\\Program Files (x86)\\Zend\\ZendServer\\bin'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'PHPRC' => 'C:\\Program Files (x86)\\Zend\\ZendServer\\etc'
+    'PHP_FCGI_MAX_REQUESTS' => '10000'
+    'PROCESSOR_ARCHITECTURE' => 'x86'
+    'PROCESSOR_ARCHITEW6432' => 'AMD64'
+    'PROCESSOR_IDENTIFIER' => 'Intel64 Family 6 Model 26 Stepping 5, GenuineIntel'
+    'PROCESSOR_LEVEL' => '6'
+    'PROCESSOR_REVISION' => '1a05'
+    'ProgramData' => 'C:\\ProgramData'
+    'ProgramFiles' => 'C:\\Program Files (x86)'
+    'ProgramFiles(x86)' => 'C:\\Program Files (x86)'
+    'ProgramW6432' => 'C:\\Program Files'
+    'PSModulePath' => 'C:\\Windows\\system32\\WindowsPowerShell\\v1.0\\Modules\\'
+    'PUBLIC' => 'C:\\Users\\Public'
+    'QT_PLUGIN_PATH' => 'C:\\Program Files (x86)\\Zend\\ZendServer\\bin'
+    'SystemDrive' => 'C:'
+    'SystemRoot' => 'C:\\Windows'
+    'TEMP' => 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp'
+    'TMP' => 'C:\\Windows\\TEMP'
+    'USERDOMAIN' => 'SUPRA'
+    'USERNAME' => 'SUPRA-TS01$'
+    'USERPROFILE' => 'C:\\Windows\\system32\\config\\systemprofile'
+    'windir' => 'C:\\Windows'
+    'windows_tracing_flags' => '3'
+    'windows_tracing_logfile' => 'C:\\BVTBin\\Tests\\installpackage\\csilogfile.log'
+    'AP_PARENT_PID' => '1200'
+    '_FCGI_CLIENT_PID_' => '1412'
+    '_FCGI_MUTEX_' => '1284'
+    '_FCGI_NTAUTH_IMPERSONATE_' => '1'
+    '_FCGI_SHUTDOWN_EVENT_' => '1292'
+    'SCRIPT_NAME' => '/OpenPrint/web/index.php'
+    'REQUEST_URI' => '/OpenPrint/web/index.php?r=delivery-note/print-pack&id=1478&uid=129'
+    'QUERY_STRING' => 'r=delivery-note/print-pack&id=1478&uid=129'
+    'REQUEST_METHOD' => 'GET'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'REMOTE_PORT' => '56653'
+    'SCRIPT_FILENAME' => 'C:/Program Files (x86)/Zend/Apache2/htdocs/OpenPrint/web/index.php'
+    'SERVER_ADMIN' => 'admin@example.com'
+    'DOCUMENT_ROOT' => 'C:/Program Files (x86)/Zend/Apache2/htdocs'
+    'REMOTE_ADDR' => '192.168.9.10'
+    'SERVER_PORT' => '8080'
+    'SERVER_ADDR' => '192.168.9.10'
+    'SERVER_NAME' => '192.168.9.10'
+    'SERVER_SOFTWARE' => 'Apache/2.2.25 (Win32) mod_ssl/2.2.25 OpenSSL/0.9.8zb'
+    'SERVER_SIGNATURE' => ''
+    'WINDIR' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATH' => 'C:\\Program Files\\Common Files\\Microsoft Shared\\Windows Live;C:\\Program Files (x86)\\Common Files\\Microsoft Shared\\Windows Live;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\Windows Live\\Shared;C:\\Program Files (x86)\\Zend\\ZendServer\\share\\ZendFramework\\bin;C:\\Program Files (x86)\\Zend\\ZendServer\\bin;'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_COOKIE' => '_csrf=42d5a5fdb965697672db8b9395738a7aceef7baf8e72a6355d6a5bd02dd3515as%3A32%3A%22EQFMAiuMuSBKY-4vIqALb6rFNq_1cyOp%22%3B'
+    'HTTP_REFERER' => 'http://192.168.9.26:10001/?db=LIVE_2014'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.5'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:33.0) Gecko/20100101 Firefox/33.0'
+    'HTTP_HOST' => '192.168.9.10:8080'
+    'FCGI_ROLE' => 'RESPONDER'
+    'PHP_SELF' => '/OpenPrint/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1417664664.5633
+    'REQUEST_TIME' => 1417664664
+]
+2014-12-04 10:45:07 [192.168.9.10][-][-][error][yii\base\ErrorException:8] exception 'yii\base\ErrorException' with message 'Trying to get property of non-object' in C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\views\delivery-note\print\pack.php:213
+Stack trace:
+#0 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\views\delivery-note\print\pack.php(213): yii\base\ErrorHandler->handleError(8, 'Trying to get p...', 'C:\\Program File...', 213, Array)
+#1 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\View.php(325): require('C:\\Program File...')
+#2 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\View.php(247): yii\base\View->renderPhpFile('C:\\Program File...', Array)
+#3 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\View.php(149): yii\base\View->renderFile('C:\\Program File...', Array, Object(app\controllers\DeliveryNoteController))
+#4 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Controller.php(367): yii\base\View->render('print/pack', Array, Object(app\controllers\DeliveryNoteController))
+#5 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\controllers\DeliveryNoteController.php(182): yii\base\Controller->render('print/pack', Array)
+#6 [internal function]: app\controllers\DeliveryNoteController->actionPrintPack('1478', 'lq300-hadi')
+#7 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\InlineAction.php(55): call_user_func_array(Array, Array)
+#8 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#9 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Module.php(455): yii\base\Controller->runAction('print-pack', Array)
+#10 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\web\Application.php(83): yii\base\Module->runAction('delivery-note/p...', Array)
+#11 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#12 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\web\index.php(12): yii\base\Application->run()
+#13 {main}
+2014-12-04 10:45:06 [192.168.9.10][-][-][info][application] $_GET = [
+    'r' => 'delivery-note/print-pack'
+    'id' => '1478'
+    'uid' => '129'
+]
+
+$_COOKIE = [
+    '_csrf' => '42d5a5fdb965697672db8b9395738a7aceef7baf8e72a6355d6a5bd02dd3515as:32:\"EQFMAiuMuSBKY-4vIqALb6rFNq_1cyOp\";'
+]
+
+$_SERVER = [
+    'ALLUSERSPROFILE' => 'C:\\ProgramData'
+    'APPDATA' => 'C:\\Windows\\system32\\config\\systemprofile\\AppData\\Roaming'
+    'CommonProgramFiles' => 'C:\\Program Files (x86)\\Common Files'
+    'CommonProgramFiles(x86)' => 'C:\\Program Files (x86)\\Common Files'
+    'CommonProgramW6432' => 'C:\\Program Files\\Common Files'
+    'COMPUTERNAME' => 'SUPRA-TS01'
+    'ComSpec' => 'C:\\Windows\\system32\\cmd.exe'
+    'FP_NO_HOST_CHECK' => 'NO'
+    'LOCALAPPDATA' => 'C:\\Windows\\system32\\config\\systemprofile\\AppData\\Local'
+    'NUMBER_OF_PROCESSORS' => '16'
+    'OS' => 'Windows_NT'
+    'Path' => 'C:\\Program Files\\Common Files\\Microsoft Shared\\Windows Live;C:\\Program Files (x86)\\Common Files\\Microsoft Shared\\Windows Live;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\Windows Live\\Shared;C:\\Program Files (x86)\\Zend\\ZendServer\\bin'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'PHPRC' => 'C:\\Program Files (x86)\\Zend\\ZendServer\\etc'
+    'PHP_FCGI_MAX_REQUESTS' => '10000'
+    'PROCESSOR_ARCHITECTURE' => 'x86'
+    'PROCESSOR_ARCHITEW6432' => 'AMD64'
+    'PROCESSOR_IDENTIFIER' => 'Intel64 Family 6 Model 26 Stepping 5, GenuineIntel'
+    'PROCESSOR_LEVEL' => '6'
+    'PROCESSOR_REVISION' => '1a05'
+    'ProgramData' => 'C:\\ProgramData'
+    'ProgramFiles' => 'C:\\Program Files (x86)'
+    'ProgramFiles(x86)' => 'C:\\Program Files (x86)'
+    'ProgramW6432' => 'C:\\Program Files'
+    'PSModulePath' => 'C:\\Windows\\system32\\WindowsPowerShell\\v1.0\\Modules\\'
+    'PUBLIC' => 'C:\\Users\\Public'
+    'QT_PLUGIN_PATH' => 'C:\\Program Files (x86)\\Zend\\ZendServer\\bin'
+    'SystemDrive' => 'C:'
+    'SystemRoot' => 'C:\\Windows'
+    'TEMP' => 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp'
+    'TMP' => 'C:\\Windows\\TEMP'
+    'USERDOMAIN' => 'SUPRA'
+    'USERNAME' => 'SUPRA-TS01$'
+    'USERPROFILE' => 'C:\\Windows\\system32\\config\\systemprofile'
+    'windir' => 'C:\\Windows'
+    'windows_tracing_flags' => '3'
+    'windows_tracing_logfile' => 'C:\\BVTBin\\Tests\\installpackage\\csilogfile.log'
+    'AP_PARENT_PID' => '1200'
+    '_FCGI_CLIENT_PID_' => '1412'
+    '_FCGI_MUTEX_' => '1928'
+    '_FCGI_NTAUTH_IMPERSONATE_' => '1'
+    '_FCGI_SHUTDOWN_EVENT_' => '1836'
+    'SCRIPT_NAME' => '/OpenPrint/web/index.php'
+    'REQUEST_URI' => '/OpenPrint/web/index.php?r=delivery-note/print-pack&id=1478&uid=129'
+    'QUERY_STRING' => 'r=delivery-note/print-pack&id=1478&uid=129'
+    'REQUEST_METHOD' => 'GET'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'REMOTE_PORT' => '56764'
+    'SCRIPT_FILENAME' => 'C:/Program Files (x86)/Zend/Apache2/htdocs/OpenPrint/web/index.php'
+    'SERVER_ADMIN' => 'admin@example.com'
+    'DOCUMENT_ROOT' => 'C:/Program Files (x86)/Zend/Apache2/htdocs'
+    'REMOTE_ADDR' => '192.168.9.10'
+    'SERVER_PORT' => '8080'
+    'SERVER_ADDR' => '192.168.9.10'
+    'SERVER_NAME' => '192.168.9.10'
+    'SERVER_SOFTWARE' => 'Apache/2.2.25 (Win32) mod_ssl/2.2.25 OpenSSL/0.9.8zb'
+    'SERVER_SIGNATURE' => ''
+    'WINDIR' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATH' => 'C:\\Program Files\\Common Files\\Microsoft Shared\\Windows Live;C:\\Program Files (x86)\\Common Files\\Microsoft Shared\\Windows Live;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\Windows Live\\Shared;C:\\Program Files (x86)\\Zend\\ZendServer\\share\\ZendFramework\\bin;C:\\Program Files (x86)\\Zend\\ZendServer\\bin;'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_COOKIE' => '_csrf=42d5a5fdb965697672db8b9395738a7aceef7baf8e72a6355d6a5bd02dd3515as%3A32%3A%22EQFMAiuMuSBKY-4vIqALb6rFNq_1cyOp%22%3B'
+    'HTTP_REFERER' => 'http://192.168.9.26:10001/?db=LIVE_2014'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.5'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:33.0) Gecko/20100101 Firefox/33.0'
+    'HTTP_HOST' => '192.168.9.10:8080'
+    'FCGI_ROLE' => 'RESPONDER'
+    'PHP_SELF' => '/OpenPrint/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1417664706.8398
+    'REQUEST_TIME' => 1417664706
+]
+2014-12-15 14:32:18 [192.168.9.10][-][-][error][yii\base\ErrorException:8] exception 'yii\base\ErrorException' with message 'Trying to get property of non-object' in C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\controllers\AccountInvoiceController.php:67
+Stack trace:
+#0 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\controllers\AccountInvoiceController.php(67): yii\base\ErrorHandler->handleError(8, 'Trying to get p...', 'C:\\Program File...', 67, Array)
+#1 [internal function]: app\controllers\AccountInvoiceController->actionPrintInvoice('4633', NULL)
+#2 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\InlineAction.php(55): call_user_func_array(Array, Array)
+#3 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#4 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Module.php(455): yii\base\Controller->runAction('print-invoice', Array)
+#5 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\web\Application.php(83): yii\base\Module->runAction('account-invoice...', Array)
+#6 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\vendor\yiisoft\yii2\base\Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#7 C:\Program Files (x86)\Zend\Apache2\htdocs\OpenPrint\web\index.php(12): yii\base\Application->run()
+#8 {main}
+2014-12-15 14:32:18 [192.168.9.10][-][-][info][application] $_GET = [
+    'r' => 'account-invoice/print-invoice'
+    'id' => '4633'
+]
+
+$_COOKIE = [
+    '_csrf' => '8bd48aae650d99de781363956ab505a5146c149174d88e7a0e5bc242b4d05005s:32:\"7Ng_VE8YTxNHpjB3T9k3ZefOyKacVOoK\";'
+]
+
+$_SERVER = [
+    'ALLUSERSPROFILE' => 'C:\\ProgramData'
+    'APPDATA' => 'C:\\Windows\\system32\\config\\systemprofile\\AppData\\Roaming'
+    'CommonProgramFiles' => 'C:\\Program Files (x86)\\Common Files'
+    'CommonProgramFiles(x86)' => 'C:\\Program Files (x86)\\Common Files'
+    'CommonProgramW6432' => 'C:\\Program Files\\Common Files'
+    'COMPUTERNAME' => 'SUPRA-TS01'
+    'ComSpec' => 'C:\\Windows\\system32\\cmd.exe'
+    'FP_NO_HOST_CHECK' => 'NO'
+    'LOCALAPPDATA' => 'C:\\Windows\\system32\\config\\systemprofile\\AppData\\Local'
+    'NUMBER_OF_PROCESSORS' => '16'
+    'OS' => 'Windows_NT'
+    'Path' => 'C:\\Program Files\\Common Files\\Microsoft Shared\\Windows Live;C:\\Program Files (x86)\\Common Files\\Microsoft Shared\\Windows Live;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\Windows Live\\Shared;C:\\Program Files (x86)\\Zend\\ZendServer\\bin'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'PHPRC' => 'C:\\Program Files (x86)\\Zend\\ZendServer\\etc'
+    'PHP_FCGI_MAX_REQUESTS' => '10000'
+    'PROCESSOR_ARCHITECTURE' => 'x86'
+    'PROCESSOR_ARCHITEW6432' => 'AMD64'
+    'PROCESSOR_IDENTIFIER' => 'Intel64 Family 6 Model 26 Stepping 5, GenuineIntel'
+    'PROCESSOR_LEVEL' => '6'
+    'PROCESSOR_REVISION' => '1a05'
+    'ProgramData' => 'C:\\ProgramData'
+    'ProgramFiles' => 'C:\\Program Files (x86)'
+    'ProgramFiles(x86)' => 'C:\\Program Files (x86)'
+    'ProgramW6432' => 'C:\\Program Files'
+    'PSModulePath' => 'C:\\Windows\\system32\\WindowsPowerShell\\v1.0\\Modules\\'
+    'PUBLIC' => 'C:\\Users\\Public'
+    'QT_PLUGIN_PATH' => 'C:\\Program Files (x86)\\Zend\\ZendServer\\bin'
+    'SystemDrive' => 'C:'
+    'SystemRoot' => 'C:\\Windows'
+    'TEMP' => 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp'
+    'TMP' => 'C:\\Windows\\TEMP'
+    'USERDOMAIN' => 'SUPRA'
+    'USERNAME' => 'SUPRA-TS01$'
+    'USERPROFILE' => 'C:\\Windows\\system32\\config\\systemprofile'
+    'windir' => 'C:\\Windows'
+    'windows_tracing_flags' => '3'
+    'windows_tracing_logfile' => 'C:\\BVTBin\\Tests\\installpackage\\csilogfile.log'
+    'AP_PARENT_PID' => '1184'
+    '_FCGI_CLIENT_PID_' => '1396'
+    '_FCGI_MUTEX_' => '1788'
+    '_FCGI_NTAUTH_IMPERSONATE_' => '1'
+    '_FCGI_SHUTDOWN_EVENT_' => '1772'
+    'SCRIPT_NAME' => '/OpenPrint/web/index.php'
+    'REQUEST_URI' => '/OpenPrint/web/index.php?r=account-invoice/print-invoice&id=4633'
+    'QUERY_STRING' => 'r=account-invoice/print-invoice&id=4633'
+    'REQUEST_METHOD' => 'GET'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'REMOTE_PORT' => '39351'
+    'SCRIPT_FILENAME' => 'C:/Program Files (x86)/Zend/Apache2/htdocs/OpenPrint/web/index.php'
+    'SERVER_ADMIN' => 'admin@example.com'
+    'DOCUMENT_ROOT' => 'C:/Program Files (x86)/Zend/Apache2/htdocs'
+    'REMOTE_ADDR' => '192.168.9.10'
+    'SERVER_PORT' => '8080'
+    'SERVER_ADDR' => '192.168.9.10'
+    'SERVER_NAME' => '192.168.9.10'
+    'SERVER_SOFTWARE' => 'Apache/2.2.25 (Win32) mod_ssl/2.2.25 OpenSSL/0.9.8zb'
+    'SERVER_SIGNATURE' => ''
+    'WINDIR' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATH' => 'C:\\Program Files\\Common Files\\Microsoft Shared\\Windows Live;C:\\Program Files (x86)\\Common Files\\Microsoft Shared\\Windows Live;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\Windows Live\\Shared;C:\\Program Files (x86)\\Zend\\ZendServer\\share\\ZendFramework\\bin;C:\\Program Files (x86)\\Zend\\ZendServer\\bin;'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_COOKIE' => '_csrf=8bd48aae650d99de781363956ab505a5146c149174d88e7a0e5bc242b4d05005s%3A32%3A%227Ng_VE8YTxNHpjB3T9k3ZefOyKacVOoK%22%3B'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.5'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:33.0) Gecko/20100101 Firefox/33.0'
+    'HTTP_HOST' => '192.168.9.10:8080'
+    'FCGI_ROLE' => 'RESPONDER'
+    'PHP_SELF' => '/OpenPrint/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1418628738.626
+    'REQUEST_TIME' => 1418628738
+]

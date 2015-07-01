@@ -132,7 +132,8 @@ class ServiceController extends Controller{
 		if(is_array($ids)){
 			$invoices = AccountInvoice::find()->where(['id'=>$ids])->with(['accountInvoiceLines','partner','accountInvoiceLines.product','stockPickings'])->asArray()->all();
 			$maped = $this->prepareCsvInvoiceData($invoices);
-
+			/*\yii\helpers\VarDumper::dump($maped);
+			die();*/
 			$filename = 'Invoices - Export - '.date('Y-m-d H:i:s').'.csv';
 			header( "Content-Type: text/csv;charset=utf-8" );
 			header( "Content-Disposition: attachment;filename=\"$filename\"" );
@@ -141,50 +142,17 @@ class ServiceController extends Controller{
 
 			$output = fopen('php://output','w');
 			// $ctn = '';
-			fputcsv(
-				$output, 
-				array_map(
-					function($e){
-						return $e;
-					},
-					["FK","KD_JENIS_TRANSAKSI","FG_PENGGANTI","NOMOR_FAKTUR","MASA_PAJAK","TAHUN_PAJAK","TANGGAL_FAKTUR","NPWP","NAMA","ALAMAT_LENGKAP","JUMLAH_DPP","JUMLAH_PPN","JUMLAH_PPNBM","ID_KETERANGAN_TAMBAHAN","FG_UANG_MUKA","UANG_MUKA_DPP","UANG_MUKA_PPN","UANG_MUKA_PPNBM","REFERENSI"]
-				),
-				','
-			);
-			fputcsv(
-				$output, 
-				array_map(
-					function($e){
-						return $e;
-					},
-					["LT","NPWP","NAMA","JALAN","BLOK","NOMOR","RT","RW","KECAMATAN","KELURAHAN","KABUPATEN","PROPINSI","KODE_POS","NOMOR_TELEPON"]
-				),
-				','
-			);
-			fputcsv(
-				$output, 
-				array_map(
-					function($e){
-						return $e;
-					},
-					["OF","KODE_OBJEK","NAMA","HARGA_SATUAN","JUMLAH_BARANG","HARGA_TOTAL","DISKON","DPP","PPN","TARIF_PPNBM","PPNBM"]
-				),
-				','
-			);
-			
-			
-			foreach($maped as $invId=>$map){
-				/*echo count($map['fk']).'-';
-				echo count($map['fapr']).'-';
-				echo count($map['of'][0]).'-';*/
+			// 
+			if(isset($maped['OUT'])){
 				fputcsv(
 					$output, 
 					array_map(
 						function($e){
 							return $e;
 						},
-						$map['fk']
-					),','
+						["FK","KD_JENIS_TRANSAKSI","FG_PENGGANTI","NOMOR_FAKTUR","MASA_PAJAK","TAHUN_PAJAK","TANGGAL_FAKTUR","NPWP","NAMA","ALAMAT_LENGKAP","JUMLAH_DPP","JUMLAH_PPN","JUMLAH_PPNBM","ID_KETERANGAN_TAMBAHAN","FG_UANG_MUKA","UANG_MUKA_DPP","UANG_MUKA_PPN","UANG_MUKA_PPNBM","REFERENSI"]
+					),
+					','
 				);
 				fputcsv(
 					$output, 
@@ -192,28 +160,62 @@ class ServiceController extends Controller{
 						function($e){
 							return $e;
 						},
-						$map['fapr']
-					),','
-					
+						["LT","NPWP","NAMA","JALAN","BLOK","NOMOR","RT","RW","KECAMATAN","KELURAHAN","KABUPATEN","PROPINSI","KODE_POS","NOMOR_TELEPON"]
+					),
+					','
 				);
-				foreach($map['of'] as $of){
+				fputcsv(
+					$output, 
+					array_map(
+						function($e){
+							return $e;
+						},
+						["OF","KODE_OBJEK","NAMA","HARGA_SATUAN","JUMLAH_BARANG","HARGA_TOTAL","DISKON","DPP","PPN","TARIF_PPNBM","PPNBM"]
+					),
+					','
+				);
+				
+				
+				foreach($maped['OUT'] as $invId=>$map){
+					/*echo count($map['fk']).'-';
+					echo count($map['fapr']).'-';
+					echo count($map['of'][0]).'-';*/
 					fputcsv(
 						$output, 
 						array_map(
 							function($e){
 								return $e;
 							},
-							$of
+							$map['fk']
 						),','
 					);
+					fputcsv(
+						$output, 
+						array_map(
+							function($e){
+								return $e;
+							},
+							$map['fapr']
+						),','
+						
+					);
+					foreach($map['of'] as $of){
+						fputcsv(
+							$output, 
+							array_map(
+								function($e){
+									return $e;
+								},
+								$of
+							),','
+						);
+					}
 				}
 			}
+			else{
 
-			$tes = [
-				["FK","01","0","0011578000002","6","2015","29/06/2015","710667502617000","ADIKARA JAYA SENTOSA PT","Perum. Graha Kota Blok A5 / 10-11 Blok - No.- RT:- RW:- Kel.- Kec.- Kota/Kab.- -","10000000","1000000","0","","0","0","0","0","cdscdsdsdsds"],
-				["FAPR","PT SINCHAN","JL PAHLAWAN BERTOPENG BLOK MATAHARI NO.11, KIOTO RT: 1 RW: 14 JAKARTA","","","",""],
-				["OF","0487060880","Secondary Board ESAB Caddy TM A 34","10000000","1.0","10000000","0.0","10000000","1000000.0","0","0.0"]
-			];
+			}
+			
 			
 			
 			fclose($output);
@@ -261,7 +263,7 @@ class ServiceController extends Controller{
 				$tax_date = \DateTime::createFromFormat('Y-m-d',$inv['date_invoice']);
 				$iAddr = $inv['partner']['street'].'\r\n'.$inv['partner']['street2'].' '.$inv['partner']['city'].', '.(isset($inv['partner']['state']->name) ? $inv['partner']['state']->name:'').($inv['partner']['zip'] ? ' - '.$inv['partner']['zip']:"");
 				// "FK","09","0","0011578000001","6","2015","18/06/2015","010621191092000","INDOCEMENT TUNGGAL PRAKARSA TBK PT","Wisma Indocement Lt. 13   Blok - No.- RT:- RW:- Kel.- Kec.- Kota/Kab.- - 12910","56750000","5675000","0","","0","0","0","0","78049887/SBM/V/2015"
-				$res[$inv['id']]['fk'] = [
+				$res['OUT'][$inv['id']]['fk'] = [
 					'FK', #FK
 					$tax_code_type, #KD JENIS TRANSAKSI
 					$tax_replace_code, #FG PENGGANTI
@@ -271,7 +273,7 @@ class ServiceController extends Controller{
 					$tax_date->format('d/m/Y'), #full tax date dd/mm/yyyy
 					preg_replace('/[\s\W]+/', '', $inv['partner']['npwp']), #customer npwp
 					$inv['partner']['name'], #customer name
-					$iAddr, #invoice address
+					$iAddr, #invoice addres['OUT']s
 					$this->convertIdr($inv['amount_untaxed'],$rate),#jumlah dpp,
 					$this->convertIdr($inv['amount_tax'],$rate),#jumlah PPN
 					'0', #Jumlah PPNBM
@@ -285,7 +287,7 @@ class ServiceController extends Controller{
 				];
 
 				// "FAPR","PT SINCHAN","JL PAHLAWAN BERTOPENG BLOK MATAHARI NO.11, KIOTO RT: 1 RW: 14 JAKARTA",,,,
-				$res[$inv['id']]['fapr'] = [
+				$res['OUT'][$inv['id']]['fapr'] = [
 					'FAPR',
 					'SUPRABAKTI MANDIRI, PT',
 					'Jl. Danau Sunter Utara Blok. A No. 9 Tanjung Priok - Jakarta Utara 14350',
@@ -318,7 +320,7 @@ class ServiceController extends Controller{
 
 							}else{
 								foreach($inv['accountInvoiceLines'] as $item):
-									$res[$inv['id']]['of'][] = [
+									$res['OUT'][$inv['id']]['of'][] = [
 										'OF', #of
 										(string)$item['product']['default_code'],#product code
 										(string)$item['product']['name_template'],#product name
@@ -340,12 +342,12 @@ class ServiceController extends Controller{
 					}
 					if($soInv):
 						// if founded
-						// override res fk
-						$res[$inv['id']]['fk'][10] = $this->convertIdr($soInv['amount_untaxed'],$rate);
-						$res[$inv['id']]['fk'][11] = $this->convertIdr($soInv['amount_total'],$rate);
+						// override res['OUT'] fk
+						$res['OUT'][$inv['id']]['fk'][10] = $this->convertIdr($soInv['amount_untaxed'],$rate);
+						$res['OUT'][$inv['id']]['fk'][11] = $this->convertIdr($soInv['amount_total'],$rate);
 
 						foreach($soInv['saleOrderLines'] as $soLine):
-							$res[$inv['id']]['of'][] = [
+							$res['OUT'][$inv['id']]['of'][] = [
 								'OF',
 								(string)$soLine['product']['default_code'],#product code
 								(string)$soLine['product']['name_template'],#product name
@@ -364,7 +366,7 @@ class ServiceController extends Controller{
 					endif;
 				}else{
 					foreach($inv['accountInvoiceLines'] as $item):
-						$res[$inv['id']]['of'][] = [
+						$res['OUT'][$inv['id']]['of'][] = [
 							'OF', #of
 							(string)$item['product']['default_code'],#product code
 							(string)$item['product']['name_template'],#product name

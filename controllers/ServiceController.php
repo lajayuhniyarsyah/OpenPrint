@@ -213,7 +213,11 @@ class ServiceController extends Controller{
 				}
 			}
 			else{
-
+				foreach ($maped['IN'] as $key => $value) {
+					// var_dump($maped['IN']);
+					die();
+					// fputcsv($output, $value);
+				}
 			}
 			
 			
@@ -405,7 +409,7 @@ class ServiceController extends Controller{
 					"IS_CREDITABLE"
 				];
 
-				foreach($invoices as $inv){
+				// foreach($invoices as $inv){
 					$datainv[]=[
 								"FM",
 								substr($inv['faktur_pajak_no'],0,2),
@@ -421,16 +425,18 @@ class ServiceController extends Controller{
 								"0",
 								"1"
 							];	
-				}
+				// }
 
+				var_dump($datainv);
+				die();
 				$res['IN'] =$datainv;
 				// $res = $this->prepareIn();
 			}
 			
 		}
-		\yii\helpers\VarDumper::dump($res);
-		die();
-		// return $res;
+		// \yii\helpers\VarDumper::dump($res['IN']);
+		// die();
+		return $res;
 	}
 
 	private function prepareOut($inv){

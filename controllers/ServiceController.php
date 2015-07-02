@@ -213,7 +213,26 @@ class ServiceController extends Controller{
 				}
 			}
 			else{
+				fputcsv($output, [
+					"FM",
+					"KD_JENIS_TRANSAKSI",
+					"FG_PENGGANTI",
+					"NOMOR_FAKTUR",
+					"MASA_PAJAK",
+					"TAHUN_PAJAK",
+					"TANGGAL_FAKTUR",
+					"NPWP",
+					"NAMA",
+					"ALAMAT_LENGKAP",
+					"JUMLAH_DPP",
+					"JUMLAH_PPN",
+					"JUMLAH_PPNBM",
+					"IS_CREDITABLE"
+				]);
 
+				foreach($maped['IN'] as $in):
+					fputcsv($output, $in);
+				endforeach;
 			}
 			
 			
@@ -388,7 +407,7 @@ class ServiceController extends Controller{
 				// SUPPLIER INVOICE
 				$rate = ($inv['currency_id']==13 ? 1:$inv['pajak']);
 				$tax_date = \DateTime::createFromFormat('Y-m-d',$inv['date_invoice']);
-				$datainv[]=[
+				/*$datainv[]=[
 					"FM",
 					"KD_JENIS_TRANSAKSI",
 					"FG_PENGGANTI",
@@ -403,34 +422,34 @@ class ServiceController extends Controller{
 					"JUMLAH_PPN",
 					"JUMLAH_PPNBM",
 					"IS_CREDITABLE"
-				];
+				];*/
 
-				foreach($invoices as $inv){
-					$datainv[]=[
-								"FM",
-								substr($inv['faktur_pajak_no'],0,2),
-								substr($inv['faktur_pajak_no'],2,1),
-								substr(str_replace('-','',str_replace('.', '', $inv['faktur_pajak_no'])), 3),
-								$tax_date->format('n'),
-								$tax_date->format('Y'),
-								$tax_date->format('d/m/Y'),
-								preg_replace('/[\s\W]+/', '', $inv['partner']['npwp']),
-								$inv['partner']['name'],
-								$this->convertIdr($inv['amount_untaxed'],$rate),
-								$this->convertIdr($inv['amount_tax'],$rate),
-								"0",
-								"1"
-							];	
-				}
+				// foreach($invoices as $inv){
+				$datainv[]=[
+							"FM",
+							substr($inv['faktur_pajak_no'],0,2),
+							substr($inv['faktur_pajak_no'],2,1),
+							substr(str_replace('-','',str_replace('.', '', $inv['faktur_pajak_no'])), 3),
+							$tax_date->format('n'),
+							$tax_date->format('Y'),
+							$tax_date->format('d/m/Y'),
+							preg_replace('/[\s\W]+/', '', $inv['partner']['npwp']),
+							$inv['partner']['name'],
+							$this->convertIdr($inv['amount_untaxed'],$rate),
+							$this->convertIdr($inv['amount_tax'],$rate),
+							"0",
+							"1"
+						];	
+				// }
 
 				$res['IN'] =$datainv;
 				// $res = $this->prepareIn();
 			}
 			
 		}
-		\yii\helpers\VarDumper::dump($res);
-		die();
-		// return $res;
+		/*\yii\helpers\VarDumper::dump($res);
+		die();*/
+		return $res;
 	}
 
 	private function prepareOut($inv){

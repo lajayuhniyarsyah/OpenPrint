@@ -213,13 +213,7 @@ class ServiceController extends Controller{
 				}
 			}
 			else{
-<<<<<<< HEAD
-				foreach ($maped['IN'] as $key => $value) {
-					// var_dump($maped['IN']);
-					die();
-					// fputcsv($output, $value);
-				}
-=======
+
 				fputcsv($output, [
 					"FM",
 					"KD_JENIS_TRANSAKSI",
@@ -240,7 +234,7 @@ class ServiceController extends Controller{
 				foreach($maped['IN'] as $in):
 					fputcsv($output, $in);
 				endforeach;
->>>>>>> origin/master
+
 			}
 			
 			
@@ -433,24 +427,7 @@ class ServiceController extends Controller{
 				];*/
 
 				// foreach($invoices as $inv){
-<<<<<<< HEAD
-					$datainv[]=[
-								"FM",
-								substr($inv['faktur_pajak_no'],0,2),
-								substr($inv['faktur_pajak_no'],2,1),
-								substr(str_replace('-','',str_replace('.', '', $inv['faktur_pajak_no'])), 3),
-								$tax_date->format('n'),
-								$tax_date->format('Y'),
-								$tax_date->format('d/m/Y'),
-								preg_replace('/[\s\W]+/', '', $inv['partner']['npwp']),
-								$inv['partner']['name'],
-								$inv['partner']['street'],
-								$this->convertIdr($inv['amount_untaxed'],$rate),
-								$this->convertIdr($inv['amount_tax'],$rate),
-								"0",
-								"1"
-							];	
-=======
+
 				$datainv[]=[
 							"FM",
 							substr($inv['faktur_pajak_no'],0,2),
@@ -466,7 +443,7 @@ class ServiceController extends Controller{
 							"0",
 							"1"
 						];	
->>>>>>> origin/master
+
 				// }
 
 				var_dump($datainv);
@@ -476,13 +453,10 @@ class ServiceController extends Controller{
 			}
 			
 		}
-<<<<<<< HEAD
-		// \yii\helpers\VarDumper::dump($res['IN']);
-		// die();
-=======
+
 		/*\yii\helpers\VarDumper::dump($res);
 		die();*/
->>>>>>> origin/master
+
 		return $res;
 	}
 

@@ -420,6 +420,7 @@ class ServiceController extends Controller{
 								$tax_date->format('d/m/Y'),
 								preg_replace('/[\s\W]+/', '', $inv['partner']['npwp']),
 								$inv['partner']['name'],
+								$inv['partner']['street'],
 								$this->convertIdr($inv['amount_untaxed'],$rate),
 								$this->convertIdr($inv['amount_tax'],$rate),
 								"0",

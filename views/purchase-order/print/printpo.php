@@ -269,7 +269,7 @@ use yii\helpers\Url;
         line-height: 25px;
     }
 	.dtlcus{
-		font-size: 15px;
+		font-size: 14px;
         margin-top: -15px;
 		margin-left: 5px;
 	}
@@ -389,11 +389,24 @@ use yii\helpers\Url;
 												<table class="dtlcus">
 													<tr>
 														<td width="30px">Telp</td>
-														<td><?php echo $model->attention0->phone; ?></td>
+														<td><?php 
+														if($model->attention0==""){
+															echo $model->partner->phone; 
+														}else{
+															echo $model->attention0->phone; 	
+														}
+														
+
+														?></td>
 													</tr>
 													<tr>
 														<td>Fax</td>
-														<td><?php echo $model->attention0->fax; ?></td>
+														<td><?php 
+														if($model->attention0==""){
+															echo $model->partner->fax; 
+														}else{
+															echo $model->attention0->fax; 	
+														} ?></td>
 													</tr>
 													<tr>
 														<td>Attn</td>

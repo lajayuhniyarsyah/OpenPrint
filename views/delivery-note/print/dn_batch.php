@@ -102,8 +102,8 @@
 
 <?php
 $uid = Yii::$app->request->getQueryParam('uid');
-// hadi or sri
-if( $uid == 23 || $uid == 101):
+// hadi or sri / ika
+if( $uid == 23 || $uid == 101 || $uid == 173):
 	?>
 	<style type="text/css">
 	.attnTo{

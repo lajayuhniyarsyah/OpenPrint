@@ -133,15 +133,15 @@ if( $uid == 23 || $uid == 101):
 	}
 	</style>
 <?php
-elseif($uid == 173):
+// elseif($uid == 173):
 	?>
-	<style type="text/css">
+	<!-- <style type="text/css">
 	.pages{
 		padding-top: 40mm;
 	}
-	</style>
+	</style> -->
 	<?php
-endif;
+// endif;
 ?>
 <div id="container">
 	<div class="pages">

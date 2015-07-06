@@ -130,7 +130,7 @@ class ServiceController extends Controller{
 		$ids = explode(',', $ids);
 		// \yii\helpers\VarDumper::dump($ids);
 		if(is_array($ids)){
-			$invoices = AccountInvoice::find()->where(['id'=>$ids])->with(['accountInvoiceLines','partner','accountInvoiceLines.product','stockPickings'])->asArray()->all();
+			$invoices = AccountInvoice::find()->where(['id'=>$ids])->with(['accountInvoiceLines','partner','partner.parent','accountInvoiceLines.product','stockPickings'])->asArray()->all();
 			$maped = $this->prepareCsvInvoiceData($invoices);
 			/*\yii\helpers\VarDumper::dump($maped);
 			die();*/
@@ -262,7 +262,7 @@ class ServiceController extends Controller{
 		foreach($invoices as $inv){
 			// echo $inv['id'].'/';
 			// var_dump($inv['faktur_pajak_no']);
-			if($inv['state']=='draft' || $inv['state']=='cancel'){
+			if($inv['state']=='draft' || $inv['state']=='cancel' || $inv['state']=='submited'){
 				// continue to next pointer
 				// we dont export draft invoice
 				continue;
@@ -284,6 +284,8 @@ class ServiceController extends Controller{
 				$tax_date = \DateTime::createFromFormat('Y-m-d',$inv['date_invoice']);
 				$iAddr = $inv['partner']['street'].'\r\n'.$inv['partner']['street2'].' '.$inv['partner']['city'].', '.(isset($inv['partner']['state']->name) ? $inv['partner']['state']->name:'').($inv['partner']['zip'] ? ' - '.$inv['partner']['zip']:"");
 				// "FK","09","0","0011578000001","6","2015","18/06/2015","010621191092000","INDOCEMENT TUNGGAL PRAKARSA TBK PT","Wisma Indocement Lt. 13   Blok - No.- RT:- RW:- Kel.- Kec.- Kota/Kab.- - 12910","56750000","5675000","0","","0","0","0","0","78049887/SBM/V/2015"
+				
+				$partner = (isset($inv['partner']['parent']) ? $inv['partner']['parent']: $inv['partner']);
 				$res['OUT'][$inv['id']]['fk'] = [
 					'FK', #FK
 					$tax_code_type, #KD JENIS TRANSAKSI
@@ -292,8 +294,8 @@ class ServiceController extends Controller{
 					$tax_date->format('n'), #MASA PAJAK
 					$tax_date->format('Y'), #TAHUN PAJAK
 					$tax_date->format('d/m/Y'), #full tax date dd/mm/yyyy
-					preg_replace('/[\s\W]+/', '', $inv['partner']['npwp']), #customer npwp
-					$inv['partner']['name'], #customer name
+					preg_replace('/[\s\W]+/', '', $partner['npwp']), #customer npwp
+					$partner['name'], #customer name
 					$iAddr, #invoice addres['OUT']s
 					$this->convertIdr($inv['amount_untaxed'],$rate),#jumlah dpp,
 					$this->convertIdr($inv['amount_tax'],$rate),#jumlah PPN
@@ -438,6 +440,7 @@ class ServiceController extends Controller{
 							$tax_date->format('d/m/Y'),
 							preg_replace('/[\s\W]+/', '', $inv['partner']['npwp']),
 							$inv['partner']['name'],
+							$inv['partner']['street'],
 							$this->convertIdr($inv['amount_untaxed'],$rate),
 							$this->convertIdr($inv['amount_tax'],$rate),
 							"0",
@@ -446,8 +449,8 @@ class ServiceController extends Controller{
 
 				// }
 
-				var_dump($datainv);
-				die();
+				/*var_dump($datainv);
+				die();*/
 				$res['IN'] =$datainv;
 				// $res = $this->prepareIn();
 			}

@@ -177,7 +177,8 @@ class DeliveryNoteController extends Controller
             endforeach;
             $linesData[$k]['totalWeight'] = $totalWeight;
         endforeach;
-        $printer = ($printer ? $printer:($uid==173 ? 'lx300-novri':'lq300-hadi'));
+        $printer = ($printer ? $printer:($uid==173 ? 'lx300-hadi':'lq300-novri'));
+        
         // echo $printer;
         return $this->render('print/pack',['model'=>$model,'pagesData'=>$linesData,'printer'=>$printer,'uid'=>$uid]);
     }

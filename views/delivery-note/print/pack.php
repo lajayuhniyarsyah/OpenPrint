@@ -1,9 +1,7 @@
 <?php
 use yii\helpers\Html;
 use yii\helpers\Url;
-if($uid==173){
-	$printer = 'lx300-novri';
-}
+
 ?>
 
 <style type="text/css">
@@ -237,8 +235,8 @@ if($uid==173){
 			<input type="hidden" value="<?=$model->id?>" name="id" />
 			<input type="hidden" value="<?=Yii::$app->request->get('uid')?>" name="uid" />
 		Print To : <select name="printer" onchange="jQuery('#formSelectPrinter').submit();">
-			<option <?=($printer=='lQ300-hadi' ? 'selected ':null)?> value="lq300-hadi">Admin Hadi (LQ 300+II)</option>
-			<option <?=($printer=='lx300-novri' ? 'selected ':null)?> value="lx300-novri">Admin Novri (LX 300+II)</option>
+			<option <?=(strtolower($printer)=='lq300-hadi' ? 'selected ':null)?> value="lq300-hadi">Admin Hadi (LQ 300+II)</option>
+			<option <?=(strtolower($printer)=='lx300-novri' ? 'selected ':null)?> value="lx300-novri">Admin Novri (LX 300+II)</option>
 		</select>
 	</form>
 </div>

@@ -107,11 +107,11 @@ if( $uid == 23 || $uid == 101 || $uid == 173):
 	?>
 	<style type="text/css">
 	.attnTo{
-		padding-top: 5mm;
+		padding-top: 2mm;
 		font-size: 10pt;
 	}
 	.dnNo{
-		padding-top: 4%;
+		padding-top: 3%;
 		font-size: 10pt;
 	}
 	.opNo{
@@ -132,14 +132,8 @@ if( $uid == 23 || $uid == 101 || $uid == 173):
 		padding-top: 5mm;
 	}
 	</style>
-<?php
-elseif($uid == 173):
-	?>
-	<style type="text/css">
-	.pages{
-		padding-top: 40mm;
-	}
-	</style>
+
+	
 	<?php
 endif;
 ?>

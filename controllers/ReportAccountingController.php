@@ -1089,8 +1089,10 @@ class ReportAccountingController extends Controller
 
 			$data = $query->all();
 		
-		if ($data[0]){
+		if ($data){
 			return $this->render('turnover',['data'=>$data,'nameproduct'=>$data[0]['product_name']]);	
+		}else{
+			echo '<center>Product Tidak Memilik Move</center>';
 		}
      	
      }

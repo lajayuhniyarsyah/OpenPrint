@@ -132,8 +132,14 @@ if( $uid == 23 || $uid == 101 || $uid == 173):
 		padding-top: 5mm;
 	}
 	</style>
-
-	
+<?php
+elseif($uid == 173):
+	?>
+	<style type="text/css">
+	.pages{
+		padding-top: 40mm;
+	}
+	</style>
 	<?php
 endif;
 ?>

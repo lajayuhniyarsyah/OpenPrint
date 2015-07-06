@@ -1088,8 +1088,11 @@ class ReportAccountingController extends Controller
 			    ->addOrderBy(['m.date' => SORT_DESC]);
 
 			$data = $query->all();
-	
-     	return $this->render('turnover',['data'=>$data,'nameproduct'=>$data[0]['product_name']]);	
+		
+		if ($data[0]){
+			return $this->render('turnover',['data'=>$data,'nameproduct'=>$data[0]['product_name']]);	
+		}
+     	
      }
 
    

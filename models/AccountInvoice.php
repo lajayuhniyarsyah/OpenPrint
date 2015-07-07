@@ -1,9 +1,6 @@
 <?php
-
 namespace app\models;
-
 use Yii;
-
 /**
  * This is the model class for table "account_invoice".
  *
@@ -73,7 +70,7 @@ use Yii;
  */
 class AccountInvoice extends \yii\db\ActiveRecord
 {
-    public $partner_to_print;
+    public $total_rated,$currency_rate;
     /**
      * @inheritdoc
      */
@@ -81,7 +78,6 @@ class AccountInvoice extends \yii\db\ActiveRecord
     {
         return 'account_invoice';
     }
-
     /**
      * @inheritdoc
      */
@@ -89,18 +85,17 @@ class AccountInvoice extends \yii\db\ActiveRecord
     {
         return [
             [['create_uid', 'write_uid', 'account_id', 'company_id', 'currency_id', 'partner_id', 'fiscal_position', 'user_id', 'partner_bank_id', 'payment_term', 'journal_id', 'period_id', 'move_id', 'commercial_partner_id', 'approver'], 'integer'],
-            [['create_date', 'write_date', 'date_due', 'date_invoice','payment_for'], 'safe'],
-            [['check_total', 'amount_tax', 'residual', 'amount_untaxed', 'amount_total', 'pajak', 'kurs','faktur_address'], 'number'],
+            [['create_date', 'write_date', 'date_due', 'date_invoice'], 'safe'],
+            [['check_total', 'amount_tax', 'residual', 'amount_untaxed', 'amount_total', 'pajak', 'kurs'], 'number'],
             [['account_id', 'company_id', 'currency_id', 'partner_id', 'reference_type', 'journal_id'], 'required'],
             [['reference_type', 'state', 'type', 'comment'], 'string'],
-            [['reconciled', 'sent','print_all_taxes_line'], 'boolean'],
+            [['reconciled', 'sent'], 'boolean'],
             [['origin', 'reference', 'supplier_invoice_number', 'number', 'move_name', 'name', 'kmk', 'kwitansi'], 'string', 'max' => 64],
             [['internal_number'], 'string', 'max' => 32],
             [['faktur_pajak_no'], 'string', 'max' => 20],
             [['number', 'company_id', 'journal_id', 'type'], 'unique', 'targetAttribute' => ['number', 'company_id', 'journal_id', 'type'], 'message' => 'The combination of Number, Company, Journal and Type has already been taken.']
         ];
     }
-
     /**
      * @inheritdoc
      */
@@ -150,21 +145,46 @@ class AccountInvoice extends \yii\db\ActiveRecord
             'pajak' => 'Kurs Pajak',
             'kurs' => 'Kurs BI',
             'approver' => 'Approved by',
+            'currency_rate'=>'Currency Rate',
+            'total_rated'=>'Subtotal In IDR',
         ];
     }
-
-   /* public function afterFind(){
+   public function afterFind(){
         
-        $this->amount_tax = $this->numberFormat($this->amount_tax);
+        /*$this->amount_tax = $this->numberFormat($this->amount_tax);
         $this->amount_untaxed = $this->numberFormat($this->amount_untaxed);
-        $this->amount_total = $this->numberFormat($this->amount_total);
+        $this->amount_total = $this->numberFormat($this->amount_total);*/
+        $this->setCurrencyRate();
+        $this->setTotalRated();
         return true;
-    }*/
-
+    }
+    private function getCurrencyRate(){
+        $res = 1;
+        if($this->currency_id!=13){
+            // if not RP
+            $q = ResCurrencyRate::find()
+                ->where('currency_id=:currencyId AND name = :dateRate')
+                ->addParams(
+                    [
+                        ':currencyId'=>$this->currency_id,
+                        ':dateRate'=>($this->date_invoice ? $this->date_invoice:$this->create_date)
+                    ]
+                )
+                ->asArray()
+                ->one();
+            $res = $q['rating'];
+        }
+        return $res;
+    }
+    private function setCurrencyRate(){
+        $this->currency_rate=$this->getCurrencyRate();
+    }
+    private function setTotalRated(){
+        $this->total_rated=($this->currency_rate*$this->amount_total);
+    }
     private function numberFormat($val){
         return number_format($val,2,',','.');
     }
-
     
     /**
      * @return \yii\db\ActiveQuery
@@ -173,7 +193,6 @@ class AccountInvoice extends \yii\db\ActiveRecord
     {
         return $this->hasMany(AccountInvoiceTax::className(), ['invoice_id' => 'id']);
     }
-
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -181,7 +200,6 @@ class AccountInvoice extends \yii\db\ActiveRecord
     {
         return $this->hasOne(ResUsers::className(), ['id' => 'approver']);
     }
-
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -189,7 +207,6 @@ class AccountInvoice extends \yii\db\ActiveRecord
     {
         return $this->hasOne(ResCompany::className(), ['id' => 'company_id']);
     }
-
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -197,7 +214,6 @@ class AccountInvoice extends \yii\db\ActiveRecord
     {
         return $this->hasOne(AccountPeriod::className(), ['id' => 'period_id']);
     }
-
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -205,7 +221,6 @@ class AccountInvoice extends \yii\db\ActiveRecord
     {
         return $this->hasOne(ResUsers::className(), ['id' => 'user_id']);
     }
-
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -213,7 +228,6 @@ class AccountInvoice extends \yii\db\ActiveRecord
     {
         return $this->hasOne(AccountFiscalPosition::className(), ['id' => 'fiscal_position']);
     }
-
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -221,7 +235,6 @@ class AccountInvoice extends \yii\db\ActiveRecord
     {
         return $this->hasOne(ResCurrency::className(), ['id' => 'currency_id']);
     }
-
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -229,7 +242,6 @@ class AccountInvoice extends \yii\db\ActiveRecord
     {
         return $this->hasOne(AccountJournal::className(), ['id' => 'journal_id']);
     }
-
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -237,7 +249,6 @@ class AccountInvoice extends \yii\db\ActiveRecord
     {
         return $this->hasOne(AccountAccount::className(), ['id' => 'account_id']);
     }
-
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -245,7 +256,6 @@ class AccountInvoice extends \yii\db\ActiveRecord
     {
         return $this->hasOne(ResPartnerBank::className(), ['id' => 'partner_bank_id']);
     }
-
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -253,7 +263,6 @@ class AccountInvoice extends \yii\db\ActiveRecord
     {
         return $this->hasOne(AccountPaymentTerm::className(), ['id' => 'payment_term']);
     }
-
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -261,15 +270,6 @@ class AccountInvoice extends \yii\db\ActiveRecord
     {
         return $this->hasOne(ResPartner::className(), ['id' => 'partner_id']);
     }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getFakturAddress()
-    {
-        return $this->hasOne(ResPartner::className(), ['id' => 'faktur_address']);
-    }
-
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -277,7 +277,6 @@ class AccountInvoice extends \yii\db\ActiveRecord
     {
         return $this->hasOne(AccountMove::className(), ['id' => 'move_id']);
     }
-
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -285,7 +284,6 @@ class AccountInvoice extends \yii\db\ActiveRecord
     {
         return $this->hasOne(ResUsers::className(), ['id' => 'write_uid']);
     }
-
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -293,15 +291,13 @@ class AccountInvoice extends \yii\db\ActiveRecord
     {
         return $this->hasOne(ResUsers::className(), ['id' => 'create_uid']);
     }
-
     /**
      * @return \yii\db\ActiveQuery
      */
     public function getAccountInvoiceLines()
     {
-        return $this->hasMany(AccountInvoiceLine::className(), ['invoice_id' => 'id'])->orderBy('sequence, id ASC');
+        return $this->hasMany(AccountInvoiceLine::className(), ['invoice_id' => 'id'])->orderBy('sequence ASC, id ASC');
     }
-
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -309,11 +305,6 @@ class AccountInvoice extends \yii\db\ActiveRecord
     {
         return $this->hasMany(SaleOrderInvoiceRel::className(), ['invoice_id' => 'id']);
     }
-
-    public function getOrders(){
-        return $this->hasMany(SaleOrder::className(),['id'=>'order_id'])->via('saleOrderInvoiceRels');
-    }
-
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -321,22 +312,11 @@ class AccountInvoice extends \yii\db\ActiveRecord
     {
         return $this->hasMany(StockPicking::className(), ['invoice_id' => 'id']);
     }
-
     /**
      * @return \yii\db\ActiveQuery
      */
     public function getPurchaseInvoiceRels()
     {
         return $this->hasMany(PurchaseInvoiceRel::className(), ['invoice_id' => 'id']);
-    }
-
-    public function afterFind(){
-        $prtName = (isset($this->partner->parent) ? $this->partner->parent->name:$this->partner->name);
-        $expPartnerName = explode(',',$prtName );
-        if(is_array($expPartnerName) && isset($expPartnerName[1])){
-            $this->partner_to_print = $expPartnerName[1].'. '.$expPartnerName[0];
-        }else{
-            $this->partner_to_print = $this->partner->name;
-        }
     }
 }

@@ -165,11 +165,13 @@ class DeliveryNoteController extends Controller
             ];
             $totalWeight=0;
             foreach($listLine->productListLines as $n=>$pLine):
-                    $linesData[$k]['lines'][] = [
+                // echo floatval($pLine->product_uom);
+                // echo ' = '.(isset($pLine->productUom->name) ? 'ada<br/>':'no<br/>');
+                $linesData[$k]['lines'][] = [
                     'no'=>$pLine->no,
                     'desc'=>nl2br($pLine->name),
                     'product'=>'['.$pLine->product->default_code.']'.$pLine->product->name_template,
-                    'qty'=>floatval($pLine->product_qty).' '.$pLine->productUom->name,
+                    'qty'=>floatval($pLine->product_qty).' '.($pLine->product_uom ? $pLine->productUom->name:null),
                     'weight'=>($pLine->weight ? $pLine->weight:'-'),
                     'measurement'=>($pLine->measurement ? $pLine->measurement:'-'),
                 ];
@@ -177,7 +179,17 @@ class DeliveryNoteController extends Controller
             endforeach;
             $linesData[$k]['totalWeight'] = $totalWeight;
         endforeach;
-        $printer = ($printer ? $printer:($uid==173 ? 'lx300-hadi':'lq300-novri'));
+        // $printer = ($printer ? $printer:($uid==173 ? 'lq300-hadi':'lx300-novri'));
+        if(!$printer){
+            if($uid==173 || $uid == 23){
+                $printer = 'lq300-hadi';
+                // echo 'aaaaa';
+
+            }else{
+                $printer = 'lx300-novri';
+
+            }
+        }
         
         // echo $printer;
         return $this->render('print/pack',['model'=>$model,'pagesData'=>$linesData,'printer'=>$printer,'uid'=>$uid]);

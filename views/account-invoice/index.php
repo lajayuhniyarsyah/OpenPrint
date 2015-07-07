@@ -14,6 +14,8 @@ use miloschuman\highcharts\Highcharts;
 /* @var $searchModel app\models\AccountInvoiceSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
+
+
 $this->title = 'Account Invoices';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -112,6 +114,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		'dataProvider' => $dataProvider,
 		'filterModel' => $searchModel,
 		'showPageSummary'=>true,
+		// 'pageSummary'=>true,
 		'columns' => [
 			['class' => 'kartik\grid\SerialColumn'],
 
@@ -315,15 +318,15 @@ $this->params['breadcrumbs'][] = $this->title;
 				'format'=>'decimal',
 				'filter'=>false,
 			],
-			[
-				'attribute'=>'currency_rate',
-				'format'=>'currency',
-			],
-			[
-				'attribute'=>'total_rated',
-				'format'=>'currency',
-				'pageSummary'=>true,
-			],
+			// [
+			// 	'attribute'=>'currency_rate',
+			// 	'format'=>'currency',
+			// ],
+			// [
+			// 	'attribute'=>'total_rated',
+			// 	'format'=>'currency',
+			// 	'pageSummary'=>true,
+			// ],
 			[
 				'attribute'=>'state',
 				'value'=>function($model,$key,$index,$grid){
@@ -338,10 +341,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				'buttons'=>[
 					'view'=>function($url,$model,$key){
 						$url = 'http://192.168.9.26:10001/?db=LIVE_2014#id='.$model->id.'&view_type=form&model=account.invoice&menu_id=220&action=241';
-						
 						return Html::a('<span class="glyphicon glyphicon-eye-open"></span>',$url);
-						
-						
 					}
 				]
 

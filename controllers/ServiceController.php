@@ -27,7 +27,7 @@ class ServiceController extends Controller{
 						'roles'=>['@']
 					],
 					[
-						'allow'=>false,
+						'allow'=>true,
 						'roles'=>['?']
 					]
 				]
@@ -130,7 +130,7 @@ class ServiceController extends Controller{
 		$ids = explode(',', $ids);
 		// \yii\helpers\VarDumper::dump($ids);
 		if(is_array($ids)){
-			$invoices = AccountInvoice::find()->where(['id'=>$ids])->with(['accountInvoiceLines','partner','accountInvoiceLines.product','stockPickings'])->asArray()->all();
+			$invoices = AccountInvoice::find()->where(['id'=>$ids])->with(['accountInvoiceLines','partner','partner.parent','accountInvoiceLines.product','stockPickings'])->asArray()->all();
 			$maped = $this->prepareCsvInvoiceData($invoices);
 			/*\yii\helpers\VarDumper::dump($maped);
 			die();*/
@@ -262,7 +262,7 @@ class ServiceController extends Controller{
 		foreach($invoices as $inv){
 			// echo $inv['id'].'/';
 			// var_dump($inv['faktur_pajak_no']);
-			if($inv['state']=='draft' || $inv['state']=='cancel'){
+			if($inv['state']=='draft' || $inv['state']=='cancel' || $inv['state']=='submited'){
 				// continue to next pointer
 				// we dont export draft invoice
 				continue;
@@ -284,6 +284,8 @@ class ServiceController extends Controller{
 				$tax_date = \DateTime::createFromFormat('Y-m-d',$inv['date_invoice']);
 				$iAddr = $inv['partner']['street'].'\r\n'.$inv['partner']['street2'].' '.$inv['partner']['city'].', '.(isset($inv['partner']['state']->name) ? $inv['partner']['state']->name:'').($inv['partner']['zip'] ? ' - '.$inv['partner']['zip']:"");
 				// "FK","09","0","0011578000001","6","2015","18/06/2015","010621191092000","INDOCEMENT TUNGGAL PRAKARSA TBK PT","Wisma Indocement Lt. 13   Blok - No.- RT:- RW:- Kel.- Kec.- Kota/Kab.- - 12910","56750000","5675000","0","","0","0","0","0","78049887/SBM/V/2015"
+				
+				$partner = (isset($inv['partner']['parent']) ? $inv['partner']['parent']: $inv['partner']);
 				$res['OUT'][$inv['id']]['fk'] = [
 					'FK', #FK
 					$tax_code_type, #KD JENIS TRANSAKSI
@@ -292,8 +294,8 @@ class ServiceController extends Controller{
 					$tax_date->format('n'), #MASA PAJAK
 					$tax_date->format('Y'), #TAHUN PAJAK
 					$tax_date->format('d/m/Y'), #full tax date dd/mm/yyyy
-					preg_replace('/[\s\W]+/', '', $inv['partner']['npwp']), #customer npwp
-					$inv['partner']['name'], #customer name
+					preg_replace('/[\s\W]+/', '', $partner['npwp']), #customer npwp
+					$partner['name'], #customer name
 					$iAddr, #invoice addres['OUT']s
 					$this->convertIdr($inv['amount_untaxed'],$rate),#jumlah dpp,
 					$this->convertIdr($inv['amount_tax'],$rate),#jumlah PPN
@@ -364,26 +366,58 @@ class ServiceController extends Controller{
 					if($soInv):
 						// if founded
 						// override res['OUT'] fk
-						$res['OUT'][$inv['id']]['fk'][10] = $this->convertIdr($soInv['amount_untaxed'],$rate);
-						$res['OUT'][$inv['id']]['fk'][11] = $this->convertIdr($soInv['amount_total'],$rate);
+						// 
+						$discountTotal = 0;
+						$dppTotal = 0;
+						$subtotalTotal = 0;
 
 						foreach($soInv['saleOrderLines'] as $soLine):
+							$pUnit = $this->convertIdr($soLine['price_unit'],$rate);
+
+							$discountLine = 0;
+
+
+							if(floatval($soLine['discount'])>0)
+							{
+								$discountLine = ($soLine['discount']/100) * ($pUnit*$soLine['product_uom_qty']);
+
+								$discountTotal += $discountLine;
+							}
+							else
+							{
+
+							}
+
+
+							$subtotal = $pUnit * $soLine['product_uom_qty'];
+							$subtotalTotal += $subtotal;
+
+							$dpp = $subtotal - $discountLine;
+							$dppTotal += $dpp;
+
+							$ppn = (10/100) * $dpp;
+
 							$res['OUT'][$inv['id']]['of'][] = [
 								'OF',
 								(string)$soLine['product']['default_code'],#product code
 								(string)$soLine['product']['name_template'],#product name
-								$this->convertIdr($soLine['price_unit'],$rate), #HARGA SATUAN
+								$pUnit, #HARGA SATUAN
 								(float)$soLine['product_uom_qty'], #qty
-								$this->convertIdr(($soLine['price_unit']*$soLine['product_uom_qty']),$rate), #HARGA TOTAL
-								$this->convertIdr($soLine['discount'],$rate), #DISKON
-								$this->convertIdr(($soLine['price_unit']*$soLine['product_uom_qty']),$rate), #dpp
-								$this->convertIdr((($soLine['price_unit']*$soLine['product_uom_qty'])*0.1),$rate), #ppn,
+								$subtotal, #HARGA TOTAL
+								$discountLine, #DISKON
+								$dpp, #dpp
+								$ppn, #ppn,
 								0, #TARIF PPNBM
 								'0.0' #ppnbm
 
 							];	
 
 						endforeach;
+						// HERE
+						$ppnTotal = round((10/100) * $dppTotal);
+
+						$res['OUT'][$inv['id']]['fk'][10] = $dppTotal;
+						$res['OUT'][$inv['id']]['fk'][11] = $ppnTotal;
 					endif;
 				}else{
 					foreach($inv['accountInvoiceLines'] as $item):
@@ -407,26 +441,10 @@ class ServiceController extends Controller{
 			}elseif($inv['type']=='in_invoice'){
 				// OUT INVOICE
 				// SUPPLIER INVOICE
+				
 				$rate = ($inv['currency_id']==13 ? 1:$inv['pajak']);
 				$tax_date = \DateTime::createFromFormat('Y-m-d',$inv['date_invoice']);
-				/*$datainv[]=[
-					"FM",
-					"KD_JENIS_TRANSAKSI",
-					"FG_PENGGANTI",
-					"NOMOR_FAKTUR",
-					"MASA_PAJAK",
-					"TAHUN_PAJAK",
-					"TANGGAL_FAKTUR",
-					"NPWP",
-					"NAMA",
-					"ALAMAT_LENGKAP",
-					"JUMLAH_DPP",
-					"JUMLAH_PPN",
-					"JUMLAH_PPNBM",
-					"IS_CREDITABLE"
-				];*/
-
-				// foreach($invoices as $inv){
+				
 
 				$datainv[]=[
 							"FM",
@@ -438,16 +456,15 @@ class ServiceController extends Controller{
 							$tax_date->format('d/m/Y'),
 							preg_replace('/[\s\W]+/', '', $inv['partner']['npwp']),
 							$inv['partner']['name'],
+							$inv['partner']['street'],
 							$this->convertIdr($inv['amount_untaxed'],$rate),
 							$this->convertIdr($inv['amount_tax'],$rate),
 							"0",
 							"1"
-						];	
+						];
 
-				// }
-
-				var_dump($datainv);
-				die();
+				/*var_dump($datainv);
+				die();*/
 				$res['IN'] =$datainv;
 				// $res = $this->prepareIn();
 			}
@@ -597,6 +614,7 @@ class ServiceController extends Controller{
 				// echo $item['price_subtotal'].'\\';
 			endforeach;
 		}
+		
 		return $res;
 	}
 

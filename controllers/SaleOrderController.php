@@ -74,7 +74,7 @@ class SaleOrderController extends Controller
 	 * Lists all SaleOrder models.
 	 * @return mixed
 	 */
-	public function actionIndex($uid)
+	public function actionIndex($uid=null)
 	{
 		$manageUsers = $this->getTrackOrderManagementUsers();
 		$onlyShowByCreateUid = true;
@@ -218,7 +218,7 @@ SELECT
 GROUP BY period_year, period_month, month_name
 ORDER BY period_year ASC, period_month ASC
 EOQ;
-		// echo '<text>'.$queryAllOrder.'</text>';
+		// echo '<pre>'.$queryAllOrder.'</pre>';
 		$commandAllOrders = $connection->createCommand($queryAllOrder);
 		$resultAllOrders = $commandAllOrders->queryAll();
 		$allOrderDataProvider = new \yii\data\ArrayDataProvider([
@@ -253,6 +253,8 @@ EOQ;
 			$xCatIndex[$monthlyOrder['period_year'].'_'.$monthlyOrder['period_month']] = $row;
 			$series[$seriesIdx]['data'][] = (float)$monthlyOrder['subtotal'];
 		}
+		/*var_dump($xCatIndex);
+		die();*/
 		$seriesIdx++;
 		
 		// IF SEARCH FORM SUBMITTED
@@ -305,12 +307,19 @@ EOQ;
 				[
 					'attribute'=>'sales_name',
 					'header'=>'User(s)',
+					'format'=>'html',
+					'value'=>function($data) use($model){
+						// return var_dump($data);
+						return \yii\helpers\Html::a($data['sales_name'],['tree','where'=>\yii\helpers\Json::encode(['date_order'=>[Yii::$app->formatter->asDate($model->date_from,'php:Y-m-d H:i:s'),Yii::$app->formatter->asDate($model->date_to,'php:Y-m-d H:i:s')],'user_id'=>[$data['user_id']]])]);
+					}
 				],
 				[
 					'attribute'=>'group_id',
 					'header'=>'Group',
-					'value'=>function($model,$key,$col,$grid) use ($groups){
-						return $groups[$model['group_id']];
+
+					'format'=>'html',
+					'value'=>function($data,$key,$col,$grid) use ($groups, $model){
+						return \yii\helpers\Html::a($groups[$data['group_id']],['tree','where'=>\yii\helpers\Json::encode(['date_order'=>[Yii::$app->formatter->asDate($model->date_from,'php:Y-m-d H:i:s'),Yii::$app->formatter->asDate($model->date_to,'php:Y-m-d H:i:s')],'group_id'=>[$data['group_id']]])]);
 					}
 				]
 			];
@@ -333,7 +342,7 @@ EOQ;
 					
 					switch ($fieldName) {
 						case 'user_id':
-							# do nothoing
+							# do nothing
 							# dont render
 							break;
 						case 'sales_name':
@@ -345,31 +354,44 @@ EOQ;
 						default:
 							# code...
 							# add to series
-								$total[$row]['value']+=$fieldValue;
-								$series[$seriesIdx]['data'][] = (float) $fieldValue;
-								#add to salesMan Grid
-								
+							# 
+							# 
 								$periodIdx = str_replace('subtotal_', '', $fieldName);
 
-								$getIdx = $xCatIndex[$periodIdx]; #get ex: 2014_1 means period on 2014 on january
+								if(isset($xCatIndex[$periodIdx])){
+									$total[$row]['value']+=$fieldValue;
+									$series[$seriesIdx]['data'][] = (float) $fieldValue;
+									#add to salesMan Grid
+									
+									
 
-								$headerName = "";
-								$explodeName = explode('_',$periodIdx);
-								$headerName = Yii::$app->formatter->asDate($explodeName[0].'-'.$explodeName[1].'-01','MMM-yyyy');
+									$getIdx = $xCatIndex[$periodIdx]; #get ex: 2014_1 means period on 2014 on january
 
-								if($row==0):    
-									$salesManSearchGrid['columns'][] = [
-										'attribute'=>$fieldName,
-										'header'=>$headerName,
-										'format'=>['currency'],
-										'pageSummary'=>true,
+									$headerName = "";
+									$explodeName = explode('_',$periodIdx);
+									$headerName = Yii::$app->formatter->asDate($explodeName[0].'-'.$explodeName[1].'-01','MMM-yyyy');
+
+									if($row==0):    
+										$salesManSearchGrid['columns'][] = [
+											'attribute'=>$fieldName,
+											'header'=>$headerName,
+											'format'=>['currency'],
+											'pageSummary'=>true,
+										];
+									endif;
+
+									$pieSeries[$seriesIdx] = [
+										'name'=>$saleMonthly['sales_name'],
+										'y'=>$total[$row]['value'],
 									];
-								endif;
+								}
+								else
+								{
+									// do nothing
+								}
 
-								$pieSeries[$seriesIdx] = [
-									'name'=>$saleMonthly['sales_name'],
-									'y'=>$total[$row]['value'],
-								];
+
+								
 								$countCurrColumn++;
 							break;
 					}
@@ -414,6 +436,37 @@ EOQ;
 				'pieSeries'=>(isset($pieSeries) ? array_values($pieSeries):null),
 			]
 		);
+	}
+
+
+	public function actionTree($where=null){
+
+		$obj = SaleOrder::find();
+		if($where){
+			$decW = \yii\helpers\Json::decode($where);
+			$datesCond = $decW['date_order'];
+			unset($decW['date_order']);
+			
+			$obj->where($decW);
+
+			var_dump($datesCond);
+			$obj->andWhere(['between','date_order',$datesCond[0],$datesCond[1]]);
+
+		}
+
+		$obj->andWhere(['not in','state',['draft','cancel']]);
+
+		$obj->with(['createU','createU.partner','partner','user','user.partner','pricelist'])->orderBy('date_order');
+
+		
+		$dataToRender['dataProvider'] = new ArrayDataProvider([
+			'allModels'=>$obj->asArray()->all(),
+			'pagination'=>[
+				'pageSize'=>-1,
+			]
+		]);
+
+		return $this->render('tree',$dataToRender);
 	}
 
 
@@ -590,7 +643,7 @@ EOQ;
 		echo \yii\helpers\Json::encode($out);
 	}
 
-	public function actionGetAllCreatorList($search = null, $id = null) {
+	public function actionGetAllCreatorList($search, $id = null) {
 		$out = ['more' => false];
 		$q = new \yii\db\Query;
 		if (!is_null($search)) {
@@ -601,7 +654,7 @@ EOQ;
 					// ->where('res_users.id in (:userList)')
 					->where('lower(login) like :loginSearch')
 					// ->andWhere('id in (:listCreator)')
-					->addParams([':loginSearch'=>'%ani%']);
+					->addParams([':loginSearch'=>'%'.$search['term'].'%']);
 				// var_dump($users->createCommand()->queryAll());
 				$out['results'] = array_values($users->createCommand()->queryAll());
 		}

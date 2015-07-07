@@ -27,7 +27,7 @@ class ServiceController extends Controller{
 						'roles'=>['@']
 					],
 					[
-						'allow'=>false,
+						'allow'=>true,
 						'roles'=>['?']
 					]
 				]
@@ -366,26 +366,58 @@ class ServiceController extends Controller{
 					if($soInv):
 						// if founded
 						// override res['OUT'] fk
-						$res['OUT'][$inv['id']]['fk'][10] = $this->convertIdr($soInv['amount_untaxed'],$rate);
-						$res['OUT'][$inv['id']]['fk'][11] = $this->convertIdr($soInv['amount_total'],$rate);
+						// 
+						$discountTotal = 0;
+						$dppTotal = 0;
+						$subtotalTotal = 0;
 
 						foreach($soInv['saleOrderLines'] as $soLine):
+							$pUnit = $this->convertIdr($soLine['price_unit'],$rate);
+
+							$discountLine = 0;
+
+
+							if(floatval($soLine['discount'])>0)
+							{
+								$discountLine = ($soLine['discount']/100) * ($pUnit*$soLine['product_uom_qty']);
+
+								$discountTotal += $discountLine;
+							}
+							else
+							{
+
+							}
+
+
+							$subtotal = $pUnit * $soLine['product_uom_qty'];
+							$subtotalTotal += $subtotal;
+
+							$dpp = $subtotal - $discountLine;
+							$dppTotal += $dpp;
+
+							$ppn = (10/100) * $dpp;
+
 							$res['OUT'][$inv['id']]['of'][] = [
 								'OF',
 								(string)$soLine['product']['default_code'],#product code
 								(string)$soLine['product']['name_template'],#product name
-								$this->convertIdr($soLine['price_unit'],$rate), #HARGA SATUAN
+								$pUnit, #HARGA SATUAN
 								(float)$soLine['product_uom_qty'], #qty
-								$this->convertIdr(($soLine['price_unit']*$soLine['product_uom_qty']),$rate), #HARGA TOTAL
-								$this->convertIdr($soLine['discount'],$rate), #DISKON
-								$this->convertIdr(($soLine['price_unit']*$soLine['product_uom_qty']),$rate), #dpp
-								$this->convertIdr((($soLine['price_unit']*$soLine['product_uom_qty'])*0.1),$rate), #ppn,
+								$subtotal, #HARGA TOTAL
+								$discountLine, #DISKON
+								$dpp, #dpp
+								$ppn, #ppn,
 								0, #TARIF PPNBM
 								'0.0' #ppnbm
 
 							];	
 
 						endforeach;
+						// HERE
+						$ppnTotal = round((10/100) * $dppTotal);
+
+						$res['OUT'][$inv['id']]['fk'][10] = $dppTotal;
+						$res['OUT'][$inv['id']]['fk'][11] = $ppnTotal;
 					endif;
 				}else{
 					foreach($inv['accountInvoiceLines'] as $item):
@@ -409,26 +441,10 @@ class ServiceController extends Controller{
 			}elseif($inv['type']=='in_invoice'){
 				// OUT INVOICE
 				// SUPPLIER INVOICE
+				
 				$rate = ($inv['currency_id']==13 ? 1:$inv['pajak']);
 				$tax_date = \DateTime::createFromFormat('Y-m-d',$inv['date_invoice']);
-				/*$datainv[]=[
-					"FM",
-					"KD_JENIS_TRANSAKSI",
-					"FG_PENGGANTI",
-					"NOMOR_FAKTUR",
-					"MASA_PAJAK",
-					"TAHUN_PAJAK",
-					"TANGGAL_FAKTUR",
-					"NPWP",
-					"NAMA",
-					"ALAMAT_LENGKAP",
-					"JUMLAH_DPP",
-					"JUMLAH_PPN",
-					"JUMLAH_PPNBM",
-					"IS_CREDITABLE"
-				];*/
-
-				// foreach($invoices as $inv){
+				
 
 				$datainv[]=[
 							"FM",
@@ -445,9 +461,7 @@ class ServiceController extends Controller{
 							$this->convertIdr($inv['amount_tax'],$rate),
 							"0",
 							"1"
-						];	
-
-				// }
+						];
 
 				/*var_dump($datainv);
 				die();*/
@@ -600,6 +614,7 @@ class ServiceController extends Controller{
 				// echo $item['price_subtotal'].'\\';
 			endforeach;
 		}
+		
 		return $res;
 	}
 

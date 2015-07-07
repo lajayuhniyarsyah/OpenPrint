@@ -1,7 +1,7 @@
 <?php
 use yii\helpers\Html;
 use yii\helpers\Url;
-
+// echo $printer;
 ?>
 
 <style type="text/css">

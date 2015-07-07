@@ -4,3 +4,4 @@ runtime/*
 vendor/*
 composer.lock
 web/img/*
+sftp-config.json

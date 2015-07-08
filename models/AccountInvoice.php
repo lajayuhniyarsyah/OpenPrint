@@ -71,6 +71,7 @@ use Yii;
 class AccountInvoice extends \yii\db\ActiveRecord
 {
     public $total_rated,$currency_rate;
+    public $partner_to_print;
     /**
      * @inheritdoc
      */
@@ -85,11 +86,11 @@ class AccountInvoice extends \yii\db\ActiveRecord
     {
         return [
             [['create_uid', 'write_uid', 'account_id', 'company_id', 'currency_id', 'partner_id', 'fiscal_position', 'user_id', 'partner_bank_id', 'payment_term', 'journal_id', 'period_id', 'move_id', 'commercial_partner_id', 'approver'], 'integer'],
-            [['create_date', 'write_date', 'date_due', 'date_invoice'], 'safe'],
-            [['check_total', 'amount_tax', 'residual', 'amount_untaxed', 'amount_total', 'pajak', 'kurs'], 'number'],
+            [['create_date', 'write_date', 'date_due', 'date_invoice','payment_for'], 'safe'],
+            [['check_total', 'amount_tax', 'residual', 'amount_untaxed', 'amount_total', 'pajak', 'kurs','faktur_address'], 'number'],
             [['account_id', 'company_id', 'currency_id', 'partner_id', 'reference_type', 'journal_id'], 'required'],
             [['reference_type', 'state', 'type', 'comment'], 'string'],
-            [['reconciled', 'sent'], 'boolean'],
+            [['reconciled', 'sent','print_all_taxes_line'], 'boolean'],
             [['origin', 'reference', 'supplier_invoice_number', 'number', 'move_name', 'name', 'kmk', 'kwitansi'], 'string', 'max' => 64],
             [['internal_number'], 'string', 'max' => 32],
             [['faktur_pajak_no'], 'string', 'max' => 20],
@@ -269,6 +270,18 @@ class AccountInvoice extends \yii\db\ActiveRecord
     public function getPartner()
     {
         return $this->hasOne(ResPartner::className(), ['id' => 'partner_id']);
+    }
+
+    public function getOrders(){
+        return $this->hasMany(SaleOrder::className(),['id'=>'order_id'])->via('saleOrderInvoiceRels');
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getFakturAddress()
+    {
+        return $this->hasOne(ResPartner::className(), ['id' => 'faktur_address']);
     }
     /**
      * @return \yii\db\ActiveQuery

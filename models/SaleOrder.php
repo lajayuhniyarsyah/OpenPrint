@@ -212,7 +212,7 @@ class SaleOrder extends \yii\db\ActiveRecord
             'origin' => 'Origin',
             'order_policy' => 'Order Policy',
             'shop_id' => 'Shop ID',
-            'client_order_ref' => 'Client Order Ref',
+            'client_order_ref' => 'Client Order Reference',
             'date_order' => 'Date Order',
             'partner_id' => 'Partner ID',
             'note' => 'Note',

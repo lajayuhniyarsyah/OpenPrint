@@ -194,6 +194,10 @@ if(isset($salesManSearchGrid) && $salesManSearchGrid){
 				'columns'=>$salesManSearchGrid['columns']
 			]);?>
 		</div>
+		<!-- <div class="panel-footer">
+			
+		</div> -->
+
 	</div>
 
 

@@ -15,6 +15,7 @@ use yii\web\JsExpression;
 $this->title = 'Sale Orders';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+<?= Html::csrfMetaTags() ?>
 <div class="sale-order-index">
 
 	<h1><?= Html::encode($this->title) ?></h1>
@@ -79,7 +80,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			[
 				'attribute'=>'name',         
 			],
-			[
+			/*[
 				'attribute'=>'create_uid',
 				'value'=>function($model,$key,$index,$column){
 					return $model->createU->partner->name;
@@ -95,8 +96,52 @@ $this->params['breadcrumbs'][] = $this->title;
 							'data'=>new JsExpression('function(term,page){return {search:term}; }'),
 							'results'=>new JsExpression('function(data,page){ return {results:data.results}; }'),
 						],
-						'initSelection' => new JsExpression($script($url2))
+						'initSelection' => new JsExpression(
+							'function (element, callback) {
+								var id=$(element).val();
+								if (id !== "") {
+									$.ajax("'.$url2.'&id=" + id, {
+										dataType: "json"
+										}).done(function(data) {
+											callback(data.results);
+										}
+									);
+								}
+							}'
+						)
 					],
+				],
+			],*/
+			
+			[
+				'attribute'=>'create_uid',
+				'value'=>function($model,$key,$index,$grid){
+					return $model->createU->name;
+				},
+				'filterType'=>GridView::FILTER_SELECT2,
+				'filterWidgetOptions'=>[
+					'pluginOptions' => [
+						'allowClear' => true,
+						'minimumInputLength'=>2,
+						'ajax'=>[
+							'url'=>Url::to(['service/search-currency']),
+							'dataType'=>'json',
+							'data'=>new JsExpression('function(term,page){return {search:term}; }'),
+							'results'=>new JsExpression('function(data,page){ return {results:data.results}; }'),
+						],
+						'initSelection' => new JsExpression(
+								'function (element, callback) {
+								var id=$(element).val();
+								if (id !== "") {
+									$.ajax("'.Url::to(['service/search-currency']).'&id=" + id, {
+										dataType: "json"
+										}).done(function(data) {
+											callback(data.results);
+										}
+									);
+								}
+							}')
+						],
 				],
 			],
 			// 'create_date',
@@ -299,5 +344,5 @@ $this->params['breadcrumbs'][] = $this->title;
 		],
 	]); ?>
 	<?php Pjax::end(); ?>
-
+	
 </div>

@@ -191,10 +191,10 @@ use yii\helpers\Url;
 		<style type="text/css">
 			.pages{
 				height: 238mm;
-				padding-top: 49mm;
+				padding-top: 173px;
 			}
 			.pages:not(:first-child){
-				padding-top: 51mm;
+				padding-top: 47mm;
 			}
 			.headers{
 				height: 66mm;

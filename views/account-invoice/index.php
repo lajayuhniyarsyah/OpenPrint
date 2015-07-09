@@ -318,15 +318,15 @@ $this->params['breadcrumbs'][] = $this->title;
 				'format'=>'decimal',
 				'filter'=>false,
 			],
-			// [
-			// 	'attribute'=>'currency_rate',
-			// 	'format'=>'currency',
-			// ],
-			// [
-			// 	'attribute'=>'total_rated',
-			// 	'format'=>'currency',
-			// 	'pageSummary'=>true,
-			// ],
+			[
+				'attribute'=>'currency_rate',
+				'format'=>'currency',
+			],
+			[
+				'attribute'=>'total_rated',
+				'format'=>'currency',
+				'pageSummary'=>true,
+			],
 			[
 				'attribute'=>'state',
 				'value'=>function($model,$key,$index,$grid){

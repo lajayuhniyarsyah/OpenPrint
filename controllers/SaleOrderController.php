@@ -279,7 +279,7 @@ EOQ;
 			endif;
 			/*var_dump($sales_ids);
 			die();*/
-
+			
 			if($model->date_from == $model->date_to){
 				$dateQuery = "so.date_order = '{$model->date_from}'";
 				$allOrderTitle .= "On ".Yii::$app->formatter->asDate($model->date_from);
@@ -305,12 +305,18 @@ EOQ;
 				[
 					'attribute'=>'sales_name',
 					'header'=>'User(s)',
+					'format'=>'raw',
+					'value'=>function($model,$key,$col,$grid) use ($groups){
+						return \yii\helpers\Html::a($model['sales_name'],['sale-order/detail','uid'=>$model['user_id']]);
+					}
+
 				],
 				[
 					'attribute'=>'group_id',
 					'header'=>'Group',
+					'format'=>'raw',
 					'value'=>function($model,$key,$col,$grid) use ($groups){
-						return $groups[$model['group_id']];
+						return \yii\helpers\Html::a($groups[$model['group_id']],['sale-order/detail','uid'=>$model['group_id']]);
 					}
 				]
 			];
@@ -351,7 +357,7 @@ EOQ;
 								
 								$periodIdx = str_replace('subtotal_', '', $fieldName);
 
-								$getIdx = $xCatIndex[$periodIdx]; #get ex: 2014_1 means period on 2014 on january
+								// $getIdx = $xCatIndex[$periodIdx]; #get ex: 2014_1 means period on 2014 on january
 
 								$headerName = "";
 								$explodeName = explode('_',$periodIdx);

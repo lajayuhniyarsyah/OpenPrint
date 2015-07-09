@@ -134,7 +134,7 @@ class ServiceController extends Controller{
 			$maped = $this->prepareCsvInvoiceData($invoices);
 			/*\yii\helpers\VarDumper::dump($maped);
 			die();*/
-			$filename = 'Invoices - Export - '.date('Y-m-d H:i:s').'.csv';
+			$filename = 'INVOICES-'.(isset($maped['OUT']) ? 'OUT':'IN').'-'.implode('+', array_keys($maped[(isset($maped['OUT']) ? 'OUT':'IN')])).'.csv';
 			header( "Content-Type: text/csv;charset=utf-8" );
 			header( "Content-Disposition: attachment;filename=\"$filename\"" );
 			header("Pragma: no-cache");
@@ -246,7 +246,7 @@ class ServiceController extends Controller{
 	private function convertIdr($amount,$rate){
 		$ret = 0;
 
-		$ret = round($amount*$rate);
+		$ret = $amount*$rate;
 		return (float)$ret;
 	}
 	/**
@@ -268,7 +268,9 @@ class ServiceController extends Controller{
 				continue;
 			}
 
+			
 			if($inv['type']=='out_invoice'){
+				$indexArr = explode('/', $inv['kwitansi'])[0];
 				$rate = ($inv['currency_id']==13 ? 1:$inv['pajak']);
 				$all_tax_code = substr($inv['faktur_pajak_no'], 0,3);
 				$tax_code_type =  substr($inv['faktur_pajak_no'], 0,2);
@@ -282,11 +284,11 @@ class ServiceController extends Controller{
 				$pure_faktur_code = substr(preg_replace('/[\s\W]+/', '', $inv['faktur_pajak_no']),3,strlen(preg_replace('/[\s\W]+/', '', $inv['faktur_pajak_no'])));
 				$exp_tax_date = explode('-', $inv['date_invoice']);
 				$tax_date = \DateTime::createFromFormat('Y-m-d',$inv['date_invoice']);
-				$iAddr = $inv['partner']['street'].'\r\n'.$inv['partner']['street2'].' '.$inv['partner']['city'].', '.(isset($inv['partner']['state']->name) ? $inv['partner']['state']->name:'').($inv['partner']['zip'] ? ' - '.$inv['partner']['zip']:"");
+				$iAddr = $inv['partner']['street'].', '.$inv['partner']['street2'].' '.$inv['partner']['city'].', '.(isset($inv['partner']['state']->name) ? $inv['partner']['state']->name:'').($inv['partner']['zip'] ? ' - '.$inv['partner']['zip']:"");
 				// "FK","09","0","0011578000001","6","2015","18/06/2015","010621191092000","INDOCEMENT TUNGGAL PRAKARSA TBK PT","Wisma Indocement Lt. 13   Blok - No.- RT:- RW:- Kel.- Kec.- Kota/Kab.- - 12910","56750000","5675000","0","","0","0","0","0","78049887/SBM/V/2015"
 				
 				$partner = (isset($inv['partner']['parent']) ? $inv['partner']['parent']: $inv['partner']);
-				$res['OUT'][$inv['id']]['fk'] = [
+				$res['OUT'][$indexArr]['fk'] = [
 					'FK', #FK
 					$tax_code_type, #KD JENIS TRANSAKSI
 					$tax_replace_code, #FG PENGGANTI
@@ -302,15 +304,15 @@ class ServiceController extends Controller{
 					'0', #Jumlah PPNBM
 					'',#id keterangan tambahan
 					($inv['payment_for']=='dp' ? '1':($inv['payment_for']=='completion' ? '2':'0')),#fg uang muka
-					$this->convertIdr($inv['amount_untaxed'],$rate),#uang muka dpp
-					$this->convertIdr($inv['amount_tax'],$rate),#uang muka ppn
+					($inv['payment_for']=='dp' ? floor($this->convertIdr($inv['amount_untaxed'],$rate)):($inv['payment_for']=='completion' ? floor($this->convertIdr($inv['amount_untaxed'],$rate)):'0')),#uang muka dpp
+					($inv['payment_for']=='dp' ? floor($this->convertIdr($inv['amount_tax'],$rate)):($inv['payment_for']=='completion' ? floor($this->convertIdr($inv['amount_tax'],$rate)):'0')),#uang muka ppn
 					'0',#uang muka ppnbm, 0 karena tidak ada PPNBM (fix)
-					$inv['origin'],#referensi
+					'Invoice No : '.$inv['kwitansi'].'. Order No : '.$inv['origin'].'. Order Ref : '.$inv['name'],#referensi
 					
 				];
 
 				// "FAPR","PT SINCHAN","JL PAHLAWAN BERTOPENG BLOK MATAHARI NO.11, KIOTO RT: 1 RW: 14 JAKARTA",,,,
-				$res['OUT'][$inv['id']]['fapr'] = [
+				$res['OUT'][$indexArr]['fapr'] = [
 					'FAPR',
 					'SUPRABAKTI MANDIRI, PT',
 					'Jl. Danau Sunter Utara Blok. A No. 9 Tanjung Priok - Jakarta Utara 14350',
@@ -342,20 +344,15 @@ class ServiceController extends Controller{
 								$soInv = \app\models\SaleOrder::find()->where(['id'=>$soid])->with(['saleOrderLines','saleOrderLines.product'])->asArray()->one();
 
 							}else{
+								// LOOP FROM INVOICE LINES
 								foreach($inv['accountInvoiceLines'] as $item):
-									$res['OUT'][$inv['id']]['of'][] = [
-										'OF', #of
-										(string)$item['product']['default_code'],#product code
-										(string)$item['product']['name_template'],#product name
-										$this->convertIdr($item['price_unit'],$rate), #harga satuan
-										(float)$item['quantity'], #jumlah barang
-										$this->convertIdr($item['price_subtotal'],$rate), #harga total
-										$this->convertIdr($item['discount'],$rate), #diskon
-										$this->convertIdr($item['price_subtotal'],$rate), #dpp
-										$this->convertIdr(($item['price_subtotal']*0.1),$rate), #ppn,
-										0, #TARIF PPNBM
-										'0.0' #ppnbm
-									];
+									$render = $this->prepareFromInvLine($item,$rate);
+									
+									$discountTotal += $render[6];
+									$dppTotal += $render[7];
+									$ppnTotal += $render[8];
+
+									$res['OUT'][$indexArr]['of'][] = $render;
 
 								endforeach;
 								$soInv = false;
@@ -371,6 +368,7 @@ class ServiceController extends Controller{
 						$dppTotal = 0;
 						$subtotalTotal = 0;
 
+						// LOOP EACH SO RELS IN ORDER LINE RELATION
 						foreach($soInv['saleOrderLines'] as $soLine):
 							$pUnit = $this->convertIdr($soLine['price_unit'],$rate);
 
@@ -383,10 +381,6 @@ class ServiceController extends Controller{
 
 								$discountTotal += $discountLine;
 							}
-							else
-							{
-
-							}
 
 
 							$subtotal = $pUnit * $soLine['product_uom_qty'];
@@ -397,7 +391,7 @@ class ServiceController extends Controller{
 
 							$ppn = (10/100) * $dpp;
 
-							$res['OUT'][$inv['id']]['of'][] = [
+							$res['OUT'][$indexArr]['of'][] = [
 								'OF',
 								(string)$soLine['product']['default_code'],#product code
 								(string)$soLine['product']['name_template'],#product name
@@ -410,33 +404,39 @@ class ServiceController extends Controller{
 								0, #TARIF PPNBM
 								'0.0' #ppnbm
 
-							];	
+							];
+
 
 						endforeach;
 						// HERE
-						$ppnTotal = round((10/100) * $dppTotal);
+						$ppnTotal = floor((10/100) * $dppTotal);
 
-						$res['OUT'][$inv['id']]['fk'][10] = $dppTotal;
-						$res['OUT'][$inv['id']]['fk'][11] = $ppnTotal;
+						$res['OUT'][$indexArr]['fk'][10] = floor($dppTotal);
+
+						$res['OUT'][$indexArr]['fk'][11] = $ppnTotal;
+						/*var_dump($ppnTotal);
+						die();*/
 					endif;
-				}else{
-					foreach($inv['accountInvoiceLines'] as $item):
-						$res['OUT'][$inv['id']]['of'][] = [
-							'OF', #of
-							(string)$item['product']['default_code'],#product code
-							(string)$item['product']['name_template'],#product name
-							$this->convertIdr($item['price_unit'],$rate), #harga satuan
-							(float)$item['quantity'], #jumlah barang
-							$this->convertIdr($item['price_subtotal'],$rate), #harga total
-							$this->convertIdr($item['discount'],$rate), #diskon
-							$this->convertIdr($item['price_subtotal'],$rate), #dpp
-							$this->convertIdr(($item['price_subtotal']*0.1),$rate), #ppn,
-							'0', #ppnbm,
-							'0.0'
+				}
 
-						];
+
+				else{
+					$discountTotal = 0;
+					$dppTotal = 0;
+					$ppnTotal = 0;
+					// LOOP FROM INVOICE LINES
+					foreach($inv['accountInvoiceLines'] as $item):
+						$render = $this->prepareFromInvLine($item,$rate);
+						
+						$discountTotal += $render[6];
+						$dppTotal += $render[7];
+						$ppnTotal += $render[8];
+
+						$res['OUT'][$indexArr]['of'][] = $render;
 						// echo $item['price_subtotal'].'\\';
 					endforeach;
+					$res['OUT'][$indexArr]['fk'][10] = floor($dppTotal);
+					$res['OUT'][$indexArr]['fk'][11] = floor($ppnTotal);
 				}
 			}elseif($inv['type']=='in_invoice'){
 				// OUT INVOICE
@@ -477,7 +477,44 @@ class ServiceController extends Controller{
 		return $res;
 	}
 
-	private function prepareOut($inv){
+
+	private function prepareFromInvLine($item,$rate){
+		$res = [];
+		$price_unit = $this->convertIdr($item['price_unit'],$rate);
+		$price_subtotal = $price_unit*$item['quantity'];
+		$discount=0;
+		if($item['discount'] && floatval($item['discount'])>0){
+			$discount = ($item['discount']/100) * ($price_unit*$item['quantity']);
+		}elseif($item['amount_discount'] && $item['amount_discount']>0){
+			$discount = $item['amount_discount'];
+		}
+		$dpp=$price_subtotal-$discount;
+		$ppn=(10/100) * $dpp;
+
+		if($item){
+			$res = [
+				'OF', #of
+				(string)$item['product']['default_code'],#product code
+				(string)$item['product']['name_template'],#product name
+				$price_unit, #harga satuan
+				(float)$item['quantity'], #jumlah barang
+				$price_subtotal, #harga total
+				$discount, #diskon
+				$dpp, #dpp
+				$ppn, #ppn,
+				'0', #ppnbm,
+				'0.0'
+
+			];
+		}
+		
+
+
+
+		return $res;
+	}
+
+	/*private function prepareOut($inv){
 		$res = [];
 		$rate = ($inv['currency_id']==13 ? 1:$inv['pajak']);
 		$all_tax_code = substr($inv['faktur_pajak_no'], 0,3);
@@ -492,7 +529,7 @@ class ServiceController extends Controller{
 		$pure_faktur_code = substr(preg_replace('/[\s\W]+/', '', $inv['faktur_pajak_no']),3,strlen(preg_replace('/[\s\W]+/', '', $inv['faktur_pajak_no'])));
 		$exp_tax_date = explode('-', $inv['date_invoice']);
 		$tax_date = \DateTime::createFromFormat('Y-m-d',$inv['date_invoice']);
-		$iAddr = $inv['partner']['street'].'\r\n'.$inv['partner']['street2'].' '.$inv['partner']['city'].', '.(isset($inv['partner']['state']->name) ? $inv['partner']['state']->name:'').($inv['partner']['zip'] ? ' - '.$inv['partner']['zip']:"");
+		$iAddr = $inv['partner']['street'].', '.$inv['partner']['street2'].' '.$inv['partner']['city'].', '.(isset($inv['partner']['state']->name) ? $inv['partner']['state']->name:'').($inv['partner']['zip'] ? ' - '.$inv['partner']['zip']:"");
 		// "FK","09","0","0011578000001","6","2015","18/06/2015","010621191092000","INDOCEMENT TUNGGAL PRAKARSA TBK PT","Wisma Indocement Lt. 13   Blok - No.- RT:- RW:- Kel.- Kec.- Kota/Kab.- - 12910","56750000","5675000","0","","0","0","0","0","78049887/SBM/V/2015"
 		$res[$inv['id']]['fk'] = [
 			'FK', #FK
@@ -513,7 +550,7 @@ class ServiceController extends Controller{
 			$this->convertIdr($inv['amount_untaxed'],$rate),#uang muka dpp
 			$this->convertIdr($inv['amount_tax'],$rate),#uang muka ppn
 			'0',#uang muka ppnbm, 0 karena tidak ada PPNBM (fix)
-			$inv['origin'],#referensi
+			'Invoice No : '.$inv['kwitansi'].'. Order No : '.$inv['origin'].'. Order Ref : '.$inv['name'],#referensi
 			
 		];
 
@@ -574,8 +611,7 @@ class ServiceController extends Controller{
 			if($soInv):
 				// if founded
 				// override res fk
-				$res[$inv['id']]['fk'][10] = $this->convertIdr($soInv['amount_untaxed'],$rate);
-				$res[$inv['id']]['fk'][11] = $this->convertIdr($soInv['amount_total'],$rate);
+				
 
 				foreach($soInv['saleOrderLines'] as $soLine):
 					$res[$inv['id']]['of'][] = [
@@ -594,6 +630,9 @@ class ServiceController extends Controller{
 					];	
 
 				endforeach;
+
+				$res[$inv['id']]['fk'][10] = $this->convertIdr($soInv['amount_untaxed'],$rate);
+				$res[$inv['id']]['fk'][11] = $this->convertIdr($soInv['amount_total'],$rate);
 			endif;
 		}else{
 			foreach($inv['accountInvoiceLines'] as $item):
@@ -616,7 +655,7 @@ class ServiceController extends Controller{
 		}
 		
 		return $res;
-	}
+	}*/
 
 }
 ?>

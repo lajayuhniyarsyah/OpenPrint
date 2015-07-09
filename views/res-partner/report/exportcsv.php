@@ -5,6 +5,15 @@ $name=str_replace('"', '', $model->name);
 $street=str_replace('"', '', $model->street);
 $phone=str_replace('"', '', $model->phone);
 $zip=str_replace('"', '', $model->zip);
+
+$blok=str_replace('"', '', $model->blok);
+$nomor=str_replace('"', '', $model->nomor);
+$rt=str_replace('"', '', $model->rt);
+$rw=str_replace('"', '', $model->rw);
+$kecamatan=str_replace('"', '', $model->kecamatan);
+$kelurahan=str_replace('"', '', $model->kelurahan);
+$kabupaten=str_replace('"', '', $model->kabupaten);
+$propinsi=str_replace('"', '', $model->propinsi);
 $array_to_csv = Array(
 	Array("LT",
         "NPWP",
@@ -25,14 +34,14 @@ $array_to_csv = Array(
         "$npwp",
         "$name",
         "$street",
-        "-",
-        "-",
-        "-",
-        "-",
-        "-",
-        "-",
-        "-",
-        "-",
+        "$blok",
+        "$nomor",
+        "$rt",
+        "$rw",
+        "$kecamatan",
+        "$kelurahan",
+        "$kabupaten",
+        "$propinsi",
         "$zip",
         "$phone",
     ),

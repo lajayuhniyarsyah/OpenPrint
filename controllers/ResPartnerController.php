@@ -33,7 +33,15 @@ class ResPartnerController extends \yii\web\Controller
      				name,
                     street,
                     phone,
-                    zip')
+                    zip,
+                    blok,
+                    nomor,
+                    rt,
+                    rw,
+                    kecamatan,
+                    kelurahan,
+                    kabupaten,
+                    propinsi')
      		->from('res_partner')
      		->where(['id' =>explode(',',$_GET['id'])]);
     	return $this->render('report/exportcsvtree',['model'=>$query->all()]);	

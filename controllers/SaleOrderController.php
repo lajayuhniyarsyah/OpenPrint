@@ -218,7 +218,7 @@ SELECT
 GROUP BY period_year, period_month, month_name
 ORDER BY period_year ASC, period_month ASC
 EOQ;
-		// echo '<pre>'.$queryAllOrder.'</pre>';
+		echo '<pre>'.$queryAllOrder.'</pre>';
 		$commandAllOrders = $connection->createCommand($queryAllOrder);
 		$resultAllOrders = $commandAllOrders->queryAll();
 		$allOrderDataProvider = new \yii\data\ArrayDataProvider([

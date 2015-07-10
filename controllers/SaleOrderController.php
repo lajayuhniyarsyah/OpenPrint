@@ -307,33 +307,20 @@ EOQ;
 				[
 					'attribute'=>'sales_name',
 					'header'=>'User(s)',
-<<<<<<< HEAD
-					'format'=>'raw',
-					'value'=>function($model,$key,$col,$grid) use ($groups){
-						return \yii\helpers\Html::a($model['sales_name'],['sale-order/detail','uid'=>$model['user_id']]);
-					}
 
-=======
 					'format'=>'html',
 					'value'=>function($data) use($model){
 						// return var_dump($data);
 						return \yii\helpers\Html::a($data['sales_name'],['tree','where'=>\yii\helpers\Json::encode(['date_order'=>[Yii::$app->formatter->asDate($model->date_from,'php:Y-m-d H:i:s'),Yii::$app->formatter->asDate($model->date_to,'php:Y-m-d H:i:s')],'user_id'=>[$data['user_id']]])]);
 					}
->>>>>>> origin/master
 				],
 				[
 					'attribute'=>'group_id',
 					'header'=>'Group',
-<<<<<<< HEAD
-					'format'=>'raw',
-					'value'=>function($model,$key,$col,$grid) use ($groups){
-						return \yii\helpers\Html::a($groups[$model['group_id']],['sale-order/detail','uid'=>$model['group_id']]);
-=======
 
 					'format'=>'html',
 					'value'=>function($data,$key,$col,$grid) use ($groups, $model){
 						return \yii\helpers\Html::a($groups[$data['group_id']],['tree','where'=>\yii\helpers\Json::encode(['date_order'=>[Yii::$app->formatter->asDate($model->date_from,'php:Y-m-d H:i:s'),Yii::$app->formatter->asDate($model->date_to,'php:Y-m-d H:i:s')],'group_id'=>[$data['group_id']]])]);
->>>>>>> origin/master
 					}
 				]
 			];
@@ -372,20 +359,6 @@ EOQ;
 							# 
 								$periodIdx = str_replace('subtotal_', '', $fieldName);
 
-<<<<<<< HEAD
-								// $getIdx = $xCatIndex[$periodIdx]; #get ex: 2014_1 means period on 2014 on january
-
-								$headerName = "";
-								$explodeName = explode('_',$periodIdx);
-								$headerName = Yii::$app->formatter->asDate($explodeName[0].'-'.$explodeName[1].'-01','MMM-yyyy');
-
-								if($row==0):    
-									$salesManSearchGrid['columns'][] = [
-										'attribute'=>$fieldName,
-										'header'=>$headerName,
-										'format'=>['currency'],
-										'pageSummary'=>true,
-=======
 								if(isset($xCatIndex[$periodIdx])){
 									$total[$row]['value']+=$fieldValue;
 									$series[$seriesIdx]['data'][] = (float) $fieldValue;
@@ -411,7 +384,6 @@ EOQ;
 									$pieSeries[$seriesIdx] = [
 										'name'=>$saleMonthly['sales_name'],
 										'y'=>$total[$row]['value'],
->>>>>>> origin/master
 									];
 								}
 								else

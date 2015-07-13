@@ -218,7 +218,7 @@ SELECT
 GROUP BY period_year, period_month, month_name
 ORDER BY period_year ASC, period_month ASC
 EOQ;
-		// echo '<pre>'.$queryAllOrder.'</pre>';
+		echo '<pre>'.$queryAllOrder.'</pre>';
 		$commandAllOrders = $connection->createCommand($queryAllOrder);
 		$resultAllOrders = $commandAllOrders->queryAll();
 		$allOrderDataProvider = new \yii\data\ArrayDataProvider([
@@ -281,7 +281,7 @@ EOQ;
 			endif;
 			/*var_dump($sales_ids);
 			die();*/
-
+			
 			if($model->date_from == $model->date_to){
 				$dateQuery = "so.date_order = '{$model->date_from}'";
 				$allOrderTitle .= "On ".Yii::$app->formatter->asDate($model->date_from);
@@ -307,6 +307,7 @@ EOQ;
 				[
 					'attribute'=>'sales_name',
 					'header'=>'User(s)',
+
 					'format'=>'html',
 					'value'=>function($data) use($model){
 						// return var_dump($data);

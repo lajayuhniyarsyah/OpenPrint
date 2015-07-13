@@ -397,7 +397,6 @@ class AccountInvoiceController extends Controller
 
 		if($model->load(Yii::$app->request->get())):
 			$model->sales = Yii::$app->request->get('sales');
-
 			$submited = true;
 			$aiSearch->start_date = $model->date_from;
 			$aiSearch->end_date = $model->date_to;
@@ -437,8 +436,6 @@ class AccountInvoiceController extends Controller
 		endif;
 		// var_dump($aiSearch->group_ids);
 		$ai = $aiSearch->getSum(); #result from query->all()
-
-		
 
 		// \yii\helpers\VarDumper::dump($aiPie);
 		$resGrid['dataProvider'] = new \yii\data\ArrayDataProvider([

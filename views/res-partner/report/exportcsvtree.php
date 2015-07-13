@@ -22,18 +22,27 @@
         $phone=str_replace('"', '', $value['phone']);
         $zip=str_replace('"', '', $value['zip']);
 
+        $blok=str_replace('"', '', $model->blok);
+		$nomor=str_replace('"', '', $model->nomor);
+		$rt=str_replace('"', '', $model->rt);
+		$rw=str_replace('"', '', $model->rw);
+		$kecamatan=str_replace('"', '', $model->kecamatan);
+		$kelurahan=str_replace('"', '', $model->kelurahan);
+		$kabupaten=str_replace('"', '', $model->kabupaten);
+		$propinsi=str_replace('"', '', $model->propinsi);
+
         $customer[]=Array("LT",
 			        "$npwp",
 			        "$name",
 			        "$street",
-			        "-",
-			        "-",
-			        "-",
-			        "-",
-			        "-",
-			        "-",
-			        "-",
-			        "-",
+			        "$blok",
+			        "$nomor",
+			        "$rt",
+			        "$rw",
+			        "$kecamatan",
+			        "$kelurahan",
+			        "$kabupaten",
+			        "$propinsi",
 			        "$zip",
 			        "$phone",
 			);

@@ -346,7 +346,7 @@ FROM (
 		WHERE
 			ai.date_invoice BETWEEN '{$this->start_date}' AND '{$this->end_date}'
 			AND ai.type='out_invoice'
-			AND ai.state not in ('cancel','draft')
+			AND ai.state not in ('cancel','draft','submited')
 			{$userIdsWhere}
 			{$groupIdsWhere}
 		) AS ai_rated
@@ -483,7 +483,7 @@ FROM (
 		WHERE
 			ai.date_invoice BETWEEN '{$this->start_date}' AND '{$this->end_date}'
 			AND ai.type='out_invoice'
-			AND ai.state not in ('cancel','draft')
+			AND ai.state not in ('cancel','draft','submited')
 			{$userIdsWhere}
 			{$groupIdsWhere}
 		) AS ai_rated

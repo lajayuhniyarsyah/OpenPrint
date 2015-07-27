@@ -150,15 +150,27 @@ class AccountInvoice extends \yii\db\ActiveRecord
             'total_rated'=>'Subtotal In IDR',
         ];
     }
-   public function afterFind(){
+    public function afterFind(){
         
         /*$this->amount_tax = $this->numberFormat($this->amount_tax);
         $this->amount_untaxed = $this->numberFormat($this->amount_untaxed);
         $this->amount_total = $this->numberFormat($this->amount_total);*/
         $this->setCurrencyRate();
         $this->setTotalRated();
+
+        $this->setPartnerToPrint();
         return true;
     }
+    private function setPartnerToPrint(){
+        $prtName = (isset($this->partner->parent) ? $this->partner->parent->name:$this->partner->name);
+        $expPartnerName = explode(',',$prtName );
+        if(is_array($expPartnerName) && isset($expPartnerName[1])){
+            $this->partner_to_print = $expPartnerName[1].'. '.$expPartnerName[0];
+        }else{
+            $this->partner_to_print = $this->partner->name;
+        }
+    }
+
     private function getCurrencyRate(){
         $res = 1;
         if($this->currency_id!=13){

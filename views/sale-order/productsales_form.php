@@ -436,20 +436,26 @@ SCRIPT;
 		                        ],
 		                        [
 		                        	'attribute'=>'price_unit',
-		                            'header'=>'Currency',
+		                            'header'=>'Price Unit',
 		                            'value'=>function($model,$key,$index,$grid){
 		                                return app\components\NumericLib::indoStyle($model['price_unit'],2,',','.');
 		                            }
 		                        ],
-		                        'pricelist',
+		                        [
+		                          'attribute'=>'pricelist',
+		                          'header'=>'Currency',
+		                        ],
 		                        [
 		                            'attribute'=>'cout',
-		                            'header'=>'Count',
+		                            'header'=>'Total',
 		                            'value'=>function($model,$key,$index,$grid){
 		                                return app\components\NumericLib::indoStyle($model['total'],2,',','.');
 		                            }
 		                        ],
-		                        'state'
+		                        [
+		                          'attribute'=>'state',
+		                          'header'=>'Satatus',
+		                        ],
 		                    ]
 		                ])?>
 

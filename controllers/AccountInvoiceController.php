@@ -126,7 +126,7 @@ class AccountInvoiceController extends Controller
         foreach($model->accountInvoiceLines as $invLine):
             $ar++;
         	// if not discount
-            if($line->account_id<>192 and !preg_match('/discount/i',$line->account->name)){
+            if($invLine->account_id<>192 and !preg_match('/discount/i',$invLine->account->name)){
                 $nameLine = (isset($invLine->product->name_template) ? $invLine->product->name_template : null);
 
                 if(trim($invLine->name)):

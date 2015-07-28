@@ -1068,7 +1068,8 @@ class ReportAccountingController extends Controller
 	    				 m.origin as origin,
 	    				 m.state as state,
 	    				 po.name as no_po,
-	    				 m.name as product_name
+	    				 m.name as product_name,
+	    				 m.partner_id as partner_id
 	    				')
 			    ->from('stock_move as m')
 			    ->join('LEFT JOIN','stock_picking as s','s.id=m.picking_id')

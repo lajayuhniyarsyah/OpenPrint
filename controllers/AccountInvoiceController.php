@@ -120,6 +120,9 @@ class AccountInvoiceController extends Controller
         $lines = [];
         $total = 0;
         $ar = 0;
+
+        // used for e-faktur new 
+        $totalIDR=0;
         foreach($model->accountInvoiceLines as $invLine):
             $ar++;
             if($invLine->account_id<>192){
@@ -135,8 +138,11 @@ class AccountInvoiceController extends Controller
                 
                 if($model->currency_id==13){
                     $priceSub = Yii::$app->numericLib->indoStyle($invLine->price_subtotal);
+                    $totalIDR = Yii::$app->numericLib->indoStyle($invLine->price_subtotal);
                 }else{
                     $priceSub = Yii::$app->numericLib->westStyle($invLine->price_subtotal);
+                    $priceUnitIDR = Yii::$app->numericLib->indoStyle($invLine->price_unit);
+                    $totalIDR = Yii::$app->numericLib->indoStyle($priceUnitIDR*$invLine->quantity);
                 }
                 $lines[] = [
                     'no'=>($model->payment_for =='dp' || $model->payment_for =='completion' ? '':$invLine->sequence),

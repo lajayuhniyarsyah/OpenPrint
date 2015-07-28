@@ -226,7 +226,7 @@ class AccountInvoiceController extends Controller
             }
         };
         foreach($model->accountInvoiceLines as $k=>$line):
-            if($line->account_id<>192){
+            if($line->account_id<>192 and !preg_match('/discount/i',$line->account->name)){
                 $ar = $k;
                 $lines[$k]['no'] = ($model->payment_for == 'dp' || $model->payment_for == 'completion' ? '':$line->sequence);
                 $lines[$k]['qty'] = ($model->payment_for == 'dp' || $model->payment_for == 'completion' ? '':$line->quantity.(isset($line->uos->name) ? ' '.$line->uos->name:null));

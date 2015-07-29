@@ -312,7 +312,7 @@ class ServiceController extends Controller{
 					($inv['payment_for']=='dp' ? $amount_untaxed:($inv['payment_for']=='completion' ? $amount_untaxed:'0')),#uang muka dpp #15
 					($inv['payment_for']=='dp' ? $amount_tax:($inv['payment_for']=='completion' ? $amount_tax:'0')),#uang muka ppn #16
 					'0',#uang muka ppnbm, 0 karena tidak ada PPNBM (fix) #17
-					'Invoice No : '.$inv['kwitansi'].'. Order No : '.$inv['origin'].'. Order Ref : '.$inv['name'],#referensi #18
+					'Invoice No : '.$inv['kwitansi'].'. Order No : '.$inv['origin'].'. Order Ref : '.$inv['name'].($inv['pajak'] ? '. Tax Rate : '.Yii::$app->numericLib->indoStyle($inv['pajak']).'. KMK : '.$inv['kmk']:''),#referensi #18
 					
 				];
 

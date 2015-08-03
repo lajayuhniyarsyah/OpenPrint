@@ -17,7 +17,7 @@
 
     foreach ($model as $value) {
     	$npwp=str_replace('-','', str_replace('.','', $value['npwp']));
-        $name=str_replace('"', '', $value['name']);
+        $name=str_replace('"', '', strtoupper($value['name']));
         $street=str_replace('"', '', $value['street']);
         $phone=str_replace('"', '', $value['phone']);
         $zip=str_replace('"', '', $value['zip']);

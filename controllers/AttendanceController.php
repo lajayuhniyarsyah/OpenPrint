@@ -32,13 +32,12 @@ class AttendanceController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new HrAttendanceMinMaxLogSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+        $toRender = [];
+        $toRender['searchModel'] = new HrAttendanceMinMaxLogSearch();
+        $toRender['dataProvider'] = $toRender['searchModel']->search(Yii::$app->request->queryParams);
+        // die('aaa');
+        return $this->render('index', $toRender);
     }
 
     /**

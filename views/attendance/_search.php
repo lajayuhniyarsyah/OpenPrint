@@ -15,23 +15,17 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'id') ?>
-
-    <?= $form->field($model, 'dept_id') ?>
-
     <?= $form->field($model, 'dept_name') ?>
-
-    <?= $form->field($model, 'employee_id') ?>
 
     <?= $form->field($model, 'employee_name') ?>
 
     <?php // echo $form->field($model, 'full_date') ?>
 
-    <?php // echo $form->field($model, 'y_log') ?>
+    <?php echo $form->field($model, 'y_log') ?>
 
-    <?php // echo $form->field($model, 'm_log') ?>
+    <?php echo $form->field($model, 'm_log') ?>
 
-    <?php // echo $form->field($model, 'd_log') ?>
+    <?php echo $form->field($model, 'd_log') ?>
 
     <?php // echo $form->field($model, 'dow_log') ?>
 

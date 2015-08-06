@@ -1,7 +1,7 @@
 <?php
 
 $npwp=str_replace('-','', str_replace('.','', $model->npwp));
-$name=str_replace('"', '', $model->name);
+$name=str_replace('"', '', strtoupper($model->name));
 $street=str_replace('"', '', $model->street);
 $phone=str_replace('"', '', $model->phone);
 $zip=str_replace('"', '', $model->zip);

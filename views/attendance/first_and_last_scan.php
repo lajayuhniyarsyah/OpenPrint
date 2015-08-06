@@ -51,7 +51,22 @@ use yii\bootstrap\Dropdown;
 			</div>
 		<?php ActiveForm::end(); ?>
 	</div>-->
-	<?=\yii\grid\GridView::widget([
-		'dataProvider'=>$dataProvider
+	<?=\kartik\export\ExportMenu::widget([
+		'dataProvider'=>$dataProvider,
+
+	])?>
+	<?=\kartik\grid\GridView::widget([
+		'dataProvider'=>$dataProvider,
+		'emptyCell'=>"&nbsp;",
+		'columns'=>[
+			'year',
+			'month',
+			'day',
+			'employee',
+			'hour_1',
+			'minute_1',
+			'hour_2',
+			'minute_2',
+		]
 	])?>
 </div>

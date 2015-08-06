@@ -153,9 +153,9 @@ SELECT
     date_series.i
     , h_emp.name_related employee
     --, att_log_min_max_pure.employee_id
-    , att_log_min_max_pure.y "year"
-    , att_log_min_max_pure.m "month"
-    , att_log_min_max_pure.d "day"
+    , (CASE WHEN att_log_min_max_pure.y IS NULL THEN date_series.year_series ELSE att_log_min_max_pure.y END) "year"
+    , (CASE WHEN att_log_min_max_pure.m IS NULL THEN date_series.month_series ELSE att_log_min_max_pure.m END) "month"
+    , (CASE WHEN att_log_min_max_pure.d IS NULL THEN date_series.day_series ELSE att_log_min_max_pure.d END) "day"
     , att_log_min_max_pure.min_hour AS "hour_1"
     , att_log_min_max_pure.min_minutes AS "minute_1"
     , (

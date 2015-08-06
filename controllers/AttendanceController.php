@@ -138,7 +138,7 @@ class AttendanceController extends Controller
             'month'=>'%%',
             'day'=>'%%'
         ];
-        $dataToRender['attendanceLogForm'] = new \app\models\attendanceLogForm;
+        $dataToRender['attendanceLogForm'] = new \app\models\AttendanceLogForm;
 
         if($dataToRender['attendanceLogForm']->load(Yii::$app->request->post())){
             $where['employee'] = $dataToRender['attendanceLogForm']['employee'];

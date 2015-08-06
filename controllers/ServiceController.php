@@ -130,7 +130,7 @@ class ServiceController extends Controller{
 		$ids = explode(',', $ids);
 		// \yii\helpers\VarDumper::dump($ids);
 		if(is_array($ids)){
-			$invoices = AccountInvoice::find()->where(['id'=>$ids])->with(['accountInvoiceLines','partner','partner.parent','accountInvoiceLines.product','stockPickings'])->asArray()->all();
+			$invoices = AccountInvoice::find()->where(['id'=>$ids])->with(['accountInvoiceLines','partner','partner.parent','accountInvoiceLines.product','stockPickings','accountInvoiceLines.account','fakturAddress','fakturAddress.parent'])->asArray()->all();
 			$maped = $this->prepareCsvInvoiceData($invoices);
 			/*\yii\helpers\VarDumper::dump($maped);
 			die();*/
@@ -284,11 +284,18 @@ class ServiceController extends Controller{
 				$pure_faktur_code = substr(preg_replace('/[\s\W]+/', '', $inv['faktur_pajak_no']),3,strlen(preg_replace('/[\s\W]+/', '', $inv['faktur_pajak_no'])));
 				$exp_tax_date = explode('-', $inv['date_invoice']);
 				$tax_date = \DateTime::createFromFormat('Y-m-d',$inv['date_invoice']);
-				$iAddr = $inv['partner']['street'].', '.$inv['partner']['street2'].' '.$inv['partner']['city'].', '.(isset($inv['partner']['state']->name) ? $inv['partner']['state']->name:'').($inv['partner']['zip'] ? ' - '.$inv['partner']['zip']:"");
+				
 				// "FK","09","0","0011578000001","6","2015","18/06/2015","010621191092000","INDOCEMENT TUNGGAL PRAKARSA TBK PT","Wisma Indocement Lt. 13   Blok - No.- RT:- RW:- Kel.- Kec.- Kota/Kab.- - 12910","56750000","5675000","0","","0","0","0","0","78049887/SBM/V/2015"
 				
-				$partner = (isset($inv['partner']['parent']) ? $inv['partner']['parent']: $inv['partner']);
-
+				if($inv['faktur_address']){
+					$partner = (isset($inv['fakturAddress']['parent']) ? $inv['fakturAddress']['parent']: $inv['fakturAddress']);
+					$fakturAddress = $inv['fakturAddress'];
+					// $partner = $inv['fakturAddress'];
+					$iAddr = $fakturAddress['street'].', '.$fakturAddress['street2'].' '.$fakturAddress['city'].', '.(isset($fakturAddress['state']->name) ? $fakturAddress['state']->name:'').($fakturAddress['zip'] ? ' - '.$fakturAddress['zip']:"");
+				}else{
+					$partner = (isset($inv['partner']['parent']) ? $inv['partner']['parent']: $inv['partner']);
+					$iAddr = $inv['partner']['street'].', '.$inv['partner']['street2'].' '.$inv['partner']['city'].', '.(isset($inv['partner']['state']->name) ? $inv['partner']['state']->name:'').($inv['partner']['zip'] ? ' - '.$inv['partner']['zip']:"");
+				}
 
 				$amount_untaxed = floor($this->convertIdr($inv['amount_untaxed'],$rate));
 				$amount_tax = floor((10/100) * $amount_untaxed);
@@ -324,7 +331,8 @@ class ServiceController extends Controller{
 					'','','',''
 				];
 
-
+				// $invLines = $this->checkLineDiscount($inv['accountInvoiceLines']);
+				$invLines = $inv['accountInvoiceLines'];
 				// EACH LINE ITEM
 				if($inv['payment_for']){
 					// IF PAYMENT FOR DP OR COMPLETION THEN ALL SALE ORDER ITEM WILL BE RENDERED
@@ -350,7 +358,7 @@ class ServiceController extends Controller{
 
 							}else{
 								// LOOP FROM INVOICE LINES
-								foreach($inv['accountInvoiceLines'] as $item):
+								foreach($invLines as $item):
 									$render = $this->prepareFromInvLine($item,$rate);
 									
 									$discountTotal += $render[6];
@@ -429,8 +437,12 @@ class ServiceController extends Controller{
 					$discountTotal = 0;
 					$dppTotal = 0;
 					$ppnTotal = 0;
+					// DEFAULT
 					// LOOP FROM INVOICE LINES
-					foreach($inv['accountInvoiceLines'] as $item):
+					// 
+					// check line from total discount
+					
+					foreach($invLines as $item):
 						$render = $this->prepareFromInvLine($item,$rate);
 						
 						$discountTotal += $render[6];
@@ -446,10 +458,15 @@ class ServiceController extends Controller{
 			}elseif($inv['type']=='in_invoice'){
 				// OUT INVOICE
 				// SUPPLIER INVOICE
-				
 				$rate = ($inv['currency_id']==13 ? 1:$inv['pajak']);
 				$tax_date = \DateTime::createFromFormat('Y-m-d',$inv['date_invoice']);
-				
+
+					$nilai1=0;
+					$nilai2=0;
+				foreach($inv['accountInvoiceLines'] as $LineID){
+					$nilai1=$nilai1+($LineID['price_unit']*$LineID['quantity']);
+					$nilai2=$nilai2+((($LineID['price_unit']*$LineID['quantity'])*10)/100);
+				}
 
 				$datainv[]=[
 							"FM",
@@ -461,9 +478,11 @@ class ServiceController extends Controller{
 							$tax_date->format('d/m/Y'),
 							preg_replace('/[\s\W]+/', '', $inv['partner']['npwp']),
 							$inv['partner']['name'],
-							$inv['partner']['street'],
-							$this->convertIdr($inv['amount_untaxed'],$rate),
-							$this->convertIdr($inv['amount_tax'],$rate),
+							trim($inv['partner']['street']),
+							// $this->convertIdr($inv['amount_untaxed'],$rate),
+							// $this->convertIdr($inv['amount_tax'],$rate),
+							$this->convertIdr(round($nilai1),$rate),
+							$this->convertIdr(round($nilai2),$rate),
 							"0",
 							"1"
 						];
@@ -482,6 +501,18 @@ class ServiceController extends Controller{
 		return $res;
 	}
 
+
+	private function checkLineDiscount($lines){
+		$discounts = 0;
+		foreach($lines as $k=>$line):
+			if(preg_match('/discount/i', $line['name']) and preg_match('/discount/i', $line['account']['name'])){
+				// discount line
+				
+			}
+			// echo $line['account']['name'];
+		endforeach;
+		die();
+	}
 
 	private function prepareFromInvLine($item,$rate){
 		$res = [];

@@ -102,7 +102,7 @@ class HrAttendanceMinMaxLogSearch extends HrAttendanceMinMaxLog
             $dataProvider = new \yii\data\ArrayDataProvider([
                 'allModels' => $query->asArray()->all(),
                 'pagination'=>[
-                    'pageSize'=>300
+                    'pageSize'=>2000
                 ],
                 'sort'=>$sort
             ]);
@@ -111,7 +111,7 @@ class HrAttendanceMinMaxLogSearch extends HrAttendanceMinMaxLog
             $dataProvider = new \yii\data\ArrayDataProvider([
                 'allModels' => $query->asArray()->all(),
                 'pagination'=>[
-                    'pageSize'=>300
+                    'pageSize'=>2000
                 ],
                 'sort'=>$sort
             ]);

@@ -42,6 +42,7 @@ class HrAttendanceMinMaxLogSearch extends HrAttendanceMinMaxLog
      */
     public function search($params)
     {
+        // die('aass');
         $query = HrAttendanceMinMaxLog::find();
         $sort = [
             'attributes'=>[
@@ -71,7 +72,8 @@ class HrAttendanceMinMaxLogSearch extends HrAttendanceMinMaxLog
         if($this->load($params)){
             if (!$this->validate()) {
                 // uncomment the following line if you do not want to return any records when validation fails
-                $query->where('0=1');
+                // $query->where('0=1');
+
                 return $dataProvider;
             }
 
@@ -109,10 +111,9 @@ class HrAttendanceMinMaxLogSearch extends HrAttendanceMinMaxLog
         }else{
             // die();
             $dataProvider = new \yii\data\ArrayDataProvider([
-                'allModels' => $query->asArray()->all(),
+                'allModels' => $query->where('0=1')->asArray()->all(),
                 'pagination'=>[
                     'pageSize'=>2000
-                ],
                 'sort'=>$sort
             ]);
         }

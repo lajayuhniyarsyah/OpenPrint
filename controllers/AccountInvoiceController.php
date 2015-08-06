@@ -262,6 +262,7 @@ class AccountInvoiceController extends Controller
 
         // IF DP OR COMPLETION
        	if($model->payment_for == 'dp'|| $model->payment_for=='completion'){
+       		// var_dump($model->orders);
        		foreach($model->orders as $so){
        			foreach($so->saleOrderLines as $line){
        				$ar++;

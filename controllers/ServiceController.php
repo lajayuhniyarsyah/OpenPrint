@@ -184,7 +184,7 @@ class ServiceController extends Controller{
 						$output, 
 						array_map(
 							function($e){
-								return $e;
+								return utf8_decode($e);
 							},
 							$map['fk']
 						),','
@@ -193,7 +193,7 @@ class ServiceController extends Controller{
 						$output, 
 						array_map(
 							function($e){
-								return $e;
+								return utf8_decode($e);
 							},
 							$map['fapr']
 						),','
@@ -204,7 +204,7 @@ class ServiceController extends Controller{
 							$output, 
 							array_map(
 								function($e){
-									return $e;
+									return utf8_decode($e);
 								},
 								$of
 							),','

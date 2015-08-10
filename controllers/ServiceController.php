@@ -314,7 +314,7 @@ class ServiceController extends Controller{
 					$this->convertIdr($inv['amount_untaxed'],$rate),#jumlah dpp, #10
 					$this->convertIdr($inv['amount_tax'],$rate),#jumlah PPN #11
 					'0', #Jumlah PPNBM #12
-					'',#id keterangan tambahan #13
+					($tax_code_type == 7 ? 1:'' ),#id keterangan tambahan #13
 					($inv['payment_for']=='dp' ? '1':($inv['payment_for']=='completion' ? '2':'0')),#fg uang muka #14
 					($inv['payment_for']=='dp' ? $amount_untaxed:($inv['payment_for']=='completion' ? $amount_untaxed:'0')),#uang muka dpp #15
 					($inv['payment_for']=='dp' ? $amount_tax:($inv['payment_for']=='completion' ? $amount_tax:'0')),#uang muka ppn #16

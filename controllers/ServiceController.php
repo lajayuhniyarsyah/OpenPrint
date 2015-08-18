@@ -135,7 +135,7 @@ class ServiceController extends Controller{
 			/*\yii\helpers\VarDumper::dump($maped);
 			die();*/
 			$filename = 'INVOICES-'.(isset($maped['OUT']) ? 'OUT':'IN').'-'.implode('+', array_keys($maped[(isset($maped['OUT']) ? 'OUT':'IN')])).'.csv';
-			header( "Content-Type: text/csv;charset=utf-8" );
+			header( "Content-Type: text/csv;charset=UTF-8" );
 			header( "Content-Disposition: attachment;filename=\"$filename\"" );
 			header("Pragma: no-cache");
 			header("Expires: 0");
@@ -184,7 +184,7 @@ class ServiceController extends Controller{
 						$output, 
 						array_map(
 							function($e){
-								return utf8_decode($e);
+								return mb_convert_encoding(utf8_encode($e), 'ISO-8859-1', 'UTF-8');
 							},
 							$map['fk']
 						),','
@@ -193,7 +193,7 @@ class ServiceController extends Controller{
 						$output, 
 						array_map(
 							function($e){
-								return utf8_decode($e);
+								return mb_convert_encoding(utf8_encode($e), 'ISO-8859-1', 'UTF-8');
 							},
 							$map['fapr']
 						),','
@@ -204,7 +204,7 @@ class ServiceController extends Controller{
 							$output, 
 							array_map(
 								function($e){
-									return utf8_decode($e);
+									return mb_convert_encoding(utf8_encode($e), 'ISO-8859-1', 'UTF-8');
 								},
 								$of
 							),','

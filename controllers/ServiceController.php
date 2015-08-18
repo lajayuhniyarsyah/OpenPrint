@@ -7,8 +7,9 @@ use app\models\AccountInvoice;
 use app\models\AccountInvoiceSearch;
 use app\models\ResUsers;
 use app\models\ResPartner;
+use app\models\AccountTax;
 use app\models\ResCurrency;
-
+use app\models\AccountInvoiceLineTax;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -461,11 +462,20 @@ class ServiceController extends Controller{
 				$rate = ($inv['currency_id']==13 ? 1:$inv['pajak']);
 				$tax_date = \DateTime::createFromFormat('Y-m-d',$inv['date_invoice']);
 
-					$nilai1=0;
-					$nilai2=0;
+				$nilai1=0;
+				$nilai2=0;
+
 				foreach($inv['accountInvoiceLines'] as $LineID){
-					$nilai1=$nilai1+($LineID['price_unit']*$LineID['quantity']);
-					$nilai2=$nilai2+((($LineID['price_unit']*$LineID['quantity'])*10)/100);
+
+					$invoicestax = \app\models\AccountInvoiceLineTax::find()->where(['invoice_line_id'=>$LineID['id']])->asArray()->all();
+
+						foreach ($invoicestax as $valtax) {
+							$taxacc = \app\models\AccountTax::find()->where(['id'=>$valtax['tax_id']])->asArray()->one();
+
+							$nilai1=$nilai1+($LineID['price_unit']*$LineID['quantity']);
+							// Cek berdasarkan Account Tax yang dipilih Many2many
+							$nilai2=$nilai2+(($LineID['price_unit']*$LineID['quantity'])*$taxacc['amount']);
+						}
 				}
 
 				$datainv[]=[

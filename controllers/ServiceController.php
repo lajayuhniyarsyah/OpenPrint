@@ -470,11 +470,20 @@ class ServiceController extends Controller{
 					$invoicestax = \app\models\AccountInvoiceLineTax::find()->where(['invoice_line_id'=>$LineID['id']])->asArray()->all();
 
 						foreach ($invoicestax as $valtax) {
+							
 							$taxacc = \app\models\AccountTax::find()->where(['id'=>$valtax['tax_id']])->asArray()->one();
+							
+							if(preg_match('/PPH/i', $taxacc['name']))
+								{
+									// CEK Taxes PPH atau PPN, Jika PPH maka  No Excute
+								}else{
 
-							$nilai1=$nilai1+($LineID['price_unit']*$LineID['quantity']);
-							// Cek berdasarkan Account Tax yang dipilih Many2many
-							$nilai2=$nilai2+(($LineID['price_unit']*$LineID['quantity'])*$taxacc['amount']);
+									// CEK Taxes PPH atau PPN, Jika PPN maka Excute
+									$nilai1=$nilai1+($LineID['price_unit']*$LineID['quantity']);
+									// Cek berdasarkan Account Tax yang dipilih Many2many
+									$nilai2=$nilai2+(($LineID['price_unit']*$LineID['quantity'])*$taxacc['amount']);
+									
+								}
 						}
 				}
 

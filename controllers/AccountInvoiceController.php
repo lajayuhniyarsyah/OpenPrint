@@ -233,7 +233,7 @@ class AccountInvoiceController extends Controller
                 $lines[$k]['qty'] = ($model->payment_for == 'dp' || $model->payment_for == 'completion' ? '':$line->quantity.(isset($line->uos->name) ? ' '.$line->uos->name:null));
                 
                 if($model->payment_for == 'dp' || $model->payment_for=='completion'){
-                	$lines[$k]['desc'] = (isset($line->product->name_template) ? $line->product->name_template.'<br/>'.$line->name.'<br/>P/N : '.$line->product->default_code:nl2br($line->name));
+                	$lines[$k]['desc'] = (isset($line->product->name_template) ? '<div>'.$line->product->name_template.'</div><div>'.nl2br($line->name).'</div><div>P/N : '.$line->product->default_code.'</div>':nl2br($line->name));
                 	if(preg_match('/FOR \:/', $lines[$k]['desc'])){
                 		$expl = explode('FOR :', $lines[$k]['desc']);
                 		$lines[$k]['desc'] = '<b>'.$expl[0].' FOR :'.'</b>';
@@ -243,7 +243,7 @@ class AccountInvoiceController extends Controller
                     $lines[$k]['unit_price'] ='';
                 	$lines[$k]['ext_price'] = '<div style="float:left;">'.$model->currency->name.'</div><div style="float:right;">'.$formated($line->price_subtotal).'</div>';
                 }else{
-                	$lines[$k]['desc'] = (isset($line->product->name_template) ? $line->product->name_template.'<br/>'.$line->name.'<br/>P/N : '.$line->product->default_code:nl2br($line->name));
+                	$lines[$k]['desc'] = (isset($line->product->name_template) ? '<div>'.$line->product->name_template.'</div><div>'.nl2br($line->name).'</div><div>P/N : '.$line->product->default_code.'</div>':nl2br($line->name));
                 	$lines[$k]['unit_price'] = '<div style="float:left;">'.$model->currency->name.'</div><div style="float:right;padding-right:8px;">'.$formated($line->price_unit).'</div>';
                 	$lines[$k]['ext_price'] = '<div style="float:left;">'.$model->currency->name.'</div><div style="float:right;">'.$formated($line->price_subtotal).'</div>';
                 }
@@ -252,7 +252,7 @@ class AccountInvoiceController extends Controller
                 $total+=$line->price_subtotal;
             }else{
                 $discountLine = [
-                    'desc'=>$line->name,
+                    'desc'=>nl2br($line->name),
                     'amount'=>$line->price_unit,
                     'currCode'=>$model->currency->name
                 ];
@@ -268,7 +268,7 @@ class AccountInvoiceController extends Controller
        				$ar++;
        				$lines[$ar]['no'] = $line->sequence;
 	                $lines[$ar]['qty'] = $line->product_uom_qty.(isset($line->productUom->name) ? ' '.$line->productUom->name:null);
-	                $lines[$ar]['desc'] = (isset($line->product->name_template) ? $line->product->name_template.'<br/>'.$line->name.'<br/>P/N : '.$line->product->default_code:nl2br($line->name));
+	                $lines[$ar]['desc'] = (isset($line->product->name_template) ? $line->product->name_template.'<br/>'.nl2br($line->name).'<br/>P/N : '.$line->product->default_code:nl2br($line->name));
 	                $lines[$ar]['unit_price'] = '';
 	                $lines[$ar]['ext_price'] = '';
        			}
@@ -280,10 +280,17 @@ class AccountInvoiceController extends Controller
         $ar+=1;
         $lines[$ar]['no'] = '';
         $lines[$ar]['qty'] = '';
-        $lines[$ar]['desc'] = 'PO No : '.$model->name;
-        if($model->comment){
-            $lines[$ar]['desc'] .= '<br/>'.$model->comment;
+        $lines[$ar]['desc'] = '<br/><br/><br/><div>';
+        /*if($model->name){
+        	$lines[$ar]['desc'] .= 'Order Ref# : '.$model->name;
         }
+        if($model->origin){
+        	$lines[$ar]['desc'] .= '<br/>Sale Ref# : '.$model->origin;
+        }*/
+        if($model->comment){
+            $lines[$ar]['desc'] .= '<br/>'.nl2br($model->comment);
+        }
+        $lines[$ar]['desc'] .= '</div>';
         $lines[$ar]['unit_price'] = '';
         $lines[$ar]['ext_price'] = '';
         if($printer == null && ($uid==100 || $uid == 191)){

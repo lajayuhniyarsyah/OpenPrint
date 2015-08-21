@@ -274,7 +274,7 @@ use yii\helpers\Url;
 	<div class="pages">
 		<div class="headers">
 			<div class="leftInfo">
-				<div class="partnerName" contenteditable="true">
+				<div class="partnerName">
 					<?php
 						$prtName = (isset($model->partner->parent) ? $model->partner->parent->name:$model->partner->name);
 						$expPartnerName = explode(',',$prtName );
@@ -287,10 +287,9 @@ use yii\helpers\Url;
 
 					?>
 				</div>
-				<div class="partnerAddr" contenteditable="true"><?=$model->partner->street?></div>
-				<div class="partnerAddr2" contenteditable="true"><?=$model->partner->street2?></div>
-				<div class="partnerAddr2" contenteditable="true"><?=$model->partner->city.' '.(isset($model->partner->state->name) ? $model->partner->state->name.' - ':'').$model->partner->zip?></div>
-				
+				<div class="partnerAddr"><?=$model->partner->street?></div>
+				<div class="partnerAddr2"><?=$model->partner->street2?></div>
+				<div class="partnerAddr2"><?=$model->partner->city.' '.(isset($model->partner->state->name) ? $model->partner->state->name.' - ':'').$model->partner->zip?></div>
 			</div>
 			<div class="rightInfo">
 				<div class="kwNo"><?=$model->kwitansi?></div>
@@ -352,7 +351,7 @@ use yii\helpers\Url;
 
 				</div>
 				<div class="dueDate"><?=(isset($model->paymentTerm->name) ? $model->paymentTerm->name:"")?></div>
-				<div class="invFootNotes" contenteditable="true">
+				<div class="invFootNotes">
 					Bank Mandiri Cab. Ketapang Indah, Jakarta -> A/C : 115-000-122-6655 (IDR)
 					<br>
 					Bank Mandiri Cab. Sunter Mall, Jakarta -> A/C : 120-000-669-0205 (USD)
@@ -395,7 +394,7 @@ console.log(maxLinesHeight);
 
 function prepareRow(rowNo,data)
 {
-	return "<tr class='cRows rows"+rowNo+"'><td class='td1'>"+data.no+"</td><td class='td2'>"+data.qty+"</td><td class='td3' contenteditable='true'>"+data.desc+"</td><td class='td4'>"+data.unit_price+"</td><td class='td5'>"+data.ext_price+"</td></tr>";
+	return "<tr class='cRows rows"+rowNo+"'><td class='td1'>"+data.no+"</td><td class='td2'>"+data.qty+"</td><td class='td3'>"+data.desc+"</td><td class='td4'>"+data.unit_price+"</td><td class='td5'>"+data.ext_price+"</td></tr>";
 }
 
 function getNotes(notes,rowNo=999999)

@@ -287,16 +287,21 @@ class ServiceController extends Controller{
 				$tax_date = \DateTime::createFromFormat('Y-m-d',$inv['date_invoice']);
 				
 				// "FK","09","0","0011578000001","6","2015","18/06/2015","010621191092000","INDOCEMENT TUNGGAL PRAKARSA TBK PT","Wisma Indocement Lt. 13   Blok - No.- RT:- RW:- Kel.- Kec.- Kota/Kab.- - 12910","56750000","5675000","0","","0","0","0","0","78049887/SBM/V/2015"
-				
+				// JIKA FAKTUR BERBEDA DENGAN ALAMAT INVOICE
+				// USER HARUS ISI ALAMAT FAKTUR DI KOLOM FIELD FAKTUR ADDRESS
 				if($inv['faktur_address']){
 					$partner = (isset($inv['fakturAddress']['parent']) ? $inv['fakturAddress']['parent']: $inv['fakturAddress']);
 					$fakturAddress = $inv['fakturAddress'];
 					// $partner = $inv['fakturAddress'];
 					$iAddr = $fakturAddress['street'].', '.$fakturAddress['street2'].' '.$fakturAddress['city'].', '.(isset($fakturAddress['state']->name) ? $fakturAddress['state']->name:'').($fakturAddress['zip'] ? ' - '.$fakturAddress['zip']:"");
-				}else{
+				}
+				else
+				{
 					$partner = (isset($inv['partner']['parent']) ? $inv['partner']['parent']: $inv['partner']);
 					$iAddr = $inv['partner']['street'].', '.$inv['partner']['street2'].' '.$inv['partner']['city'].', '.(isset($inv['partner']['state']->name) ? $inv['partner']['state']->name:'').($inv['partner']['zip'] ? ' - '.$inv['partner']['zip']:"");
 				}
+
+				$this->validateCustomerData($partner);
 
 				$amount_untaxed = floor($this->convertIdr($inv['amount_untaxed'],$rate));
 				$amount_tax = floor((10/100) * $amount_untaxed);
@@ -312,7 +317,7 @@ class ServiceController extends Controller{
 					preg_replace('/[\s\W]+/', '', $partner['npwp']), #customer npwp #7
 					$partner['name'], #customer name #8
 					$iAddr, #invoice addres['OUT'] #9
-					$this->convertIdr($inv['amount_untaxed'],$rate),#jumlah dpp, #10
+					$this->convertIdr($inv['amount_untaxed'],$rate),#jumlah dpp, #[10]
 					$this->convertIdr($inv['amount_tax'],$rate),#jumlah PPN #11
 					'0', #Jumlah PPNBM #12
 					($tax_code_type == 7 ? 1:'' ),#id keterangan tambahan #13
@@ -453,7 +458,13 @@ class ServiceController extends Controller{
 						$res['OUT'][$indexArr]['of'][] = $render;
 						// echo $item['price_subtotal'].'\\';
 					endforeach;
-					$res['OUT'][$indexArr]['fk'][10] = floor($dppTotal);
+
+					// OUT LINE NORMAL
+					// LINE EFAKTUR TANPA PAYMENT FOR REF
+					// $outFK10 = (is_numeric( $dppTotal ) && floor( $dppTotal ) != $dppTotal ? floor(floatval($dppTotal)) : floatval($dppTotal));
+					$outFK10 = (is_numeric($dppTotal) && floor($dppTotal) == $dppTotal ? $dppTotal:floor($dppTotal));
+					$res['OUT'][$indexArr]['fk'][10] = $outFK10;
+
 					$res['OUT'][$indexArr]['fk'][11] = floor($ppnTotal);
 				}
 			}elseif($inv['type']=='in_invoice'){
@@ -518,6 +529,12 @@ class ServiceController extends Controller{
 		die();*/
 
 		return $res;
+	}
+
+	private function validateCustomerData($partner){
+		if(!$partner['npwp']){
+			throw new NotFoundHttpException('NPWP Customer '.$partner['name'].' Kosong / Tidak Lengkap / Tidak Valid. Tolong periksa kembali');
+		}
 	}
 
 

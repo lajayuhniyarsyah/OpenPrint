@@ -174,7 +174,7 @@ use yii\helpers\Url;
 		padding-top: 16mm;
 		font-size:10pt;
 		font-weight: bold;
-		letter-spacing: -1px;
+		letter-spacing: 0px;
 	}
 	.choosePrinter{
 		position: absolute;

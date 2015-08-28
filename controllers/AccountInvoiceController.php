@@ -134,7 +134,9 @@ class AccountInvoiceController extends Controller
                 endif;
 
                 if(isset($invLine->product->default_code)){
-                    $nameLine .= '<br/>P/N : '.$invLine->product->default_code;
+                	if($invLine->product->productTmpl->type!='service'){
+                		$nameLine .= '<br/>P/N : '.$invLine->product->default_code;
+                	}
                 }
                 
                 if($model->currency_id==13){
@@ -243,7 +245,7 @@ class AccountInvoiceController extends Controller
                     $lines[$k]['unit_price'] ='';
                 	$lines[$k]['ext_price'] = '<div style="float:left;">'.$model->currency->name.'</div><div style="float:right;">'.$formated($line->price_subtotal).'</div>';
                 }else{
-                	$lines[$k]['desc'] = (isset($line->product->name_template) ? '<div>'.$line->product->name_template.'</div><div>'.nl2br($line->name).'</div><div>P/N : '.$line->product->default_code.'</div>':nl2br($line->name));
+                	$lines[$k]['desc'] = (isset($line->product->name_template) ? '<div>'.$line->product->name_template.'</div><div>'.nl2br($line->name).'</div><div>'.($line->product->productTmpl->type != 'service' ? 'P/N : '.$line->product->default_code:'').'</div>':nl2br($line->name));
                 	$lines[$k]['unit_price'] = '<div style="float:left;">'.$model->currency->name.'</div><div style="float:right;padding-right:8px;">'.$formated($line->price_unit).'</div>';
                 	$lines[$k]['ext_price'] = '<div style="float:left;">'.$model->currency->name.'</div><div style="float:right;">'.$formated($line->price_subtotal).'</div>';
                 }
@@ -268,7 +270,16 @@ class AccountInvoiceController extends Controller
        				$ar++;
        				$lines[$ar]['no'] = $line->sequence;
 	                $lines[$ar]['qty'] = $line->product_uom_qty.(isset($line->productUom->name) ? ' '.$line->productUom->name:null);
-	                $lines[$ar]['desc'] = (isset($line->product->name_template) ? $line->product->name_template.'<br/>'.nl2br($line->name).'<br/>P/N : '.$line->product->default_code:nl2br($line->name));
+	                // replacer for repeat description
+	                // replace format [part number] part item name
+	                $double_name_replace = '['.$line->product->default_code.'] '.$line->product->name_template;
+	                $normalDesc = str_replace($double_name_replace, '', $line->name);
+	                // str_replace(search, replace, subject)
+	                if($normalDesc){
+	                	$normalDesc.='<br/>';
+	                }
+	                $lines[$ar]['desc'] = (isset($line->product->name_template) ? $line->product->name_template.'<br/>'.$normalDesc.'P/N : '.$line->product->default_code:nl2br($line->name));
+	                // $lines[$ar]['desc'] = (isset($line->product->name_template) ? $line->product->name_template.'<br/>'.nl2br($line->name).'<br/>P/N : '.$line->product->default_code:nl2br($line->name));
 	                $lines[$ar]['unit_price'] = '';
 	                $lines[$ar]['ext_price'] = '';
        			}

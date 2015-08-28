@@ -161,7 +161,7 @@ SELECT
     , (
         CASE 
             WHEN 
-                att_log_min_max_pure.min_datetime_log = att_log_min_max_pure.max_datetime_log
+                att_log_min_max_pure.min_date_time_log = att_log_min_max_pure.max_date_time_log
             THEN
                 NULL
             ELSE
@@ -172,7 +172,7 @@ SELECT
     , (
         CASE 
             WHEN 
-                att_log_min_max_pure.min_datetime_log = att_log_min_max_pure.max_datetime_log
+                att_log_min_max_pure.min_date_time_log = att_log_min_max_pure.max_date_time_log
             THEN
                 NULL
             ELSE
@@ -184,36 +184,47 @@ SELECT
     
 FROM
 (
-    SELECT 
-        att_log_grouped.employee_id,
+    SELECT
+        att_log_grouped2.employee_id,
+        att_log_grouped2.y,
+        att_log_grouped2.m,
+        att_log_grouped2.d,
+        att_log_grouped2.min_date_time_log,
+        att_log_grouped2.max_date_time_log
+        , EXTRACT(HOUR FROM TO_TIMESTAMP(min_date_time_log)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0') as min_hour
+        , EXTRACT(MINUTE FROM TO_TIMESTAMP(min_date_time_log)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0') as min_minutes
         
-        att_log_grouped.y,
-        att_log_grouped.m,
-        att_log_grouped.d
-        , MIN(att_log_grouped.datetime_log) AS min_datetime_log
-        , MIN(att_log_grouped.hours) AS min_hour
-        , MIN(att_log_grouped.minutes) AS min_minutes
-        , MAX(att_log_grouped.datetime_log) AS max_datetime_log
-        , MAX(att_log_grouped.hours) AS max_hour
-        , MAX(att_log_grouped.minutes) AS max_minutes
-    FROM
-    (
-        SELECT
-            att_log.employee_id, att_log.att_pin
-            , datetime_log
-            , TO_TIMESTAMP(datetime_log)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0' AS timestamp_log
-            , EXTRACT(YEAR FROM TO_TIMESTAMP(datetime_log)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0') as y
-            , EXTRACT(MONTH FROM TO_TIMESTAMP(datetime_log)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0') as m
-            , EXTRACT(DAY FROM TO_TIMESTAMP(datetime_log)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0') as d
-            , EXTRACT(HOUR FROM TO_TIMESTAMP(datetime_log)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0') as hours
-            , EXTRACT(MINUTE FROM TO_TIMESTAMP(datetime_log)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0') as minutes
+        , EXTRACT(HOUR FROM TO_TIMESTAMP(max_date_time_log)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0') as max_hour
+        , EXTRACT(MINUTE FROM TO_TIMESTAMP(max_date_time_log)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0') as max_minutes
+        
+    FROM (
+        SELECT 
+            att_log_grouped.employee_id,
+            att_log_grouped.y,
+            att_log_grouped.m,
+            att_log_grouped.d
+            , MIN(att_log_grouped.datetime_log) as min_date_time_log
+            , MAX(att_log_grouped.datetime_log) as max_date_time_log
             
-        FROM hr_attendance_log att_log
-        -- WHERE h_emp.name_related ilike '%{$where['employee']}%'
-    ) AS att_log_grouped
-    GROUP BY
-        att_log_grouped.employee_id, att_log_grouped.y, att_log_grouped.m, att_log_grouped.d
-) AS att_log_min_max_pure
+        FROM
+        (
+            SELECT
+                att_log.employee_id, att_log.att_pin
+                , datetime_log
+                , TO_TIMESTAMP(datetime_log)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0' AS timestamp_log
+                , EXTRACT(YEAR FROM TO_TIMESTAMP(datetime_log)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0') as y
+                , EXTRACT(MONTH FROM TO_TIMESTAMP(datetime_log)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0') as m
+                , EXTRACT(DAY FROM TO_TIMESTAMP(datetime_log)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0') as d
+                , EXTRACT(HOUR FROM TO_TIMESTAMP(datetime_log)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0') as hours
+                , EXTRACT(MINUTE FROM TO_TIMESTAMP(datetime_log)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0') as minutes
+                
+            FROM hr_attendance_log att_log
+            -- WHERE h_emp.name_related ilike '%{$where['employee']}%'
+            ) AS att_log_grouped
+            GROUP BY
+            att_log_grouped.employee_id, att_log_grouped.y, att_log_grouped.m, att_log_grouped.d
+        ) AS att_log_grouped2
+    ) AS att_log_min_max_pure
 
 FULL JOIN
     (

@@ -295,11 +295,11 @@ use yii\helpers\Url;
 					$pn=$value->part_number;
 				}
 
-				if($value->discount_nominal=="0.000"){
-					if($value->discount=="0.000"){
-						$diskon=$diskon+0;
+				
+				if(!floatval($value->discount_nominal)){
+					if(!floatval($value->discount)){
+						$diskon=$diskon;
 					}else{
-
 						$hitungdiscount=(($value->price_unit*$value->product_qty)*$value->discount)/100;
 						$diskon=$diskon+$hitungdiscount;
 					}

@@ -1110,6 +1110,363 @@ class ReportAccountingController extends Controller
      }
 
 
+     public function actionRevisidn()
+     {
+    	
+     	// $command = Yii::$app->db->createCommand("
+     	// 										select
+						// 						   sp.id as id
+						// 						   , count(op.id) total_op
+						// 						from stock_picking as sp
+						// 						left join order_preparation as op on op.picking_id = sp.id
+						// 						group by sp.id
+						// 						having count(op.id)>1
+						// 						order by sp.id desc
+     	// 										")->queryAll();
+
+     	// foreach ($command as  $value) {
+     	// 	echo $value['id'].'<br/>';
+     	// 	$cekop = Yii::$app->db->createCommand("
+     	// 										SELECT 
+     	// 											id as id, 
+     	// 											picking_id as picking_id 
+     	// 										FROM order_preparation 
+     	// 										WHERE picking_id='".$value['id']."'
+     	// 										")->queryAll();
+
+     	// }
+
+
+    	$command = Yii::$app->db->
+     					createCommand("
+     								SELECT  op.name as no_op,
+     									op.id as op_id,
+										sp.name as pick_name,
+										op.sale_id as so_id,
+										sp.id as pick_id,
+										sp.note_id as pick_note_id,
+										sp.backorder_id as backorder_id,
+										sp1.name as out1,
+										sp1.id as id_picking,
+										sp1.note_id as pick_note_id1,
+										sp2.note_id as pick_note_id2,
+										dn.name as dn_name,
+										dn.state as dnstate,
+										dn.id as dn_id,
+										dn1.name as dn2,
+										dn1.id as id_dn,
+										dn1.state as statedn,
+										op.state as opstate,
+										sp.state as spstate,
+										sp2.state as sp2state
+									FROM order_preparation as op
+									LEFT JOIN delivery_note as dn ON dn.prepare_id=op.id
+									LEFT JOIN stock_picking as sp ON sp.id=op.picking_id
+									LEFT JOIN stock_picking as sp1 ON sp1.note_id=dn.id
+									LEFT JOIN delivery_note as dn1 ON dn1.id=sp.note_id
+									LEFT JOIN stock_picking as sp2 ON sp2.id=sp.backorder_id
+									"
+     							);
+
+        $data = $command->queryAll();
+        $out['results'] = array_values($data);
+        foreach ($data as $value) {
+
+
+
+        	/*
+        		Update State OP done JIka DN DOne Dan Picking Done
+	        	if ($value['opstate']=="approve"){
+					$cekPick = Yii::$app->db->createCommand("SELECT id FROM stock_picking where sale_id='".$value['so_id']."' and state='confirmed'");
+			     	$pick = $cekPick->queryOne();
+
+			     	if ($pick['id']){
+			     		echo 'Ada<br/>';
+			     	}else{
+			     		if ($value['dnstate']=="done" and $value['spstate']=="done"){
+			     			$command = Yii::$app->db->createCommand("update order_preparation set state = 'done' where id = '".$value['op_id']."'");
+					        $command->execute();	
+					        echo 'status DN---'.$value['dnstate'].'---Status Picking--'.$value['spstate'].'----'.$value['op_id'].'<br/>';
+			     		}
+
+			     		
+
+			     	}
+	        	}
+			*/
+        	/*
+        		// Rubah Picking ID OP yang status nya masih Approve dengan Picking ID yang statusnya Confirmed dari SO Terkait
+        		if ($value['opstate']=="approve"){
+
+	        		$cekPick = Yii::$app->db->createCommand("SELECT id FROM stock_picking where sale_id='".$value['so_id']."' and state='confirmed'");
+		     		$pick = $cekPick->queryOne();
+
+		     		if ($pick['id']){
+
+		     			$command = Yii::$app->db->createCommand("update order_preparation set picking_id = '".$pick['id']."' where id = '".$value['op_id']."'");
+				        $command->execute();	
+		     		}
+
+        			echo $value['op_id'].'----'.$pick['id'].'<br/>';
+
+
+        		}
+        	
+        	*/
+
+        	
+        	
+        		// Cek OP Line By Product ID dan Qty Compare dengan Move lIne Product Id dan Qty, JIka ada yang sama, update Picking ID di OP
+	        	if($value['opstate']=="done" and $value['spstate']=="done"){
+		        	$cekOPLine = Yii::$app->db->
+		     					createCommand("SELECT product_id, product_qty FROM order_preparation_line where preparation_id='".$value['op_id']."' ORDER BY product_id,product_qty ASC");
+		     		$OPLine = $cekOPLine->queryAll();
+
+		     		$a = "";
+		     		foreach ($OPLine as $val) {
+		     			$a .= $val['product_id'].'-'.$val['product_qty'].'-';
+		     		}
+
+					$cekMove = Yii::$app->db->
+		     					createCommand("SELECT product_id, product_qty FROM stock_move where picking_id='".$value['pick_id']."' ORDER BY product_id,product_qty ASC");
+		     		$MoveLine = $cekMove->queryAll();
+
+		     		$b = "";
+		     		foreach ($MoveLine as $valB) {
+		     			$b .= $valB['product_id'].'-'.number_format($valB['product_qty'],2 ,'.', '').'-';
+		     		}
+
+		     		if ($a==$b){
+		     		}else{
+					
+					// echo $value['no_op'].'<br/>';	     		
+		     		// echo $a.'----'.$value['op_id'].'<br/>';
+		     		// echo $b.'----'.$value['op_id'].'<br/>';
+
+		     		// echo '<br/><br/>';
+		     			$cekSO = Yii::$app->db->createCommand("SELECT id FROM stock_picking WHERE sale_id='".$value['so_id']."'")->queryAll();
+
+		     			$idSO= "";
+						foreach ($cekSO as $SO)
+						{
+							$idSO .= $SO['id'].',';
+
+							$cekMove2 = Yii::$app->db->createCommand("SELECT product_id, product_qty FROM stock_move where picking_id='".$SO['id']."' ORDER BY product_id,product_qty ASC");
+		     				$MoveLine1 = $cekMove2->queryAll();
+
+		     				$c = "";
+		     				foreach ($MoveLine1 as $valC) {
+				     			$c .= $valC['product_id'].'-'.number_format($valC['product_qty'],2 ,'.', '').'-';
+				     		}
+
+				     		if ($c==$c){
+				     			echo $c.'<br/>';
+				     			// echo 'Sama<br/>';
+				     		}
+
+				     		// if($c==$a){
+				     		// 	echo $a.'----'.$value['pick_id'].'<br/>';
+				     		// 	echo $c.'----'.$SO['id'].'<br/>';
+				     			
+				     		// 	$command = Yii::$app->db->createCommand("update order_preparation set picking_id = '".$SO['id']."' where id = '".$value['op_id']."'");
+				       //  		$command->execute();	
+				     		// }
+						}	
+
+		     		
+		     		}
+		     	}
+	 		
+	 		
+        	/*
+        		// Update Picking ID di OP dengan cek Count OP Line Dan Move Line
+	        	if ($value['backorder_id']){
+			    	$cekLine = Yii::$app->db->createCommand("SELECT count(id) as total FROM order_preparation_line where preparation_id='".$value['op_id']."'");
+			    	$xLine = $cekLine->queryOne();
+
+			    	$cekMove = Yii::$app->db->createCommand("SELECT count(id) as total_move FROM stock_move where picking_id='".$value['backorder_id']."'");
+			    	$yLine = $cekMove->queryOne();
+
+			    	$cekMV = Yii::$app->db->createCommand("SELECT count(id) as total_pick FROM stock_move where picking_id='".$value['pick_id']."'");
+			    	$nLine = $cekMV->queryOne();
+
+			    	if ($xLine['total']==$yLine['total_move']){
+			    		$command = Yii::$app->db->createCommand("update order_preparation set picking_id = '".$value['backorder_id']."' where id = '".$value['op_id']."'");
+				        $command->execute();	
+			    	}
+
+			    	if ($xLine['total']<>$nLine['total_pick']){
+			    	   
+			    	   $p = Yii::$app->db->createCommand("select sp.id, count(sm.id) total_sm
+														from stock_picking sp
+														left join stock_move as sm on sm.picking_id = sp.id
+														where sp.sale_id ='".$value['so_id']."' 
+														group by sp.id
+														having count(sm.id)='".$xLine['total']."'");
+			    	   $pLine = $p->queryOne();
+
+			    		
+			    	   if ($pLine['total_sm']==$xLine['total']){
+				    	   	if($pLine['id']){
+				    	   		$command = Yii::$app->db->createCommand("update order_preparation set picking_id = '".$pLine['id']."' where id = '".$value['op_id']."'");
+					        	$command->execute();
+				    	   	}
+				    	   	 	
+			    	   }
+				    	echo $value['op_id'].'-------OP---'.$xLine['total'].'------MOVE ID------'.$nLine['total_pick'].'--------TOTAL--'.$pLine['total_sm'].'------'.$pLine['id'].'<br/>';    
+			    	}
+
+	        		
+
+	        	}
+	        	*/
+
+			
+
+			// foreach ($datapickline as $pickID) {
+			// 	$line[]=$pickID['product_id'];
+			// }
+			// echo '<pre>';
+			// var_dump($line);
+			// echo '</pre>';
+			// echo '<br/>';
+			// echo '<br/>';
+        	/*
+        		Update DN status Cancel Jika OP dan Stock Picking status Cancel
+        		if ($value['dnstate']=="approve"){
+        			if ($value['opstate']=="cancel" AND $value['spstate']=="cancel"){
+        				$command = Yii::$app->db->createCommand("update delivery_note set state = 'cancel' where id = '".$value['dn_id']."'");
+				        $command->execute();	
+        			}
+        		}
+			
+			*/
+
+        	/*
+        		Update picking ID OP berdasarkan ID Picking yang masih belum Done, dikarnakan status DN masih belum Done
+	        	if ($value['dnstate']=="approve"){
+	    		    	$picking = Yii::$app->db->
+	    		    							createCommand("
+	    		    								SELECT id as picking_id FROM stock_picking where sale_id='".$value['so_id']."' and state ='confirmed'
+	    		    								");
+	    		    	$datapick = $picking->queryOne();
+
+	    		    if ($datapick['picking_id']){
+	    		    	echo 'ID OP---------'.$value['op_id'].'-------state DN--------------'.$value['dnstate'].'------------------------'.$datapick['picking_id'].'<br/>';	
+	    		    	$command = Yii::$app->db->createCommand("update order_preparation set picking_id = '".$datapick['picking_id']."' where id = '".$value['op_id']."'");
+				        $command->execute();	
+	    		    }
+	        		// echo 'ID OP---------'.$value['op_id'].'-------state DN--------------'.$value['dnstate'].'------------------------'.$datapick['picking_id'].'<br/>';	
+	        	}
+        	*/
+
+        	/*
+	        	// Update Stock Picking note ID samakan dengan ID DN dari OP 
+	        	if ($value['dn_id']){
+	        		if ($value['spstate']=="done"){
+	        			$command = Yii::$app->db->createCommand("update stock_picking set note_id ='".$value['dn_id']."'  where id = '".$value['pick_id']."'");
+			    		$command->execute();	 		
+	        		}
+	        		
+	        	}
+        	*/
+	        /*
+	        	Update OP dari Backoder ID dari stock picking yang status nya masih confirm dan cek backorder ID yang status nya Done, maka di replace ke ID backorder
+				if ($value['backorder_id']){        
+					if ($value['spstate']=="confirmed"){
+						$command = Yii::$app->db->createCommand("update order_preparation set picking_id = '".$value['backorder_id']."' where id = '".$value['op_id']."'");
+			        	$command->execute();	
+					}	
+	        	}
+        	*/
+
+
+	        /*
+	        	if ($value['backorder_id']){
+	        		if ($value['pick_note_id1']==$value['pick_note_id2']){
+	        			if ($value['spstate']=="confirmed" && $value['sp2state']=="done"){     				
+	        				// Update stock picking yang masih confirm --> note id dibuat menjadi Null
+	        				$command = Yii::$app->db->createCommand("update stock_picking set note_id = Null where id = '".$value['pick_id']."'");
+			        		$command->execute();
+			        		// Update order Preparation yang picking nya confirm menjadi picking yang done
+			        		$command = Yii::$app->db->createCommand("update order_preparation set picking_id = '".$value['backorder_id']."' where id = '".$value['op_id']."'");
+			        		$command->execute();	
+	        			}
+	        		}
+	        	}
+
+			*/
+        	
+	        /*
+	        	if ($value['spstate']=="confirmed"){
+					// Update Stock Picking Status Confirmed MNOte Id Menjadi Null
+					$command = Yii::$app->db->createCommand("update stock_picking set note_id = Null where id = '".$value['pick_id']."'");
+			        $command->execute();	         		
+	        	}
+	        */
+
+
+	        /*
+	        	if ($value['dn_id'] == $value ['id_dn'])
+	        	{
+	        		echo $value['dn_id'].'--------------'.$value['id_dn'].'------------------'.$value['pick_id'];
+	        	}
+	        	else
+	        	{
+					echo $value['dn_id'].'--------------'.$value['id_dn'].'-------------------'.$value['pick_id'];
+					if ($value['dn_id']){
+						$command = Yii::$app->db->createCommand("update stock_picking set note_id = '".$value['dn_id']."' where id = '".$value['pick_id']."'");
+			        $command->execute();	        			
+					}
+					
+	        	}
+			*/
+
+	        /*
+	        	if ($value['dn_id'] ==  $value ['id_dn'])
+	        	{}else{
+					
+					$command = Yii::$app->db->createCommand("update stock_picking set note_id = '".$value['dn_id']."' where id = '".$value['pick_id']."'");
+			        $command->execute();	        		
+	        	}
+	        */
+
+	        /*
+	        	if ($value['dn_name'] ==  $value ['dn2'])
+	        	{	
+	        		echo '111<br/>';
+	        	}else{
+	        		echo '222<br/>';
+	        		if ($value['id_picking']){
+	        			$command = Yii::$app->db->createCommand("update order_preparation set picking_id = '".$value['id_picking']."' where id = '".$value['op_id']."'");
+			        $command->execute();	
+	        		}
+	        		 
+	        	}
+			*/
+
+			/*        	
+	        	if ($value['pick_note_id']==''){
+	        		$command = Yii::$app->db->createCommand("update stock_picking set note_id = '".$value['dn_id']."' where id = '".$value['pick_id']."'");
+			        $command->execute();	
+	        	}else{
+	        		echo 'aaaaaa<br/>';
+	        	}	
+	        	if ($value['pick_note_id1']==''){
+	        		if ($value['backorder_id']){
+	        			$command = Yii::$app->db->createCommand("update order_preparation set picking_id = '".$value['backorder_id']."' where id = '".$value['op_id']."'");
+			        	$command->execute();	
+	        		}
+	        			
+	        	}else{
+	        		echo 'aaaaaa<br/>';
+	        	}
+			*/
+        
+         }
+
+
+     }
 
 }
 

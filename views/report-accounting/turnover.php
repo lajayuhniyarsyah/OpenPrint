@@ -35,7 +35,10 @@
 				$no_surat=$value['ref_cus'];
 				$no_pb='LBM No '.$value['lbm'];
 			}else{
+				// echo $value['dn'].'<br/>';
 				$no_surat=substr($value['dn'], 0,7);
+				// $no_surat=$value['id'];
+				// $value['dn']
 				$no_pb=substr($value['op'], 0,7);
 			}
 

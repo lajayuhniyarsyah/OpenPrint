@@ -287,9 +287,9 @@ use yii\helpers\Url;
 
 					?>
 				</div>
-				<div class="partnerAddr"><?=$model->partner->street?></div>
-				<div class="partnerAddr2"><?=$model->partner->street2?></div>
-				<div class="partnerAddr2"><?=$model->partner->city.' '.(isset($model->partner->state->name) ? $model->partner->state->name.' - ':'').$model->partner->zip?></div>
+				<div class="partnerAddr" contenteditable="true"><?=$model->partner->street?></div>
+				<div class="partnerAddr2" contenteditable="true"><?=$model->partner->street2?></div>
+				<div class="partnerAddr2" contenteditable="true"><?=$model->partner->city.' '.(isset($model->partner->state->name) ? $model->partner->state->name.' - ':'').$model->partner->zip?></div>
 			</div>
 			<div class="rightInfo">
 				<div class="kwNo"><?=$model->kwitansi?></div>
@@ -394,7 +394,7 @@ console.log(maxLinesHeight);
 
 function prepareRow(rowNo,data)
 {
-	return "<tr class='cRows rows"+rowNo+"'><td class='td1'>"+data.no+"</td><td class='td2'>"+data.qty+"</td><td class='td3'>"+data.desc+"</td><td class='td4'>"+data.unit_price+"</td><td class='td5'>"+data.ext_price+"</td></tr>";
+	return "<tr class='cRows rows"+rowNo+"'><td class='td1' contenteditable='true'>"+data.no+"</td><td class='td2'>"+data.qty+"</td><td class='td3'>"+data.desc+"</td><td class='td4'>"+data.unit_price+"</td><td class='td5'>"+data.ext_price+"</td></tr>";
 }
 
 function getNotes(notes,rowNo=999999)

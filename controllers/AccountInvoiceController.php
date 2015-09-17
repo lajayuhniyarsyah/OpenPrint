@@ -113,219 +113,266 @@ class AccountInvoiceController extends Controller
 
 	// action print
 	public function actionPrint($id,$uid=null,$printer=null){
-        $this->layout = 'printout';
-        $discount = ['desc'=>'','curr'=>'','amount'=>''];
-        $model = $this->findModel($id);
+		$this->layout = 'printout';
+		$discount = ['desc'=>'','curr'=>'','amount'=>''];
+		$model = $this->findModel($id);
 
-        $lines = [];
-        $total = 0;
-        $ar = 0;
+		$lines = [];
+		$total = 0;
+		$ar = 0;
 
-        // used for e-faktur new 
-        $totalIDR=0;
-        foreach($model->accountInvoiceLines as $invLine):
-            $ar++;
-        	// if not discount
-            if($invLine->account_id<>192 and !preg_match('/discount/i',$invLine->account->name)){
-                $nameLine = (isset($invLine->product->name_template) ? $invLine->product->name_template : null);
+		// used for e-faktur new 
+		$totalIDR=0;
+		foreach($model->accountInvoiceLines as $invLine):
+			$ar++;
+			// if not discount
+			if($invLine->account_id<>192 and !preg_match('/discount/i',$invLine->account->name)){
+				$nameLine = (isset($invLine->product->name_template) ? $invLine->product->name_template : null);
 
-                if(trim($invLine->name)):
-                    $nameLine .= (isset($invLine->product->name_template) ? '<br/>':"").nl2br($invLine->name);
-                endif;
+				if(trim($invLine->name)):
+					$nameLine .= (isset($invLine->product->name_template) ? '<br/>':"").nl2br($invLine->name);
+				endif;
 
-                if(isset($invLine->product->default_code)){
-                	if($invLine->product->productTmpl->type!='service'){
-                		$nameLine .= '<br/>P/N : '.$invLine->product->default_code;
-                	}
-                }
-                
-                if($model->currency_id==13){
-                    $priceSub = Yii::$app->numericLib->indoStyle($invLine->price_subtotal);
-                    $totalIDR = Yii::$app->numericLib->indoStyle($invLine->price_subtotal);
-                }else{
-                    $priceSub = Yii::$app->numericLib->westStyle($invLine->price_subtotal);
-                    $priceUnitIDR = Yii::$app->numericLib->indoStyle($invLine->price_unit);
-                    $totalIDR = Yii::$app->numericLib->indoStyle($priceUnitIDR*$invLine->quantity);
-                }
-                $lines[] = [
-                    'no'=>($model->payment_for =='dp' || $model->payment_for =='completion' ? '':$invLine->sequence),
-                    'name'=>$nameLine,
-                    'price_subtotal'=>$priceSub,
-                    'rate_symbol'=>$model->currency->name
-                ];
-
-
-                // $total+=floatval($invLine->price_unit)*floatval($invLine->quantity);
-                $total+=$invLine->price_subtotal;
-                /*echo 'price unit '.$invLine->price_unit;
-                echo 'qty '.floatval($invLine->quantity).'<br/>';*/
-            }
-            else
-            {
-                $discount = [
-                    'desc'=>$invLine->name,
-                    'curr'=>$model->currency->name,
-                    'amount'=>$invLine->price_unit,
-                ];
-            }
-
-        endforeach;
-
-        # IF NOT PRINT ALL TAXES THEN GET ITEM IN SALES ORDER RECORD AND PUT IT TO LINES
-       	if(!$model->print_all_taxes_line){
-       		unset($lines); #reset Lines
-       		$lines = [];
-        	$lines[] = [
-        		'no'=>'',
-        		'name'=>($model->currency_id == 13 ? 'Sesuai Invoice ':'As Per Invoice No. ').$model->kwitansi.($model->currency_id	==13 ? '<br/>(Lampiran Invoice : 1, 2)':'<br/>(List Find Attach In Invoice Page : 1, 2)'),
-        		// 'AS PER INVOICE NO. LIST FIND ATTACH IN INVOICE PAGE 1, 2'
-        		'price_subtotal'=>($model->currency_id == 13 ? Yii::$app->numericLib->indoStyle($total):Yii::$app->numericLib->westStyle($total)),
-                'rate_symbol'=>$model->currency->name,
-
-        	];
-        }else{
-            // IF DP OR COMPLETION
-            if($model->payment_for == 'dp'|| $model->payment_for=='completion'){
-                foreach($model->orders as $so){
-                    foreach($so->saleOrderLines as $line){
-                        $ar++;
-                        $lines[$ar]['no'] = $line->sequence;
-                        // $lines[$ar]['qty'] = $line->product_uom_qty.(isset($line->productUom->name) ? ' '.$line->productUom->name:null);
-                        $lines[$ar]['name'] = (isset($line->product->name_template) ? $line->product->name_template.'<br/>'.$line->name.'<br/>P/N : '.$line->product->default_code:nl2br($line->name));
-                        $lines[$ar]['price_subtotal'] = '';
-                        $lines[$ar]['rate_symbol'] = '';
-                    }
-                }
-            }
-        }
-        // echo $total;
-        // print_r($lines);
-        if($uid==100 && !$printer){
-            $printer='sri';
-        }elseif(!$printer){
-            $printer = 'refa';
-        }
-        if($model->currency->name=='IDR' and $model->currency->id==13)
-        {
-            // if Rupiah
-            return $this->render('print/fp_rp',['model'=>$model,'lines'=>$lines,'uid'=>$uid,'printer'=>$printer,'discount'=>$discount,'total'=>$total]);
-        }else{
-            return $this->render('print/fp_valas',['model'=>$model,'lines'=>$lines,'uid'=>$uid,'printer'=>$printer,'discount'=>$discount,'total'=>$total]);
-        }        
-    }
-
-    public function actionPrintInvoice($id,$uid=null,$printer="refa"){
-        $this->layout = 'printout';
-        $model=$this->findModel($id);
-        $lines = [];
-        $discountLine=['desc'=>'','amount'=>'','currCode'=>''];
-        $ar = 0;
-        $total = 0;
-        $formated = function($value) use ($model){
-            if($model->currency_id==13){
-                return Yii::$app->numericLib->indoStyle(floatval($value));
-            }else{
-                return Yii::$app->numericLib->westStyle(floatval($value));
-            }
-        };
-        foreach($model->accountInvoiceLines as $k=>$line):
-            if($line->account_id<>192 and !preg_match('/discount/i',$line->account->name)){
-                $ar = $k;
-                $lines[$k]['no'] = ($model->payment_for == 'dp' || $model->payment_for == 'completion' ? '':$line->sequence);
-                $lines[$k]['qty'] = ($model->payment_for == 'dp' || $model->payment_for == 'completion' ? '':$line->quantity.(isset($line->uos->name) ? ' '.$line->uos->name:null));
-                
-                if($model->payment_for == 'dp' || $model->payment_for=='completion'){
-                	$lines[$k]['desc'] = (isset($line->product->name_template) ? '<div>'.$line->product->name_template.'</div><div>'.nl2br($line->name).'</div><div>P/N : '.$line->product->default_code.'</div>':nl2br($line->name));
-                	if(preg_match('/FOR \:/', $lines[$k]['desc'])){
-                		$expl = explode('FOR :', $lines[$k]['desc']);
-                		$lines[$k]['desc'] = '<b>'.$expl[0].' FOR :'.'</b>';
-                	}
-                	$dpName = '';
-                	// $lines[$k]['unit_price'] = '<div style="float:left;">'.$model->currency->name.'</div><div style="float:right;padding-right:8px;">'.$formated($line->price_unit).'</div>';
-                    $lines[$k]['unit_price'] ='';
-                	$lines[$k]['ext_price'] = '<div style="float:left;">'.$model->currency->name.'</div><div style="float:right;">'.$formated($line->price_subtotal).'</div>';
-                }else{
-                	$lines[$k]['desc'] = (isset($line->product->name_template) ? '<div>'.$line->product->name_template.'</div><div>'.nl2br($line->name).'</div><div>'.($line->product->productTmpl->type != 'service' ? 'P/N : '.$line->product->default_code:'').'</div>':nl2br($line->name));
-                	$lines[$k]['unit_price'] = '<div style="float:left;">'.$model->currency->name.'</div><div style="float:right;padding-right:8px;">'.$formated($line->price_unit).'</div>';
-                	$lines[$k]['ext_price'] = '<div style="float:left;">'.$model->currency->name.'</div><div style="float:right;">'.$formated($line->price_subtotal).'</div>';
-                }
-                
-                // $total+=floatval($line->price_unit)*floatval($line->quantity);
-                $total+=$line->price_subtotal;
-            }else{
-                $discountLine = [
-                    'desc'=>nl2br($line->name),
-                    'amount'=>$line->price_unit,
-                    'currCode'=>$model->currency->name
-                ];
-            }
-
-        endforeach;
-
-        // IF DP OR COMPLETION
-       	if($model->payment_for == 'dp'|| $model->payment_for=='completion'){
-       		// var_dump($model->orders);
-       		foreach($model->orders as $so){
-       			foreach($so->saleOrderLines as $line){
-       				$ar++;
-       				$lines[$ar]['no'] = $line->sequence;
-	                $lines[$ar]['qty'] = $line->product_uom_qty.(isset($line->productUom->name) ? ' '.$line->productUom->name:null);
-	                // replacer for repeat description
-	                // replace format [part number] part item name
-	                $double_name_replace = '['.$line->product->default_code.'] '.$line->product->name_template;
-	                $normalDesc = str_replace($double_name_replace, '', $line->name);
-	                // str_replace(search, replace, subject)
-	                if($normalDesc){
-	                	$normalDesc.='<br/>';
-	                }
-	                $lines[$ar]['desc'] = (isset($line->product->name_template) ? $line->product->name_template.'<br/>'.$normalDesc.'P/N : '.$line->product->default_code:nl2br($line->name));
-	                // $lines[$ar]['desc'] = (isset($line->product->name_template) ? $line->product->name_template.'<br/>'.nl2br($line->name).'<br/>P/N : '.$line->product->default_code:nl2br($line->name));
-	                $lines[$ar]['unit_price'] = '';
-	                $lines[$ar]['ext_price'] = '';
-       			}
-       		}
-       	}
+				if(isset($invLine->product->default_code)){
+					if($invLine->product->productTmpl->type!='service'){
+						$nameLine .= '<br/>P/N : '.$invLine->product->default_code;
+					}
+				}
+				
+				if($model->currency_id==13){
+					$priceSub = Yii::$app->numericLib->indoStyle($invLine->price_subtotal);
+					$totalIDR = Yii::$app->numericLib->indoStyle($invLine->price_subtotal);
+				}else{
+					$priceSub = Yii::$app->numericLib->westStyle($invLine->price_subtotal);
+					$priceUnitIDR = Yii::$app->numericLib->indoStyle($invLine->price_unit);
+					$totalIDR = Yii::$app->numericLib->indoStyle($priceUnitIDR*$invLine->quantity);
+				}
+				$lines[] = [
+					'no'=>($model->payment_for =='dp' || $model->payment_for =='completion' ? '':$invLine->sequence),
+					'name'=>$nameLine,
+					'price_subtotal'=>$priceSub,
+					'rate_symbol'=>$model->currency->name
+				];
 
 
+				// $total+=floatval($invLine->price_unit)*floatval($invLine->quantity);
+				$total+=$invLine->price_subtotal;
+				/*echo 'price unit '.$invLine->price_unit;
+				echo 'qty '.floatval($invLine->quantity).'<br/>';*/
+			}
+			else
+			{
+				$discount = [
+					'desc'=>$invLine->name,
+					'curr'=>$model->currency->name,
+					'amount'=>$invLine->price_unit,
+				];
+			}
 
-        $ar+=1;
-        $lines[$ar]['no'] = '';
-        $lines[$ar]['qty'] = '';
-        $lines[$ar]['desc'] = '<br/><br/><br/><div>';
-        /*if($model->name){
-        	$lines[$ar]['desc'] .= 'Order Ref# : '.$model->name;
-        }
-        if($model->origin){
-        	$lines[$ar]['desc'] .= '<br/>Sale Ref# : '.$model->origin;
-        }*/
-        if($model->comment){
-            $lines[$ar]['desc'] .= '<br/>'.nl2br($model->comment);
-        }
-        $lines[$ar]['desc'] .= '</div>';
-        $lines[$ar]['unit_price'] = '';
-        $lines[$ar]['ext_price'] = '';
-        if($printer == null && ($uid==100 || $uid == 191)){
-            $printer='sri';
-        }
-        // echo $total;
-        return $this->render('print/inv',['model'=>$model,'lines'=>$lines,'printer'=>$printer,'discountLine'=>$discountLine,'total'=>$total,'uid'=>$uid]);
-    }
+		endforeach;
+
+		# IF NOT PRINT ALL TAXES THEN GET ITEM IN SALES ORDER RECORD AND PUT IT TO LINES
+		if(!$model->print_all_taxes_line){
+			unset($lines); #reset Lines
+			$lines = [];
+			$lines[] = [
+				'no'=>'',
+				'name'=>($model->currency_id == 13 ? 'Sesuai Invoice ':'As Per Invoice No. ').$model->kwitansi.($model->currency_id	==13 ? '<br/>(Lampiran Invoice : 1, 2)':'<br/>(List Find Attach In Invoice Page : 1, 2)'),
+				// 'AS PER INVOICE NO. LIST FIND ATTACH IN INVOICE PAGE 1, 2'
+				'price_subtotal'=>($model->currency_id == 13 ? Yii::$app->numericLib->indoStyle($total):Yii::$app->numericLib->westStyle($total)),
+				'rate_symbol'=>$model->currency->name,
+
+			];
+		}else{
+			// IF DP OR COMPLETION
+			if($model->payment_for == 'dp'|| $model->payment_for=='completion'){
+				foreach($model->orders as $so){
+					foreach($so->saleOrderLines as $line){
+						$ar++;
+						$lines[$ar]['no'] = $line->sequence;
+						// $lines[$ar]['qty'] = $line->product_uom_qty.(isset($line->productUom->name) ? ' '.$line->productUom->name:null);
+						$lines[$ar]['name'] = (isset($line->product->name_template) ? $line->product->name_template.'<br/>'.$line->name.'<br/>P/N : '.$line->product->default_code:nl2br($line->name));
+						$lines[$ar]['price_subtotal'] = '';
+						$lines[$ar]['rate_symbol'] = '';
+					}
+				}
+			}
+		}
+		// echo $total;
+		// print_r($lines);
+		if($uid==100 && !$printer){
+			$printer='sri';
+		}elseif(!$printer){
+			$printer = 'refa';
+		}
+		if($model->currency->name=='IDR' and $model->currency->id==13)
+		{
+			// if Rupiah
+			return $this->render('print/fp_rp',['model'=>$model,'lines'=>$lines,'uid'=>$uid,'printer'=>$printer,'discount'=>$discount,'total'=>$total]);
+		}else{
+			return $this->render('print/fp_valas',['model'=>$model,'lines'=>$lines,'uid'=>$uid,'printer'=>$printer,'discount'=>$discount,'total'=>$total]);
+		}        
+	}
+
+	public function actionPrintInvoice($id,$uid=null,$printer="refa"){
+		$this->layout = 'printout';
+		$model=$this->findModel($id);
+		$lines = [];
+		$discountLine=['desc'=>'','amount'=>'','currCode'=>''];
+		$ar = 0;
+		$total = 0;
+		$formated = function($value) use ($model){
+			if($model->currency_id==13){
+				return Yii::$app->numericLib->indoStyle(floatval($value));
+			}else{
+				return Yii::$app->numericLib->westStyle(floatval($value));
+			}
+		};
+		$amount_payment_for = 0;
+		$payment_for = false;
+		$payment_for_dp_complete = [];
+		foreach($model->accountInvoiceLines as $k=>$line):
+			if($line->account_id<>192 and !preg_match('/discount/i',$line->account->name)){
+				$ar = $k;
+				$lines[$k]['no'] = ($model->payment_for == 'dp' || $model->payment_for == 'completion' ? '':$line->sequence);
+				$lines[$k]['qty'] = ($model->payment_for == 'dp' || $model->payment_for == 'completion' ? '':$line->quantity.(isset($line->uos->name) ? ' '.$line->uos->name:null));
+				
+				
+				if($model->payment_for == 'dp' || $model->payment_for=='completion'){
+					$lines[$k]['desc'] = (isset($line->product->name_template) ? '<div>'.$line->product->name_template.'</div><div>'.nl2br($line->name).'</div><div>P/N : '.$line->product->default_code.'</div>':nl2br($line->name));
+					if(preg_match('/\:/', $lines[$k]['desc'])){
+						$expl = explode(':', $lines[$k]['desc']);
+						$lines[$k]['desc'] = '<b>'.$expl[0].(isset($expl[1]) ? $expl[1]:'').' :'.'</b>';
+						$payment_for = true;
+						$payment_for_dp_complete['main'][] = ['idx'=>$k,'total'=>$line->price_subtotal,'desc'=>$lines[$k]['desc']];
+					}else{
+						$payment_for_dp_complete['out'][] = ['idx'=>$k,'total'=>$line->price_subtotal];
+					}
+					
+					$dpName = '';
+					// $lines[$k]['unit_price'] = '<div style="float:left;">'.$model->currency->name.'</div><div style="float:right;padding-right:8px;">'.$formated($line->price_unit).'</div>';
+					$lines[$k]['unit_price'] ='';
+					$lines[$k]['ext_price'] = '<div style="float:left;">'.$model->currency->name.'</div><div style="float:right;">'.$formated($line->price_subtotal).'</div>';
+					
+				}else{
+					$lines[$k]['desc'] = (isset($line->product->name_template) ? '<div>'.$line->product->name_template.'</div><div>'.nl2br($line->name).'</div><div>'.($line->product->productTmpl->type != 'service' ? 'P/N : '.$line->product->default_code:'').'</div>':nl2br($line->name));
+					$lines[$k]['unit_price'] = '<div style="float:left;">'.$model->currency->name.'</div><div style="float:right;padding-right:8px;">'.$formated($line->price_unit).'</div>';
+					$lines[$k]['ext_price'] = '<div style="float:left;">'.$model->currency->name.'</div><div style="float:right;">'.$formated($line->price_subtotal).'</div>';
+				}
+				
+				// $total+=floatval($line->price_unit)*floatval($line->quantity);
+				$total+=$line->price_subtotal;
+			}else{
+				$discountLine = [
+					'desc'=>nl2br($line->name),
+					'amount'=>$line->price_unit,
+					'currCode'=>$model->currency->name
+				];
+			}
+
+		endforeach;
+
+		// IF DP OR COMPLETION
+		if($model->payment_for == 'dp'|| $model->payment_for=='completion'){
+			// var_dump($model->orders);
+			foreach($model->orders as $so){
+				foreach($so->saleOrderLines as $line){
+					$ar++;
+					$lines[$ar]['no'] = $line->sequence;
+					$lines[$ar]['qty'] = $line->product_uom_qty.(isset($line->productUom->name) ? ' '.$line->productUom->name:null);
+					// replacer for repeat description
+					// replace format [part number] part item name
+					$double_name_replace = '['.$line->product->default_code.'] '.$line->product->name_template;
+					$normalDesc = str_replace($double_name_replace, '', $line->name);
+					// str_replace(search, replace, subject)
+					if($normalDesc){
+						$normalDesc.='<br/>';
+					}
+					$lines[$ar]['desc'] = (isset($line->product->name_template) ? $line->product->name_template.'<br/>'.$normalDesc.'P/N : '.$line->product->default_code:nl2br($line->name));
+					// $lines[$ar]['desc'] = (isset($line->product->name_template) ? $line->product->name_template.'<br/>'.nl2br($line->name).'<br/>P/N : '.$line->product->default_code:nl2br($line->name));
+					$lines[$ar]['unit_price'] = '';
+					$lines[$ar]['ext_price'] = '';
+				}
+			}
+		}
 
 
-    public function actionPrintKwitansi($id,$uid,$printer=null){
 
-        $this->layout = 'printout';
-        $model = $this->findModel($id);
+		$ar+=1;
+		$lines[$ar]['no'] = '';
+		$lines[$ar]['qty'] = '';
+		$lines[$ar]['desc'] = '<br/><br/><br/><div>';
+		/*if($model->name){
+			$lines[$ar]['desc'] .= 'Order Ref# : '.$model->name;
+		}
+		if($model->origin){
+			$lines[$ar]['desc'] .= '<br/>Sale Ref# : '.$model->origin;
+		}*/
+		if($model->comment){
+			$lines[$ar]['desc'] .= '<br/>'.nl2br($model->comment);
+		}
+		$lines[$ar]['desc'] .= '</div>';
+		$lines[$ar]['unit_price'] = '';
+		$lines[$ar]['ext_price'] = '';
+		if($printer == null && ($uid==100 || $uid == 191)){
+			$printer='sri';
+		}
+		// echo $total;
 
-        if(!$printer && ($uid==100 || $uid == 191)){
-            $printer = 'sri';
-        }
+		// if payment for complete or dp
+		if($payment_for){
+			
+			$payment_for_total = 0;
+			$payment_for_desc = '';
+			$toRemove = [];
+			if(isset($payment_for_dp_complete['out'])):
+				foreach($payment_for_dp_complete['out'] as $out){
+					$payment_for_total += $out['total'];
+					$toRemove[] = $out['idx'];
+					
+				}
+			endif;
+			foreach($payment_for_dp_complete['main'] as $main){
+				$payment_for_total += $main['total'];
+				$payment_for_desc = $main['desc'];
+				$toRemove[] = $main['idx'];
+			}
 
-        if(!$printer){
-            $printer='refa';
-        }
-        return $this->render('print/kwitansi',['model'=>$model,'printer'=>$printer]);
-    }
+			// remove
+			foreach($toRemove as $rm){
+				unset($lines[$rm]);
+			}
+
+			array_unshift(
+				$lines, [
+					'no'=>'',
+					'qty'=>'',
+					'desc'=>$payment_for_desc,
+					'unit_price'=>'',
+					'ext_price'=>'<div style="float:left;">'.$model->currency->name.'</div><div style="float:right;">'.$formated($payment_for_total).'</div>'
+				]
+			);
+
+
+		}
+		return $this->render('print/inv',['model'=>$model,'lines'=>$lines,'printer'=>$printer,'discountLine'=>$discountLine,'total'=>$total,'uid'=>$uid]);
+	}
+
+
+	public function actionPrintKwitansi($id,$uid,$printer=null){
+
+		$this->layout = 'printout';
+		$model = $this->findModel($id);
+
+		if(!$printer && ($uid==100 || $uid == 191)){
+			$printer = 'sri';
+		}
+
+		if(!$printer){
+			$printer='refa';
+		}
+		return $this->render('print/kwitansi',['model'=>$model,'printer'=>$printer]);
+	}
 
 	/**
 	 * Displays a single AccountInvoice model.
@@ -614,8 +661,8 @@ class AccountInvoiceController extends Controller
 		];
 		// \yii\helpers\VarDumper::dump($dataArr);
 		$dataToRender['provider'] = new \yii\data\ArrayDataProvider([
-		    'allModels' => $dataArr,
-		    'pagination' => false
+			'allModels' => $dataArr,
+			'pagination' => false
 		]);
 
 
@@ -676,8 +723,8 @@ class AccountInvoiceController extends Controller
 		];
 		// \yii\helpers\VarDumper::dump($dataArr);
 		$dataToRender['provider'] = new \yii\data\ArrayDataProvider([
-		    'allModels' => $dataArr,
-		    'pagination' => false
+			'allModels' => $dataArr,
+			'pagination' => false
 		]);
 
 
@@ -739,12 +786,12 @@ class AccountInvoiceController extends Controller
 		// \yii\helpers\VarDumper::dump($dataToRender['chart']['series']);
 
 		$dataToRender['provider'] = new ActiveDataProvider([
-		    'query' => $query->select('year_invoice, gid, group_name, 
+			'query' => $query->select('year_invoice, gid, group_name, 
 				SUM(amount_target) AS amount_target, SUM(ytd_target) as ytd_target, SUM(ytd_sales_achievement) as ytd_sales_achievement, 
 				SUM(achievement) AS achievement'),
-		    'pagination' => [
-		        'pageSize' => -1,
-		    ],
+			'pagination' => [
+				'pageSize' => -1,
+			],
 		]);
 
 		$dataToRender['year'] = (int)$year;
@@ -798,12 +845,12 @@ class AccountInvoiceController extends Controller
 		// \yii\helpers\VarDumper::dump($dataToRender['chart']['series']);
 
 		$dataToRender['provider'] = new ActiveDataProvider([
-		    'query' => $query->select('year_invoice, gid, group_name, 
+			'query' => $query->select('year_invoice, gid, group_name, 
 				SUM(amount_target) AS amount_target, SUM(ytd_target) as ytd_target, SUM(ytd_sales_achievement) as ytd_sales_achievement, 
 				SUM(achievement) AS achievement'),
-		    'pagination' => [
-		        'pageSize' => -1,
-		    ],
+			'pagination' => [
+				'pageSize' => -1,
+			],
 		]);
 
 		$dataToRender['year'] = (int)$year;

@@ -118,12 +118,13 @@ class PurchaseOrderController extends Controller
         $model->load(Yii::$app->request->get());
         $modelLine->load(Yii::$app->request->get());
 
-        if ($model->load(Yii::$app->request->get()) AND $modelLine->load(Yii::$app->request->get())) {
+        /*if ($model->load(Yii::$app->request->get()) AND $modelLine->load(Yii::$app->request->get())) {
             $query = $this->getPOLineRelatedQuery($model,$modelLine,$groupBy);
         }else{
             $query = $this->getPOLineRelatedQuery($model,$modelLine,$groupBy);
-        }
+        }*/
 
+        $query = $this->getPOLineRelatedQuery($model,$modelLine,$groupBy);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -209,6 +210,7 @@ class PurchaseOrderController extends Controller
                             pol.partner_id as partner_id,
                             po.date_order as date_order,
                             po.name as no_po,
+                            pol.name as pol_desc,
                             rp.name as partner,
                             pol.product_id as product_id,
                             pp.name_template as product,
@@ -223,11 +225,13 @@ class PurchaseOrderController extends Controller
                 ->join('LEFT JOIN','purchase_order as po','po.id=pol.order_id')
                 ->join('LEFT JOIN','product_pricelist as pid','pid.id=po.pricelist_id')
                 ->join('LEFT JOIN','product_product as pp','pp.id=pol.product_id')
+                // ->join('LEFT JOIN', 'product_uom as puom','po.')
                 ->join('LEFT JOIN','res_partner as rp','rp.id=pol.partner_id');
 
         if($groupBy){
             if($groupBy=='partner'){
                 $query->groupBy(['pol.partner_id','rp.name', 'pid.id']);
+                $query->orderBy('rp.name ASC');
             }
         }
 
@@ -236,6 +240,14 @@ class PurchaseOrderController extends Controller
                 {
                     $query->andWhere(['pol.partner_id'=>explode(',',$params['partner_id'])]); 
                 }
+        }
+
+        if(isset($modelline['name']) && $modelline['name']){
+            
+                
+            $query->andWhere(['ilike','pol.name',$modelline['name']]); 
+            // die();
+                
         }
        if(isset($modelline['product_id']) && $modelline['product_id']){
                 if($modelline['product_id']!='0')

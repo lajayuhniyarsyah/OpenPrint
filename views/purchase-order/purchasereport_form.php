@@ -127,11 +127,13 @@ SCRIPT;
 							$form = ActiveForm::begin([
 									'method'=>'get',
 									'action'=>['purchase-order/purchasereport'],
+									'enableClientValidation'=>false
 								]); 
 						}else{
 							$form = ActiveForm::begin([
 									'method'=>'get',
 									'action'=>['purchase-order/purchasereport','groupBy'=>'partner'],
+									'enableClientValidation'=>false
 								]); 
 						}
 					?>
@@ -174,6 +176,7 @@ SCRIPT;
 								]);
 							?>
 						</div>
+						
 						<div style="width:100%;">
 							<div style="float:left; width:45%;">
 									<?=DatePicker::widget([
@@ -207,6 +210,15 @@ SCRIPT;
 							?>
 							</div>
 						</div>
+						<div style="width:100%">
+							<div style="width:40%;float:left;">
+								
+									<?php
+										echo $form->field($modelline,'name');
+									?>
+								
+							</div>
+						</div>
 
 					<div style="clear:both"></div>
 					<div class="form-group">
@@ -220,7 +232,7 @@ SCRIPT;
 			<div style="clear:both"></div>
 				<div class="panel panel-default">
 		            <div class="panel-heading">
-		                <h3 class="panel-title">Purchase Product Sales</h3>
+		                <h3 class="panel-title">Purchase Product</h3>
 		            </div>
 		        <div class="panel-body">
 				<?php  
@@ -248,6 +260,7 @@ SCRIPT;
 			                            }
 			                        ],
 			                        'product',
+			                        'pol_desc',
 			                        [
 			                        	'attribute'=>'product_qty',
 			                            'header'=>'Qty',

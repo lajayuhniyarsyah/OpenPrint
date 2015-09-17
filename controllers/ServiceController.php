@@ -131,7 +131,7 @@ class ServiceController extends Controller{
 		$ids = explode(',', $ids);
 		// \yii\helpers\VarDumper::dump($ids);
 		if(is_array($ids)){
-			$invoices = AccountInvoice::find()->where(['id'=>$ids])->with(['accountInvoiceLines','partner','partner.parent','accountInvoiceLines.product','stockPickings','accountInvoiceLines.account','fakturAddress','fakturAddress.parent'])->asArray()->all();
+			$invoices = AccountInvoice::find()->where(['id'=>$ids])->with(['currency','accountInvoiceLines','partner','partner.state','partner.parent','accountInvoiceLines.product','stockPickings','accountInvoiceLines.account','fakturAddress','fakturAddress.parent'])->asArray()->all();
 			$maped = $this->prepareCsvInvoiceData($invoices);
 			/*\yii\helpers\VarDumper::dump($maped);
 			die();*/
@@ -293,12 +293,12 @@ class ServiceController extends Controller{
 					$partner = (isset($inv['fakturAddress']['parent']) ? $inv['fakturAddress']['parent']: $inv['fakturAddress']);
 					$fakturAddress = $inv['fakturAddress'];
 					// $partner = $inv['fakturAddress'];
-					$iAddr = $fakturAddress['street'].', '.$fakturAddress['street2'].' '.$fakturAddress['city'].', '.(isset($fakturAddress['state']->name) ? $fakturAddress['state']->name:'').($fakturAddress['zip'] ? ' - '.$fakturAddress['zip']:"");
+					$iAddr = $fakturAddress['street'].', '.$fakturAddress['street2'].' '.$fakturAddress['city'].', '.(isset($fakturAddress['state']['name']) ? $fakturAddress['state']['name']:'').($fakturAddress['zip'] ? ' - '.$fakturAddress['zip']:"");
 				}
 				else
 				{
 					$partner = (isset($inv['partner']['parent']) ? $inv['partner']['parent']: $inv['partner']);
-					$iAddr = $inv['partner']['street'].', '.$inv['partner']['street2'].' '.$inv['partner']['city'].', '.(isset($inv['partner']['state']->name) ? $inv['partner']['state']->name:'').($inv['partner']['zip'] ? ' - '.$inv['partner']['zip']:"");
+					$iAddr = $inv['partner']['street'].', '.$inv['partner']['street2'].' '.$inv['partner']['city'].', '.(isset($inv['partner']['state']['name']) ? $inv['partner']['state']['name']:'').($inv['partner']['zip'] ? ' - '.$inv['partner']['zip']:"");
 				}
 
 				$this->validateCustomerData($partner);
@@ -343,7 +343,7 @@ class ServiceController extends Controller{
 				if($inv['payment_for']){
 					// IF PAYMENT FOR DP OR COMPLETION THEN ALL SALE ORDER ITEM WILL BE RENDERED
 					// check from sale order invoice
-					$soRel = \app\models\SaleOrderInvoiceRel::find()->where(['invoice_id'=>$inv['id']])->with(['order','order.saleOrderLines','order.saleOrderLines.product'])->asArray()->one();
+					$soRel = \app\models\SaleOrderInvoiceRel::find()->where(['invoice_id'=>$inv['id']])->with(['order','order.saleOrderLines','order.saleOrderLines.product','order.pricelist','order.pricelist.currency'])->asArray()->one();
 					
 					if($soRel)
 					{
@@ -360,11 +360,12 @@ class ServiceController extends Controller{
 								$soid = $pick['sale_id'];
 							endforeach;
 							if(count($sid)==1){
-								$soInv = \app\models\SaleOrder::find()->where(['id'=>$soid])->with(['saleOrderLines','saleOrderLines.product'])->asArray()->one();
+								$soInv = \app\models\SaleOrder::find()->where(['id'=>$soid])->with(['saleOrderLines','saleOrderLines.product','pricelist','pricelist.currency'])->asArray()->one();
 
 							}else{
 								// LOOP FROM INVOICE LINES
 								foreach($invLines as $item):
+									// add item line
 									$render = $this->prepareFromInvLine($item,$rate);
 									
 									$discountTotal += $render[6];
@@ -379,10 +380,20 @@ class ServiceController extends Controller{
 							
 						}
 					}
+
+					// IF ITEM TAKE FROM SALE ORDER / SO
 					if($soInv):
 						// if founded
 						// override res['OUT'] fk
-						// 
+						// var_dump($soInv);
+						$currencyOnSO = $soInv['pricelist']['currency'];
+						if($currencyOnSO['id']!=13 and $inv['currency_id']==13){
+							if($inv['pajak']){
+								$rate = $inv['pajak'];
+							}else{
+								throw new NotFoundHttpException('Mata Uang di Sale Order = '.$currencyOnSO['name'].' Tetapi di Invoice Mata Uang yang digunakan adalah '.$inv['currency']['name'].', namun Tax Rate tidak didefinisikan pada sistem. Tolong Update Tax Rate !');
+							}
+						}
 						$discountTotal = 0;
 						$dppTotal = 0;
 						$subtotalTotal = 0;
@@ -396,8 +407,18 @@ class ServiceController extends Controller{
 
 							if(floatval($soLine['discount'])>0)
 							{
-								$discountLine = ($soLine['discount']/100) * ($pUnit*$soLine['product_uom_qty']);
+								// IF NOMINAL COUNTED BY PERCENTAGE
+								if($soLine['discount_nominal']){
+									$discountLine = $soLine['discount_nominal'];
+								}else{
+									// IF NOMINAL NOT COUNTED BY PERCENTAGE
+									$discountLine = ($soLine['discount']/100) * ($pUnit*$soLine['product_uom_qty']);
+								}
+								// $discountLine = ($soLine['discount_nominal'])
 
+								$discountTotal += $discountLine;
+							}elseif(floatval($soLine['discount_nominal'])){
+								$discountLine = $soLine['discount_nominal'];
 								$discountTotal += $discountLine;
 							}
 
@@ -555,10 +576,14 @@ class ServiceController extends Controller{
 		$price_unit = $this->convertIdr($item['price_unit'],$rate);
 		$price_subtotal = $price_unit*$item['quantity'];
 		$discount=0;
-		if($item['discount'] && floatval($item['discount'])>0){
-			$discount = ($item['discount']/100) * ($price_unit*$item['quantity']);
-		}elseif($item['amount_discount'] && $item['amount_discount']>0){
+		// check if amount discount is not null first
+		// if checked first cause amount_discount in future is repretentation of discount on perccentage
+		if($item['amount_discount'] && $item['amount_discount']>0){
+			// if discount amount
 			$discount = $item['amount_discount'];
+
+		}elseif($item['discount'] && floatval($item['discount'])>0){
+			$discount = ($item['discount']/100) * ($price_unit*$item['quantity']);
 		}
 		$dpp=$price_subtotal-$discount;
 		$ppn=(10/100) * $dpp;

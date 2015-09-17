@@ -33,7 +33,7 @@ class NumericLib extends Component{
 		elseif ($x < 1000)
 			return $this->convertToBahasa($x / 100) . " ratus" . $this->convertToBahasa($x % 100);
 		elseif ($x < 2000)
-			return " seribu" . convertToBahasa($x - 1000);
+			return " seribu" . $this->convertToBahasa($x - 1000);
 		elseif ($x < 1000000)
 			return $this->convertToBahasa($x / 1000) . " ribu" . $this->convertToBahasa($x % 1000);
 		elseif ($x < 1000000000)

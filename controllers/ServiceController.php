@@ -332,7 +332,7 @@ class ServiceController extends Controller{
 				// "FAPR","PT SINCHAN","JL PAHLAWAN BERTOPENG BLOK MATAHARI NO.11, KIOTO RT: 1 RW: 14 JAKARTA",,,,
 				$res['OUT'][$indexArr]['fapr'] = [
 					'FAPR',
-					'SUPRABAKTI MANDIRI, PT',
+					'PT. SUPRABAKTI MANDIRI',
 					'Jl. Danau Sunter Utara Blok. A No. 9 Tanjung Priok - Jakarta Utara 14350',
 					'','','',''
 				];

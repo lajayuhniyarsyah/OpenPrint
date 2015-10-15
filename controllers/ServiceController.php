@@ -306,6 +306,14 @@ class ServiceController extends Controller{
 				$amount_untaxed = floor($this->convertIdr($inv['amount_untaxed'],$rate));
 				$amount_tax = floor((10/100) * $amount_untaxed);
 
+
+				$expPartnerName = explode(',',$partner['name'] );
+				if(is_array($expPartnerName) && isset($expPartnerName[1])){
+					$partnerName = $expPartnerName[1].'.'.$expPartnerName[0];
+				}else{
+					$partnerName = $model->partner->name;
+				}
+				// echo $partnerName;
 				$res['OUT'][$indexArr]['fk'] = [
 					'FK', #FK #0
 					$tax_code_type, #KD JENIS TRANSAKSI #1
@@ -315,7 +323,7 @@ class ServiceController extends Controller{
 					$tax_date->format('Y'), #TAHUN PAJAK #5
 					$tax_date->format('d/m/Y'), #full tax date dd/mm/yyyy #6
 					preg_replace('/[\s\W]+/', '', $partner['npwp']), #customer npwp #7
-					$partner['name'], #customer name #8
+					$partnerName, #customer name #8
 					$iAddr, #invoice addres['OUT'] #9
 					$this->convertIdr($inv['amount_untaxed'],$rate),#jumlah dpp, #[10]
 					$this->convertIdr($inv['amount_tax'],$rate),#jumlah PPN #11

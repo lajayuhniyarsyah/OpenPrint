@@ -309,8 +309,9 @@ class ServiceController extends Controller{
 
 				$expPartnerName = explode(',',$partner['name'] );
 				if(is_array($expPartnerName) && isset($expPartnerName[1])){
-					$partnerName = $expPartnerName[1].'.'.$expPartnerName[0];
+					$partnerName = trim($expPartnerName[1]).'. '.trim($expPartnerName[0]);
 				}else{
+					// if not exploded
 					$partnerName = $model->partner->name;
 				}
 				// echo $partnerName;

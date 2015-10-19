@@ -907,3 +907,4 @@ class AccountInvoiceController extends Controller
 		return $this->render('wapu',$dataToRender);
 	}
 }
+?>

@@ -119,7 +119,7 @@ class AttendanceController extends Controller
     }
 
 
-    public function actionFirstAndLastScan($year=null,$month=null){
+    public function actionFirstAndLastScan($year=null,$month=null,$department=null){
         if(!$year){
             $year = date('Y');
         }
@@ -148,6 +148,13 @@ class AttendanceController extends Controller
             $where['day'] = $dataToRender['attendanceLogForm']['day'];
 
         }
+        if($department == 'All Department' || $department == ''){
+            $department = 'All Department';
+            $department_query = '%%';
+        }else{
+            $department_query = $department;
+        }
+        
         $query = <<<query
 SELECT 
     date_series.i
@@ -237,7 +244,12 @@ FULL JOIN
         FROM(
             SELECT i::DATE FROM generate_series('{$first}','{$last}', '1 day'::INTERVAL) AS i
         ) AS date_series
-        JOIN (SELECT DISTINCT(employee_id) as eid FROM hr_attendance_log) AS eids ON eids.eid > 0
+        JOIN (
+            SELECT DISTINCT(employee_id) as eid, hrd.name as dept_name FROM hr_attendance_log hrl
+            JOIN hr_employee hre ON hre.id = hrl.employee_id
+            JOIN hr_department hrd ON hrd.id = hre.department_id
+            WHERE hrd.name like '$department_query'
+        ) AS eids ON eids.eid > 0
         -- WHERE h_emp.eid ilike '%{$where['employee']}%'
         -- order by eids.eid asc, date_series.i asc
     ) AS date_series ON date_series.emp_id = att_log_min_max_pure.employee_id and date_series.year_series = att_log_min_max_pure.y and date_series.month_series = att_log_min_max_pure.m and date_series.day_series = att_log_min_max_pure.d
@@ -258,6 +270,16 @@ query;
         ]);
         $dataToRender['year'] = $year;
         $dataToRender['month'] = $month;
+        $dataToRender['department_active'] = $department;
+
+
+        $depts = \app\models\HrDepartment::find()->select('name')->orderBy('name ASC');
+
+        if($department){
+            // $depts->where('name = :name',[':name'=>$department]);
+        }
+        $dataToRender['depts'] = $depts->asArray()->all();
+        // var_dump($dataToRender['depts']);
         return $this->render('first_and_last_scan',$dataToRender);
     }
 }

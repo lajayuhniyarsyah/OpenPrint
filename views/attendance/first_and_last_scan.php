@@ -26,8 +26,31 @@ use yii\bootstrap\Dropdown;
 			<?php
 				$items = [];
 				for($m=1;$m<=12;$m++){
-					$items[] = ['label' => $m, 'url' => ['','month'=>$m]];
+					$items[] = ['label' => $m, 'url' => ['','month'=>$m,'department'=>$department_active]];
 				}
+				echo Dropdown::widget([
+					'items' => $items,
+				]);
+			?>
+		</span>
+
+		-
+
+		<span id="departmentTitle" class="dropdown">
+			<a href="#"  data-toggle="dropdown" class="dropdown-toggle"><?=Html::encode($department_active)?></a>
+			<?php
+				
+				$items = [];
+				/*for($m=1;$m<=12;$m++){
+					$items[] = ['label' => $m, 'url' => ['','month'=>$m]];
+				}*/
+				/*var_dump($depts);
+				die();*/
+				$items[] = ['label'=>'All Dept','url'=>['','month'=>$month,'department'=>'All Department']];
+				foreach($depts as $dept):
+
+					$items[] = ['label'=>$dept['name'],'url'=>['','month'=>$month,'department'=>$dept['name']]];
+				endforeach;
 				echo Dropdown::widget([
 					'items' => $items,
 				]);

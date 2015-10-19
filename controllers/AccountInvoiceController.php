@@ -520,6 +520,10 @@ class AccountInvoiceController extends Controller
 		$aiPie = $aiSearch->getSumGroup();
 		/*var_dump($ai);
 		die();*/
+		if(!$ai){
+			throw new NotFoundHttpException('Data not found.');
+			
+		}
 		$fields = array_keys($ai[0]);
 		$uidF = array_search('user_id',$fields); 	# SEARCH USER ID INDEX
 		unset($fields[$uidF]);						# UNSET FIELD WITH SEARCHED INDEX KEY REMOVE USER_ID

@@ -378,7 +378,7 @@ class DeliveryNoteController extends Controller
         $res =  [
             'qty'=>$line->product_qty,
             'uom'=>$line->productUom->name,
-            'name'=>($line->name ? nl2br($line->name):$line->product->name),
+            'name'=>($line->name ? nl2br('['.$line->product->default_code.'] '.$line->name):'['.$line->product->default_code.']'.$line->product->name),
             'batches'=>$this->prepareBatches($line),
             'part_no'=>$line->product->default_code,
         ];

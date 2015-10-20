@@ -409,19 +409,22 @@ class ServiceController extends Controller{
 
 						// LOOP EACH SO RELS IN ORDER LINE RELATION
 						foreach($soInv['saleOrderLines'] as $soLine):
-							$pUnit = $this->convertIdr($soLine['price_unit'],$rate);
+							if(floatval($soLine['price_unit'])==0.00){
+								continue;
+							}
+							$pUnit = $this->convertIdr(round($soLine['price_unit']),$rate);
 
 							$discountLine = 0;
 
 
 							if(floatval($soLine['discount'])>0)
 							{
-								// IF NOMINAL COUNTED BY PERCENTAGE
+								// IF NOMINAL COUNTED BY DISCOUNT NOMINAL
 								if($soLine['discount_nominal']){
 									$discountLine = $soLine['discount_nominal'];
 								}else{
 									// IF NOMINAL NOT COUNTED BY PERCENTAGE
-									$discountLine = ($soLine['discount']/100) * ($pUnit*$soLine['product_uom_qty']);
+									$discountLine = ($soLine['discount']/100) * (round($pUnit*$soLine['product_uom_qty']));
 								}
 								// $discountLine = ($soLine['discount_nominal'])
 
@@ -432,13 +435,13 @@ class ServiceController extends Controller{
 							}
 
 
-							$subtotal = $pUnit * $soLine['product_uom_qty'];
-							$subtotalTotal += $subtotal;
+							$subtotal = round($pUnit * $soLine['product_uom_qty']);
+							
 
-							$dpp = $subtotal - $discountLine;
+							$dpp = round($subtotal - $discountLine);
 							$dppTotal += $dpp;
 
-							$ppn = (10/100) * $dpp;
+							$ppn = round((10/100) * $dpp);
 
 							$res['OUT'][$indexArr]['of'][] = [
 								'OF',
@@ -458,7 +461,7 @@ class ServiceController extends Controller{
 
 						endforeach;
 						// HERE
-						$ppnTotal = floor((10/100) * $dppTotal);
+						$ppnTotal = round((10/100) * $dppTotal);
 
 						$res['OUT'][$indexArr]['fk'][10] = floor($dppTotal);
 
@@ -468,22 +471,21 @@ class ServiceController extends Controller{
 					endif;
 				}
 
-
+				// DEFAULT
 				else{
 					$discountTotal = 0;
 					$dppTotal = 0;
 					$ppnTotal = 0;
-					// DEFAULT
+					
 					// LOOP FROM INVOICE LINES
 					// 
 					// check line from total discount
-					
 					foreach($invLines as $item):
 						$render = $this->prepareFromInvLine($item,$rate);
 						
-						$discountTotal += $render[6];
+						$discountTotal += round($render[6]);
 						$dppTotal += $render[7];
-						$ppnTotal += $render[8];
+						$ppnTotal += round($render[8]);
 
 						$res['OUT'][$indexArr]['of'][] = $render;
 						// echo $item['price_subtotal'].'\\';
@@ -493,9 +495,10 @@ class ServiceController extends Controller{
 					// LINE EFAKTUR TANPA PAYMENT FOR REF
 					// $outFK10 = (is_numeric( $dppTotal ) && floor( $dppTotal ) != $dppTotal ? floor(floatval($dppTotal)) : floatval($dppTotal));
 					$outFK10 = (is_numeric($dppTotal) && floor($dppTotal) == $dppTotal ? $dppTotal:floor($dppTotal));
+
 					$res['OUT'][$indexArr]['fk'][10] = $outFK10;
 
-					$res['OUT'][$indexArr]['fk'][11] = floor($ppnTotal);
+					$res['OUT'][$indexArr]['fk'][11] = round($ppnTotal);
 				}
 			}elseif($inv['type']=='in_invoice'){
 				// OUT INVOICE
@@ -604,10 +607,10 @@ class ServiceController extends Controller{
 				(string)$item['product']['name_template'],#product name
 				$price_unit, #harga satuan
 				(float)$item['quantity'], #jumlah barang
-				$price_subtotal, #harga total
+				round($price_subtotal), #harga total
 				$discount, #diskon
-				$dpp, #dpp
-				$ppn, #ppn,
+				round($dpp), #dpp
+				round($ppn), #ppn,
 				'0', #ppnbm,
 				'0.0'
 

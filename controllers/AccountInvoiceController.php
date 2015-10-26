@@ -112,92 +112,21 @@ class AccountInvoiceController extends Controller
 	}
 
 	// action print
-	public function actionPrint($id,$uid=null,$printer=null){
+	public function actionPrint($id,$uid=null,$printer=null,$block=True){
+		if($block){
+			throw new NotFoundHttpException('Page Under Maintenance!');
+		}
 		$this->layout = 'printout';
 		$discount = ['desc'=>'','curr'=>'','amount'=>''];
 		$model = $this->findModel($id);
 
-		$lines = [];
-		$total = 0;
-		$ar = 0;
-
-		// used for e-faktur new 
-		$totalIDR=0;
-		foreach($model->accountInvoiceLines as $invLine):
-			$ar++;
-			// if not discount
-			if($invLine->account_id<>192 and !preg_match('/discount/i',$invLine->account->name)){
-				$nameLine = (isset($invLine->product->name_template) ? $invLine->product->name_template : null);
-
-				if(trim($invLine->name)):
-					$nameLine .= (isset($invLine->product->name_template) ? '<br/>':"").nl2br($invLine->name);
-				endif;
-
-				if(isset($invLine->product->default_code)){
-					if($invLine->product->productTmpl->type!='service'){
-						$nameLine .= '<br/>P/N : '.$invLine->product->default_code;
-					}
-				}
-				
-				if($model->currency_id==13){
-					$priceSub = Yii::$app->numericLib->indoStyle($invLine->price_subtotal);
-					$totalIDR = Yii::$app->numericLib->indoStyle($invLine->price_subtotal);
-				}else{
-					$priceSub = Yii::$app->numericLib->westStyle($invLine->price_subtotal);
-					$priceUnitIDR = Yii::$app->numericLib->indoStyle($invLine->price_unit);
-					$totalIDR = Yii::$app->numericLib->indoStyle($priceUnitIDR*$invLine->quantity);
-				}
-				$lines[] = [
-					'no'=>($model->payment_for =='dp' || $model->payment_for =='completion' ? '':$invLine->sequence),
-					'name'=>$nameLine,
-					'price_subtotal'=>$priceSub,
-					'rate_symbol'=>$model->currency->name
-				];
+		$data = $model->getInvoiceMapData();
+		/*var_dump($data['currency']);
+		die();*/
 
 
-				// $total+=floatval($invLine->price_unit)*floatval($invLine->quantity);
-				$total+=$invLine->price_subtotal;
-				/*echo 'price unit '.$invLine->price_unit;
-				echo 'qty '.floatval($invLine->quantity).'<br/>';*/
-			}
-			else
-			{
-				$discount = [
-					'desc'=>$invLine->name,
-					'curr'=>$model->currency->name,
-					'amount'=>$invLine->price_unit,
-				];
-			}
 
-		endforeach;
 
-		# IF NOT PRINT ALL TAXES THEN GET ITEM IN SALES ORDER RECORD AND PUT IT TO LINES
-		if(!$model->print_all_taxes_line){
-			unset($lines); #reset Lines
-			$lines = [];
-			$lines[] = [
-				'no'=>'',
-				'name'=>($model->currency_id == 13 ? 'Sesuai Invoice ':'As Per Invoice No. ').$model->kwitansi.($model->currency_id	==13 ? '<br/>(Lampiran Invoice : 1, 2)':'<br/>(List Find Attach In Invoice Page : 1, 2)'),
-				// 'AS PER INVOICE NO. LIST FIND ATTACH IN INVOICE PAGE 1, 2'
-				'price_subtotal'=>($model->currency_id == 13 ? Yii::$app->numericLib->indoStyle($total):Yii::$app->numericLib->westStyle($total)),
-				'rate_symbol'=>$model->currency->name,
-
-			];
-		}else{
-			// IF DP OR COMPLETION
-			if($model->payment_for == 'dp'|| $model->payment_for=='completion'){
-				foreach($model->orders as $so){
-					foreach($so->saleOrderLines as $line){
-						$ar++;
-						$lines[$ar]['no'] = $line->sequence;
-						// $lines[$ar]['qty'] = $line->product_uom_qty.(isset($line->productUom->name) ? ' '.$line->productUom->name:null);
-						$lines[$ar]['name'] = (isset($line->product->name_template) ? $line->product->name_template.'<br/>'.$line->name.'<br/>P/N : '.$line->product->default_code:nl2br($line->name));
-						$lines[$ar]['price_subtotal'] = '';
-						$lines[$ar]['rate_symbol'] = '';
-					}
-				}
-			}
-		}
 		// echo $total;
 		// print_r($lines);
 		if($uid==100 && !$printer){
@@ -210,9 +139,13 @@ class AccountInvoiceController extends Controller
 			// if Rupiah
 			return $this->render('print/fp_rp',['model'=>$model,'lines'=>$lines,'uid'=>$uid,'printer'=>$printer,'discount'=>$discount,'total'=>$total]);
 		}else{
-			return $this->render('print/fp_valas',['model'=>$model,'lines'=>$lines,'uid'=>$uid,'printer'=>$printer,'discount'=>$discount,'total'=>$total]);
+			// return $this->render('print/fp_valas',['model'=>$model,'lines'=>$lines,'uid'=>$uid,'printer'=>$printer,'discount'=>$discount,'total'=>$total,'eFak'=>$eFak]);
+
+			return $this->render('print/fp_valas',['model'=>$model,'data'=>$data,'uid'=>$uid,'printer'=>$printer]);
 		}        
 	}
+
+	
 
 	public function actionPrintInvoice($id,$uid=null,$printer="refa"){
 		$this->layout = 'printout';

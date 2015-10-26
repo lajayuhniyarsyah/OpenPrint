@@ -344,4 +344,189 @@ class AccountInvoice extends \yii\db\ActiveRecord
     {
         return $this->hasMany(PurchaseInvoiceRel::className(), ['invoice_id' => 'id']);
     }
+
+    private function prepareTotal(){
+        return [
+                'subtotal'=>0,
+                'subtotalMainCurr'=>0,
+                'discountSubtotal'=>0,
+                'discountSubtotalMainCurr'=>0,
+                'amountUntaxed'=>0,
+                'amountUntaxedMainCurr'=>0,
+                'amountTax'=>0,
+                'amountTaxMainCurr'=>0,
+                'amountTotal'=>0,
+                'amountTotalMainCurr'=>0,
+            ];
+    }
+
+
+    public function getInvoiceMapData(){
+        $invoice = [
+
+            'no'=>null,
+            'partner'=>null,
+            'fakturNo'=>null,
+            'currency'=>$this->currency->name,
+            'rate'=>($this->currency_id==13?1:$this->pajak),
+            'lines'=>[
+
+                /*'no'=>null,
+                'name'=>null,
+                'priceUnit'=>0,
+                'priceUnitMainCurr'=>0,
+                'qty'=>0,
+
+                'priceSubtotal'=>0,
+                'priceSubtotalMainCurr'=>0,
+                
+                'discountPercentage'=>0,
+                'discountAmount'=>0,
+                'discountMainCurr'=>0,
+
+                'taxMainCurr'=>0,
+                'totalAmountMainCurr'=>0,*/
+                
+
+            ],
+            'total'=>$this->prepareTotal()
+
+
+        ];
+
+        $lines = [];
+        $idx=0;
+        foreach($this->accountInvoiceLines as $invLine):
+            $priceUnitMainCurr = round($invLine->price_unit * $invoice['rate'],2);
+            $priceSubtotalMainCurr = round($priceUnitMainCurr*$invLine->quantity);
+
+            $discountMainCurr = ($invLine->discount ? $priceSubtotalMainCurr*($invLine->discount/100):($invLine->amount_discount ? round($invLine->amount_discount*$invoice['rate']) : 0));
+
+            $priceTotal = ($invLine->price_unit*$invLine->quantity)-$invLine->amount_discount;
+            $priceTotalMainCurr = round($priceSubtotalMainCurr-$discountMainCurr);
+
+            $taxMainCurr = floor((10/100)*$priceTotalMainCurr);
+            $totalAmountMainCurr = round($priceTotalMainCurr+$taxMainCurr);
+            $lines[$idx] = [
+                'id'=>$invLine->id,
+
+                'no'=>($this->payment_for =='dp' || $this->payment_for =='completion' ? '':$invLine->sequence),
+                'name'=>$invLine->getNameLine(),
+
+
+                'priceUnit'=>$invLine->price_unit,
+                'priceUnitMainCurr'=>$priceUnitMainCurr,
+                'qty'=>$invLine->quantity,
+
+                'priceSubtotal'=>$invLine->quantity*$invLine->price_unit,
+                'priceSubtotalMainCurr'=>$priceSubtotalMainCurr,
+                
+                'discountPercentage'=>$invLine->discount,
+                'discountAmount'=>$invLine->amount_discount,
+                'discountMainCurr'=>$discountMainCurr,
+
+                'priceTotal'=>$priceTotal,
+                'priceTotalMainCurr'=>$priceTotalMainCurr,
+
+                'taxMainCurr'=>$taxMainCurr,
+                'totalAmountMainCurr'=>$totalAmountMainCurr,
+            ];
+
+            $invoice['total']['subtotal'] += $lines[$idx]['priceSubtotal'];
+            $invoice['total']['subtotalMainCurr'] += $priceSubtotalMainCurr;
+            $invoice['total']['discountSubtotal'] += $invLine->amount_discount;
+            $invoice['total']['discountSubtotalMainCurr'] += $discountMainCurr;
+            $invoice['total']['amountUntaxed'] += $priceTotal;
+            $invoice['total']['amountUntaxedMainCurr'] += $priceTotalMainCurr;
+            $invoice['total']['amountTax'] += $priceTotal*(10/100);
+            $invoice['total']['amountTaxMainCurr'] += $taxMainCurr;
+            $invoice['total']['amountTotal'] += $invLine->price_subtotal;
+            $invoice['total']['amountTotalMainCurr'] += $totalAmountMainCurr;
+
+            $idx++;
+        endforeach;
+
+        if($this->payment_for=='dp' || $this->payment_for=='completion'):
+            unset($invoice['total']);
+            $invoice['total'] = $this->prepareTotal();
+            // then add so lines
+            foreach($this->orders as $so):
+
+                foreach($so->saleOrderLines as $soLine):
+                    $idx++;
+
+                    $priceUnitMainCurr = round($soLine->price_unit * $invoice['rate'],2);
+                    $priceSubtotalMainCurr = round($priceUnitMainCurr*$soLine->product_uom_qty);
+
+                    $discountMainCurr = ($soLine->discount ? $priceSubtotalMainCurr*($soLine->discount/100):($soLine->discount_nominal ? round($soLine->discount_nominal*$invoice['rate']) : 0));
+
+                    $priceTotal = ($soLine->price_unit*$soLine->product_uom_qty)-$soLine->discount_nominal;
+                    $priceTotalMainCurr = round($priceSubtotalMainCurr-$discountMainCurr);
+                    echo $priceTotalMainCurr.'<br/>';
+                    $taxMainCurr = floor((10/100)*$priceTotalMainCurr);
+                    $totalAmountMainCurr = round($priceTotalMainCurr+$taxMainCurr);
+                    $lines[$idx] = [
+                        'id'=>$soLine->id,
+
+                        'no'=>($this->payment_for =='dp' || $this->payment_for =='completion' ? '':$soLine->sequence),
+                        'name'=>(isset($soLine->product->name_template) ? $soLine->product->name_template.'<br/>'.$soLine->name.'<br/>P/N : '.$soLine->product->default_code:nl2br($soLine->name)),
+
+
+                        'priceUnit'=>$soLine->price_unit,
+                        'priceUnitMainCurr'=>$priceUnitMainCurr,
+                        'qty'=>$soLine->product_uom_qty,
+
+                        'priceSubtotal'=>$soLine->product_uom_qty*$soLine->price_unit,
+                        'priceSubtotalMainCurr'=>$priceSubtotalMainCurr,
+                        
+                        'discountPercentage'=>$soLine->discount,
+                        'discountAmount'=>$soLine->discount_nominal,
+                        'discountMainCurr'=>$discountMainCurr,
+
+                        'priceTotal'=>$priceTotal,
+                        'priceTotalMainCurr'=>$priceTotalMainCurr,
+
+                        'taxMainCurr'=>$taxMainCurr,
+                        'totalAmountMainCurr'=>$totalAmountMainCurr,
+                    ];
+                    
+                    if($this->currency_id!=13):
+                        $invoice['total']['subtotal'] += $lines[$idx]['priceSubtotal'];
+                        $invoice['total']['subtotalMainCurr'] += $priceSubtotalMainCurr;
+                        $invoice['total']['discountSubtotal'] += $soLine->discount_nominal;
+                        $invoice['total']['discountSubtotalMainCurr'] += $discountMainCurr;
+                        $invoice['total']['amountUntaxed'] += $priceTotal;
+                        $invoice['total']['amountUntaxedMainCurr'] += round($priceTotalMainCurr);
+                        $invoice['total']['amountTax'] += round($priceTotal*(10/100));
+                        $invoice['total']['amountTaxMainCurr'] += $taxMainCurr;
+                        $invoice['total']['amountTotal'] += $priceTotal+$invoice['total']['amountTax'];
+                        $invoice['total']['amountTotalMainCurr'] += $totalAmountMainCurr;
+                    endif;
+
+
+
+                endforeach;
+            endforeach;
+            if($this->dp_percentage && $this->currency_id!=13){
+                // $invoice['total']['subtotal'] = $lines[$idx]['priceSubtotal'];
+                $invoice['total']['subtotalMainCurr'] = round($invoice['total']['subtotalMainCurr'] * ($this->dp_percentage/100));
+                // $invoice['total']['discountSubtotal'] = $soLine->discount_nominal;
+                $invoice['total']['discountSubtotalMainCurr'] = $invoice['total']['discountSubtotalMainCurr'];
+                // $invoice['total']['amountUntaxed'] = $priceTotal;
+                $invoice['total']['amountUntaxedMainCurr'] = round($invoice['total']['subtotalMainCurr'] - $invoice['total']['discountSubtotalMainCurr']);
+                $invoice['total']['amountTax'] = $this->amount_tax;
+                $invoice['total']['amountTaxMainCurr'] = floor($invoice['total']['amountUntaxedMainCurr']*(10/100));
+                $invoice['total']['amountTotal'] += $priceTotal+$invoice['total']['amountTax'];
+                $invoice['total']['amountTotalMainCurr'] += $totalAmountMainCurr;
+            }
+            
+        endif;
+
+        $invoice['lines'] = $lines;
+        var_dump($invoice['total']);
+
+        return $invoice;
+    }
+
+    
 }

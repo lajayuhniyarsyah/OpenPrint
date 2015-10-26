@@ -30,7 +30,11 @@ use \NumberFormatter;
  * @property integer $asset_category_id
  * @property integer $spk
  * @property double $amount_discount
- *
+ * @property double $price_unit_main_curr
+ * @property double $price_total_main_curr
+ * @property double $price_dpp_main_curr
+ * @property double $price_ppn_main_curr
+ * 
  * @property AccountInvoiceLineTax[] $accountInvoiceLineTaxes
  * @property PerintahKerja $spk0
  * @property AccountAssetCategory $assetCategory
@@ -46,6 +50,28 @@ use \NumberFormatter;
  */
 class AccountInvoiceLine extends \yii\db\ActiveRecord
 {
+    public $price_unit_main_curr,$subtotal_main_curr,$_price_dpp_main_curr,$_price_ppn_main_curr;
+
+
+    public function afterFind(){
+
+        $this->setSubtotal_main_curr();
+
+        return true;
+    }
+
+
+
+
+    public function getSubtotal_main_curr(){
+        return $this->price_unit_main_curr;
+    }
+
+    public function setSubtotal_main_curr(){
+        $this->price_unit_main_curr = round($this->price_unit*$this->invoice->pajak);
+    }
+
+
     /**
      * @inheritdoc
      */
@@ -61,10 +87,10 @@ class AccountInvoiceLine extends \yii\db\ActiveRecord
     {
         return [
             [['create_uid', 'write_uid', 'uos_id', 'account_id', 'sequence', 'invoice_id', 'company_id', 'account_analytic_id', 'partner_id', 'product_id', 'asset_category_id', 'spk'], 'integer'],
-            [['create_date', 'write_date'], 'safe'],
+            [['create_date', 'write_date','main_curr'], 'safe'],
             [['account_id', 'name', 'price_unit', 'quantity'], 'required'],
             [['name'], 'string'],
-            [['price_unit', 'price_subtotal', 'discount', 'quantity', 'amount_discount'], 'number'],
+            [['price_unit', 'price_subtotal', 'discount', 'quantity', 'amount_discount','price_unit_main_curr','price_total_main_curr','price_dpp_main_curr','price_ppn_main_curr',], 'number'],
             [['origin'], 'string', 'max' => 256]
         ];
     }
@@ -206,5 +232,20 @@ class AccountInvoiceLine extends \yii\db\ActiveRecord
     public function getPurchaseOrderLineInvoiceRels()
     {
         return $this->hasMany(PurchaseOrderLineInvoiceRel::className(), ['invoice_id' => 'id']);
+    }
+
+    public function getNameLine(){
+        $nameLine = (isset($this->product->name_template) ? $this->product->name_template : null);
+        if(trim($this->name)):
+            $nameLine .= (isset($this->product->name_template) ? '<br/>':"").nl2br($this->name);
+        endif;
+        
+        if(isset($this->product->default_code)){
+            if($this->product->productTmpl->type!='service'){
+                $nameLine .= '<br/>P/N : '.$this->product->default_code;
+            }
+        }
+
+        return $nameLine;
     }
 }

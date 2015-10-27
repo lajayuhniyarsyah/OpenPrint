@@ -435,11 +435,12 @@ class AccountInvoice extends \yii\db\ActiveRecord
 
 
                 'formated'=>[
-                    'priceUnit'=>Yii::$app->numericLib->indoStyle($invLine->price_unit),
-                    'priceUnitMainCurr'=>Yii::$app->numericLib->indoStyle($priceUnitMainCurr),
+                    'currency'=>($this->payment_for ? '':$this->currency->name),
+                    'priceUnit'=>($this->payment_for ? '':Yii::$app->numericLib->indoStyle($invLine->price_unit)),
+                    'priceUnitMainCurr'=>($this->payment_for ? '':Yii::$app->numericLib->indoStyle($priceUnitMainCurr)),
                     // 'qty'=>$invLine->quantity,
 
-                    'priceSubtotal'=>($this->payment_for ? '':Yii::$app->numericLib->indoStyle($invLine->quantity*$invLine->price_unit)),
+                    'priceSubtotal'=>($this->payment_for ? '':Yii::$app->numericLib->westStyle($invLine->quantity*$invLine->price_unit)),
                     'priceSubtotalMainCurr'=>($this->payment_for ? '':Yii::$app->numericLib->indoStyle($priceSubtotalMainCurr)),
                     
                     'discountPercentage'=>Yii::$app->numericLib->indoStyle($invLine->discount),
@@ -514,6 +515,7 @@ class AccountInvoice extends \yii\db\ActiveRecord
                         'totalAmountMainCurr'=>$totalAmountMainCurr,
 
                         'formated'=>[
+                            'currency'=>$this->currency->name,
                             'priceUnit'=>Yii::$app->numericLib->indoStyle($soLine->price_unit),
                             'priceUnitMainCurr'=>Yii::$app->numericLib->indoStyle($priceUnitMainCurr),
                             // 'qty'=>$invLine->quantity,

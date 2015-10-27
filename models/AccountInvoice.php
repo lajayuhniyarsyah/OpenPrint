@@ -573,7 +573,7 @@ class AccountInvoice extends \yii\db\ActiveRecord
             
         endif;
 
-        $invoice['total']['amountTaxMainCurr'] = round($invoice['total']['amountTaxMainCurr']);
+        $invoice['total']['amountTaxMainCurr'] = floor($invoice['total']['amountTaxMainCurr']);
 
         $invoice['lines'] = $lines;
 

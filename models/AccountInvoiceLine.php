@@ -251,7 +251,7 @@ class AccountInvoiceLine extends \yii\db\ActiveRecord
             }
         }
         if(!$this->invoice->payment_for){
-            $nameLine .= '<br/><b>'.Yii::$app->numericLib->indoStyle($this->price_unit_main_curr).' x '.floatval($this->quantity).'</b>';
+            $nameLine .= '<br/><b>Rp'.Yii::$app->numericLib->indoStyle($this->price_unit_main_curr).' x '.floatval($this->quantity).'</b>';
         }
         
 

@@ -296,7 +296,7 @@ $this->registerJs('
 
 	function prepareNoteRow(rowNo,data)
     {
-        return "<tr class=\'cRows rows"+rowNo+"\'><td>&nbsp;</td><td colspan=\"\">"+data.name+"</td><td></td></tr>";
+        return "<tr class=\'cRows rows"+rowNo+"\'><td>&nbsp;</td><td colspan=\"\" contenteditable=\"true\">"+data.name+"</td><td></td></tr>";
     }
 	var rowPage = 0;
 	jQuery.each(lines,function(key,line){

@@ -250,8 +250,10 @@ class AccountInvoiceLine extends \yii\db\ActiveRecord
                 $nameLine .= '<br/>P/N : '.$this->product->default_code;
             }
         }
-
-        $nameLine .= '<br/><b>'.Yii::$app->numericLib->indoStyle($this->price_unit_main_curr).' x '.floatval($this->quantity).'</b>';
+        if(!$this->invoice->payment_for){
+            $nameLine .= '<br/><b>'.Yii::$app->numericLib->indoStyle($this->price_unit_main_curr).' x '.floatval($this->quantity).'</b>';
+        }
+        
 
         return $nameLine;
     }

@@ -360,12 +360,12 @@ $this->registerJs('
 
     function prepareRow(rowNo,data)
     {
-        return "<tr class=\'cRows rows"+rowNo+"\'><td style=\"width:6%;\">"+data.no+"</td><td contenteditable=\"true\" style=\"width:368px;padding-right:10px;\">"+data.name+"</td><td><div style=\"float:left;width:13mm;\">"+invData.currency+"</div><div class=\"spaceSymVal\">"+data.priceSubtotal+"</div><div class=\"idrCols\">"+data.formated.priceSubtotalMainCurr+"</div><div style=\"clear:both;\"></div></td><td>&nbsp;</td></tr>";
+        return "<tr class=\'cRows rows"+rowNo+"\'><td style=\"width:6%;\">"+data.no+"</td><td style=\"width:368px;padding-right:10px;\">"+data.name+"</td><td><div style=\"float:left;width:13mm;\">"+invData.currency+"</div><div class=\"spaceSymVal\">"+data.priceSubtotal+"</div><div class=\"idrCols\">"+data.formated.priceSubtotalMainCurr+"</div><div style=\"clear:both;\"></div></td><td>&nbsp;</td></tr>";
     }
 
     function prepareNoteRow(rowNo,data)
     {
-        return "<tr class=\'cRows rows"+rowNo+"\'><td style=\"width:6%;\">&nbsp;</td><td contenteditable=\"true\" style=\"width:374px\">"+data.name+"</td><td><div style=\"float:left;width:13mm;\">&nbsp;</div><div>&nbsp;</div><div style=\"clear:both;\"></div></td><td>&nbsp;</td></tr>";
+        return "<tr class=\'cRows rows"+rowNo+"\'><td style=\"width:6%;\">&nbsp;</td><td style=\"width:374px\">"+data.name+"</td><td><div style=\"float:left;width:13mm;\">&nbsp;</div><div>&nbsp;</div><div style=\"clear:both;\"></div></td><td>&nbsp;</td></tr>";
     }
     var rowPage = 0;
     jQuery.each(lines,function(key,line){

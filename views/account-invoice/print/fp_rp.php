@@ -265,6 +265,7 @@ use yii\helpers\Url;
 </div>
 </div>
 <?php
+// var_dump($data);
 $this->registerJs('
 	var currPage = 1;
 
@@ -289,12 +290,12 @@ $this->registerJs('
 
 	function prepareRow(rowNo,data)
 	{
-		return "<tr class=\'cRows rows"+rowNo+"\'><td style=\"width:38px;\">"+data.no+"</td><td contenteditable=\"true\" style=\"width:440px;\">"+data.name+"</td><td class=\"lineVal\">"+data.formated.priceSubtotalMainCurr+"</td></tr>";
+		return "<tr class=\'cRows rows"+rowNo+"\'><td style=\"width:38px;\">"+data.no+"</td><td style=\"width:440px;\">"+data.name+"</td><td class=\"lineVal\">"+data.formated.priceSubtotalMainCurr+"</td></tr>";
 	}
 
 	function prepareNoteRow(rowNo,data)
     {
-        return "<tr class=\'cRows rows"+rowNo+"\'><td>&nbsp;</td><td colspan=\"\" contenteditable=\"true\">"+data.name+"</td><td></td></tr>";
+        return "<tr class=\'cRows rows"+rowNo+"\'><td>&nbsp;</td><td colspan=\"\">"+data.name+"</td><td></td></tr>";
     }
 	var rowPage = 0;
 	jQuery.each(lines,function(key,line){

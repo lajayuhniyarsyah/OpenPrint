@@ -119,8 +119,9 @@ class AccountInvoiceController extends Controller
 		$this->layout = 'printout';
 		$discount = ['desc'=>'','curr'=>'','amount'=>''];
 		$model = $this->findModel($id);
+		// $model->printForFaktur = true;
 
-		$data = $model->getInvoiceMapData();
+		$data = $model->getInvoiceMapData(true);
 		/*var_dump($data['currency']);
 		die();*/
 
@@ -146,11 +147,32 @@ class AccountInvoiceController extends Controller
 		}        
 	}
 
-	
 
 	public function actionPrintInvoice($id,$uid=null,$printer="refa"){
 		$this->layout = 'printout';
 		$model=$this->findModel($id);
+
+		$data = $model->getInvoiceMapData();
+
+		// var_dump($data);
+
+
+		if($printer == null && ($uid==100 || $uid == 191)){
+			$printer='sri';
+		}
+
+		return $this->render('print/new_inv',['model'=>$model,'data'=>$data,'printer'=>$printer,'uid'=>$uid]);
+	}
+
+	
+
+	public function actionOldPrintInvoice($id,$uid=null,$printer="refa"){
+		$this->layout = 'printout';
+		$model=$this->findModel($id);
+
+		$data = $model->getInvoiceMapData();
+
+
 		$lines = [];
 		$discountLine=['desc'=>'','amount'=>'','currCode'=>''];
 		$ar = 0;

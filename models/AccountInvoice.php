@@ -72,6 +72,8 @@ class AccountInvoice extends \yii\db\ActiveRecord
 {
     public $total_rated,$currency_rate;
     public $partner_to_print;
+
+    // public $printForFaktur = false; #for printing use, if set to true
     /**
      * @inheritdoc
      */
@@ -362,7 +364,8 @@ class AccountInvoice extends \yii\db\ActiveRecord
     }
 
 
-    public function getInvoiceMapData(){
+    public function getInvoiceMapData($printForFaktur=false){
+        // $this->printForFaktur = $printForFaktur;
         $invoice = [
 
             'no'=>null,
@@ -415,7 +418,7 @@ class AccountInvoice extends \yii\db\ActiveRecord
                 'id'=>$invLine->id,
 
                 'no'=>($this->payment_for =='dp' || $this->payment_for =='completion' ? '':$invLine->sequence),
-                'name'=>$invLine->getNameLine(),
+                'name'=>$invLine->getNameLine($printForFaktur),
 
 
                 'priceUnit'=>$invLine->price_unit,
@@ -552,8 +555,6 @@ class AccountInvoice extends \yii\db\ActiveRecord
                         $invoice['total']['amountTotal'] += $priceTotal+$invoice['total']['amountTax'];
                         $invoice['total']['amountTotalMainCurr'] += $totalAmountMainCurr;
                     // endif;
-
-
 
                 endforeach;
             endforeach;

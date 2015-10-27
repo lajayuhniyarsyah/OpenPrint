@@ -239,7 +239,9 @@ class AccountInvoiceLine extends \yii\db\ActiveRecord
         return $this->hasMany(PurchaseOrderLineInvoiceRel::className(), ['invoice_id' => 'id']);
     }
 
-    public function getNameLine(){
+
+
+    public function getNameLine($printForFaktur=false){
         $nameLine = (isset($this->product->name_template) ? $this->product->name_template : null);
         if(trim($this->name)):
             $nameLine .= (isset($this->product->name_template) ? '<br/>':"").nl2br($this->name);
@@ -250,7 +252,7 @@ class AccountInvoiceLine extends \yii\db\ActiveRecord
                 $nameLine .= '<br/>P/N : '.$this->product->default_code;
             }
         }
-        if(!$this->invoice->payment_for){
+        if(!$this->invoice->payment_for && $printForFaktur){
             $nameLine .= '<br/><b>Rp'.Yii::$app->numericLib->indoStyle($this->price_unit_main_curr).' x '.floatval($this->quantity).'</b>';
         }
         

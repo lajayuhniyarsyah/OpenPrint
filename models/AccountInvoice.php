@@ -439,8 +439,8 @@ class AccountInvoice extends \yii\db\ActiveRecord
                     'priceUnitMainCurr'=>Yii::$app->numericLib->indoStyle($priceUnitMainCurr),
                     // 'qty'=>$invLine->quantity,
 
-                    'priceSubtotal'=>Yii::$app->numericLib->indoStyle($invLine->quantity*$invLine->price_unit),
-                    'priceSubtotalMainCurr'=>Yii::$app->numericLib->indoStyle($priceSubtotalMainCurr),
+                    'priceSubtotal'=>($this->payment_for ? '':Yii::$app->numericLib->indoStyle($invLine->quantity*$invLine->price_unit)),
+                    'priceSubtotalMainCurr'=>($this->payment_for ? '':Yii::$app->numericLib->indoStyle($priceSubtotalMainCurr)),
                     
                     'discountPercentage'=>Yii::$app->numericLib->indoStyle($invLine->discount),
                     'discountAmount'=>Yii::$app->numericLib->indoStyle($invLine->amount_discount),
@@ -472,9 +472,11 @@ class AccountInvoice extends \yii\db\ActiveRecord
             unset($invoice['total']);
             $invoice['total'] = $this->prepareTotal();
             // then add so lines
+            $no=0;
             foreach($this->orders as $so):
 
                 foreach($so->saleOrderLines as $soLine):
+                    $no++;
                     $idx++;
 
                     $priceUnitMainCurr = round($soLine->price_unit * $invoice['rate'],2);
@@ -490,7 +492,7 @@ class AccountInvoice extends \yii\db\ActiveRecord
                     $lines[$idx] = [
                         'id'=>$soLine->id,
 
-                        'no'=>($this->payment_for =='dp' || $this->payment_for =='completion' ? '':$soLine->sequence),
+                        'no'=>($this->payment_for =='dp' || $this->payment_for =='completion' ? $no:$soLine->sequence),
                         'name'=>(isset($soLine->product->name_template) ? $soLine->product->name_template.'<br/>'.$soLine->name.'<br/>P/N : '.$soLine->product->default_code:nl2br($soLine->name)),
 
 
@@ -549,7 +551,7 @@ class AccountInvoice extends \yii\db\ActiveRecord
                 endforeach;
             endforeach;
 
-            if($this->dp_percentage && $this->currency_id!=13){
+            if($this->dp_percentage){
                 // $invoice['total']['subtotal'] = $lines[$idx]['priceSubtotal'];
                 $invoice['total']['subtotalMainCurr'] = round($invoice['total']['subtotalMainCurr'] * ($this->dp_percentage/100));
                 // $invoice['total']['discountSubtotal'] = $soLine->discount_nominal;

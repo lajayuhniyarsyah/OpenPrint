@@ -1,6 +1,10 @@
 <?php
 use yii\helpers\Html;
 use yii\helpers\Url;
+
+/*foreach($model->accountInvoiceLines as $ll){
+    var_dump($ll);
+}*/
 ?>
 <style type="text/css">
     table{
@@ -84,7 +88,13 @@ use yii\helpers\Url;
         text-align: right;
     }
     .spaceSymVal{
-        width:127px;text-align:right;
+        width:127px;
+        text-align:left;
+        float: left;
+    }
+    .idrCols{
+        position: absolute;
+        margin-left: 185px;
     }
     <?php
     if($printer=='sri'):
@@ -232,11 +242,17 @@ use yii\helpers\Url;
                                         </tr>
                                     </table>
                                 </div>
-                                    <?='<div style="float:left;width:auto;">'.$model->currency->name.'</div><div class="wid1">'.Yii::$app->numericLib->westStyle($total).'</div><div style="clear:both;"></div>';?>
+                                <table style="width:100%;" cellpadding="0" cellspacing="0">
+                                    <tr>
+                                        <td style="width:61%;"><?='<div style="width:auto;float:left;">'.  $model->currency->name.'</div><div class="wid1">'.Yii::$app->numericLib->westStyle($model->amount_untaxed).'</div>'?></td>
+                                        <td style="text-align:right;"><?=Yii::$app->numericLib->indoStyle($data['total']['subtotalMainCurr'])?></td>
+                                    </tr>
+                                </table>
+                                <?php // echo '<div style="float:left;width:auto;">'.$model->currency->name.'</div><div class="wid1">'.Yii::$app->numericLib->westStyle($total).'</div><div style="clear:both;"></div>'; ?>
                             </div>
                             <!-- <div style="height:11mm;">
                                 <div>
-                                    <?=$discount['desc']?>
+                                    <?php //echo $discount['desc']; ?>
                                 </div>
                             </div> -->
                         </td>
@@ -247,8 +263,9 @@ use yii\helpers\Url;
                             <div class="amount">
                                 <table style="width:100%;" cellpadding="0" cellspacing="0">
                                     <tr>
-                                        <td style="width:61%;"><?='<div style="position:absolute;margin-left:-131px;">'.$discount['desc'].'</div><div style="width:auto;float:left;">'.($discount['amount'] != '' ? $model->currency->name:null).'</div><div class="wid1">'.($discount['amount'] != '' ? Yii::$app->numericLib->westStyle(-$discount['amount']):null).'</div>'?></td>
-                                        <td style="text-align:right;">&nbsp;</td>
+                                        <td style="width:61%;"><?='<div style="position:absolute;margin-left:-131px;">'
+                                        .($data['total']['discountSubtotalMainCurr'] ? 'DISCOUNT ':null).'</div><div style="width:auto;float:left;">'.($data['total']['discountSubtotalMainCurr'] != '' ? $model->currency->name:'&nbsp;').'</div><div class="wid1">'.($data['total']['discountSubtotalMainCurr']  ? Yii::$app->numericLib->westStyle(-$data['total']['discountSubtotal']):null).'</div>'?></td>
+                                        <td style="text-align:right;"><?php echo ($data['total']['discountSubtotalMainCurr'] ? Yii::$app->numericLib->indoStyle(round($data['total']['discountSubtotalMainCurr'])):'&nbsp;'); ?></td>
                                     </tr>
                                 </table>
                             </div>
@@ -274,7 +291,7 @@ use yii\helpers\Url;
                                 <table style="width:100%;" cellpadding="0" cellspacing="0">
                                     <tr>
                                         <td style="width:61%;"><?='<div style="width:auto;float:left;">'.  $model->currency->name.'</div><div class="wid1">'.Yii::$app->numericLib->westStyle($model->amount_untaxed).'</div>'?></td>
-                                        <td style="text-align:right;"><?=Yii::$app->numericLib->indoStyle((round($model->amount_untaxed*$model->pajak)))?></td>
+                                        <td style="text-align:right;"><?=Yii::$app->numericLib->indoStyle($data['total']['amountUntaxedMainCurr'])?></td>
                                     </tr>
                                 </table>
                             </div>
@@ -284,7 +301,7 @@ use yii\helpers\Url;
                         <td>
                             <div class="amount" style="margin-top:-3px;">
                                 <div style="width:auto;float:left;"><?= (isset($model->amount_tax) ? '<div style="float:left;width:auto;">'.$model->currency->name.'</div><div class="wid1">'.Yii::$app->numericLib->westStyle($model->amount_tax).'</div><div style="clear:both;"></div>':''); ?></div>
-                                <div style="text-align:right;"><?=Yii::$app->numericLib->indoStyle((round(($model->amount_untaxed*$model->pajak)*0.10)))?></div>
+                                <div style="text-align:right;"><?=Yii::$app->numericLib->indoStyle($data['total']['amountTaxMainCurr'])?></div>
                                 <div class="clear:both;"></div>
                             </div>
                         </td>
@@ -318,6 +335,7 @@ use yii\helpers\Url;
 </div>
 </div>
 <?php
+
 $this->registerJs('
     var currPage = 1;
     var rateSymbol = "'.$model->currency->name.'";
@@ -331,8 +349,8 @@ $this->registerJs('
     
 
     // data to render
-    //var lines = '.\yii\helpers\Json::encode($model->accountInvoiceLines).';
-    var lines = '.\yii\helpers\Json::encode($lines).';
+    var invData = '.\yii\helpers\Json::encode($data).';
+    var lines = '.\yii\helpers\Json::encode($data['lines']).';
     var maxLinesHeight = jQuery(\'.tdLines:last\').height();
     
 
@@ -342,7 +360,7 @@ $this->registerJs('
 
     function prepareRow(rowNo,data)
     {
-        return "<tr class=\'cRows rows"+rowNo+"\'><td style=\"width:6%;\">"+data.no+"</td><td contenteditable=\"true\" style=\"width:368px;padding-right:10px;\">"+data.name+"</td><td><div style=\"float:left;width:13mm;\">"+data.rate_symbol+"</div><div class=\"spaceSymVal\">"+data.price_subtotal+"</div><div style=\"clear:both;\"></div></td><td>&nbsp;</td></tr>";
+        return "<tr class=\'cRows rows"+rowNo+"\'><td style=\"width:6%;\">"+data.no+"</td><td contenteditable=\"true\" style=\"width:368px;padding-right:10px;\">"+data.name+"</td><td><div style=\"float:left;width:13mm;\">"+invData.currency+"</div><div class=\"spaceSymVal\">"+data.priceSubtotal+"</div><div class=\"idrCols\">"+data.formated.priceSubtotalMainCurr+"</div><div style=\"clear:both;\"></div></td><td>&nbsp;</td></tr>";
     }
 
     function prepareNoteRow(rowNo,data)
@@ -351,10 +369,13 @@ $this->registerJs('
     }
     var rowPage = 0;
     jQuery.each(lines,function(key,line){
+
         var getRow = prepareRow(currRow,line);
+
         if(key==0)
         {
             jQuery(\'table#lines\'+currPage).html(getRow);
+            console.log(getRow);
         }
         else
         {

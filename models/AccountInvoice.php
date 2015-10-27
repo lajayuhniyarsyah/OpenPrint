@@ -87,7 +87,7 @@ class AccountInvoice extends \yii\db\ActiveRecord
         return [
             [['create_uid', 'write_uid', 'account_id', 'company_id', 'currency_id', 'partner_id', 'fiscal_position', 'user_id', 'partner_bank_id', 'payment_term', 'journal_id', 'period_id', 'move_id', 'commercial_partner_id', 'approver'], 'integer'],
             [['create_date', 'write_date', 'date_due', 'date_invoice','payment_for'], 'safe'],
-            [['check_total', 'amount_tax', 'residual', 'amount_untaxed', 'amount_total', 'pajak', 'kurs','faktur_address'], 'number'],
+            [['check_total', 'amount_tax', 'residual', 'amount_untaxed', 'amount_total', 'pajak', 'kurs','faktur_address','dp_percentage'], 'number'],
             [['account_id', 'company_id', 'currency_id', 'partner_id', 'reference_type', 'journal_id'], 'required'],
             [['reference_type', 'state', 'type', 'comment'], 'string'],
             [['reconciled', 'sent','print_all_taxes_line'], 'boolean'],
@@ -148,6 +148,7 @@ class AccountInvoice extends \yii\db\ActiveRecord
             'approver' => 'Approved by',
             'currency_rate'=>'Currency Rate',
             'total_rated'=>'Subtotal In IDR',
+            'dp_percentage'=>'DP/Termin Percentage'
         ];
     }
     public function afterFind(){

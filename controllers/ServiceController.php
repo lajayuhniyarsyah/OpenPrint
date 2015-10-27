@@ -250,6 +250,8 @@ class ServiceController extends Controller{
 		$ret = $amount*$rate;
 		return (float)$ret;
 	}
+
+	
 	/**
 	 * [prepareCsvData description]
 	 * @param  [array] $invoices array result of model->all()
@@ -396,6 +398,7 @@ class ServiceController extends Controller{
 						// override res['OUT'] fk
 						// var_dump($soInv);
 						$currencyOnSO = $soInv['pricelist']['currency'];
+						// IF CURRENCY ON SO IS NOT IDR BUT IN INVOICE CURENCY IS IDR
 						if($currencyOnSO['id']!=13 and $inv['currency_id']==13){
 							if($inv['pajak']){
 								$rate = $inv['pajak'];
@@ -406,13 +409,14 @@ class ServiceController extends Controller{
 						$discountTotal = 0;
 						$dppTotal = 0;
 						$subtotalTotal = 0;
+						$totalPPN = 0;
 
 						// LOOP EACH SO RELS IN ORDER LINE RELATION
 						foreach($soInv['saleOrderLines'] as $soLine):
 							if(floatval($soLine['price_unit'])==0.00){
 								continue;
 							}
-							$pUnit = $this->convertIdr(round($soLine['price_unit']),$rate);
+							$pUnit = $this->convertIdr(round($soLine['price_unit'],2),$rate);
 
 							$discountLine = 0;
 
@@ -420,9 +424,12 @@ class ServiceController extends Controller{
 							if(floatval($soLine['discount'])>0)
 							{
 								// IF NOMINAL COUNTED BY DISCOUNT NOMINAL
-								if($soLine['discount_nominal']){
+								if($soLine['discount_nominal'])
+								{
 									$discountLine = $soLine['discount_nominal'];
-								}else{
+								}
+								else
+								{
 									// IF NOMINAL NOT COUNTED BY PERCENTAGE
 									$discountLine = ($soLine['discount']/100) * (round($pUnit*$soLine['product_uom_qty']));
 								}
@@ -441,7 +448,8 @@ class ServiceController extends Controller{
 							$dpp = round($subtotal - $discountLine);
 							$dppTotal += $dpp;
 
-							$ppn = round((10/100) * $dpp);
+							$ppn = (10/100) * $dpp;
+							$totalPPN += $ppn;
 
 							$res['OUT'][$indexArr]['of'][] = [
 								'OF',
@@ -461,11 +469,18 @@ class ServiceController extends Controller{
 
 						endforeach;
 						// HERE
-						$ppnTotal = round((10/100) * $dppTotal);
+						$ppnTotal = round($totalPPN);
 
-						$res['OUT'][$indexArr]['fk'][10] = floor($dppTotal);
+						$res['OUT'][$indexArr]['fk'][10] = round($dppTotal);
 
-						$res['OUT'][$indexArr]['fk'][11] = $ppnTotal;
+						$res['OUT'][$indexArr]['fk'][11] = round($ppnTotal);
+
+						// if invoice currency idr then trust user input total
+						if($inv['currency_id']!=13){
+							$res['OUT'][$indexArr]['fk'][15] = round($dppTotal*($inv['dp_percentage']/100)); #uang muka dpp = dppTotal * dp percentage
+							$res['OUT'][$indexArr]['fk'][16] = round($res['OUT'][$indexArr]['fk'][15]*(10/100)); #uang muka ppn = 10% ppnTotal
+						}
+						
 						/*var_dump($ppnTotal);
 						die();*/
 					endif;
@@ -484,8 +499,8 @@ class ServiceController extends Controller{
 						$render = $this->prepareFromInvLine($item,$rate);
 						
 						$discountTotal += round($render[6]);
-						$dppTotal += $render[7];
-						$ppnTotal += round($render[8]);
+						$dppTotal += round($render[7]);
+						$ppnTotal += $render[8];
 
 						$res['OUT'][$indexArr]['of'][] = $render;
 						// echo $item['price_subtotal'].'\\';
@@ -610,7 +625,7 @@ class ServiceController extends Controller{
 				round($price_subtotal), #harga total
 				$discount, #diskon
 				round($dpp), #dpp
-				round($ppn), #ppn,
+				$ppn, #ppn,
 				'0', #ppnbm,
 				'0.0'
 

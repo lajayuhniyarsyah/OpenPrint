@@ -290,6 +290,7 @@ $this->registerJs('
 
 	function prepareRow(rowNo,data)
 	{
+		console.log(\'NO = \'+data.no);
 		return "<tr class=\'cRows rows"+rowNo+"\'><td style=\"width:38px;\">"+data.no+"</td><td style=\"width:440px;\">"+data.name+"</td><td class=\"lineVal\">"+data.formated.priceSubtotalMainCurr+"</td></tr>";
 	}
 

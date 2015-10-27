@@ -370,7 +370,7 @@ class AccountInvoice extends \yii\db\ActiveRecord
             'fakturNo'=>null,
             'currency'=>$this->currency->name,
             'rate'=>($this->currency_id==13?1:$this->pajak),
-            'comment'=>$this->comment,
+            'comment'=>nl2br($this->comment),
             'lines'=>[
 
                 /*'no'=>null,

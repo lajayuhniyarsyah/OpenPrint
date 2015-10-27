@@ -408,8 +408,8 @@ class AccountInvoice extends \yii\db\ActiveRecord
             $priceTotal = ($invLine->price_unit*$invLine->quantity)-$invLine->amount_discount;
             $priceTotalMainCurr = round($priceSubtotalMainCurr-$discountMainCurr);
 
-            $taxMainCurr = floor((10/100)*$priceTotalMainCurr);
-            var_dump($taxMainCurr);
+            $taxMainCurr = (10/100)*$priceTotalMainCurr;
+            // var_dump($taxMainCurr);
             $totalAmountMainCurr = round($priceTotalMainCurr+$taxMainCurr);
             $lines[$idx] = [
                 'id'=>$invLine->id,
@@ -469,6 +469,8 @@ class AccountInvoice extends \yii\db\ActiveRecord
             $invoice['total']['amountTotalMainCurr'] += $totalAmountMainCurr;
 
             $idx++;
+
+            // var_dump($taxMainCurr);
         endforeach;
         // var_dump($invoice['total']['amountTaxMainCurr']);
 
@@ -545,7 +547,7 @@ class AccountInvoice extends \yii\db\ActiveRecord
                         $invoice['total']['discountSubtotalMainCurr'] += $discountMainCurr;
                         $invoice['total']['amountUntaxed'] += $priceTotal;
                         $invoice['total']['amountUntaxedMainCurr'] += round($priceTotalMainCurr);
-                        $invoice['total']['amountTax'] += floor($priceTotal*(10/100));
+                        $invoice['total']['amountTax'] += round($priceTotal*(10/100),2);
                         $invoice['total']['amountTaxMainCurr'] += $taxMainCurr;
                         $invoice['total']['amountTotal'] += $priceTotal+$invoice['total']['amountTax'];
                         $invoice['total']['amountTotalMainCurr'] += $totalAmountMainCurr;
@@ -571,7 +573,11 @@ class AccountInvoice extends \yii\db\ActiveRecord
             
         endif;
 
+        $invoice['total']['amountTaxMainCurr'] = round($invoice['total']['amountTaxMainCurr']);
+
         $invoice['lines'] = $lines;
+
+
         // var_dump($invoice);
 
         return $invoice;

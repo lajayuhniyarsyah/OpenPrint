@@ -520,7 +520,7 @@ class AccountInvoice extends \yii\db\ActiveRecord
                             'priceUnitMainCurr'=>Yii::$app->numericLib->indoStyle($priceUnitMainCurr),
                             // 'qty'=>$invLine->quantity,
 
-                            'priceSubtotal'=>Yii::$app->numericLib->indoStyle($soLine->product_uom_qty*$soLine->price_unit),
+                            'priceSubtotal'=>Yii::$app->numericLib->westStyle($soLine->product_uom_qty*$soLine->price_unit),
                             'priceSubtotalMainCurr'=>Yii::$app->numericLib->indoStyle($priceSubtotalMainCurr),
                             
                             'discountPercentage'=>Yii::$app->numericLib->indoStyle($soLine->discount),

@@ -510,9 +510,28 @@ class AccountInvoice extends \yii\db\ActiveRecord
 
                         'taxMainCurr'=>$taxMainCurr,
                         'totalAmountMainCurr'=>$totalAmountMainCurr,
+
+                        'formated'=>[
+                            'priceUnit'=>Yii::$app->numericLib->indoStyle($soLine->price_unit),
+                            'priceUnitMainCurr'=>Yii::$app->numericLib->indoStyle($priceUnitMainCurr),
+                            // 'qty'=>$invLine->quantity,
+
+                            'priceSubtotal'=>Yii::$app->numericLib->indoStyle($soLine->product_uom_qty*$soLine->price_unit),
+                            'priceSubtotalMainCurr'=>Yii::$app->numericLib->indoStyle($priceSubtotalMainCurr),
+                            
+                            'discountPercentage'=>Yii::$app->numericLib->indoStyle($soLine->discount),
+                            'discountAmount'=>Yii::$app->numericLib->indoStyle($soLine->discount_nominal),
+                            'discountMainCurr'=>Yii::$app->numericLib->indoStyle($discountMainCurr),
+
+                            'priceTotal'=>Yii::$app->numericLib->indoStyle($priceTotal),
+                            'priceTotalMainCurr'=>Yii::$app->numericLib->indoStyle($priceTotalMainCurr),
+
+                            'taxMainCurr'=>Yii::$app->numericLib->indoStyle($taxMainCurr),
+                            'totalAmountMainCurr'=>Yii::$app->numericLib->indoStyle($totalAmountMainCurr),
+                        ]
                     ];
                     
-                    if($this->currency_id!=13):
+                    // if($this->currency_id!=13):
                         $invoice['total']['subtotal'] += $lines[$idx]['priceSubtotal'];
                         $invoice['total']['subtotalMainCurr'] += $priceSubtotalMainCurr;
                         $invoice['total']['discountSubtotal'] += $soLine->discount_nominal;
@@ -523,12 +542,13 @@ class AccountInvoice extends \yii\db\ActiveRecord
                         $invoice['total']['amountTaxMainCurr'] += $taxMainCurr;
                         $invoice['total']['amountTotal'] += $priceTotal+$invoice['total']['amountTax'];
                         $invoice['total']['amountTotalMainCurr'] += $totalAmountMainCurr;
-                    endif;
+                    // endif;
 
 
 
                 endforeach;
             endforeach;
+
             if($this->dp_percentage && $this->currency_id!=13){
                 // $invoice['total']['subtotal'] = $lines[$idx]['priceSubtotal'];
                 $invoice['total']['subtotalMainCurr'] = round($invoice['total']['subtotalMainCurr'] * ($this->dp_percentage/100));
@@ -545,7 +565,7 @@ class AccountInvoice extends \yii\db\ActiveRecord
         endif;
 
         $invoice['lines'] = $lines;
-        // var_dump($invoice['total']);
+        // var_dump($invoice);
 
         return $invoice;
     }

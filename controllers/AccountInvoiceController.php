@@ -112,7 +112,7 @@ class AccountInvoiceController extends Controller
 	}
 
 	// action print
-	public function actionPrint($id,$uid=null,$printer=null,$block=True){
+	public function actionPrint($id,$uid=null,$printer=null,$block=False){
 		if($block){
 			throw new NotFoundHttpException('Page Under Maintenance!');
 		}
@@ -137,7 +137,8 @@ class AccountInvoiceController extends Controller
 		if($model->currency->name=='IDR' and $model->currency->id==13)
 		{
 			// if Rupiah
-			return $this->render('print/fp_rp',['model'=>$model,'lines'=>$lines,'uid'=>$uid,'printer'=>$printer,'discount'=>$discount,'total'=>$total]);
+			// return $this->render('print/fp_rp',['model'=>$model,'lines'=>$lines,'uid'=>$uid,'printer'=>$printer,'discount'=>$discount,'total'=>$total]);
+			return $this->render('print/fp_rp',['model'=>$model,'data'=>$data,'uid'=>$uid,'printer'=>$printer]);
 		}else{
 			// return $this->render('print/fp_valas',['model'=>$model,'lines'=>$lines,'uid'=>$uid,'printer'=>$printer,'discount'=>$discount,'total'=>$total,'eFak'=>$eFak]);
 

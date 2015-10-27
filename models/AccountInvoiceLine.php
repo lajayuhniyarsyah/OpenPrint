@@ -51,7 +51,7 @@ use \NumberFormatter;
 class AccountInvoiceLine extends \yii\db\ActiveRecord
 {
     public $price_unit_main_curr,$subtotal_main_curr,$_price_dpp_main_curr,$_price_ppn_main_curr;
-
+    public $invoice_rate;
 
     public function afterFind(){
 
@@ -68,7 +68,12 @@ class AccountInvoiceLine extends \yii\db\ActiveRecord
     }
 
     public function setSubtotal_main_curr(){
-        $this->price_unit_main_curr = round($this->price_unit*$this->invoice->pajak);
+        if(preg_match('/IDR/i', $this->invoice->currency->name)){
+            $this->invoice_rate = 1;
+        }else{
+            $this->invoice_rate = $this->invoice->pajak;
+        }
+        $this->price_unit_main_curr = round($this->price_unit*$this->invoice_rate,2);
     }
 
 
@@ -245,6 +250,8 @@ class AccountInvoiceLine extends \yii\db\ActiveRecord
                 $nameLine .= '<br/>P/N : '.$this->product->default_code;
             }
         }
+
+        $nameLine .= '<br/><b>'.Yii::$app->numericLib->indoStyle($this->price_unit_main_curr).' x '.floatval($this->quantity).'</b>';
 
         return $nameLine;
     }

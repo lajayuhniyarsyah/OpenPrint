@@ -264,8 +264,8 @@ use yii\helpers\Url;
                                 <table style="width:100%;" cellpadding="0" cellspacing="0">
                                     <tr>
                                         <td style="width:61%;"><?='<div style="position:absolute;margin-left:-131px;">'
-                                        .'DISCOUNT'.'</div><div style="width:auto;float:left;">'.($data['total']['discountSubtotalMainCurr'] != '' ? $model->currency->name:null).'</div><div class="wid1">'.($data['total']['discountSubtotalMainCurr'] != '' ? Yii::$app->numericLib->westStyle(-$data['total']['discountSubtotal']):null).'</div>'?></td>
-                                        <td style="text-align:right;"><?php echo Yii::$app->numericLib->indoStyle(round($data['total']['discountSubtotalMainCurr'])); ?></td>
+                                        .($data['total']['discountSubtotalMainCurr'] ? 'DISCOUNT ':null).'</div><div style="width:auto;float:left;">'.($data['total']['discountSubtotalMainCurr'] != '' ? $model->currency->name:'&nbsp;').'</div><div class="wid1">'.($data['total']['discountSubtotalMainCurr']  ? Yii::$app->numericLib->westStyle(-$data['total']['discountSubtotal']):null).'</div>'?></td>
+                                        <td style="text-align:right;"><?php echo ($data['total']['discountSubtotalMainCurr'] ? Yii::$app->numericLib->indoStyle(round($data['total']['discountSubtotalMainCurr'])):'&nbsp;'); ?></td>
                                     </tr>
                                 </table>
                             </div>
@@ -360,7 +360,7 @@ $this->registerJs('
 
     function prepareRow(rowNo,data)
     {
-        return "<tr class=\'cRows rows"+rowNo+"\'><td style=\"width:6%;\">"+data.no+"</td><td contenteditable=\"true\" style=\"width:368px;padding-right:10px;\">"+data.name+"</td><td><div style=\"float:left;width:13mm;\">"+invData.currency+"</div><div class=\"spaceSymVal\">"+data.priceSubtotal+"</div><div class=\"idrCols\">"+data.priceSubtotalMainCurr+"</div><div style=\"clear:both;\"></div></td><td>&nbsp;</td></tr>";
+        return "<tr class=\'cRows rows"+rowNo+"\'><td style=\"width:6%;\">"+data.no+"</td><td contenteditable=\"true\" style=\"width:368px;padding-right:10px;\">"+data.name+"</td><td><div style=\"float:left;width:13mm;\">"+invData.currency+"</div><div class=\"spaceSymVal\">"+data.priceSubtotal+"</div><div class=\"idrCols\">"+data.formated.priceSubtotalMainCurr+"</div><div style=\"clear:both;\"></div></td><td>&nbsp;</td></tr>";
     }
 
     function prepareNoteRow(rowNo,data)

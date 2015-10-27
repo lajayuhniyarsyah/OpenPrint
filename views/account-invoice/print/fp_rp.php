@@ -228,7 +228,7 @@ use yii\helpers\Url;
                                     </table>
                                 </div>
                                 <div class="amVal">
-										<?= Yii::$app->numericLib->indoStyle($total); ?>
+										<?= Yii::$app->numericLib->indoStyle($data['total']['subtotalMainCurr']); ?>
 								</div>
 							</div>
 						</td>
@@ -236,7 +236,7 @@ use yii\helpers\Url;
 					<tr>
 						<td class="spacerTd">
 							<div class="amount">
-								<?='<div style="position:absolute;margin-left:-148px;">'.$discount['desc'].'</div><div class="amVal">'.($discount['amount'] != '' ? Yii::$app->numericLib->indoStyle(-$discount['amount']):null).'</div>'?>
+								<?='<div style="position:absolute;margin-left:-148px;">'.($data['total']['discountSubtotalMainCurr'] ? 'DISCOUNT':'&nbsp;').'</div><div class="amVal">'.($data['total']['discountSubtotalMainCurr'] ? Yii::$app->numericLib->indoStyle(-$data['total']['discountSubtotalMainCurr']):'&nbsp;').'</div>'?>
 							</div>
 						</td>
 					</tr>
@@ -278,7 +278,8 @@ $this->registerJs('
 	
 
 	// data to render
-	var lines = '.\yii\helpers\Json::encode($lines).';
+	var invData = '.\yii\helpers\Json::encode($data).';
+    var lines = '.\yii\helpers\Json::encode($data['lines']).';
 	var maxLinesHeight = jQuery(\'.tdLines:last\').height();
 	
 
@@ -288,7 +289,7 @@ $this->registerJs('
 
 	function prepareRow(rowNo,data)
 	{
-		return "<tr class=\'cRows rows"+rowNo+"\'><td style=\"width:38px;\">"+data.no+"</td><td contenteditable=\"true\" style=\"width:440px;\">"+data.name+"</td><td class=\"lineVal\">"+data.price_subtotal+"</td></tr>";
+		return "<tr class=\'cRows rows"+rowNo+"\'><td style=\"width:38px;\">"+data.no+"</td><td contenteditable=\"true\" style=\"width:440px;\">"+data.name+"</td><td class=\"lineVal\">"+data.formated.priceSubtotalMainCurr+"</td></tr>";
 	}
 
 	function prepareNoteRow(rowNo,data)

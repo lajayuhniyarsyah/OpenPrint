@@ -243,12 +243,12 @@ use yii\helpers\Url;
 					<tr>
 						<td>
 							<div class="amount">
-								<div class="amVal"><?= (isset($model->amount_untaxed) ? Yii::$app->numericLib->indoStyle($model->amount_untaxed):''); ?></div>
+								<div class="amVal"><?= (isset($data['total']['amountUntaxedMainCurr']) ? Yii::$app->numericLib->indoStyle($data['total']['amountUntaxedMainCurr']):''); ?></div>
 							</div>
 						</td>
 					</tr>
 					<tr>
-						<td><div class="amount"><div class="amVal"><?= (isset($model->amount_tax) ? Yii::$app->numericLib->indoStyle($model->amount_tax):''); ?></div></div></td>
+						<td><div class="amount"><div class="amVal"><?= (isset($data['total']['amountTaxMainCurr']) ? Yii::$app->numericLib->indoStyle($data['total']['amountTaxMainCurr']):''); ?></div></div></td>
 					</tr>
 					<tr>
 						<td>
@@ -296,7 +296,7 @@ $this->registerJs('
 
 	function prepareNoteRow(rowNo,data)
     {
-        return "<tr class=\'cRows rows"+rowNo+"\'><td>&nbsp;</td><td colspan=\"\" contenteditable=\"true\">"+data.name+"</td><td></td></tr>";
+        return "<tr class=\'cRows rows"+rowNo+"\'><td>&nbsp;</td><td colspan=\"\" contenteditable=\"true\">"+data.name+"<br/>"+data.comment+"</td><td></td></tr>";
     }
 	var rowPage = 0;
 	jQuery.each(lines,function(key,line){
@@ -334,7 +334,7 @@ $this->registerJs('
 		currRow=currRow+1;
 	});
 
-	var noteRow = prepareNoteRow(currRow,{name:\'PO No : \'+poNo});
+	var noteRow = prepareNoteRow(currRow,{name:\'PO No : \'+poNo, comment:invData.comment});
     jQuery(\'table#lines\'+currPage+\' tr:last\').after(noteRow);
 	// end loop
 

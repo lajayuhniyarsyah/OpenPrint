@@ -365,7 +365,7 @@ $this->registerJs('
 
     function prepareNoteRow(rowNo,data)
     {
-        return "<tr class=\'cRows rows"+rowNo+"\' contenteditable=\'true\'><td style=\"width:6%;\">&nbsp;</td><td style=\"width:374px\">"+data.name+"</td><td><div style=\"float:left;width:13mm;\">&nbsp;</div><div>&nbsp;</div><div style=\"clear:both;\"></div></td><td>&nbsp;</td></tr>";
+        return "<tr class=\'cRows rows"+rowNo+"\' contenteditable=\'true\'><td style=\"width:6%;\">&nbsp;</td><td style=\"width:374px\">"+data.name+"<br/>"+data.comment+"</td><td><div style=\"float:left;width:13mm;\">&nbsp;</div><div>&nbsp;</div><div style=\"clear:both;\"></div></td><td>&nbsp;</td></tr>";
     }
     var rowPage = 0;
     jQuery.each(lines,function(key,line){

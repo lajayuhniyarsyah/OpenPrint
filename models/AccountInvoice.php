@@ -370,6 +370,7 @@ class AccountInvoice extends \yii\db\ActiveRecord
             'fakturNo'=>null,
             'currency'=>$this->currency->name,
             'rate'=>($this->currency_id==13?1:$this->pajak),
+            'comment'=>$this->comment,
             'lines'=>[
 
                 /*'no'=>null,
@@ -408,6 +409,7 @@ class AccountInvoice extends \yii\db\ActiveRecord
             $priceTotalMainCurr = round($priceSubtotalMainCurr-$discountMainCurr);
 
             $taxMainCurr = floor((10/100)*$priceTotalMainCurr);
+            var_dump($taxMainCurr);
             $totalAmountMainCurr = round($priceTotalMainCurr+$taxMainCurr);
             $lines[$idx] = [
                 'id'=>$invLine->id,
@@ -468,6 +470,7 @@ class AccountInvoice extends \yii\db\ActiveRecord
 
             $idx++;
         endforeach;
+        // var_dump($invoice['total']['amountTaxMainCurr']);
 
         if($this->payment_for=='dp' || $this->payment_for=='completion'):
             unset($invoice['total']);
@@ -542,7 +545,7 @@ class AccountInvoice extends \yii\db\ActiveRecord
                         $invoice['total']['discountSubtotalMainCurr'] += $discountMainCurr;
                         $invoice['total']['amountUntaxed'] += $priceTotal;
                         $invoice['total']['amountUntaxedMainCurr'] += round($priceTotalMainCurr);
-                        $invoice['total']['amountTax'] += round($priceTotal*(10/100));
+                        $invoice['total']['amountTax'] += floor($priceTotal*(10/100));
                         $invoice['total']['amountTaxMainCurr'] += $taxMainCurr;
                         $invoice['total']['amountTotal'] += $priceTotal+$invoice['total']['amountTax'];
                         $invoice['total']['amountTotalMainCurr'] += $totalAmountMainCurr;

@@ -512,8 +512,9 @@ class ServiceController extends Controller{
 					$outFK10 = (is_numeric($dppTotal) && floor($dppTotal) == $dppTotal ? $dppTotal:floor($dppTotal));
 
 					$res['OUT'][$indexArr]['fk'][10] = $outFK10;
-
-					$res['OUT'][$indexArr]['fk'][11] = round($ppnTotal);
+					/*echo $res['OUT'][$indexArr]['fk'][10];
+					die();*/
+					$res['OUT'][$indexArr]['fk'][11] = floor($ppnTotal);
 				}
 			}elseif($inv['type']=='in_invoice'){
 				// OUT INVOICE
@@ -601,19 +602,29 @@ class ServiceController extends Controller{
 	private function prepareFromInvLine($item,$rate){
 		$res = [];
 		$price_unit = $this->convertIdr($item['price_unit'],$rate);
-		$price_subtotal = $price_unit*$item['quantity'];
+		$price_subtotal = round($price_unit*$item['quantity']);
 		$discount=0;
 		// check if amount discount is not null first
 		// if checked first cause amount_discount in future is repretentation of discount on perccentage
 		if($item['amount_discount'] && $item['amount_discount']>0){
-			// if discount amount
-			$discount = $item['amount_discount'];
+			if($item['discount']>0){
+				// if discount percentage is known
+				$discount = ($item['discount']/100) * $price_subtotal;
+
+			}else{
+				// if discount percentage is not set but only set amount of discount
+				$discount = $this->convertIdr($item['amount_discount'],$rate);
+			}
+			
 
 		}elseif($item['discount'] && floatval($item['discount'])>0){
-			$discount = ($item['discount']/100) * ($price_unit*$item['quantity']);
+			$discount = ($item['discount']/100) * ($price_subtotal);
 		}
-		$dpp=$price_subtotal-$discount;
-		$ppn=(10/100) * $dpp;
+		$dpp=round($price_subtotal-$discount);
+
+		$ppn=floor((10/100) * $dpp);
+		/*var_dump($ppn);
+		die();*/
 
 		if($item){
 			$res = [
@@ -622,9 +633,9 @@ class ServiceController extends Controller{
 				(string)$item['product']['name_template'],#product name
 				$price_unit, #harga satuan
 				(float)$item['quantity'], #jumlah barang
-				round($price_subtotal), #harga total
+				$price_subtotal, #harga total
 				$discount, #diskon
-				round($dpp), #dpp
+				$dpp, #dpp
 				$ppn, #ppn,
 				'0', #ppnbm,
 				'0.0'

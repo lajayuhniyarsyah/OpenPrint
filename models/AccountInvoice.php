@@ -576,9 +576,9 @@ class AccountInvoice extends \yii\db\ActiveRecord
 
                 endforeach;
             endforeach;
-            echo $invoice['total']['subtotalMainCurr'];
+            /*echo $invoice['total']['subtotalMainCurr'];
             echo '<br/>';
-            echo $invoice['total']['discountSubtotal'];
+            echo $invoice['total']['discountSubtotal'];*/
             if($this->dp_percentage && $printForFaktur){
                 // $invoice['total']['subtotal'] = $lines[$idx]['priceSubtotal'];
 

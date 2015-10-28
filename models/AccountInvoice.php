@@ -374,13 +374,17 @@ class AccountInvoice extends \yii\db\ActiveRecord
 
     public function getInvoiceMapData($printForFaktur=false){
         // $this->printForFaktur = $printForFaktur;
+        $main_curr = false;
+        if($this->currency_id==13){
+            $main_curr=true;
+        }
         $invoice = [
 
             'no'=>null,
             'partner'=>null,
             'fakturNo'=>null,
             'currency'=>$this->currency->name,
-            'rate'=>($this->currency_id==13?1:$this->pajak),
+            'rate'=>($main_curr?1:$this->pajak),
             'comment'=>nl2br($this->comment),
             'lines'=>[
 
@@ -448,7 +452,7 @@ class AccountInvoice extends \yii\db\ActiveRecord
 
 
                 'formated'=>[
-                    'currency'=>($this->payment_for ? '':$this->currency->name),
+                    'currency'=>$this->currency->name,
                     'priceUnit'=>($this->payment_for ? '':$this->formatValue($invLine->price_unit)),
                     'priceUnitMainCurr'=>($this->payment_for ? '':$this->formatValue($priceUnitMainCurr)),
                     // 'qty'=>$invLine->quantity,
@@ -484,6 +488,7 @@ class AccountInvoice extends \yii\db\ActiveRecord
             // var_dump($taxMainCurr);
             // echo $invoice['total']['amountTax'];
         endforeach;
+        $invTotalTmp = $invoice['total'];
         // var_dump($invoice['total']['amountTaxMainCurr']);
 
         if($this->payment_for=='dp' || $this->payment_for=='completion'):
@@ -503,7 +508,8 @@ class AccountInvoice extends \yii\db\ActiveRecord
                     $priceUnitMainCurr = round($soLine->price_unit * $invoice['rate'],2);
                     $priceSubtotalMainCurr = round($priceUnitMainCurr*$soLine->product_uom_qty);
 
-                    $discountMainCurr = ($soLine->discount ? $priceSubtotalMainCurr*($soLine->discount/100):($soLine->discount_nominal ? round($soLine->discount_nominal*$invoice['rate']) : 0));
+                    // $discountMainCurr = ($soLine->discount ? $priceSubtotalMainCurr*($soLine->discount/100):($soLine->discount_nominal ? round($soLine->discount_nominal*$invoice['rate']) : 0));
+                    $discountMainCurr = $soLine->discount_nominal;
 
                     $priceTotal = ($soLine->price_unit*$soLine->product_uom_qty)-$soLine->discount_nominal;
                     $priceTotalMainCurr = round($priceSubtotalMainCurr-$discountMainCurr);
@@ -535,7 +541,7 @@ class AccountInvoice extends \yii\db\ActiveRecord
                         'totalAmountMainCurr'=>$totalAmountMainCurr,
 
                         'formated'=>[
-                            'currency'=>$this->currency->name,
+                            'currency'=>($this->payment_for ? '':$this->currency->name),
                             'priceUnit'=>($printForFaktur ? $this->formatValue($soLine->price_unit):'&nbsp;'),
                             'priceUnitMainCurr'=>$this->formatValue($priceUnitMainCurr),
                             // 'qty'=>$invLine->quantity,
@@ -570,18 +576,39 @@ class AccountInvoice extends \yii\db\ActiveRecord
 
                 endforeach;
             endforeach;
-
+            echo $invoice['total']['subtotalMainCurr'];
+            echo '<br/>';
+            echo $invoice['total']['discountSubtotal'];
             if($this->dp_percentage && $printForFaktur){
                 // $invoice['total']['subtotal'] = $lines[$idx]['priceSubtotal'];
-                $invoice['total']['subtotalMainCurr'] = round($invoice['total']['subtotalMainCurr'] * ($this->dp_percentage/100));
-                // $invoice['total']['discountSubtotal'] = $soLine->discount_nominal;
-                $invoice['total']['discountSubtotalMainCurr'] = $invoice['total']['discountSubtotalMainCurr'];
-                // $invoice['total']['amountUntaxed'] = $priceTotal;
-                $invoice['total']['amountUntaxedMainCurr'] = round($invoice['total']['subtotalMainCurr'] - $invoice['total']['discountSubtotalMainCurr']);
-                $invoice['total']['amountTax'] = $this->amount_tax;
-                $invoice['total']['amountTaxMainCurr'] = floor($invoice['total']['amountUntaxedMainCurr']*(10/100));
-                $invoice['total']['amountTotal'] = $priceTotal+$invoice['total']['amountTax'];
-                $invoice['total']['amountTotalMainCurr'] = $totalAmountMainCurr;
+
+                if($main_curr){
+                    // if currency in main currency setting then 
+                    // use total in invoice
+                    $invoice['total']['subtotalMainCurr'] = $invTotalTmp['subtotalMainCurr'];
+
+                    // $invoice['total']['discountSubtotal'] = $soLine->discount_nominal;
+                    $invoice['total']['discountSubtotalMainCurr'] = $invTotalTmp['discountSubtotalMainCurr'];
+                    // $invoice['total']['amountUntaxed'] = $priceTotal;
+                    $invoice['total']['amountUntaxedMainCurr'] = $invTotalTmp['amountUntaxedMainCurr'];
+                    $invoice['total']['amountTax'] = $invTotalTmp['amountTax'];
+                    $invoice['total']['amountTaxMainCurr'] = $invTotalTmp['amountTaxMainCurr'];
+                    $invoice['total']['amountTotal'] = $invTotalTmp['amountTotal'];
+                    $invoice['total']['amountTotalMainCurr'] = $invTotalTmp['amountTotalMainCurr'];
+                }else{
+                    $invoice['total']['subtotalMainCurr'] = round($invoice['total']['subtotalMainCurr'] * ($this->dp_percentage/100));
+
+                    // $invoice['total']['discountSubtotal'] = $soLine->discount_nominal;
+                    $invoice['total']['discountSubtotalMainCurr'] = $invoice['total']['discountSubtotalMainCurr'];
+                    // $invoice['total']['amountUntaxed'] = $priceTotal;
+                    $invoice['total']['amountUntaxedMainCurr'] = round($invoice['total']['subtotalMainCurr'] - $invoice['total']['discountSubtotalMainCurr']);
+                    $invoice['total']['amountTax'] = $this->amount_tax;
+                    $invoice['total']['amountTaxMainCurr'] = floor($invoice['total']['amountUntaxedMainCurr']*(10/100));
+                    $invoice['total']['amountTotal'] = $priceTotal+$invoice['total']['amountTax'];
+                    $invoice['total']['amountTotalMainCurr'] = $totalAmountMainCurr;
+                }
+
+                
             }
             
         endif;

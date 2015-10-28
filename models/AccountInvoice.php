@@ -363,6 +363,14 @@ class AccountInvoice extends \yii\db\ActiveRecord
             ];
     }
 
+    public function formatValue($value){
+        if($this->currency_id==13){
+            return Yii::$app->numericLib->indoStyle(floatval($value));
+        }else{
+            return Yii::$app->numericLib->westStyle(floatval($value));
+        }
+    }
+
 
     public function getInvoiceMapData($printForFaktur=false){
         // $this->printForFaktur = $printForFaktur;
@@ -441,22 +449,22 @@ class AccountInvoice extends \yii\db\ActiveRecord
 
                 'formated'=>[
                     'currency'=>($this->payment_for ? '':$this->currency->name),
-                    'priceUnit'=>($this->payment_for ? '':Yii::$app->numericLib->indoStyle($invLine->price_unit)),
-                    'priceUnitMainCurr'=>($this->payment_for ? '':Yii::$app->numericLib->indoStyle($priceUnitMainCurr)),
+                    'priceUnit'=>($this->payment_for ? '':$this->formatValue($invLine->price_unit)),
+                    'priceUnitMainCurr'=>($this->payment_for ? '':$this->formatValue($priceUnitMainCurr)),
                     // 'qty'=>$invLine->quantity,
 
-                    'priceSubtotal'=>Yii::$app->numericLib->westStyle($invLine->quantity*$invLine->price_unit),
-                    'priceSubtotalMainCurr'=>($printForFaktur ? ($this->payment_for ? '&nbsp;':Yii::$app->numericLib->indoStyle($priceSubtotalMainCurr)):Yii::$app->numericLib->indoStyle($priceSubtotalMainCurr)),
+                    'priceSubtotal'=>$this->formatValue($invLine->quantity*$invLine->price_unit),
+                    'priceSubtotalMainCurr'=>($printForFaktur ? ($this->payment_for ? '&nbsp;':$this->formatValue($priceSubtotalMainCurr)):Yii::$app->numericLib->indoStyle($priceSubtotalMainCurr)),
                     
-                    'discountPercentage'=>Yii::$app->numericLib->indoStyle($invLine->discount),
-                    'discountAmount'=>Yii::$app->numericLib->indoStyle($invLine->amount_discount),
-                    'discountMainCurr'=>Yii::$app->numericLib->indoStyle($discountMainCurr),
+                    'discountPercentage'=>$this->formatValue($invLine->discount),
+                    'discountAmount'=>$this->formatValue($invLine->amount_discount),
+                    'discountMainCurr'=>$this->formatValue($discountMainCurr),
 
-                    'priceTotal'=>Yii::$app->numericLib->indoStyle($priceTotal),
-                    'priceTotalMainCurr'=>Yii::$app->numericLib->indoStyle($priceTotalMainCurr),
+                    'priceTotal'=>$this->formatValue($priceTotal),
+                    'priceTotalMainCurr'=>$this->formatValue($priceTotalMainCurr),
 
-                    'taxMainCurr'=>Yii::$app->numericLib->indoStyle($taxMainCurr),
-                    'totalAmountMainCurr'=>Yii::$app->numericLib->indoStyle($totalAmountMainCurr),
+                    'taxMainCurr'=>$this->formatValue($taxMainCurr),
+                    'totalAmountMainCurr'=>$this->formatValue($totalAmountMainCurr),
                 ]
             ];
 
@@ -474,6 +482,7 @@ class AccountInvoice extends \yii\db\ActiveRecord
             $idx++;
 
             // var_dump($taxMainCurr);
+            // echo $invoice['total']['amountTax'];
         endforeach;
         // var_dump($invoice['total']['amountTaxMainCurr']);
 
@@ -527,22 +536,22 @@ class AccountInvoice extends \yii\db\ActiveRecord
 
                         'formated'=>[
                             'currency'=>$this->currency->name,
-                            'priceUnit'=>($printForFaktur ? Yii::$app->numericLib->indoStyle($soLine->price_unit):'&nbsp;'),
-                            'priceUnitMainCurr'=>Yii::$app->numericLib->indoStyle($priceUnitMainCurr),
+                            'priceUnit'=>($printForFaktur ? $this->formatValue($soLine->price_unit):'&nbsp;'),
+                            'priceUnitMainCurr'=>$this->formatValue($priceUnitMainCurr),
                             // 'qty'=>$invLine->quantity,
 
-                            'priceSubtotal'=>($printForFaktur ? Yii::$app->numericLib->westStyle($soLine->product_uom_qty*$soLine->price_unit):'&nbsp;'),
-                            'priceSubtotalMainCurr'=>Yii::$app->numericLib->indoStyle($priceSubtotalMainCurr),
+                            'priceSubtotal'=>($printForFaktur ? $this->formatValue($soLine->product_uom_qty*$soLine->price_unit):'&nbsp;'),
+                            'priceSubtotalMainCurr'=>$this->formatValue($priceSubtotalMainCurr),
                             
-                            'discountPercentage'=>Yii::$app->numericLib->indoStyle($soLine->discount),
-                            'discountAmount'=>Yii::$app->numericLib->indoStyle($soLine->discount_nominal),
-                            'discountMainCurr'=>Yii::$app->numericLib->indoStyle($discountMainCurr),
+                            'discountPercentage'=>$this->formatValue($soLine->discount),
+                            'discountAmount'=>$this->formatValue($soLine->discount_nominal),
+                            'discountMainCurr'=>$this->formatValue($discountMainCurr),
 
-                            'priceTotal'=>Yii::$app->numericLib->indoStyle($priceTotal),
-                            'priceTotalMainCurr'=>Yii::$app->numericLib->indoStyle($priceTotalMainCurr),
+                            'priceTotal'=>$this->formatValue($priceTotal),
+                            'priceTotalMainCurr'=>$this->formatValue($priceTotalMainCurr),
 
-                            'taxMainCurr'=>Yii::$app->numericLib->indoStyle($taxMainCurr),
-                            'totalAmountMainCurr'=>Yii::$app->numericLib->indoStyle($totalAmountMainCurr),
+                            'taxMainCurr'=>$this->formatValue($taxMainCurr),
+                            'totalAmountMainCurr'=>$this->formatValue($totalAmountMainCurr),
                         ]
                     ];
                     
@@ -571,8 +580,8 @@ class AccountInvoice extends \yii\db\ActiveRecord
                 $invoice['total']['amountUntaxedMainCurr'] = round($invoice['total']['subtotalMainCurr'] - $invoice['total']['discountSubtotalMainCurr']);
                 $invoice['total']['amountTax'] = $this->amount_tax;
                 $invoice['total']['amountTaxMainCurr'] = floor($invoice['total']['amountUntaxedMainCurr']*(10/100));
-                $invoice['total']['amountTotal'] += $priceTotal+$invoice['total']['amountTax'];
-                $invoice['total']['amountTotalMainCurr'] += $totalAmountMainCurr;
+                $invoice['total']['amountTotal'] = $priceTotal+$invoice['total']['amountTax'];
+                $invoice['total']['amountTotalMainCurr'] = $totalAmountMainCurr;
             }
             
         endif;

@@ -153,8 +153,56 @@ class AccountInvoiceController extends Controller
 		$model=$this->findModel($id);
 
 		$data = $model->getInvoiceMapData();
+		$data['notes'] = $model->name.'<br/>SO : '.$model->origin.'<br/>'.nl2br($model->comment);
+
 
 		// var_dump($data);
+		
+		$data['lines'][] = [
+			'id'=>'notes',
+
+            'no'=>'&nbsp;',
+            'name'=>'PO NO : '.$model->name.'<br/>SO : '.$model->origin.'<br/>'.nl2br($model->comment),
+
+
+            'priceUnit'=>'&nbsp;',
+            'priceUnitMainCurr'=>'&nbsp;',
+            'qty'=>'&nbsp;',
+
+            'priceSubtotal'=>'&nbsp;',
+            'priceSubtotalMainCurr'=>'&nbsp;',
+            
+            'discountPercentage'=>'&nbsp;',
+            'discountAmount'=>'&nbsp;',
+            'discountMainCurr'=>'&nbsp;',
+
+            'priceTotal'=>'&nbsp;',
+            'priceTotalMainCurr'=>'&nbsp;',
+
+            'taxMainCurr'=>'&nbsp;',
+            'totalAmountMainCurr'=>'&nbsp;',
+
+
+            'formated'=>[
+                'currency'=>'&nbsp;',
+                'priceUnit'=>'&nbsp;',
+                'priceUnitMainCurr'=>'&nbsp;',
+                // 'qty'=>$invLine->quantity,
+
+                'priceSubtotal'=>'&nbsp;',
+                'priceSubtotalMainCurr'=>'&nbsp;',
+                
+                'discountPercentage'=>'&nbsp;',
+                'discountAmount'=>'&nbsp;',
+                'discountMainCurr'=>'&nbsp;',
+
+                'priceTotal'=>'&nbsp;',
+                'priceTotalMainCurr'=>'&nbsp;',
+
+                'taxMainCurr'=>'&nbsp;',
+                'totalAmountMainCurr'=>'&nbsp;',
+            ]
+		];
 
 
 		if($printer == null && ($uid==100 || $uid == 191)){

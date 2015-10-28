@@ -398,7 +398,7 @@ console.log(maxLinesHeight);
 
 function prepareRow(rowNo,data)
 {
-	return "<tr class='cRows rows"+rowNo+"'><td class='td1' contenteditable='true'>"+data.no+"</td><td class='td2'>"+data.qty+"</td><td class='td3'>"+data.name+"</td><td class='td4'>"+data.formated.priceUnit+"</td><td class='td5'>"+data.formated.priceSubtotal+"</td></tr>";
+	return "<tr id='lines"+data.id+"' class='cRows rows"+rowNo+"'><td class='td1' contenteditable='true'>"+data.no+"</td><td class='td2'>"+data.qty+"</td><td class='td3'>"+data.name+"</td><td class='td4'>"+data.formated.priceUnit+"</td><td class='td5'>"+data.formated.priceSubtotal+"</td></tr>";
 }
 
 function getNotes(notes,rowNo=999999)
@@ -406,8 +406,6 @@ function getNotes(notes,rowNo=999999)
 	return "<tr class='cRows rows"+rowNo+"'><td style='width:23%;'></td><td style='width:57%;padding-top:10mm;'>Notes : <br/>"+notes+"</td><td></td></tr>";
 }
 var rowPage = 0;
-
-
 
 jQuery.each(lines,function(key,line){
 	var getRow = prepareRow(currRow,line);
@@ -446,6 +444,7 @@ jQuery.each(lines,function(key,line){
 	currRow=currRow+1;
 });
 // end loop
+
 var currIndex = 0;
 function refreshActButton(currIndex){
 	jQuery('.btnActLine').remove();
@@ -518,6 +517,7 @@ jQuery('#container').on('click','.btnPasteBefore',function(e){
 	jQuery('.btnPaste').hide();
 	return false;
 });
+jQuery('tr#linesnotes td').attr('contenteditable','true');
 EOD;
 unset($jsonLines);
 $this->registerJs($scr);

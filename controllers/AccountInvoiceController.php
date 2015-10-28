@@ -153,7 +153,7 @@ class AccountInvoiceController extends Controller
 		$model=$this->findModel($id);
 
 		$data = $model->getInvoiceMapData();
-		$data['notes'] = $model->name.'<br/>SO : '.$model->origin.'<br/>'.nl2br($model->comment);
+		$data['notes'] = $model->name.'<br/>'.nl2br($model->comment);
 
 
 		// var_dump($data);

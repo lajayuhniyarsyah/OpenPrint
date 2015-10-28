@@ -162,7 +162,7 @@ class AccountInvoiceController extends Controller
 			'id'=>'notes',
 
             'no'=>'&nbsp;',
-            'name'=>'PO NO : '.$model->name.'<br/>SO : '.$model->origin.'<br/>'.nl2br($model->comment),
+            'name'=>'PO NO : '.$model->name.'<br/>'.nl2br($model->comment),
 
 
             'priceUnit'=>'&nbsp;',

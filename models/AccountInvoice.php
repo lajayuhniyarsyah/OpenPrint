@@ -423,7 +423,7 @@ class AccountInvoice extends \yii\db\ActiveRecord
 
                 'priceUnit'=>$invLine->price_unit,
                 'priceUnitMainCurr'=>$priceUnitMainCurr,
-                'qty'=>$invLine->quantity,
+                'qty'=>($this->payment_for ? '&nbsp;':$invLine->quantity),
 
                 'priceSubtotal'=>$invLine->quantity*$invLine->price_unit,
                 'priceSubtotalMainCurr'=>$priceSubtotalMainCurr,
@@ -445,8 +445,8 @@ class AccountInvoice extends \yii\db\ActiveRecord
                     'priceUnitMainCurr'=>($this->payment_for ? '':Yii::$app->numericLib->indoStyle($priceUnitMainCurr)),
                     // 'qty'=>$invLine->quantity,
 
-                    'priceSubtotal'=>($this->payment_for ? '':Yii::$app->numericLib->westStyle($invLine->quantity*$invLine->price_unit)),
-                    'priceSubtotalMainCurr'=>($this->payment_for ? '':Yii::$app->numericLib->indoStyle($priceSubtotalMainCurr)),
+                    'priceSubtotal'=>Yii::$app->numericLib->westStyle($invLine->quantity*$invLine->price_unit),
+                    'priceSubtotalMainCurr'=>($printForFaktur ? ($this->payment_for ? '&nbsp;':Yii::$app->numericLib->indoStyle($priceSubtotalMainCurr)):Yii::$app->numericLib->indoStyle($priceSubtotalMainCurr)),
                     
                     'discountPercentage'=>Yii::$app->numericLib->indoStyle($invLine->discount),
                     'discountAmount'=>Yii::$app->numericLib->indoStyle($invLine->amount_discount),
@@ -478,8 +478,11 @@ class AccountInvoice extends \yii\db\ActiveRecord
         // var_dump($invoice['total']['amountTaxMainCurr']);
 
         if($this->payment_for=='dp' || $this->payment_for=='completion'):
-            unset($invoice['total']);
-            $invoice['total'] = $this->prepareTotal();
+            if($printForFaktur){
+                unset($invoice['total']);
+                $invoice['total'] = $this->prepareTotal();
+            }
+            
             // then add so lines
             $no=0;
             foreach($this->orders as $so):
@@ -502,7 +505,7 @@ class AccountInvoice extends \yii\db\ActiveRecord
                         'id'=>$soLine->id,
 
                         'no'=>($this->payment_for =='dp' || $this->payment_for =='completion' ? $no:$soLine->sequence),
-                        'name'=>(isset($soLine->product->name_template) ? $soLine->product->name_template.'<br/>'.$soLine->name.'<br/>P/N : '.$soLine->product->default_code:nl2br($soLine->name)),
+                        'name'=>(isset($soLine->product->name_template) ? $soLine->product->name_template.'<br/>'.nl2br($soLine->name).'<br/>P/N : '.$soLine->product->default_code:nl2br($soLine->name)),
 
 
                         'priceUnit'=>$soLine->price_unit,
@@ -524,11 +527,11 @@ class AccountInvoice extends \yii\db\ActiveRecord
 
                         'formated'=>[
                             'currency'=>$this->currency->name,
-                            'priceUnit'=>Yii::$app->numericLib->indoStyle($soLine->price_unit),
+                            'priceUnit'=>($printForFaktur ? Yii::$app->numericLib->indoStyle($soLine->price_unit):'&nbsp;'),
                             'priceUnitMainCurr'=>Yii::$app->numericLib->indoStyle($priceUnitMainCurr),
                             // 'qty'=>$invLine->quantity,
 
-                            'priceSubtotal'=>Yii::$app->numericLib->westStyle($soLine->product_uom_qty*$soLine->price_unit),
+                            'priceSubtotal'=>($printForFaktur ? Yii::$app->numericLib->westStyle($soLine->product_uom_qty*$soLine->price_unit):'&nbsp;'),
                             'priceSubtotalMainCurr'=>Yii::$app->numericLib->indoStyle($priceSubtotalMainCurr),
                             
                             'discountPercentage'=>Yii::$app->numericLib->indoStyle($soLine->discount),
@@ -543,7 +546,7 @@ class AccountInvoice extends \yii\db\ActiveRecord
                         ]
                     ];
                     
-                    // if($this->currency_id!=13):
+                    if($printForFaktur):
                         $invoice['total']['subtotal'] += $lines[$idx]['priceSubtotal'];
                         $invoice['total']['subtotalMainCurr'] += $priceSubtotalMainCurr;
                         $invoice['total']['discountSubtotal'] += $soLine->discount_nominal;
@@ -554,12 +557,12 @@ class AccountInvoice extends \yii\db\ActiveRecord
                         $invoice['total']['amountTaxMainCurr'] += $taxMainCurr;
                         $invoice['total']['amountTotal'] += $priceTotal+$invoice['total']['amountTax'];
                         $invoice['total']['amountTotalMainCurr'] += $totalAmountMainCurr;
-                    // endif;
+                    endif;
 
                 endforeach;
             endforeach;
 
-            if($this->dp_percentage){
+            if($this->dp_percentage && $printForFaktur){
                 // $invoice['total']['subtotal'] = $lines[$idx]['priceSubtotal'];
                 $invoice['total']['subtotalMainCurr'] = round($invoice['total']['subtotalMainCurr'] * ($this->dp_percentage/100));
                 // $invoice['total']['discountSubtotal'] = $soLine->discount_nominal;

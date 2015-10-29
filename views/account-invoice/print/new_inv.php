@@ -398,7 +398,7 @@ console.log(maxLinesHeight);
 
 function prepareRow(rowNo,data)
 {
-	return "<tr id='lines"+data.id+"' class='cRows rows"+rowNo+"'><td class='td1' contenteditable='true'>"+data.no+"</td><td class='td2'>"+data.qty+"</td><td class='td3'>"+data.name+"</td><td class='td4'>"+data.formated.currency+"&nbsp;"+data.formated.priceUnit+"</td><td class='td5'>"+data.formated.currency+"&nbsp;"+data.formated.priceSubtotal+"</td></tr>";
+	return "<tr id='lines"+data.id+"' class='cRows rows"+rowNo+"'><td class='td1' contenteditable='true'>"+data.no+"</td><td class='td2'>"+data.qty+"</td><td class='td3'>"+data.name+"</td><td class='td4'>"+(data.formated.priceUnit ? data.formated.currency+"&nbsp;":"")+data.formated.priceUnit+"</td><td class='td5'>"+data.formated.currency+"&nbsp;"+data.formated.priceSubtotal+"</td></tr>";
 }
 
 function getNotes(notes,rowNo=999999)

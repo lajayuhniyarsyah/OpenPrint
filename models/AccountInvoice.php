@@ -434,7 +434,7 @@ class AccountInvoice extends \yii\db\ActiveRecord
                 'priceUnit'=>$invLine->price_unit,
                 'priceUnitMainCurr'=>$priceUnitMainCurr,
                 'qty'=>($this->payment_for ? '&nbsp;':$invLine->quantity),
-
+                'unit'=>$invLine->uos->name,
                 'priceSubtotal'=>round($invLine->quantity*$invLine->price_unit),
                 'priceSubtotalMainCurr'=>$priceSubtotalMainCurr,
                 
@@ -524,6 +524,7 @@ class AccountInvoice extends \yii\db\ActiveRecord
                         'priceUnit'=>$soLine->price_unit,
                         'priceUnitMainCurr'=>$priceUnitMainCurr,
                         'qty'=>$soLine->product_uom_qty,
+                        'unit'=>$soLine->productUom->name,
 
                         'priceSubtotal'=>$soLine->product_uom_qty*$soLine->price_unit,
                         'priceSubtotalMainCurr'=>$priceSubtotalMainCurr,

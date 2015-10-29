@@ -168,6 +168,7 @@ class AccountInvoiceController extends Controller
             'priceUnit'=>'&nbsp;',
             'priceUnitMainCurr'=>'&nbsp;',
             'qty'=>'&nbsp;',
+            'unit'=>'&nbsp;',
 
             'priceSubtotal'=>'&nbsp;',
             'priceSubtotalMainCurr'=>'&nbsp;',

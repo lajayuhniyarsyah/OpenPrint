@@ -469,11 +469,11 @@ class ServiceController extends Controller{
 
 						endforeach;
 						// HERE
-						$ppnTotal = round($totalPPN);
+						$ppnTotal = floor($totalPPN);
 
 						$res['OUT'][$indexArr]['fk'][10] = round($dppTotal);
 
-						$res['OUT'][$indexArr]['fk'][11] = round($ppnTotal);
+						$res['OUT'][$indexArr]['fk'][11] = $ppnTotal;
 
 						// if invoice currency idr then trust user input total
 						if($inv['currency_id']!=13){
@@ -622,7 +622,7 @@ class ServiceController extends Controller{
 		}
 		$dpp=round($price_subtotal-$discount);
 
-		$ppn=floor((10/100) * $dpp);
+		$ppn=round((10/100) * $dpp,2);
 		/*var_dump($ppn);
 		die();*/
 

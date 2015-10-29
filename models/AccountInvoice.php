@@ -374,9 +374,9 @@ class AccountInvoice extends \yii\db\ActiveRecord
 
     public function getInvoiceMapData($printForFaktur=false){
         // $this->printForFaktur = $printForFaktur;
-        $main_curr = false;
+        $isMainCurrency = false;
         if($this->currency_id==13){
-            $main_curr=true;
+            $isMainCurrency=true;
         }
         $invoice = [
 
@@ -384,10 +384,9 @@ class AccountInvoice extends \yii\db\ActiveRecord
             'partner'=>null,
             'fakturNo'=>null,
             'currency'=>$this->currency->name,
-            'rate'=>($main_curr?1:$this->pajak),
+            'rate'=>($isMainCurrency?1:$this->pajak),
             'comment'=>nl2br($this->comment),
             'lines'=>[
-
                 /*'no'=>null,
                 'name'=>null,
                 'priceUnit'=>0,
@@ -403,8 +402,6 @@ class AccountInvoice extends \yii\db\ActiveRecord
 
                 'taxMainCurr'=>0,
                 'totalAmountMainCurr'=>0,*/
-                
-
             ],
             'total'=>$this->prepareTotal()
 
@@ -416,6 +413,7 @@ class AccountInvoice extends \yii\db\ActiveRecord
         foreach($this->accountInvoiceLines as $invLine):
 
             $priceUnitMainCurr = round($invLine->price_unit * $invoice['rate'],2);
+            $priceSubtotal = ($isMainCurrency ? round($invLine->quantity*$invLine->price_unit):($invLine->quantity*$invLine->price_unit));
             $priceSubtotalMainCurr = round($priceUnitMainCurr*$invLine->quantity);
 
             $discountMainCurr = ($invLine->discount ? $priceSubtotalMainCurr*($invLine->discount/100):($invLine->amount_discount ? round($invLine->amount_discount*$invoice['rate']) : 0));
@@ -437,7 +435,7 @@ class AccountInvoice extends \yii\db\ActiveRecord
                 'priceUnitMainCurr'=>$priceUnitMainCurr,
                 'qty'=>($this->payment_for ? '&nbsp;':$invLine->quantity),
 
-                'priceSubtotal'=>$invLine->quantity*$invLine->price_unit,
+                'priceSubtotal'=>round($invLine->quantity*$invLine->price_unit),
                 'priceSubtotalMainCurr'=>$priceSubtotalMainCurr,
                 
                 'discountPercentage'=>$invLine->discount,
@@ -457,7 +455,7 @@ class AccountInvoice extends \yii\db\ActiveRecord
                     'priceUnitMainCurr'=>($this->payment_for ? '':$this->formatValue($priceUnitMainCurr)),
                     // 'qty'=>$invLine->quantity,
 
-                    'priceSubtotal'=>$this->formatValue($invLine->quantity*$invLine->price_unit),
+                    'priceSubtotal'=>$this->formatValue($priceSubtotal),
                     'priceSubtotalMainCurr'=>($printForFaktur ? ($this->payment_for ? '&nbsp;':$this->formatValue($priceSubtotalMainCurr)):Yii::$app->numericLib->indoStyle($priceSubtotalMainCurr)),
                     
                     'discountPercentage'=>$this->formatValue($invLine->discount),
@@ -520,7 +518,7 @@ class AccountInvoice extends \yii\db\ActiveRecord
                         'id'=>$soLine->id,
 
                         'no'=>($this->payment_for =='dp' || $this->payment_for =='completion' ? $no:$soLine->sequence),
-                        'name'=>(isset($soLine->product->name_template) ? $soLine->product->name_template.'<br/>'.nl2br($soLine->name).'<br/>P/N : '.$soLine->product->default_code:nl2br($soLine->name)),
+                        'name'=>(isset($soLine->product->name_template) ? $soLine->product->name_template.'<br/>'.nl2br($soLine->name).'<br/>P/N : '.$soLine->product->default_code.($printForFaktur ? '<br/>Rp<b>'.$this->formatValue($priceUnitMainCurr).' x '.$soLine->product_uom_qty.'</b>':'&nbsp;'):nl2br($soLine->name).($printForFaktur ? '<br/>'.$this->formatValue($priceUnitMainCurr).' x '.$soLine->product_uom_qty:'&nbsp;')),
 
 
                         'priceUnit'=>$soLine->price_unit,
@@ -582,7 +580,7 @@ class AccountInvoice extends \yii\db\ActiveRecord
             if($this->dp_percentage && $printForFaktur){
                 // $invoice['total']['subtotal'] = $lines[$idx]['priceSubtotal'];
 
-                if($main_curr){
+                if($isMainCurrency){
                     // if currency in main currency setting then 
                     // use total in invoice
                     $invoice['total']['subtotalMainCurr'] = $invTotalTmp['subtotalMainCurr'];

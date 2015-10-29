@@ -152,7 +152,7 @@ class AccountInvoiceController extends Controller
 		$this->layout = 'printout';
 		$model=$this->findModel($id);
 
-		$data = $model->getInvoiceMapData();
+		$data = $model->getInvoiceMapData(false);
 		$data['notes'] = $model->name.'<br/>'.nl2br($model->comment);
 
 
@@ -218,7 +218,7 @@ class AccountInvoiceController extends Controller
 		$this->layout = 'printout';
 		$model=$this->findModel($id);
 
-		$data = $model->getInvoiceMapData();
+		$data = $model->getInvoiceMapData(false);
 
 
 		$lines = [];

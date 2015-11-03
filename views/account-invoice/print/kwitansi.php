@@ -24,7 +24,8 @@ use yii\helpers\Url;
 	.clearBoth{
 		clear: both;
 	}
-	.absPos{
+	.absPos
+	{
 		position: absolute;
 	}
 	#custName{
@@ -37,11 +38,11 @@ use yii\helpers\Url;
 		font-size: 13px;
 		font-size: 16px;
 	}
-	#words{
+	#words
+	{
 		font-style: italic;
 		line-height: 38px;
-    	margin-top: 142px;
-    	
+    	margin-top: 142px;	
 	}
 	#paymentOf1{
 		margin-top: 258px;
@@ -217,7 +218,7 @@ $formated = function($value) use ($model){
 	<div id="paymentOf3" class="absPos">
 		<div class="widPO">Jumlah</div>
 		<div class="widPOCurr"><?=$model->currency->name?></div>
-		<div class="widPOVal"><?=$formated($model->amount_total)?></div>
+		<div class="widPOVal" contenteditable="true"><?=$formated($model->amount_total)?></div>
 		
 	</div>
 	<div id="hrTotal" class="absPos" >

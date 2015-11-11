@@ -175,10 +175,11 @@ class DeliveryNoteController extends Controller
                     'weight'=>($pLine->weight ? $pLine->weight:'-'),
                     'measurement'=>($pLine->measurement ? $pLine->measurement:'-'),
                 ];
-                $totalWeight+=$pLine->weight;
+                $totalWeight+=floatval(str_replace(',', '', $pLine->weight));
             endforeach;
-            $linesData[$k]['totalWeight'] = $totalWeight;
+            $linesData[$k]['totalWeight'] = str_replace('.00', '', Yii::$app->numericLib->westStyle($totalWeight));
         endforeach;
+        
         // $printer = ($printer ? $printer:($uid==173 ? 'lq300-hadi':'lx300-novri'));
         if(!$printer){
             if($uid==173 || $uid == 23){

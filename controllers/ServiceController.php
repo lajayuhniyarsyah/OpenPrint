@@ -314,7 +314,7 @@ class ServiceController extends Controller{
 					$partnerName = trim($expPartnerName[1]).'. '.trim($expPartnerName[0]);
 				}else{
 					// if not exploded
-					$partnerName = $model->partner->name;
+					$partnerName = $inv['partner']['name'];
 				}
 				// echo $partnerName;
 				$res['OUT'][$indexArr]['fk'] = [
@@ -474,11 +474,13 @@ class ServiceController extends Controller{
 						$res['OUT'][$indexArr]['fk'][10] = round($dppTotal);
 
 						$res['OUT'][$indexArr]['fk'][11] = $ppnTotal;
+						/*var_dump($ppnTotal);
+						die();*/
 
 						// if invoice currency idr then trust user input total
 						if($inv['currency_id']!=13){
 							$res['OUT'][$indexArr]['fk'][15] = round($dppTotal*($inv['dp_percentage']/100)); #uang muka dpp = dppTotal * dp percentage
-							$res['OUT'][$indexArr]['fk'][16] = round($res['OUT'][$indexArr]['fk'][15]*(10/100)); #uang muka ppn = 10% ppnTotal
+							$res['OUT'][$indexArr]['fk'][16] = floor($res['OUT'][$indexArr]['fk'][15]*(10/100)); #uang muka ppn = 10% ppnTotal
 						}
 						
 						/*var_dump($ppnTotal);

@@ -512,7 +512,7 @@ class AccountInvoice extends \yii\db\ActiveRecord
             $invoice['total']['discountSubtotalMainCurr'] += $discountMainCurr;
             $invoice['total']['amountUntaxed'] += $priceTotal;
             $invoice['total']['amountUntaxedMainCurr'] += $priceTotalMainCurr;
-            echo $discountMainCurr;
+            // echo $discountMainCurr;
             $invoice['total']['amountTax'] += $priceTotal*(10/100);
             $invoice['total']['amountTaxMainCurr'] += $taxMainCurr;
             $invoice['total']['amountTotal'] += $invLine->price_subtotal;
@@ -621,8 +621,9 @@ class AccountInvoice extends \yii\db\ActiveRecord
 
                 endforeach;
             endforeach;
-            $invoice['total']['discountSubtotal'] = $discountTotal['total'];
-            $invoice['total']['discountSubtotalMainCurr'] = $discountTotal['mainCurr'];
+            $invoice['total']['discountSubtotal'] = round($discountTotal['total']);
+
+            $invoice['total']['discountSubtotalMainCurr'] = round($discountTotal['mainCurr']);
             
             /*echo $invoice['total']['subtotalMainCurr'];
             echo '<br/>';
@@ -633,10 +634,10 @@ class AccountInvoice extends \yii\db\ActiveRecord
                 if($isMainCurrency){
                     // if currency in main currency setting then 
                     // use total in invoice
-                    $invoice['total']['subtotalMainCurr'] = $invTotalTmp['subtotalMainCurr'];
+                    $invoice['total']['subtotalMainCurr'] = round($invTotalTmp['subtotalMainCurr']);
 
                     // $invoice['total']['discountSubtotal'] = $soLine->discount_nominal;
-                    $invoice['total']['discountSubtotalMainCurr'] = $invTotalTmp['discountSubtotalMainCurr'];
+                    $invoice['total']['discountSubtotalMainCurr'] = round($invTotalTmp['discountSubtotalMainCurr']);
                     // $invoice['total']['amountUntaxed'] = $priceTotal;
                     $invoice['total']['amountUntaxedMainCurr'] = $invTotalTmp['amountUntaxedMainCurr'];
                     $invoice['total']['amountTax'] = $invTotalTmp['amountTax'];
@@ -662,6 +663,10 @@ class AccountInvoice extends \yii\db\ActiveRecord
         endif;
 
         $invoice['total']['amountTaxMainCurr'] = floor($invoice['total']['amountTaxMainCurr']);
+        
+        $invoice['total']['discountSubtotal'] = round($invoice['total']['discountSubtotal']);
+        $invoice['total']['discountSubtotalMainCurr'] = round($invoice['total']['discountSubtotalMainCurr']);
+
 
         $invoice['total']['amountTotalMainCurrCounted'] = $invoice['total']['amountUntaxedMainCurr']+$invoice['total']['amountTaxMainCurr'];
         $invoice['total']['formated']['amountTotalMainCurrCounted'] = $this->formatValue($invoice['total']['amountTotalMainCurrCounted']);

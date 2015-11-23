@@ -608,16 +608,8 @@ class ServiceController extends Controller{
 		$discount=0;
 		// check if amount discount is not null first
 		// if checked first cause amount_discount in future is repretentation of discount on perccentage
-		if($item['amount_discount'] && $item['amount_discount']>0){
-			if($item['discount']>0){
-				// if discount percentage is known
-				$discount = ($item['discount']/100) * $price_subtotal;
-
-			}else{
-				// if discount percentage is not set but only set amount of discount
-				$discount = $this->convertIdr($item['amount_discount'],$rate);
-			}
-			
+		if($item['amount_discount']){
+			$discount = $this->convertIdr($item['amount_discount'],$rate);
 
 		}elseif($item['discount'] && floatval($item['discount'])>0){
 			$discount = ($item['discount']/100) * ($price_subtotal);

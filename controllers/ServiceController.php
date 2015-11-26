@@ -419,14 +419,21 @@ class ServiceController extends Controller{
 							$pUnit = $this->convertIdr(round($soLine['price_unit'],2),$rate);
 
 							$discountLine = 0;
-
+							$subtotal = round($pUnit * $soLine['product_uom_qty']);
 
 							if(floatval($soLine['discount'])>0)
 							{
 								// IF NOMINAL COUNTED BY DISCOUNT NOMINAL
 								if($soLine['discount_nominal'])
 								{
-									$discountLine = $soLine['discount_nominal'];
+									if($soLine['discount']){
+										$discountLine = round(($soLine['discount']/100)*$subtotal,2);
+									}
+									else
+									{
+										$discountLine = $this->convertIdr($soLine['discount_nominal'],$rate);
+									}
+									
 								}
 								else
 								{
@@ -442,7 +449,7 @@ class ServiceController extends Controller{
 							}
 
 
-							$subtotal = round($pUnit * $soLine['product_uom_qty']);
+							
 							
 
 							$dpp = round($subtotal - $discountLine);

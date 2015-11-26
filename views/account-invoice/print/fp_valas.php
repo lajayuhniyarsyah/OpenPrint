@@ -244,7 +244,7 @@ use yii\helpers\Url;
                                 </div>
                                 <table style="width:100%;" cellpadding="0" cellspacing="0">
                                     <tr>
-                                        <td style="width:61%;"><?='<div style="width:auto;float:left;">'.  $model->currency->name.'</div><div class="wid1">'.Yii::$app->numericLib->westStyle($model->amount_untaxed).'</div>'?></td>
+                                        <td style="width:61%;"><?='<div style="width:auto;float:left;">'.  $model->currency->name.'</div><div class="wid1">'.Yii::$app->numericLib->westStyle($data['total']['subtotal']).'</div>'?></td>
                                         <td style="text-align:right;"><?=Yii::$app->numericLib->indoStyle($data['total']['subtotalMainCurr'])?></td>
                                     </tr>
                                 </table>

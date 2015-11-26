@@ -307,7 +307,7 @@ use yii\helpers\Url;
 		</div>
 		<div class="footers">
 			<div class="amounts">
-				<div class="amLine1 am"><?='<div class="currSymbol">'.$model->currency->name.'</div><div class="amountNumber">'.$formated($data['total']['subtotal']).'</div><div class="clear"></div>'?></div>
+				<div class="amLine1 am"><?='<div class="currSymbol">'.$model->currency->name.'</div><div class="amountNumber">'.$formated(($model->currency_id==13 ? $data['total']['subtotalMainCurr']:$data['total']['subtotal'])).'</div><div class="clear"></div>'?></div>
 				<div class="amLine2 am">
 					<div class="am2Words" contenteditable="true"><?=($data['total']['discountSubtotal'] ? 'DISCOUNT':'&nbsp;')?></div>
 					<div class="kursAm2" contenteditable="true"><?=($data['total']['discountSubtotal'] ? $data['currency']:'&nbsp;')?></div>

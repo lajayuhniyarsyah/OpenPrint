@@ -1090,8 +1090,14 @@ class ReportAccountingController extends Controller
 
 			$data = $query->all();
 		
+
+		foreach ($data as $value) {
+			$product[]=$value['name_template'];
+			$PN[]=$value['part_number'];
+		}
+
 		if ($data){
-			return $this->render('turnover',['data'=>$data,'nameproduct'=>$data[0]['product_name']]);	
+			return $this->render('turnover',['data'=>$data,'nameproduct'=>'['.$PN[0].']'.$product[0]]);	
 		}else{
 			echo '<center>Product Tidak Memilik Move</center>';
 		}
@@ -1214,7 +1220,7 @@ class ReportAccountingController extends Controller
         	
         	*/
 
-        	
+        	/*
         	
         		// Cek OP Line By Product ID dan Qty Compare dengan Move lIne Product Id dan Qty, JIka ada yang sama, update Picking ID di OP
 	        	if($value['opstate']=="done" and $value['spstate']=="done"){
@@ -1258,26 +1264,21 @@ class ReportAccountingController extends Controller
 		     				foreach ($MoveLine1 as $valC) {
 				     			$c .= $valC['product_id'].'-'.number_format($valC['product_qty'],2 ,'.', '').'-';
 				     		}
-
-				     		if ($c==$c){
-				     			echo $c.'<br/>';
-				     			// echo 'Sama<br/>';
-				     		}
-
 				     		// if($c==$a){
 				     		// 	echo $a.'----'.$value['pick_id'].'<br/>';
 				     		// 	echo $c.'----'.$SO['id'].'<br/>';
 				     			
 				     		// 	$command = Yii::$app->db->createCommand("update order_preparation set picking_id = '".$SO['id']."' where id = '".$value['op_id']."'");
-				       //  		$command->execute();	
+				      		// $command->execute();	
 				     		// }
-						}	
-
-		     		
+				     		echo $c.'>>>>>>>>>>>'.$value['so_id'].'>>>>>>>>'.$SO['id'].'<br/>';				     		
+						}
+				     			
+						echo '<br/><br/>';	
 		     		}
 		     	}
 	 		
-	 		
+	 		*/
         	/*
         		// Update Picking ID di OP dengan cek Count OP Line Dan Move Line
 	        	if ($value['backorder_id']){
@@ -1342,12 +1343,12 @@ class ReportAccountingController extends Controller
 			
 			*/
 
-        	/*
-        		Update picking ID OP berdasarkan ID Picking yang masih belum Done, dikarnakan status DN masih belum Done
+   			/*
+        		//Update picking ID OP berdasarkan ID Picking yang masih belum Done, dikarnakan status DN masih belum Done
 	        	if ($value['dnstate']=="approve"){
 	    		    	$picking = Yii::$app->db->
 	    		    							createCommand("
-	    		    								SELECT id as picking_id FROM stock_picking where sale_id='".$value['so_id']."' and state ='confirmed'
+	    		    								SELECT id as picking_id FROM stock_picking where sale_id='".$value['so_id']."' and state ='assigned'
 	    		    								");
 	    		    	$datapick = $picking->queryOne();
 
@@ -1358,7 +1359,8 @@ class ReportAccountingController extends Controller
 	    		    }
 	        		// echo 'ID OP---------'.$value['op_id'].'-------state DN--------------'.$value['dnstate'].'------------------------'.$datapick['picking_id'].'<br/>';	
 	        	}
-        	*/
+        	
+			*/
 
         	/*
 	        	// Update Stock Picking note ID samakan dengan ID DN dari OP 
@@ -1397,13 +1399,13 @@ class ReportAccountingController extends Controller
 
 			*/
         	
-	        /*
-	        	if ($value['spstate']=="confirmed"){
+	      
+	        	if ($value['spstate']=="assigned"){
 					// Update Stock Picking Status Confirmed MNOte Id Menjadi Null
 					$command = Yii::$app->db->createCommand("update stock_picking set note_id = Null where id = '".$value['pick_id']."'");
 			        $command->execute();	         		
 	        	}
-	        */
+	        
 
 
 	        /*

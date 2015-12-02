@@ -133,8 +133,8 @@ class ServiceController extends Controller{
 		if(is_array($ids)){
 			$invoices = AccountInvoice::find()->where(['id'=>$ids])->with(['currency','accountInvoiceLines','partner','partner.state','partner.parent','accountInvoiceLines.product','stockPickings','accountInvoiceLines.account','fakturAddress','fakturAddress.parent'])->asArray()->all();
 			$maped = $this->prepareCsvInvoiceData($invoices);
-			/*\yii\helpers\VarDumper::dump($maped);
-			die();*/
+			// \yii\helpers\VarDumper::dump($maped);
+			// die();
 			$filename = 'INVOICES-'.(isset($maped['OUT']) ? 'OUT':'IN').'-'.implode('+', array_keys($maped[(isset($maped['OUT']) ? 'OUT':'IN')])).'.csv';
 			header( "Content-Type: text/csv;charset=UTF-8" );
 			header( "Content-Disposition: attachment;filename=\"$filename\"" );
@@ -244,11 +244,17 @@ class ServiceController extends Controller{
 			Yii::$app->end();
 		}
 	}
-	private function convertIdr($amount,$rate){
+	private function convertIdr($amount,$rate,$round_dec=0){
 		$ret = 0;
 
 		$ret = $amount*$rate;
-		return (float)$ret;
+		if($round_dec){
+			return (float)round($ret,$round_dec);
+		}
+		else{
+			return (float)$ret;
+		}
+		
 	}
 
 	
@@ -416,10 +422,10 @@ class ServiceController extends Controller{
 							if(floatval($soLine['price_unit'])==0.00){
 								continue;
 							}
-							$pUnit = $this->convertIdr(round($soLine['price_unit'],2),$rate);
+							$pUnit = $this->convertIdr(round($soLine['price_unit'],2),$rate,2);
 
 							$discountLine = 0;
-							$subtotal = round($pUnit * $soLine['product_uom_qty']);
+							$subtotal = round($pUnit * $soLine['product_uom_qty'],2);
 
 							if(floatval($soLine['discount'])>0)
 							{
@@ -438,7 +444,7 @@ class ServiceController extends Controller{
 								else
 								{
 									// IF NOMINAL NOT COUNTED BY PERCENTAGE
-									$discountLine = ($soLine['discount']/100) * (round($pUnit*$soLine['product_uom_qty']));
+									$discountLine = ($soLine['discount']/100) * (round($pUnit*$soLine['product_uom_qty'],2));
 								}
 								// $discountLine = ($soLine['discount_nominal'])
 
@@ -452,7 +458,7 @@ class ServiceController extends Controller{
 							
 							
 
-							$dpp = round($subtotal - $discountLine);
+							$dpp = round($subtotal - $discountLine,2);
 							$dppTotal += $dpp;
 
 							$ppn = (10/100) * $dpp;
@@ -478,7 +484,7 @@ class ServiceController extends Controller{
 						// HERE
 						$ppnTotal = floor($totalPPN);
 
-						$res['OUT'][$indexArr]['fk'][10] = round($dppTotal);
+						$res['OUT'][$indexArr]['fk'][10] = floor($dppTotal);
 
 						$res['OUT'][$indexArr]['fk'][11] = $ppnTotal;
 						/*var_dump($ppnTotal);
@@ -486,7 +492,7 @@ class ServiceController extends Controller{
 
 						// if invoice currency idr then trust user input total
 						if($inv['currency_id']!=13){
-							$res['OUT'][$indexArr]['fk'][15] = round($dppTotal*($inv['dp_percentage']/100)); #uang muka dpp = dppTotal * dp percentage
+							$res['OUT'][$indexArr]['fk'][15] = floor($dppTotal*($inv['dp_percentage']/100)); #uang muka dpp = dppTotal * dp percentage
 							$res['OUT'][$indexArr]['fk'][16] = floor($res['OUT'][$indexArr]['fk'][15]*(10/100)); #uang muka ppn = 10% ppnTotal
 						}
 						
@@ -507,24 +513,35 @@ class ServiceController extends Controller{
 					foreach($invLines as $item):
 						$render = $this->prepareFromInvLine($item,$rate);
 						
-						$discountTotal += round($render[6]);
-						$dppTotal += round($render[7]);
+						$discountTotal += $render[6];
+
+						$dppTotal += $render[7];
 						$ppnTotal += $render[8];
 
 						$res['OUT'][$indexArr]['of'][] = $render;
 						// echo $item['price_subtotal'].'\\';
 					endforeach;
+					// var_dump($dppTotal);
+					$dppTotal = floor($dppTotal);
+					$ppnTOtal = floor($ppnTotal);
+					// var_dump($dppTotal);
 
+					
 					// OUT LINE NORMAL
 					// LINE EFAKTUR TANPA PAYMENT FOR REF
 					// $outFK10 = (is_numeric( $dppTotal ) && floor( $dppTotal ) != $dppTotal ? floor(floatval($dppTotal)) : floatval($dppTotal));
 					$outFK10 = (is_numeric($dppTotal) && floor($dppTotal) == $dppTotal ? $dppTotal:floor($dppTotal));
+					/*echo '$dppTotal = '.$dppTotal;
+					echo '<br/>'.$outFK10;*/
 
 					$res['OUT'][$indexArr]['fk'][10] = $outFK10;
 					/*echo $res['OUT'][$indexArr]['fk'][10];
 					die();*/
 					$res['OUT'][$indexArr]['fk'][11] = floor($ppnTotal);
+
+					// die();
 				}
+
 			}elseif($inv['type']=='in_invoice'){
 				// OUT INVOICE
 				// SUPPLIER INVOICE
@@ -583,8 +600,8 @@ class ServiceController extends Controller{
 			
 		}
 
-		/*\yii\helpers\VarDumper::dump($res);
-		die();*/
+		// \yii\helpers\VarDumper::dump($res);
+		// die();
 
 		return $res;
 	}
@@ -605,13 +622,15 @@ class ServiceController extends Controller{
 			}
 			// echo $line['account']['name'];
 		endforeach;
-		die();
+		
 	}
 
 	private function prepareFromInvLine($item,$rate){
 		$res = [];
-		$price_unit = $this->convertIdr($item['price_unit'],$rate);
-		$price_subtotal = round($price_unit*$item['quantity']);
+		$price_unit = $this->convertIdr($item['price_unit'],$rate,2);
+		$price_subtotal = round($price_unit*$item['quantity'],2);
+		/*echo $price_subtotal;
+		echo "---<br/>";*/
 		$discount=0;
 		// check if amount discount is not null first
 		// if checked first cause amount_discount in future is repretentation of discount on perccentage
@@ -621,9 +640,9 @@ class ServiceController extends Controller{
 		}elseif($item['discount'] && floatval($item['discount'])>0){
 			$discount = ($item['discount']/100) * ($price_subtotal);
 		}
-		$dpp=round($price_subtotal-$discount);
+		$dpp=round($price_subtotal-$discount,2);
 
-		$ppn=round((10/100) * $dpp,2);
+		$ppn=round((10/100) * $dpp,5);
 		/*var_dump($ppn);
 		die();*/
 

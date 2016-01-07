@@ -328,7 +328,7 @@ class ServiceController extends Controller{
 					$tax_code_type, #KD JENIS TRANSAKSI #1
 					$tax_replace_code, #FG PENGGANTI #2
 					$pure_faktur_code, #NOMOR FAKTUR #3
-					$tax_date->format('n'), #MASA PAJAK #4
+					(isset($inv['tax_period']) && $inv['tax_period'] ? $inv['tax_period']:$tax_date->format('n')), #MASA PAJAK #4
 					$tax_date->format('Y'), #TAHUN PAJAK #5
 					$tax_date->format('d/m/Y'), #full tax date dd/mm/yyyy #6
 					preg_replace('/[\s\W]+/', '', $partner['npwp']), #customer npwp #7
@@ -342,7 +342,7 @@ class ServiceController extends Controller{
 					($inv['payment_for']=='dp' ? $amount_untaxed:($inv['payment_for']=='completion' ? $amount_untaxed:'0')),#uang muka dpp #15
 					($inv['payment_for']=='dp' ? $amount_tax:($inv['payment_for']=='completion' ? $amount_tax:'0')),#uang muka ppn #16
 					'0',#uang muka ppnbm, 0 karena tidak ada PPNBM (fix) #17
-					'Invoice No : '.$inv['kwitansi'].'. Order No : '.$inv['origin'].'. Order Ref : '.$inv['name'].($inv['pajak'] ? '. Tax Rate : '.Yii::$app->numericLib->indoStyle($inv['pajak']).'. KMK : '.$inv['kmk']:''),#referensi #18
+					'Invoice No : '.$inv['kwitansi']."\nOrder No : ".$inv['origin']."\nOrder Ref : ".$inv['name'].($inv['pajak']>1 ? "\nTax Rate : ".Yii::$app->numericLib->indoStyle($inv['pajak'])."\nKMK : ".$inv['kmk']:''),#referensi #18
 					
 				];
 
@@ -412,6 +412,7 @@ class ServiceController extends Controller{
 								throw new NotFoundHttpException('Mata Uang di Sale Order = '.$currencyOnSO['name'].' Tetapi di Invoice Mata Uang yang digunakan adalah '.$inv['currency']['name'].', namun Tax Rate tidak didefinisikan pada sistem. Tolong Update Tax Rate !');
 							}
 						}
+
 						$discountTotal = 0;
 						$dppTotal = 0;
 						$subtotalTotal = 0;
@@ -433,6 +434,7 @@ class ServiceController extends Controller{
 								if($soLine['discount_nominal'])
 								{
 									if($soLine['discount']){
+
 										$discountLine = round(($soLine['discount']/100)*$subtotal,2);
 									}
 									else
@@ -450,7 +452,7 @@ class ServiceController extends Controller{
 
 								$discountTotal += $discountLine;
 							}elseif(floatval($soLine['discount_nominal'])){
-								$discountLine = $soLine['discount_nominal'];
+								$discountLine = $this->convertIdr($soLine['discount_nominal'],$rate);
 								$discountTotal += $discountLine;
 							}
 

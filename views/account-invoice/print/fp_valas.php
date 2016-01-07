@@ -244,8 +244,16 @@ use yii\helpers\Url;
                                 </div>
                                 <table style="width:100%;" cellpadding="0" cellspacing="0">
                                     <tr>
-                                        <td style="width:61%;"><?='<div style="width:auto;float:left;">'.  $model->currency->name.'</div><div class="wid1">'.Yii::$app->numericLib->westStyle($data['total']['subtotal']).'</div>'?></td>
-                                        <td style="text-align:right;"><?=Yii::$app->numericLib->indoStyle($data['total']['subtotalMainCurr'])?></td>
+                                        <td style="width:61%;"><?='<div style="width:auto;float:left;">'.  $model->currency->name.'</div><div class="wid1">'.Yii::$app->numericLib->westStyle(($model->payment_for ? $model->amount_untaxed:$data['total']['subtotal'])).'</div>'?></td>
+                                        <td style="text-align:right;">
+                                            <?php
+                                                if(isset($data['dp']['dpp'])){
+                                                    echo Yii::$app->numericLib->indoStyle($data['dp']['dpp']);
+                                                }else{
+                                                    echo Yii::$app->numericLib->indoStyle($data['total']['subtotalMainCurr']);
+                                                }
+                                            ?>
+                                        </td>
                                     </tr>
                                 </table>
                                 <?php // echo '<div style="float:left;width:auto;">'.$model->currency->name.'</div><div class="wid1">'.Yii::$app->numericLib->westStyle($total).'</div><div style="clear:both;"></div>'; ?>
@@ -263,9 +271,31 @@ use yii\helpers\Url;
                             <div class="amount">
                                 <table style="width:100%;" cellpadding="0" cellspacing="0">
                                     <tr>
-                                        <td style="width:61%;"><?='<div style="position:absolute;margin-left:-131px;">'
-                                        .($data['total']['discountSubtotalMainCurr'] ? 'DISCOUNT ':null).'</div><div style="width:auto;float:left;">'.($data['total']['discountSubtotalMainCurr'] != '' ? $model->currency->name:'&nbsp;').'</div><div class="wid1">'.($data['total']['discountSubtotalMainCurr']  ? Yii::$app->numericLib->westStyle(-$data['total']['discountSubtotal']):null).'</div>'?></td>
-                                        <td style="text-align:right;"><?php echo ($data['total']['discountSubtotalMainCurr'] ? Yii::$app->numericLib->indoStyle(round($data['total']['discountSubtotalMainCurr'])):'&nbsp;'); ?></td>
+                                        <td style="width:61%;">
+                                        <?php 
+                                            echo '<div style="position:absolute;margin-left:-131px;">'.($data['total']['discountSubtotalMainCurr'] ? 'DISCOUNT ':null).'</div>';
+                                            if(isset($data['dp']['dpp']))
+                                            {
+                                                echo '<div style="width:auto;float:left;">'.($data['total']['discountSubtotalMainCurr'] != '' ? $model->currency->name:'&nbsp;').'</div><div class="wid1">0.00</div>';
+                                            }
+                                            else
+                                            {
+                                                echo '<div style="width:auto;float:left;">'.($data['total']['discountSubtotalMainCurr'] != '' ? $model->currency->name:'&nbsp;').'</div><div class="wid1">'.($data['total']['discountSubtotalMainCurr']  ? Yii::$app->numericLib->westStyle(-$data['total']['discountSubtotal']):null).'</div>';
+                                            }
+                                        ?>
+                                        </td>
+                                        <td style="text-align:right;">
+                                            <?php 
+                                                if(isset($data['dp']['dpp']))
+                                                {
+                                                    echo '0.00'; 
+                                                }
+                                                else
+                                                {
+                                                    echo ($data['total']['discountSubtotalMainCurr'] ? Yii::$app->numericLib->indoStyle(round($data['total']['discountSubtotalMainCurr'])):'&nbsp;'); 
+                                                }
+                                            ?>
+                                        </td>
                                     </tr>
                                 </table>
                             </div>
@@ -291,7 +321,19 @@ use yii\helpers\Url;
                                 <table style="width:100%;" cellpadding="0" cellspacing="0">
                                     <tr>
                                         <td style="width:61%;"><?='<div style="width:auto;float:left;">'.  $model->currency->name.'</div><div class="wid1">'.Yii::$app->numericLib->westStyle($model->amount_untaxed).'</div>'?></td>
-                                        <td style="text-align:right;"><?=Yii::$app->numericLib->indoStyle($data['total']['amountUntaxedMainCurr'])?></td>
+                                        <td style="text-align:right;">
+                                            <?php
+                                                if(isset($data['dp']['dpp']))
+                                                {
+                                                    echo Yii::$app->numericLib->indoStyle($data['dp']['dpp']);
+                                                }
+                                                else
+                                                {
+                                                    echo Yii::$app->numericLib->indoStyle($data['total']['amountUntaxedMainCurr']);
+                                                }
+                                                
+                                            ?>
+                                        </td>
                                     </tr>
                                 </table>
                             </div>
@@ -301,7 +343,19 @@ use yii\helpers\Url;
                         <td>
                             <div class="amount" style="margin-top:-3px;">
                                 <div style="width:auto;float:left;"><?= (isset($model->amount_tax) ? '<div style="float:left;width:auto;">'.$model->currency->name.'</div><div class="wid1">'.Yii::$app->numericLib->westStyle($model->amount_tax).'</div><div style="clear:both;"></div>':''); ?></div>
-                                <div style="text-align:right;"><?=Yii::$app->numericLib->indoStyle($data['total']['amountTaxMainCurr'])?></div>
+                                <div style="text-align:right;">
+                                    <?php 
+                                        if(isset($data['dp']['ppn']))
+                                        {
+                                            echo Yii::$app->numericLib->indoStyle($data['dp']['ppn']);
+                                        }
+                                        else
+                                        {
+                                            echo Yii::$app->numericLib->indoStyle($data['total']['amountTaxMainCurr']);
+                                        }
+                                        
+                                    ?>
+                                </div>
                                 <div class="clear:both;"></div>
                             </div>
                         </td>

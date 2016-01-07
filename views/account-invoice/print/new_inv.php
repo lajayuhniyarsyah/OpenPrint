@@ -26,7 +26,7 @@ use yii\helpers\Url;
 	}
 	.headers
 	{
-		padding-top:62mm;
+		padding-top:58mm;
 		height: 33mm;
 	}
 	.leftInfo
@@ -59,7 +59,7 @@ use yii\helpers\Url;
 		background: grey;
 	}
 	#container .pages:not(:first-child){
-		// padding-top: 4mm;
+		padding-top: 4mm;
 		padding-top: 5px;
 	}
 
@@ -213,7 +213,7 @@ use yii\helpers\Url;
 	// var_dump($printer);
 	if($printer == 'sri')
 	{
-		$css .= '.headers{padding-top:60mm;height: 32mm;}.kwNo{line-height: 2mm;}.terb{padding-top: 11mm;line-height: 35px;}';
+		$css .= '.headers{padding-top:56mm;height: 32mm;}.kwNo{line-height: 2mm;}.terb{padding-top: 11mm;line-height: 35px;}';
 	}
 	elseif($printer == 'refa'){
 		$css .= '

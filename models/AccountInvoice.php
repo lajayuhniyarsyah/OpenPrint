@@ -487,7 +487,7 @@ class AccountInvoice extends \yii\db\ActiveRecord
 				'priceUnitMainCurr'=>$priceUnitMainCurr,
 				'qty'=>($this->payment_for ? '&nbsp;':$invLine->quantity),
 				'unit'=>$unit,
-				'priceSubtotal'=>($isMainCurrency ? round($invLine->quantity*$invLine->price_unit,2):($invLine->quantity*$invLine->price_unit)),
+				'priceSubtotal'=>($isMainCurrency ? round($invLine->quantity*$invLine->price_unit,2):round($invLine->quantity*$invLine->price_unit,2)),
 				'priceSubtotalMainCurr'=>$priceSubtotalMainCurr,
 				
 				'discountPercentage'=>$invLine->discount,
@@ -525,7 +525,9 @@ class AccountInvoice extends \yii\db\ActiveRecord
 			];
 
 			$invoice['total']['subtotal'] += $lines[$idx]['priceSubtotal'];
+			// echo $lines[$idx]['priceSubtotal'].'<br/>';
 			$invoice['total']['subtotalMainCurr'] += $priceSubtotalMainCurr;
+			// echo $priceSubtotalMainCurr.'<br/>';
 			$invoice['total']['discountSubtotal'] += $invLine->amount_discount;
 			
 			$invoice['total']['discountSubtotalMainCurr'] += $discountMainCurr;
@@ -542,6 +544,7 @@ class AccountInvoice extends \yii\db\ActiveRecord
 			// var_dump($taxMainCurr);
 			// echo $invoice['total']['amountTax'];
 		endforeach;
+		// die();
 		// var_dump($counterLinePriced);
 		if($counterLinePriced==1){
 			$invoice['total']['amountUntaxedMainCurr'] = floor($lines[0]['priceSubtotalMainCurr'])-floor($lines[0]['discountMainCurr']);
@@ -562,10 +565,22 @@ class AccountInvoice extends \yii\db\ActiveRecord
 		// var_dump($invoice['total']['amountTaxMainCurr']);
 
 		if($this->payment_for=='dp' || $this->payment_for=='completion'):
+			
 			if($printForFaktur){
 				unset($invoice['total']);
 				$invoice['total'] = $this->prepareTotal();
 			}
+			$diffCurrency = false;
+			$soValasInvoiceIDR = false;
+			foreach($this->orders as $order):
+				if($order->pricelist->currency_id != $this->currency_id){
+					$diffCurrency = true;
+					if(preg_match('/idr/i', $this->currency->name)){
+						// if invoice rupiah
+						$invoice['rate'] = $this->pajak;
+					}
+				}
+			endforeach;
 			
 			// then add so lines
 			$no=0;
@@ -576,10 +591,17 @@ class AccountInvoice extends \yii\db\ActiveRecord
 					$idx++;
 
 					$priceUnitMainCurr = round($soLine->price_unit * $invoice['rate'],2);
-					$priceSubtotalMainCurr = round($priceUnitMainCurr*$soLine->product_uom_qty,2);
 
+					$priceSubtotalMainCurr = round($priceUnitMainCurr*$soLine->product_uom_qty,2);
+					/*echo '<br/>=====================<br/>';
+					echo $soLine->price_unit.'-----..>';
+					echo $priceUnitMainCurr.' X '.$soLine->product_uom_qty.'===';
+					echo $priceSubtotalMainCurr;
+
+					echo '<br/>=====================<br/>';*/
 					// $discountMainCurr = ($soLine->discount ? $priceSubtotalMainCurr*($soLine->discount/100):($soLine->discount_nominal ? round($soLine->discount_nominal*$invoice['rate']) : 0));
 					$discountMainCurr = $soLine->discount_nominal*$invoice['rate'];
+
 					// var_dump($discountMainCurr);
 					$priceTotal = ($soLine->price_unit*$soLine->product_uom_qty)-$soLine->discount_nominal;
 					$priceTotalMainCurr = round($priceSubtotalMainCurr-$discountMainCurr,2);
@@ -638,15 +660,21 @@ class AccountInvoice extends \yii\db\ActiveRecord
 						$lines[$idx]['name'] .= ($discountMainCurr >0 ? '<br/><b>Discount</b> Rp'.$this->formatValue($discountMainCurr,13):null);
 
 						$invoice['total']['subtotal'] += $lines[$idx]['priceSubtotal'];
+
 						$invoice['total']['subtotalMainCurr'] += $priceSubtotalMainCurr;
+						
 						$invoice['total']['discountSubtotal'] += $soLine->discount_nominal;
+						$discountTotal['mainCurr'] += $discountMainCurr;
+						$discountTotal['total'] += $lines[$idx]['discountAmount'];
 						$invoice['total']['discountSubtotalMainCurr'] += $discountMainCurr;
 						$invoice['total']['amountUntaxed'] += $priceTotal;
+						// echo $priceTotalMainCurr.'<br/>';
 						$invoice['total']['amountUntaxedMainCurr'] += floor($priceTotalMainCurr);
 						$invoice['total']['amountTax'] += round($priceTotal*(10/100),5);
 						$invoice['total']['amountTaxMainCurr'] += $taxMainCurr;
 						$invoice['total']['amountTotal'] += $priceTotal+$invoice['total']['amountTax'];
 						$invoice['total']['amountTotalMainCurr'] += $totalAmountMainCurr;
+
 					else:
 						// do nothing
 					endif;
@@ -661,35 +689,53 @@ class AccountInvoice extends \yii\db\ActiveRecord
 			/*echo $invoice['total']['subtotalMainCurr'];
 			echo '<br/>';
 			echo $invoice['total']['discountSubtotal'];*/
+			// die($invTotalTmp['subtotalMainCurr']);
 			if($this->dp_percentage && $printForFaktur){
 				// $invoice['total']['subtotal'] = $lines[$idx]['priceSubtotal'];
 
 				if($isMainCurrency){
 					// if currency in main currency setting then 
 					// use total in invoice
+					// $invoice['total']['subtotalMainCurr'] = floor($invTotalTmp['subtotalMainCurr']);
 					$invoice['total']['subtotalMainCurr'] = floor($invTotalTmp['subtotalMainCurr']);
 
 					// $invoice['total']['discountSubtotal'] = $soLine->discount_nominal;
 					$invoice['total']['discountSubtotalMainCurr'] = floor($invTotalTmp['discountSubtotalMainCurr']);
 					// $invoice['total']['amountUntaxed'] = $priceTotal;
 					$invoice['total']['amountUntaxedMainCurr'] = $invTotalTmp['amountUntaxedMainCurr'];
+
 					$invoice['total']['amountTax'] = $invTotalTmp['amountTax'];
 					$invoice['total']['amountTaxMainCurr'] = $invTotalTmp['amountTaxMainCurr'];
 					$invoice['total']['amountTotal'] = $invTotalTmp['amountTotal'];
 					$invoice['total']['amountTotalMainCurr'] = $invTotalTmp['amountTotalMainCurr'];
-				}else{
-					$invoice['total']['subtotalMainCurr'] = floor($invoice['total']['amountUntaxedMainCurr'] * ($this->dp_percentage/100));
+
+					$invoice['dp']['dpp'] = floor($invTotalTmp['amountUntaxedMainCurr']);
+					$invoice['dp']['ppn'] = $invTotalTmp['amountTaxMainCurr'];
+					$invoice['dp']['discount'] = 0;
+				}
+				else
+				{
+					// var_dump($invoice['total']);
+					$invoice['total']['subtotalMainCurr'] = floor($invoice['total']['subtotalMainCurr']);
 
 					// var_dump( $invoice['total']['amountUntaxedMainCurr']);
 					// $invoice['total']['discountSubtotal'] = $soLine->discount_nominal;
 					$invoice['total']['discountSubtotalMainCurr'] = floor($invoice['total']['discountSubtotalMainCurr']);
 					// $invoice['total']['amountUntaxed'] = $priceTotal;
 					$invoice['total']['amountUntaxedMainCurr'] = floor($invoice['total']['subtotalMainCurr'] - $invoice['total']['discountSubtotalMainCurr']);
+					// echo $invoice['total']['subtotalMainCurr'].' - '.$invoice['total']['discountSubtotalMainCurr'].'<br/>';
+
 					// var_dump( $invoice['total']['amountUntaxedMainCurr']);
 					$invoice['total']['amountTax'] = $this->amount_tax;
 					$invoice['total']['amountTaxMainCurr'] = floor($invoice['total']['amountUntaxedMainCurr']*(10/100));
 					$invoice['total']['amountTotal'] = $priceTotal+$invoice['total']['amountTax'];
 					$invoice['total']['amountTotalMainCurr'] = $totalAmountMainCurr;
+
+
+					$invoice['dp']['dpp'] = floor($invoice['total']['amountUntaxedMainCurr'] * ($this->dp_percentage/100));
+					$invoice['dp']['ppn'] = floor($invoice['dp']['dpp']*(10/100));
+					$invoice['dp']['discount'] = 0;
+
 				}
 
 				
@@ -704,6 +750,7 @@ class AccountInvoice extends \yii\db\ActiveRecord
 
 		$invoice['total']['discountSubtotalMainCurr']   = floor($invoice['total']['discountSubtotalMainCurr']);
 		$invoice['total']['amountUntaxed']              = round($invoice['total']['amountUntaxed'],2);
+		// echo $invTotalTmp['amountUntaxedMainCurr'].'<br/>';
 		$invoice['total']['amountUntaxedMainCurr']      = floor($invoice['total']['amountUntaxedMainCurr']);
 		// echo $discountMainCurr;
 		$invoice['total']['amountTax']                  = round($invoice['total']['amountTax'],2);

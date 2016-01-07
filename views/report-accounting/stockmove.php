@@ -30,8 +30,8 @@
 			$body[]='<tr>
 					<td>'.$no.'</td>
 					<td>'.Yii::$app->formatter->asDatetime($value['tanggal'], "php:d-m-Y").'</td>
-					<td>'.substr($value['dn_no'], 1,6).'</td>
-					<td>'.substr($value['no_op'], 1,6).'</td>
+					<td>'.substr($value['dn_no'], 0,6).'</td>
+					<td>'.substr($value['no_op'], 0,6).'</td>
 					<td>'.$value['part_number'].'</td>
 					<td>'.$value['name_template'].'</td>
 					<td>'.$value['name_input'].'</td>

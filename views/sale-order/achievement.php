@@ -5,6 +5,7 @@ use kartik\widgets\ActiveForm;
 use kartik\widgets\DatePicker;
 use kartik\widgets\Select2;
 use kartik\grid\GridView;
+use yii\web\JsExpression;
 
 use miloschuman\highcharts\Highcharts;
 
@@ -23,7 +24,7 @@ $form = ActiveForm::begin([
 
 <?=Select2::widget([
 	'name' => 'sales',
-	'data' => \yii\helpers\ArrayHelper::merge(
+	/*'data' => \yii\helpers\ArrayHelper::merge(
 		$saleUsers,
 		[
 			'all'=>"All Sales",
@@ -38,7 +39,30 @@ $form = ActiveForm::begin([
 			"group:jtt"=>"Group: Jawa Tengah / Timur",
 			"group:sls"=>"Group: Sulawesi",
 		]
-	),
+	),*/
+	'pluginOptions'=>[
+		'tags'=>true,
+		'ajax'=>[
+			'url'=>Url::to(['service/search-user']),
+			'dataType'=>'json',
+			'data'=>new JsExpression('function(term,page){return {search:term}; }'),
+			'results'=>new JsExpression('function(data,page){ return {results:data.results}; }'),
+		],
+		'allowClear'=>true,
+		'initSelection' => new JsExpression('function (element, callback) {
+			var id=$(element).val();
+			console.log("CONSOLLLLLLLE ID"+id);
+			if (id !== "") {
+				$.ajax("'.Url::to(['service/search-user']).'&id=" + id, {
+					dataType: "json"
+					}).done(function(data) { 
+						callback(data.results);
+
+					}
+				);
+			}
+		}'),
+	],
 	'value'=>Yii::$app->request->get('sales'),
 	'options' => [
 		'placeholder' => 'Select Sales ...',
@@ -62,38 +86,38 @@ $form = ActiveForm::begin([
 	'convertFormat'=>true,
 ]);?>
 <div class="form-group">
-    <?= Html::submitButton('Search', ['class' =>'btn btn-primary']) ?>
+	<?= Html::submitButton('Search', ['class' =>'btn btn-primary']) ?>
 </div>
 <?php ActiveForm::end(); ?>
 
 <?php
 // var_dump($series);
 echo HighCharts::widget([
-    'options' => [
-        /*'chart' => [
-                'type' => 'line'
-        ],*/
-        'legend'=>[
-        	// 'layout'=>'vertical',
-        	// 'verticalAlign'=>'top',
-        	// 'floating'=>true,
-        	'itemWidth'=>150,
-        	/*'x'=>90,
-        	'y'=>45,*/
-        ],
-        'title' => [
-             'text' => 'Sale Order Received'
-             ],
-        'xAxis' => [
-            'categories' => $chart['xCategories']
-        ],
-        'yAxis' => [
-            'title' => [
-                'text' => 'Order (IDR)'
-            ]
-        ],
-        'series' => $chart['series']
-    ]
+	'options' => [
+		/*'chart' => [
+				'type' => 'line'
+		],*/
+		'legend'=>[
+			// 'layout'=>'vertical',
+			// 'verticalAlign'=>'top',
+			// 'floating'=>true,
+			'itemWidth'=>150,
+			/*'x'=>90,
+			'y'=>45,*/
+		],
+		'title' => [
+			 'text' => 'Sale Order Received'
+			 ],
+		'xAxis' => [
+			'categories' => $chart['xCategories']
+		],
+		'yAxis' => [
+			'title' => [
+				'text' => 'Order (IDR)'
+			]
+		],
+		'series' => $chart['series']
+	]
 ]);
 ?>
 <div class="panel panel-default">

@@ -42,7 +42,7 @@ class ReportAccountingController extends Controller
 	    		->select(
 	    				'
 	    				 dn.create_date as cretae_date, 
-	    				 dn.tanggal as tanggal,
+	    				 sp.date_done as tanggal,
 	    				 dn.name as dn_no,
 	    				 op.name as no_op,
 	    				 p.default_code as part_number,
@@ -61,7 +61,7 @@ class ReportAccountingController extends Controller
 			    ->from('stock_move as sm')
 			    ->join('JOIN','stock_picking as sp','sm.picking_id=sp.id')
 			    ->join('JOIN', 'order_preparation as op', 'op.picking_id=sp.id')
-			    ->join('LEFT JOIN', 'delivery_note as dn', 'dn.prepare_id=op.id')
+			    ->join('LEFT JOIN', 'delivery_note as dn', 'dn.id=sp.note_id')
 			    ->join('LEFT JOIN', 'product_product as p', 'p.id=sm.product_id')
 			    ->join('LEFT JOIN','sale_order_line as sol','sol.id=sm.sale_line_id')
 			    ->join('LEFT JOIN', 'sale_order as so', 'so.id=op.sale_id')
@@ -69,13 +69,14 @@ class ReportAccountingController extends Controller
 			    ->join('JOIN', 'res_partner as r', 'r.id=dn.partner_id')
 			    ->join('LEFT JOIN', 'stock_production_lot as batch', 'batch.id=sm.prodlot_id')
 			    ->join('JOIN', 'product_pricelist as ppl', 'ppl.id = so.pricelist_id')
-			    ->where(['>=','dn.tanggal',$from])
-			    ->andWhere(['<=','dn.tanggal',$to])
+			    ->where(['>=','sp.date_done',$from])
+			    ->andWhere(['<=','sp.date_done',$to])
 			    ->andWhere(['not', ['p.default_code' => 'DUMMY01']])
-			    ->orderBy('dn.tanggal ASC');
+			    ->orderBy('sp.date_done ASC');
 			    
 
-    	}else{
+    	}
+    	else{
 	    		$query
 	    		->select(
 	    				'

@@ -23,6 +23,7 @@ use app\models\SaleOrderSearch;
 use app\models\ResUsers;
 use app\models\ResPartner;
 use app\models\SaleOrderLine;
+use app\models\ProductProduct;
 
 use app\models\SaleAnnualReportForm;
 use app\models\ResGroups;
@@ -74,19 +75,27 @@ class PurchaseOrderController extends Controller
     {
         $out = ['more' => false];
         if (!is_null($search)) {
-            $query = new Query;
+            $command = new Query;
             $lowerchr=strtolower($search);
             $command = Yii::$app->db->createCommand("SELECT DISTINCT id, name as text FROM res_partner WHERE lower(name) LIKE '%".$lowerchr."%' AND supplier=true AND is_company=true LIMIT 20");
             $data = $command->queryAll();
             $out['results'] = array_values($data);
         }
+
         elseif ($id > 0) {
-            $out['results'] = ['id' => $id, 'text' => ResPartner::find($id)->name];
+
+            $ids=explode(',', $id);
+            foreach ($ids as $value) {
+                $data[] = ['id' => $value, 'text' => ResPartner::find()->where(['id' => $value])->one()->name];
+            }
+
+            $out['results'] = $data;
         }
         else {
             $out['results'] = ['id' => 0, 'text' => 'No matching records found'];
         }
-        echo Json::encode($out);
+
+        echo \yii\helpers\Json::encode($out);
     }
 
 
@@ -96,12 +105,18 @@ class PurchaseOrderController extends Controller
         if (!is_null($search)) {
             $query = new Query;
             $lowerchr=strtolower($search);
-            $command = Yii::$app->db->createCommand("SELECT DISTINCT id, name as text FROM product_template WHERE lower(name) LIKE '%".$lowerchr."%' AND purchase_ok=true LIMIT 20");
+            $command = Yii::$app->db->createCommand("SELECT DISTINCT id, '[' || default_code || '] ' || name_template as text FROM product_product WHERE lower(name_template) LIKE '%".$lowerchr."%' OR lower(default_code) LIKE '%".$lowerchr."%' LIMIT 20");
             $data = $command->queryAll();
             $out['results'] = array_values($data);
         }
         elseif ($id > 0) {
-            $out['results'] = ['id' => $id, 'text' => ProductTemplate::find($id)->name];
+
+            $ids=explode(',', $id);
+            foreach ($ids as $value) {
+                $data[] = ['id' => $value, 'text' => '['.ProductProduct::find()->where(['id' => $value])->one()->default_code.'] '.ProductProduct::find()->where(['id' => $value])->one()->name_template];
+            }
+            
+            $out['results'] = $data;
         }
         else {
             $out['results'] = ['id' => 0, 'text' => 'No matching records found'];
@@ -111,18 +126,22 @@ class PurchaseOrderController extends Controller
 
     public function actionPurchasereport($groupBy=null)
     {
+        $connection = \Yii::$app->db;
         $this->layout = 'dashboard';
         $query = new Query;
         $model = new PurchaseOrder();
         $modelLine = new PurchaseOrderLine();
         $model->load(Yii::$app->request->get());
         $modelLine->load(Yii::$app->request->get());
+        $submited = false;
 
-        /*if ($model->load(Yii::$app->request->get()) AND $modelLine->load(Yii::$app->request->get())) {
-            $query = $this->getPOLineRelatedQuery($model,$modelLine,$groupBy);
-        }else{
-            $query = $this->getPOLineRelatedQuery($model,$modelLine,$groupBy);
-        }*/
+        // print_r($model);
+
+        // if ($model->load(Yii::$app->request->get()) AND $modelLine->load(Yii::$app->request->get())) {
+        //     $query = $this->getPOLineRelatedQuery($model,$modelLine,$groupBy);
+        // }else{
+        //     $query = $this->getPOLineRelatedQuery($model,$modelLine,$groupBy);
+        // }
 
         $query = $this->getPOLineRelatedQuery($model,$modelLine,$groupBy);
 
@@ -144,14 +163,11 @@ class PurchaseOrderController extends Controller
     public function getPOLineRelatedQuery($params = [], $modelline = [], $groupBy = null)
     {
         $query = new Query;
-
-
         if($params['partner_id']){
             $partner_id=$params['partner_id'];    
         }else{
             $partner_id='0';   
         }
-        
         if($modelline){
             if($modelline['product_id']){
                 $product=$modelline['product_id'];
@@ -176,6 +192,7 @@ class PurchaseOrderController extends Controller
             $dattefrom='0';
             $dateto='0';
         }
+
 
         // if($params['pricelist']){
         //     if(is_array($params['pricelist'])){
@@ -217,6 +234,7 @@ class PurchaseOrderController extends Controller
                             pol.price_unit as price_unit,
                             pol.state as state,
                             pol.product_qty as product_qty,
+                            pu.name as uom,
                             pid.name as pricelist,
                             (pol.product_qty*pol.price_unit) as total,
                         ');
@@ -225,7 +243,7 @@ class PurchaseOrderController extends Controller
                 ->join('LEFT JOIN','purchase_order as po','po.id=pol.order_id')
                 ->join('LEFT JOIN','product_pricelist as pid','pid.id=po.pricelist_id')
                 ->join('LEFT JOIN','product_product as pp','pp.id=pol.product_id')
-                // ->join('LEFT JOIN', 'product_uom as puom','po.')
+                ->join('LEFT JOIN', 'product_uom as pu','pu.id=pol.product_uom')
                 ->join('LEFT JOIN','res_partner as rp','rp.id=pol.partner_id');
 
         if($groupBy){
@@ -257,10 +275,24 @@ class PurchaseOrderController extends Controller
             }
 
         if(isset($params['state']) && $params['state']){
-            if($params['state']!='0')
+            
+            if ($params['state']=="purchased"){
+                $cekstate = 'confirmed, approved, done';
+                if($params['state']!='0')
+                {
+                    $query->andWhere(['pol.state'=>explode(',', $cekstate)]); 
+                }
+
+            }else{
+                if($params['state']!='0')
                 {
                     $query->andWhere(['pol.state'=>explode(',',$params['state'])]); 
                 }
+            }
+            
+
+        }else{
+            $query->andWhere(['in', 'pol.state', ['confirmed', 'approved', 'done']]); 
         }
 
 
@@ -271,6 +303,9 @@ class PurchaseOrderController extends Controller
                     $query->andWhere(['>=','po.date_order',$params['date_order']]);
                     $query->andWhere(['<=','po.date_order',$params['duedate']]);
                 }
+        }
+        if (isset($params['pricelist'])){
+            $query->andWhere(['po.pricelist_id'=>$params['pricelist']]);  
         }
 
         if(!$groupBy){

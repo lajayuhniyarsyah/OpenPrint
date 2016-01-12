@@ -12,6 +12,7 @@ use app\models\ProductSaleReportForm;
 
 use app\models\SaleAnnualReportForm;
 use app\models\ResGroups;
+use app\models\ProductProduct;
 use app\models\ResGroupsUsersRel;
 use app\models\GroupSales;
 use app\models\GroupSalesLine;
@@ -218,7 +219,7 @@ SELECT
 GROUP BY period_year, period_month, month_name
 ORDER BY period_year ASC, period_month ASC
 EOQ;
-		echo '<pre>'.$queryAllOrder.'</pre>';
+		// echo '<pre>'.$queryAllOrder.'</pre>';
 		$commandAllOrders = $connection->createCommand($queryAllOrder);
 		$resultAllOrders = $commandAllOrders->queryAll();
 		$allOrderDataProvider = new \yii\data\ArrayDataProvider([
@@ -265,6 +266,10 @@ EOQ;
 			$sales_ids=[]; #sales ids
 			$group_ids=[]; #sale group ids
 			if($getSalesUsers):
+				if(!is_array($getSalesUsers)){
+					$dec = urldecode($getSalesUsers);
+					$getSalesUsers = explode(',', $dec);
+				}
 				foreach($getSalesUsers as $searchFor):
 					if(preg_match('/group\:/', $searchFor)){
 						// search for group
@@ -279,8 +284,8 @@ EOQ;
 					}
 				endforeach;
 			endif;
-			/*var_dump($sales_ids);
-			die();*/
+			// var_dump($sales_ids);
+			// die();
 			
 			if($model->date_from == $model->date_to){
 				$dateQuery = "so.date_order = '{$model->date_from}'";
@@ -418,7 +423,6 @@ EOQ;
 				}
 			];
 		}
-
 
 
 		return $this->render(
@@ -684,45 +688,58 @@ EOQ;
 		return $res;
 	}
 
+    public function actionCustomerlist($search = null, $id = null) 
+    {
+        $out = ['more' => false];
+        if (!is_null($search)) {
+            $command = new Query;
+            $lowerchr=strtolower($search);
+            $command = Yii::$app->db->createCommand("SELECT DISTINCT id, name as text FROM res_partner WHERE lower(name) LIKE '%".$lowerchr."%' AND customer=true AND is_company=true LIMIT 20");
+            $data = $command->queryAll();
+            $out['results'] = array_values($data);
+        }
 
-	   public function actionCustomerlist($search = null, $id = null) 
-	{
-		$out = ['more' => false];
-		if (!is_null($search)) {
-			$query = new Query;
-			$lowerchr=strtolower($search);
-			$command = Yii::$app->db->createCommand("SELECT DISTINCT id, name as text FROM res_partner WHERE lower(name) LIKE '%".$lowerchr."%' AND customer=true AND is_company=true LIMIT 20");
-			$data = $command->queryAll();
-			$out['results'] = array_values($data);
-		}
-		elseif ($id > 0) {
-			$out['results'] = ['id' => $id, 'text' => ResPartner::find($id)->name];
-		}
-		else {
-			$out['results'] = ['id' => 0, 'text' => 'No matching records found'];
-		}
-		echo Json::encode($out);
-	}
+        elseif ($id > 0) {
+
+            $ids=explode(',', $id);
+            foreach ($ids as $value) {
+                $data[] = ['id' => $value, 'text' => ResPartner::find()->where(['id' => $value])->one()->name];
+            }
+
+            $out['results'] = $data;
+        }
+        else {
+            $out['results'] = ['id' => 0, 'text' => 'No matching records found'];
+        }
+
+        echo \yii\helpers\Json::encode($out);
+    }
 
 
-	public function actionProductlist($search = null, $id = null) 
-	{
-		$out = ['more' => false];
-		if (!is_null($search)) {
-			$query = new Query;
-			$lowerchr=strtolower($search);
-			$command = Yii::$app->db->createCommand("SELECT DISTINCT id, name as text FROM product_template WHERE lower(name) LIKE '%".$lowerchr."%' AND purchase_ok=true LIMIT 20");
-			$data = $command->queryAll();
-			$out['results'] = array_values($data);
-		}
-		elseif ($id > 0) {
-			$out['results'] = ['id' => $id, 'text' => ProductTemplate::find($id)->name];
-		}
-		else {
-			$out['results'] = ['id' => 0, 'text' => 'No matching records found'];
-		}
-		echo Json::encode($out);
-	}
+    public function actionProductlist($search = null, $id = null) 
+    {
+        $out = ['more' => false];
+        if (!is_null($search)) {
+            $query = new Query;
+            $lowerchr=strtolower($search);
+            $command = Yii::$app->db->createCommand("SELECT DISTINCT id, '[' || default_code || '] ' || name_template as text FROM product_product WHERE lower(name_template) LIKE '%".$lowerchr."%' OR lower(default_code) LIKE '%".$lowerchr."%' LIMIT 20");
+            $data = $command->queryAll();
+            $out['results'] = array_values($data);
+        }
+        elseif ($id > 0) {
+
+            $ids=explode(',', $id);
+            foreach ($ids as $value) {
+                $data[] = ['id' => $value, 'text' => '['.ProductProduct::find()->where(['id' => $value])->one()->default_code.'] '.ProductProduct::find()->where(['id' => $value])->one()->name_template];
+            }
+            
+            $out['results'] = $data;
+        }
+        else {
+            $out['results'] = ['id' => 0, 'text' => 'No matching records found'];
+        }
+        echo Json::encode($out);
+    }
 
 
 	public function actionProductcategory($search = null, $id = null) 
@@ -922,12 +939,37 @@ EOQ;
 				
 			}
 		}
-		if(isset($params['state']) && $params['state']){
-			if($params['state']!='0')
-				{
-					$query->andWhere(['sol.state'=>explode(',',$params['state'])]); 
-				}
-		}
+		// if(isset($params['state']) && $params['state']){
+		// 	if($params['state']!='0')
+		// 		{
+		// 			$query->andWhere(['sol.state'=>explode(',',$params['state'])]); 
+		// 		}
+		// }
+
+
+        if(isset($params['state']) && $params['state']){
+            
+            if ($params['state']=="order"){
+                $cekstate = 'confirmed, approved, done';
+                if($params['state']!='0')
+                {
+                    $query->andWhere(['sol.state'=>explode(',', $cekstate)]); 
+                }
+
+            }else{
+                if($params['state']!='0')
+                {
+                    $query->andWhere(['sol.state'=>explode(',',$params['state'])]); 
+                }
+            }
+            
+
+        }else{
+            $query->andWhere(['in', 'sol.state', ['confirmed', 'approved', 'done']]); 
+        }
+
+        
+		
 		if(isset($params['date_from']) && $params['date_from']){
 			 if($params['date_from'] !='0')
 			 	{

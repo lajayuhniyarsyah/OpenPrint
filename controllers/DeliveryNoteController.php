@@ -134,6 +134,7 @@ class DeliveryNoteController extends Controller
         $prepLines = $this->prepareLineData($model->deliveryNoteLines); 
         // var_dump($prepLines);
         $linesData = $this->renderLinesPrint($prepLines);
+
         if(!$test):
             return $this->render('print/dn_batch',['model'=>$model,'linesData'=>$linesData]);
         else:
@@ -201,8 +202,9 @@ class DeliveryNoteController extends Controller
     {
         $res = [];
         // var_dump($preparedLines);
+        $no = 0;
         foreach($preparedLines as $k=>$l):
-            $res[$k]=[
+            $res[$no]=[
                 'qty'=>'<div style="float:left;width:10mm;">'.($l['no'] ? $l['no']:'&nbsp;').'</div>
                     <div>'.floatval($l['qty']).' '.$l['uom'].'</div><div style="clear:both;"></div>',
                 
@@ -211,33 +213,34 @@ class DeliveryNoteController extends Controller
             // var_dump($l);
             if(isset($l['name2'])){
                 if(array_key_exists('set', $l) && count($l['set']) && isset($l['name'])){
-                    $res[$k]['name'] = $l['name'];
+                    $res[$no]['name'] = $l['name'];
                 }else{
-                    $res[$k]['name'] = $l['name2'];
+                    $res[$no]['name'] = $l['name2'];
                 }
                 
             }else{
 
-                $res[$k]['name'] = $l['name'];
+                $res[$no]['name'] = $l['name'];
             }
 
             // if PRODUCT IS SET TYPE
             if(array_key_exists('set', $l)){
-                $res[$k]['name'].='<br/>Consist Of : <ul style="margin:0;">';
+                $res[$no]['name'].='<br/>Consist Of : <ul style="margin:0;">';
                 foreach($l['set'] as $set){
-                    $res[$k]['name'] .= '<li>'.$set['name'].'</li>';
+                    $res[$no]['name'] .= '<li>'.$set['name'].'</li>';
                     if(array_key_exists('batches', $set) && count($set['batches'])>=1):
-                        $res[$k]['name'].=$this->prepareBathesRender($set);
+                        $res[$no]['name'].=$this->prepareBathesRender($set);
                     endif;
                 }
-                $res[$k]['name'].='</ul>';
+                $res[$no]['name'].='</ul>';
             }
 
 
             if(array_key_exists('batches', $l) && count($l['batches'])>=1)
             {
-                $res[$k]['name'].='<br/>'.$this->prepareBathesRender($l);
+                $res[$no]['name'].='<br/>'.$this->prepareBathesRender($l);
             }
+            $no++;
         endforeach;
         /*echo '----------';
         var_dump($res);*/

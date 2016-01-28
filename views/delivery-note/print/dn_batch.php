@@ -102,8 +102,8 @@
 
 <?php
 $uid = Yii::$app->request->getQueryParam('uid');
-// hadi or sri / ika
-if( $uid == 23 || $uid == 101 || $uid == 173):
+// hadi or sri / ika // mike
+if( $uid == 23 || $uid == 101 || $uid == 173 || $uid==25):
 	?>
 	<style type="text/css">
 	.attnTo{
@@ -221,7 +221,7 @@ $scr = '
 	var lines = '.\yii\helpers\Json::encode($linesData).';
 	var maxLinesHeight = jQuery(\'.tdLines:last\').height();
 	
-
+	console.log(lines);
 	var currRow = 0;
 
 	console.log(maxLinesHeight);

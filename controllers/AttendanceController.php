@@ -119,7 +119,7 @@ class AttendanceController extends Controller
     }
 
 
-    public function actionFirstAndLastScan($year=null,$month=null,$department=null){
+    public function actionFirstAndLastScan($site=1792,$year=null,$month=null,$department=null){
         if(!$year){
             $year = date('Y');
         }
@@ -158,6 +158,7 @@ class AttendanceController extends Controller
         $query = <<<query
 SELECT 
     date_series.i
+    , r_p.name work_site
     , h_emp.name_related employee
     --, att_log_min_max_pure.employee_id
     , (CASE WHEN att_log_min_max_pure.y IS NULL THEN date_series.year_series ELSE att_log_min_max_pure.y END) "year"
@@ -249,12 +250,13 @@ FULL JOIN
             JOIN hr_employee hre ON hre.id = hrl.employee_id
             JOIN hr_department hrd ON hrd.id = hre.department_id
             WHERE hrd.name like '$department_query'
+                AND hre.address_id = {$site}
         ) AS eids ON eids.eid > 0
         -- WHERE h_emp.eid ilike '%{$where['employee']}%'
         -- order by eids.eid asc, date_series.i asc
     ) AS date_series ON date_series.emp_id = att_log_min_max_pure.employee_id and date_series.year_series = att_log_min_max_pure.y and date_series.month_series = att_log_min_max_pure.m and date_series.day_series = att_log_min_max_pure.d
 JOIN hr_employee AS h_emp ON h_emp.id = date_series.emp_id
-
+LEFT JOIN res_partner r_p ON r_p.id = h_emp.address_id
 ORDER BY h_emp.name_related ASC, date_series.i ASC, att_log_min_max_pure.y ASC, att_log_min_max_pure.m ASC, att_log_min_max_pure.d ASC
 query;
         
@@ -272,6 +274,13 @@ query;
         $dataToRender['month'] = $month;
         $dataToRender['department_active'] = $department;
 
+
+
+
+
+        $site_active = \app\models\ResPartner::findOne($site);
+        $dataToRender['site_active'] = $site_active;
+        $dataToRender['sites'] = \app\models\ResPartner::find()->where(['id'=>[1792,2788]])->orderBy('name ASC')->asArray()->all();
 
         $depts = \app\models\HrDepartment::find()->select('name')->orderBy('name ASC');
 

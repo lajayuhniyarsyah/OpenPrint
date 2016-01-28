@@ -13,7 +13,7 @@ use yii\bootstrap\Dropdown;
 				$end = date('Y');
 				$items = [];
 				for($iYear=$start;$iYear<=$end;$iYear++){
-					$items[] = ['label' => $iYear, 'url' => ['','year'=>$iYear,'month'=>$month,'department'=>$department_active]];
+					$items[] = ['label' => $iYear, 'url' => ['','year'=>$iYear,'month'=>$month,'department'=>$department_active,'site'=>$site_active->id]];
 				}
 				echo Dropdown::widget([
 					'items' => $items,
@@ -26,7 +26,7 @@ use yii\bootstrap\Dropdown;
 			<?php
 				$items = [];
 				for($m=1;$m<=12;$m++){
-					$items[] = ['label' => $m, 'url' => ['','year'=>$year,'month'=>$m,'department'=>$department_active]];
+					$items[] = ['label' => $m, 'url' => ['','year'=>$year,'month'=>$m,'department'=>$department_active,'site'=>$site_active->id]];
 				}
 				echo Dropdown::widget([
 					'items' => $items,
@@ -46,11 +46,33 @@ use yii\bootstrap\Dropdown;
 				}*/
 				/*var_dump($depts);
 				die();*/
-				$items[] = ['label'=>'All Dept','url'=>['','month'=>$month,'department'=>'All Department']];
+				$items[] = ['label'=>'All Dept','url'=>['','month'=>$month,'department'=>'All Department','site'=>$site_active->id]];
 				foreach($depts as $dept):
 
-					$items[] = ['label'=>$dept['name'],'url'=>['','year'=>$year,'month'=>$month,'department'=>$dept['name']]];
+					$items[] = ['label'=>$dept['name'],'url'=>['','year'=>$year,'month'=>$month,'department'=>$dept['name'],'site'=>$site_active->id]];
 				endforeach;
+				echo Dropdown::widget([
+					'items' => $items,
+				]);
+			?>
+		</span>
+
+		- ON -
+		<span id="siteSelection" class="dropdown">
+			<a href="#"  data-toggle="dropdown" class="dropdown-toggle"><?=Html::encode($site_active->name)?></a>
+			<?php
+				
+				$items = [];
+				/*for($m=1;$m<=12;$m++){
+					$items[] = ['label' => $m, 'url' => ['','month'=>$m]];
+				}*/
+				/*var_dump($depts);
+				die();*/
+				
+				foreach($sites as $site):
+					$items[] = ['label'=>$site['name'],'url'=>['','year'=>$year,'month'=>$month,'department'=>$department_active,'site'=>$site['id']]];
+				endforeach;
+
 				echo Dropdown::widget([
 					'items' => $items,
 				]);

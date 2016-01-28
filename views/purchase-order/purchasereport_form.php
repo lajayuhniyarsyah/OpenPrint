@@ -63,7 +63,7 @@ $initScript = <<< SCRIPT
 	function (element, callback) {
 		var id=\$(element).val();
 		if (id !== "") {
-			\$.ajax("{$url}?id=" + id, {
+			$.ajax("'.Url::to(['supplierlist']).'&id=" + id, {
 			dataType: "json"
 		}).done(function(data) { callback(data.results);});
 		}
@@ -121,12 +121,12 @@ SCRIPT;
 
 					<br/>
 					<br/>
-					<div id="formactivity">
+					<div id="formactivity" class="row">
 					<?php
 						if($groupBy=='nogroup'){
 							$form = ActiveForm::begin([
 									'method'=>'get',
-									'action'=>['purchase-order/purchasereport'],
+									'action'=>['purchase-order/purchasereport'], 
 									'enableClientValidation'=>false
 								]); 
 						}else{
@@ -137,93 +137,110 @@ SCRIPT;
 								]); 
 						}
 					?>
-
-						<div style="width:40%;float:left;">
-							<?php
-								echo $form->field($model, 'partner_id')->widget(Select2::classname(), [
-									'options' => ['placeholder' => 'All Supplier ...'],
-									'pluginOptions' => [
-										'tags'=>true,
-										'allowClear' => true,
-										'minimumInputLength' => 2,
-										'ajax' => [
-											'url' => $url,
-											'dataType' => 'json',
-											'data' => new JsExpression('function(term,page) { return {search:term}; }'),
-											'results' => new JsExpression('function(data,page) { return {results:data.results}; }'),
-										],
-										'initSelection' => new JsExpression($initScript)
+					<div class="col-md-6">
+						<?php
+							echo $form->field($model, 'partner_id')->widget(Select2::classname(), [
+								'name'=>'partner_id',
+								'pluginOptions'=>[
+									'tags'=>true,
+									'ajax'=>[
+										'url'=>Url::to(['supplierlist']),
+										'dataType'=>'json',
+										'data'=>new JsExpression('function(term,page){return {search:term}; }'),
+										'results'=>new JsExpression('function(data,page){ return {results:data.results}; }'),
 									],
-								]);
-							?>
-						</div>
-						<div style="width:40%;float:right;">
-							<?php
-								echo $form->field($modelline, 'product_id')->widget(Select2::classname(), [
-									'options' => ['placeholder' => 'All Product ...'],
-									'pluginOptions' => [
-										'tags'=>true,
-										'allowClear' => true,
-										'minimumInputLength' => 2,
-										'ajax' => [
-											'url' => $urlproduct,
-											'dataType' => 'json',
-											'data' => new JsExpression('function(term,page) { return {search:term}; }'),
-											'results' => new JsExpression('function(data,page) { return {results:data.results}; }'),
-										],
-										'initSelection' => new JsExpression($initScriptProduct)
+									'allowClear'=>true,
+									'initSelection' => new JsExpression('function (element, callback) {
+										var id=$(element).val();
+										console.log("CONSOLLLLLLLE ID"+id);
+										if (id !== "") {
+											$.ajax("'.Url::to(['supplierlist']).'&id=" + id, {
+												dataType: "json"
+												}).done(function(data) { 
+													callback(data.results);
+												}
+											);
+										}
+									}'),
+								],
+								'value'=>Yii::$app->request->get('partner_id'),
+								'options' => ['placeholder' => 'All Supplier ...', 'multiple' => true],
+							]);
+						?>
+
+						<?php
+							echo $form->field($modelline,'name');
+						?>
+					</div>
+					<div class="col-md-6">
+						<?php
+							echo $form->field($modelline, 'product_id')->widget(Select2::classname(), [
+								'name'=>'product_id',
+								'pluginOptions'=>[
+									'tags'=>true,
+									'ajax'=>[
+										'url'=>Url::to(['productlist']),
+										'dataType'=>'json',
+										'data'=>new JsExpression('function(term,page){return {search:term}; }'),
+										'results'=>new JsExpression('function(data,page){ return {results:data.results}; }'),
 									],
-								]);
-							?>
-						</div>
-						
-						<div style="width:100%;">
-							<div style="float:left; width:45%;">
-									<?=DatePicker::widget([
-										'model' => $model,
-										'attribute' => 'date_order',
-										'attribute2' => 'duedate',
-										'options' => ['placeholder' => 'Start date'],
-										'options2' => ['placeholder' => 'End date'],
-										'type' => DatePicker::TYPE_RANGE,
-										'form' => $form,
-										'pluginOptions' => [
-											'format' => 'yyyy-MM-dd',
-											// 'format' => 'dd-MM-yyyy',
-											'autoclose' => true,
-											'startDate'=>'01/07/2014',
-										],
-										'convertFormat'=>true,
-									]);?>
-							</div>
-							<div style="width:40%;float:right; line-height:0px">
+									'allowClear'=>true,
+									'initSelection' => new JsExpression('function (element, callback) {
+										var id=$(element).val();
+										console.log("CONSOLLLLLLLE ID"+id);
+										if (id !== "") {
+											$.ajax("'.Url::to(['productlist']).'&id=" + id, {
+												dataType: "json"
+												}).done(function(data) { 
+													callback(data.results);
+												}
+											);
+										}
+									}'),
+								],
+								'value'=>Yii::$app->request->get('product_id'),
+								'options' => ['placeholder' => 'All Product ...', 'multiple' => true],
+							]);
+						?>
 
-							<?php
-								echo $form->field($model, 'state')->widget(Select2::classname(), [
-								    'name' => 'state', 
-								    'options' => ['placeholder' => 'Select a State ...'],
-								    'pluginOptions' => [
-								        'tags' => ["draft", "confirmed", "approved", "done", "cancel"],
-								        'maximumInputLength' => 10
-								    ],
-								]);
-							?>
-							</div>
+						<?php
+							echo $form->field($model, 'state')->widget(Select2::classname(), [
+							    'name' => 'state', 
+							    'options' => ['placeholder' => 'Select a State ...'],
+							    'pluginOptions' => [
+							        // 'tags' => ["draft", "confirmed", "approved", "done", "cancel"],
+							        'tags' => ["purchased","cancel","draft"],
+							        'maximumInputLength' => 10
+							    ],
+							]);
+						?>
+					</div>
+					
+					<div class="col-md-12">
+						<div style="float:left; width:45%;">
+								<?=DatePicker::widget([
+									'model' => $model,
+									'attribute' => 'date_order',
+									'attribute2' => 'duedate',
+									'options' => ['placeholder' => 'Start date'],
+									'options2' => ['placeholder' => 'End date'],
+									'type' => DatePicker::TYPE_RANGE,
+									'form' => $form,
+									'pluginOptions' => [
+										'format' => 'yyyy-MM-dd',
+										'autoclose' => true,
+										'startDate'=>'01/07/2014',
+									],
+									'convertFormat'=>true,
+								]);?>
 						</div>
-						<div style="width:100%">
-							<div style="width:40%;float:left;">
-								
-									<?php
-										echo $form->field($modelline,'name');
-									?>
-								
-							</div>
-						</div>
+					</div>
 
-					<div style="clear:both"></div>
-					<div class="form-group">
-						<br/><br/>
+					<div class="col-md-6">
+						<br/>
 				         <?= Html::submitButton('View Report', ['class' => 'btn btn-primary', 'name' => 'report-activity']) ?>
+				         <br/>
+				         <br/>
 				    </div>
 					<?php ActiveForm::end(); ?>
 					</div>
@@ -252,6 +269,7 @@ SCRIPT;
 			                            'headerOptions'=>['class'=>'kartik-sheet-style'] 
 			                        ],
 			                        'partner',
+			                        'no_po',
 			                        [
 			                        	'attribute'=>'date_order',
 			                            'header'=>'Date',
@@ -268,6 +286,7 @@ SCRIPT;
 			                                return app\components\NumericLib::indoStyle($model['product_qty'],2,',','.');
 			                            }
 			                        ],
+			                        'uom',
 			                        [
 			                        	'attribute'=>'price_unit',
 			                            'header'=>'Currency',

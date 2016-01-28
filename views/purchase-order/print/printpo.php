@@ -59,6 +59,9 @@ use yii\helpers\Url;
 		float: right;
 		width: 50mm;
 	}
+	.noborder{
+		border-left: none !important;
+	}
 	.do{
 		font-size: 22px;
 		font-weight: bold;
@@ -129,6 +132,8 @@ use yii\helpers\Url;
 	.tablefooter{
 		float:left; width:100%; border-left:1px solid black; border-right:1px solid black; height:185px;
 		border-bottom:1px solid black;
+		/*margin-top: 90px;*/
+		clear: both;
 	}
 	.tablefooter td{
 		border: medium none !important;
@@ -213,6 +218,9 @@ use yii\helpers\Url;
 		font-size: 16px;
 		vertical-align: top;
 	}
+	.lineTable{
+		border: 1px solid black;
+	}
 	.leftdata{
 		float: left;
 		width: 75%;
@@ -251,11 +259,11 @@ use yii\helpers\Url;
 	}
 	.rigthheadtable{
 		float: right;
-		width: 43%;
+		width: 48%;
 	}
 	.leftheadtable{
 		float: left;
-		width: 57%;
+		width: 52%;
 		border-right: 1px solid black;
 	}
 	.cus{
@@ -287,53 +295,65 @@ use yii\helpers\Url;
 		$subtotal=0;
 		foreach ($model->purchaseOrderLines as $value){
 
-				
-
 				if($value->part_number==""){
 					$pn="";
 				}else{
 					$pn=$value->part_number;
 				}
 
-				
 				if(!floatval($value->discount_nominal)){
 					if(!floatval($value->discount)){
 						$diskon=$diskon;
-					}else{
+ 					}else{
 						$hitungdiscount=(($value->price_unit*$value->product_qty)*$value->discount)/100;
 						$diskon=$diskon+$hitungdiscount;
 					}
 				}else{
 					$diskon=$diskon+$value->discount_nominal;
 				}
-
-
                 if($value->note_line){
                 	$noteline=$value->note_line;
-                	if($noteline=='-'){}else{
+                	if($noteline=='-' OR $noteline==false){}else{
                     	$data2[]=array('',''.nl2br($noteline).'','','','','','');	
                 	}
-                    
                 }
    	            if($value->variants==false){
 					$desc=nl2br($value->name);
 				}else{
 					$desc=$value->variants0->name;
 				}
+
+				
 				$subtotal=$subtotal+($value->price_unit*$value->product_qty);
         		
+
+        		if ($model->pricelist_id==2){
+        			$product_qty=app\components\NumericLib::indoStyle($value->product_qty,2,',','.');
+        			$price_unit=app\components\NumericLib::indoStyle($value->price_unit,0,',','.');
+        			$subtotal1=app\components\NumericLib::indoStyle($value->price_unit*$value->product_qty,0,',','.');
+        		}else{
+					$product_qty=app\components\NumericLib::indoStyle($value->product_qty,2,',','.');
+        			$price_unit=app\components\NumericLib::indoStyle($value->price_unit,2,',','.');
+        			$subtotal1=app\components\NumericLib::indoStyle($value->price_unit*$value->product_qty,2,',','.');
+        		}
 				$data2[]=array(
 								$no,
                                 $desc,
 								$pn,
-								app\components\NumericLib::indoStyle($value->product_qty,2,',','.'),
+								$product_qty,
 								$value->productUom->name,
-								app\components\NumericLib::indoStyle($value->price_unit,2,',','.'),
-								app\components\NumericLib::indoStyle($value->price_unit*$value->product_qty,2,',','.'));
+								$price_unit,
+								$subtotal1);
 						$no++;
 				}
-		$data2[]=array('','<br/><br/>'.nl2br($model->notes),'','','','','');
-        
+
+		$note=explode("^^^",$model->notes);
+
+		foreach ($note as $notes) {
+			$data2[]=array('',str_replace("^^^", "", nl2br($notes)),'','','','','');
+		}
+		
+
         if($model->pricelist_id==11){
             $pricelist="USD";
         }else if($model->pricelist_id==12){
@@ -347,8 +367,6 @@ use yii\helpers\Url;
         }else if($model->pricelist_id==9){
             $pricelist="SGD";
         }
-        
-        
 	?>
 <div id="pageContainer">
 <div class="pages">
@@ -430,7 +448,7 @@ use yii\helpers\Url;
 												<table class="dtlcus space">
 													<tr>
 														<td width="100px">Nomor PO</td>
-														<td style="font-family:Verdana,Helvetica,sans-serif;"><?php echo $model->name; ?></td>
+														<td style="font-family:Verdana,Helvetica,sans-serif; font-size:16px;"><strong><?php echo $model->name; ?></strong></td>
 													</tr>
 													<tr>
 														<td>Tanggal</td>
@@ -442,7 +460,7 @@ use yii\helpers\Url;
 													</tr>
 													<tr>
 														<td>Nomor F-PB</td>
-														<td><?php echo $model->origin; ?></td>
+														<td style="font-family:Verdana,Helvetica,sans-serif; font-size:16px;"><strong><?php echo $model->origin; ?></strong></td>
 													</tr>
 													<tr>
 														<td>Due Date</td>
@@ -458,81 +476,15 @@ use yii\helpers\Url;
 					</tr>
 					<tr>
 						<td>
-							<table class="headtablepages" style="width:186mm; border:1px solid black; border-collapse: collapse; margin-left:15px;">
-									<tr>
-										<th width="30px">No.</th>
-										<th width="265px">DESCRIPTION</th>
-										<th width="89px">PART NO</th>
-										<th width="60px">QTY</th>
-										<th width="50px">UNIT</th>
-										<th width="80px">HARGA<br/><?php echo $pricelist ?></th>
-										<th width="107px">TOTAL<br/><?php echo $pricelist ?></th>
-									</tr>
-							</table>
-										</td>
-									</tr>
-									<tr>
-										<?php $maxHeight = '102mm'; ?>
-										<td class="tdLines" style="height:<?=$maxHeight?>;vertical-align:top;">
-											<div class="contentArea">
-												<table class="contentLines">
-														
-												</table>
-											</div>
-										</td>
-									</tr>
-									<tr class="hideprint">
-										<td>
-											<table class="total">
-													<tr>
-														<td colspan="3" width="384px"></td>
-														<td colspan="3" width="190px">TOTAL AMOUNT</td>
-														<td width="107px" align="right"><?php echo app\components\NumericLib::indoStyle($subtotal,2,',','.') ?></td>
-													</tr>
-													<tr>
-														<td colspan="3"></td>
-														<td colspan="3">Discount</td>
-														<td align="right"><?php echo app\components\NumericLib::indoStyle($diskon,2,',','.') ?></td>
-													</tr>
-													<tr>
-														<td colspan="3"></td>
-														<td colspan="3">PPN 10%</td>
-														<td align="right"><?php echo app\components\NumericLib::indoStyle($model->amount_tax,2,',','.') ?></td>
-													</tr>
-													<tr>
-														<td colspan="3"></td>
-														<td colspan="3">GRAND TOTAL</td>
-														<td align="right"><?php echo app\components\NumericLib::indoStyle($model->amount_total,2,',','.') ?></td>
-													</tr>
-											</table>
-										</td>
-									</tr>
-									<tr class="hideprint">
-									<td>
-									<div class="tablettd">
-
-										<table class="tablefooter">
-										<tr>
-											<td>
-												<div style="margin-top:-15px; margin-bottom:15px; font-size:18px;">
-													PENAGIHAN HARUS MELAMPIRKAN
-												</div>
-												<div class="ket">
-												1). Copy PO dan Faktur Pajak ASLI Rangkap 2 <br/>
-													2). Kwitansi ASLI dan Surat Jalan (DO) ASLI<br/>
-													3). NPWP/NPPKP Suprabakti Mandiri : 01.327.742.1-038.000<br/>
-													4). Alamat NPWP : JL.Danau Sunter Utara Blok A No.9 Tanjung Priuk<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jakarta Utara 14350<br/>
-													5). Pengiriman Barang harus melampirkan Surat Jalan Rangkap<br/>
-													6). Email E-Faktur dapat diemail ke efaktur@beltcare.com
-												</div>
-											</td>
-											<td>
-											Disetujui Oleh<br/><br/><br/><br/><br/>
-											(.......................)<br/>Date:
-											</td>
-										</tr>
+						<?php $maxHeight = '100mm'; ?>
+							<div class="tdLines" style="height:<?=$maxHeight?>;vertical-align:top;">
+								<div class="contentArea">
+									<table class="headtablepages contentLines">
+											
+											
 									</table>
-									</div>
+								</div>
+							</div>
 						</td>
 					</tr>
 					
@@ -544,6 +496,8 @@ use yii\helpers\Url;
 </div>
 
 <?php
+$footer ='"<tr><td colspan=5 style=\'border-right:none !important;\'><div style=\'margin-top:15px; margin-bottom:15px; font-size:18px; border-left:none !important;\'>PENAGIHAN HARUS MELAMPIRKAN</div><div class=ket>1). Copy PO dan Faktur Pajak ASLI Rangkap 2 <br/>2). Kwitansi ASLI dan Surat Jalan (DO) ASLI<br/>3). NPWP/NPPKP Suprabakti Mandiri : 01.327.742.1-038.000<br/>4). Alamat NPWP : JL.Danau Sunter Utara Blok A No.9 Tanjung Priuk<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jakarta Utara 14350<br/>5). Pengiriman Barang harus melampirkan Surat Jalan Rangkap<br/>6). Email E-Faktur dapat diemail ke efaktur@beltcare.com<br/></div></td><td colspan=2  class=noborder>Disetujui Oleh<br/><br/><br/><br/><br/>(.......................)<br/>Date:</td></tr>"';
+
 $this->registerJs('
 	var currPage = 1;
 
@@ -553,18 +507,19 @@ $this->registerJs('
 	// add id to container
 	jQuery(\'div.pages\').attr(\'id\',\'page\'+currPage);
 	jQuery(\'table.contentLines:last\').attr(\'id\',\'lines\'+currPage);
-	jQuery(\'table tr td.tdLines:last\').attr(\'id\',\'tdLine\'+currPage);
+	jQuery(\'div.tdLines\').attr(\'id\',\'tdLine\'+currPage);
+	jQuery(\'tdLines:last\').attr(\'id\',\'tdLine\'+currPage);
 	
 
 	// data to render
 	var lines = '.\yii\helpers\Json::encode($data2).';
 	var maxLinesHeight = jQuery(\'.tdLines:last\').height();
 	
-
+	
 	var currRow = 0;
 
 	console.log(maxLinesHeight);
-
+	
 	function prepareRow(rowNo,data)
 	{
 		console.log(data[0]);
@@ -584,8 +539,10 @@ $this->registerJs('
 		}
 		rowPage = rowPage+1;
 
-		var currLineHeight = jQuery(\'#tdLine\'+currPage).height();
+		var currLineHeight = jQuery(\'#lines\'+currPage).height();
+		// var currLineHeight = jQuery(\'#tdLine\'+currPage).height();
 		console.log(\'Key \'+key+\' \'+currLineHeight);
+
 		if(currLineHeight>maxLinesHeight){
 			// remove last row
 			jQuery(\'table#lines\'+currPage+\' tr:last\').remove();
@@ -594,7 +551,9 @@ $this->registerJs('
 			// alert(pageHeight);
 			var setLineHeight=439-pageHeight;
 			
+			var resLine1 = "<tr><th width=30px height=25px>No.</th><th width=265px>DESCRIPTION</th><th width=89px>PART NO</th><th width=60px>QTY</th><th width=50px>UNIT</th><th width=80px>HARGA<br/>'.$pricelist.'</th><th width=107px>TOTAL<br/>'.$pricelist.'</th></tr>";
 			var resLine = "<tr><td style=\"width:30px; height:"+setLineHeight+"px;  text-align:center;\"></td><td style=\"width:265px; text-align:center;\"></td><td style=\"width:89px; text-align:center;\"><div class=\"leftdata\"></div><div class=\"rightdata\"></div></td><td style=\"width:60px; text-align:right;\"><div class=\"leftdata\"></div><div class=\"rightdata\"></div></td><td style=\"width:50px; text-align:center;\"><div class=\"leftdata\"></div><div class=\"rightdata\"></div></td><td style=\"width:80px; text-align:center;\"><div class=\"leftdata\"></div><div class=\"rightdata\"></div></td><td style=\"width:107px; text-align:center;\"><div class=\"leftdata\"></div><div class=\"rightdata\"></div></td></tr>";
+			jQuery(\'#lines\'+currPage+\' tr:first\').before(resLine1);
 			jQuery(\'#lines\'+currPage+\' tr:last\').after(resLine);
 
 			// add new page container
@@ -604,7 +563,8 @@ $this->registerJs('
 			// add id to new div
 			jQuery(\'div.pages:last\').attr(\'id\',\'page\'+currPage);
 			jQuery(\'table.contentLines:last\').attr(\'id\',\'lines\'+currPage);
-			jQuery(\'table tr td.tdLines:last\').attr(\'id\',\'tdLine\'+currPage);
+			jQuery(\'.tdLines:last\').attr(\'id\',\'tdLine\'+currPage);
+
 
 			jQuery(\'table#lines\'+currPage).html(getRow);
 			currLineHeight = jQuery(\'#tdLine\'+currPage).height();
@@ -617,13 +577,34 @@ $this->registerJs('
 	});
 		var HeightTable=jQuery(\'#tdLine\'+currPage).height();
 		var cektable=jQuery(\'#lines\'+currPage).height();
-		var SetHeight=HeightTable-cektable+35;
+		var SetHeight=(HeightTable-cektable)-23;
+		var MinHeight=(HeightTable-cektable)-23;
+		
 
-		if (cektable < HeightTable){
-			var res = "<tr><td style=\"width:30px; height:"+SetHeight+"px;  text-align:center;\"></td><td style=\"width:265px; text-align:center;\"></td><td style=\"width:89px; text-align:center;\"><div class=\"leftdata\"></div><div class=\"rightdata\"></div></td><td style=\"width:60px; text-align:right;\"><div class=\"leftdata\"></div><div class=\"rightdata\"></div></td><td style=\"width:50px; text-align:center;\"><div class=\"leftdata\"></div><div class=\"rightdata\"></div></td><td style=\"width:80px; text-align:center;\"><div class=\"leftdata\"></div><div class=\"rightdata\"></div></td><td style=\"width:107px; text-align:center;\"><div class=\"leftdata\"></div><div class=\"rightdata\"></div></td></tr>";
-			jQuery(\'#lines\'+currPage+\' tr:last\').after(res);
-			jQuery(\'#page\'+currPage+\' .hideprint\').show();
+		if(currPage){
+			if (cektable < HeightTable){
+				var footer ='.$footer.';
+				var footertotal = "<tr class=lineTable><td colspan=3></td><td colspan=3>TOTAL AMOUNT</td><td align=right>'.app\components\NumericLib::indoStyle($subtotal,2,',','.').'</td></tr><tr class=lineTable><td colspan=3></td><td colspan=3>Discount</td><td align=right>'.app\components\NumericLib::indoStyle($diskon,2,',','.').'</td></tr class=lineTable><tr><td colspan=3></td><td colspan=3>PPN 10%</td><td align=right>'.app\components\NumericLib::indoStyle($model->amount_tax,2,',','.').'</td></tr><tr class=lineTable><td colspan=3></td><td colspan=3>GRAND TOTAL</td><td align=right>'.app\components\NumericLib::indoStyle($model->amount_total,2,',','.').'</td></tr>";
+				var res1 = "<tr><th width=30px height=25px>No.</th><th width=265px>DESCRIPTION</th><th width=89px>PART NO</th><th width=60px>QTY</th><th width=50px>UNIT</th><th width=80px>HARGA<br/>'.$pricelist.'</th><th width=107px>TOTAL<br/>'.$pricelist.'</th></tr>";
+				var res = "<tr><td style=\"width:30px; height:"+SetHeight+"px;  text-align:center;\"></td><td style=\"width:265px; text-align:center;\"></td><td style=\"width:89px; text-align:center;\"><div class=\"leftdata\"></div><div class=\"rightdata\"></div></td><td style=\"width:60px; text-align:right;\"><div class=\"leftdata\"></div><div class=\"rightdata\"></div></td><td style=\"width:50px; text-align:center;\"><div class=\"leftdata\"></div><div class=\"rightdata\"></div></td><td style=\"width:80px; text-align:center;\"><div class=\"leftdata\"></div><div class=\"rightdata\"></div></td><td style=\"width:107px; text-align:center;\"><div class=\"leftdata\"></div><div class=\"rightdata\"></div></td></tr>";
+				jQuery(\'#lines\'+currPage+\' tr:first\').before(res1);
+				jQuery(\'#lines\'+currPage+\' tr:last\').after(res);
+				jQuery(\'#lines\'+currPage+\' tr:last\').after(footertotal);
+				jQuery(\'#lines\'+currPage+\' tr:last\').after(footer);
+				jQuery(\'#page\'+currPage+\' .hideprint\').show();
+			}else{
+				var footer ='.$footer.';
+				var footertotal = "<tr class=lineTable><td colspan=3></td><td colspan=3>TOTAL AMOUNT</td><td align=right>'.app\components\NumericLib::indoStyle($subtotal,2,',','.').'</td></tr><tr class=lineTable><td colspan=3></td><td colspan=3>Discount</td><td align=right>'.app\components\NumericLib::indoStyle($diskon,2,',','.').'</td></tr class=lineTable><tr><td colspan=3></td><td colspan=3>PPN 10%</td><td align=right>'.app\components\NumericLib::indoStyle($model->amount_tax,2,',','.').'</td></tr><tr class=lineTable><td colspan=3></td><td colspan=3>GRAND TOTAL</td><td align=right>'.app\components\NumericLib::indoStyle($model->amount_total,2,',','.').'</td></tr>";
+				var res1 = "<tr><th width=30px height=25px>No.</th><th width=265px>DESCRIPTION</th><th width=89px>PART NO</th><th width=60px>QTY</th><th width=50px>UNIT</th><th width=80px>HARGA<br/>'.$pricelist.'</th><th width=107px>TOTAL<br/>'.$pricelist.'</th></tr>";
+				var res = "<tr><td style=\"width:30px; height:"+SetHeight+"px;  text-align:center;\"></td><td style=\"width:265px; text-align:center;\"></td><td style=\"width:89px; text-align:center;\"><div class=\"leftdata\"></div><div class=\"rightdata\"></div></td><td style=\"width:60px; text-align:right;\"><div class=\"leftdata\"></div><div class=\"rightdata\"></div></td><td style=\"width:50px; text-align:center;\"><div class=\"leftdata\"></div><div class=\"rightdata\"></div></td><td style=\"width:80px; text-align:center;\"><div class=\"leftdata\"></div><div class=\"rightdata\"></div></td><td style=\"width:107px; text-align:center;\"><div class=\"leftdata\"></div><div class=\"rightdata\"></div></td></tr>";
+				jQuery(\'#lines\'+currPage+\' tr:first\').before(res1);
+				jQuery(\'#lines\'+currPage+\' tr:last\').after(res);
+				jQuery(\'#lines\'+currPage+\' tr:last\').after(footertotal);
+				jQuery(\'#lines\'+currPage+\' tr:last\').after(footer);
+				jQuery(\'#page\'+currPage+\' .hideprint\').show();
+			}			
 		}
+
 	// end loop
 ');
 ?>

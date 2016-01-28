@@ -146,7 +146,7 @@ SCRIPT;
 					<br/>
 					<br/>
 
-					<div id="formactivity">
+					<div id="formactivity" class="row">
 						<?php
 
 						if($groupBy=='nogroup'){
@@ -162,47 +162,85 @@ SCRIPT;
 						}
 					?>
 						
-						<div style="width:40%;float:left;">
+						<div class="col-md-6">
 							<?php
 								echo $form->field($model, 'product')->widget(Select2::classname(), [
-									'options' => ['placeholder' => 'All Product ...'],
-									'value'=>Yii::$app->request->get('product'),
-									'pluginOptions' => [
+									'name'=>'product',
+									'pluginOptions'=>[
 										'tags'=>true,
-										'allowClear' => true,
-										'minimumInputLength' => 2,
-										'ajax' => [
-											'url' => $urlproduct,
-											'dataType' => 'json',
-											'data' => new JsExpression('function(term,page) { return {search:term}; }'),
-											'results' => new JsExpression('function(data,page) { return {results:data.results}; }'),
-										],
-										'initSelection' => new JsExpression($initScriptProduct)
+										'ajax'=>[
+											'url'=>Url::to(['productlist']),
+											'dataType'=>'json',
+											'data'=>new JsExpression('function(term,page){return {search:term}; }'),
+											'results'=>new JsExpression('function(data,page){ return {results:data.results}; }'),
 									],
+										'allowClear'=>true,
+										'initSelection' => new JsExpression('function (element, callback) {
+											var id=$(element).val();
+											console.log("CONSOLLLLLLLE ID"+id);
+											if (id !== "") {
+												$.ajax("'.Url::to(['productlist']).'&id=" + id, {
+													dataType: "json"
+													}).done(function(data) { 
+														callback(data.results);
+													}
+												);
+											}
+										}'),
+									],
+									'value'=>Yii::$app->request->get('product'),
+									'options' => ['placeholder' => 'All Product ...', 'multiple' => true],
 								]);
 							?>
-						</div>
-						<div style="width:40%;float:right;">
 
 							<?php
-								// echo $form->field($model, 'productcategory')->widget(Select2::classname(), [
-								// 	'options' => ['placeholder' => 'All Product Category ...'],
-								// 	'name'=>'productcategory',
-								// 	// 'value'=>$productcategory,
-								// 	'pluginOptions' => [
-								// 		'tags'=>true,
-								// 		'allowClear' => true,
-								// 		'minimumInputLength' => 2,
-								// 		'ajax' => [
-								// 			'url' => $urlcategory,
-								// 			'dataType' => 'json',
-								// 			'data' => new JsExpression('function(term,page) { return {search:term}; }'),
-								// 			'results' => new JsExpression('function(data,page) { return {results:data.results}; }'),
-								// 		],
-								// 		'initSelection' => new JsExpression($initScriptCategory)
-								// 	],
-								// ]);
+								echo $form->field($model, 'partner')->widget(Select2::classname(), [
+									'name'=>'partner',
+									'pluginOptions'=>[
+										'tags'=>true,
+										'ajax'=>[
+											'url'=>Url::to(['customerlist']),
+											'dataType'=>'json',
+											'data'=>new JsExpression('function(term,page){return {search:term}; }'),
+											'results'=>new JsExpression('function(data,page){ return {results:data.results}; }'),
+									],
+										'allowClear'=>true,
+										'initSelection' => new JsExpression('function (element, callback) {
+											var id=$(element).val();
+											console.log("CONSOLLLLLLLE ID"+id);
+											if (id !== "") {
+												$.ajax("'.Url::to(['customerlist']).'&id=" + id, {
+													dataType: "json"
+													}).done(function(data) { 
+														callback(data.results);
+													}
+												);
+											}
+										}'),
+									],
+									'value'=>Yii::$app->request->get('partner'),
+									'options' => ['placeholder' => 'All Partner ...', 'multiple' => true],
+								]);
 							?>
+							<br/>
+							<?=DatePicker::widget([
+										'model' => $model,
+										'attribute' => 'date_from',
+										'attribute2' => 'date_to',
+										'options' => ['placeholder' => 'Start date'],
+										'options2' => ['placeholder' => 'End date'],
+										'type' => DatePicker::TYPE_RANGE,
+										'form' => $form,
+										'pluginOptions' => [
+											'format' => 'yyyy-MM-dd',
+											'autoclose' => true,
+											'startDate'=>'01/07/2014',
+										],
+										'convertFormat'=>true,
+							]);?>
+						</div>
+
+						<div class="col-md-6">
 							<?php
 								echo $form->field($model, 'productcategory')->widget(Select2::classname(), [
 									'data' => $datacetegory,
@@ -213,47 +251,6 @@ SCRIPT;
 									]
 
 								]);
-							?>
-						</div>
-
-						<div style="width:40%;float:left;">
-							<?php
-								echo $form->field($model, 'partner')->widget(Select2::classname(), [
-									'options' => ['placeholder' => 'All Customer ...'],
-									'value'=>Yii::$app->request->get('product'),
-									'pluginOptions' => [
-										'tags'=>true,
-										'allowClear' => true,
-										'minimumInputLength' => 2,
-										'ajax' => [
-											'url' => $url,
-											'dataType' => 'json',
-											'data' => new JsExpression('function(term,page) { return {search:term}; }'),
-											'results' => new JsExpression('function(data,page) { return {results:data.results}; }'),
-										],
-										'initSelection' => new JsExpression($initScript)
-									],
-								]);
-							?>
-						</div>
-
-						<div style="width:40%;float:right;">
-							<?php
-								// echo $form->field($model, 'pricelist')->widget(Select2::classname(), [
-								// 	'options' => ['placeholder' => 'All Pricelist ...'],
-								// 	'pluginOptions' => [
-								// 		'tags'=>true,
-								// 		'allowClear' => true,
-								// 		'minimumInputLength' => 2,
-								// 		'ajax' => [
-								// 			'url' => $urlpricelist,
-								// 			'dataType' => 'json',
-								// 			'data' => new JsExpression('function(term,page) { return {search:term}; }'),
-								// 			'results' => new JsExpression('function(data,page) { return {results:data.results}; }'),
-								// 		],
-								// 		'initSelection' => new JsExpression($initScriptpricelist)
-								// 	],
-								// ]);
 							?>
 
 							<?php
@@ -267,41 +264,20 @@ SCRIPT;
 
 								]);
 							?>
-						</div>
-
-						<div style="width:100%;">
-							<div style="float:left; width:45%;">
-									<?=DatePicker::widget([
-										'model' => $model,
-										'attribute' => 'date_from',
-										'attribute2' => 'date_to',
-										'options' => ['placeholder' => 'Start date'],
-										'options2' => ['placeholder' => 'End date'],
-										'type' => DatePicker::TYPE_RANGE,
-										'form' => $form,
-										'pluginOptions' => [
-											'format' => 'yyyy-MM-dd',
-											// 'format' => 'dd-MM-yyyy',
-											'autoclose' => true,
-											'startDate'=>'01/07/2014',
-										],
-										'convertFormat'=>true,
-									]);?>
-							</div>
-							<div style="width:40%;float:right; line-height:0px">
 
 							<?php
 								echo $form->field($model, 'state')->widget(Select2::classname(), [
 								    'name' => 'state', 
 								    'options' => ['placeholder' => 'Select a State ...'],
 								    'pluginOptions' => [
-								        'tags' => ["draft", "confirmed", "approved", "done", "cancel"],
+								        'tags' => ["order","draft", "cancel"],
+								        // 'tags' => ["draft", "confirmed", "approved", "done", "cancel"],
 								        'maximumInputLength' => 10
 								    ],
 								]);
 							?>
-							</div>
 						</div>
+
 
 					<div style="clear:both"></div>
 					<div class="form-group">

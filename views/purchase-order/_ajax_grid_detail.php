@@ -43,7 +43,7 @@ use yii\widgets\Pjax;
 		                        	'attribute'=>'qty',
 		                            'header'=>'Qty',
 		                            'value'=>function($model,$key,$index,$grid){
-		                                return app\components\NumericLib::indoStyle($model['total'],2,',','.');
+		                                return app\components\NumericLib::indoStyle($model['product_qty'],2,',','.');
 		                            }
 		                        ],
 		                        [

@@ -449,8 +449,8 @@ class AccountInvoice extends \yii\db\ActiveRecord
 				elseif($invLine->discount<=0 && $invLine->amount_discount){
 
 					$discountMainCurr = round($invLine->amount_discount*$invoice['rate'],2);
-					var_dump($discountMainCurr);
-					echo '<br/>';
+					/*var_dump($discountMainCurr);
+					echo '<br/>';*/
 				}
 				// disocunt not filled, amount discount not filled
 				else{
@@ -465,8 +465,14 @@ class AccountInvoice extends \yii\db\ActiveRecord
 			/*echo $priceSubtotalMainCurr."-".$discountMainCurr;
 			var_dump($priceTotalMainCurr);
 			die('xx');*/
-
-			$taxMainCurr = (10/100)*$priceTotalMainCurr;
+			// var_dump($invLine->accountInvoiceTaxes);
+			if($invLine->accountInvoiceLineTaxes){
+				$taxMainCurr = (10/100)*$priceTotalMainCurr;
+			}else{
+				$taxMainCurr = 0;
+			}
+			// $taxMainCurr = (10/100)*$priceTotalMainCurr;
+			
 			// var_dump($taxMainCurr);
 			$totalAmountMainCurr = round($priceTotalMainCurr+$taxMainCurr,2);
 			
@@ -535,6 +541,7 @@ class AccountInvoice extends \yii\db\ActiveRecord
 			$invoice['total']['amountUntaxedMainCurr'] += $priceTotalMainCurr;
 			// echo $discountMainCurr;
 			$invoice['total']['amountTax'] += $priceTotal*(10/100);
+
 			$invoice['total']['amountTaxMainCurr'] += $taxMainCurr;
 			$invoice['total']['amountTotal'] += $invLine->price_subtotal;
 			$invoice['total']['amountTotalMainCurr'] += $totalAmountMainCurr;

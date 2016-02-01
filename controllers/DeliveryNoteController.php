@@ -304,10 +304,9 @@ class DeliveryNoteController extends Controller
 
                 if (count($l['note_line_material']) == 1){
 
-                    $res[$no]['name'].='<br/>Consist Of : <ul style="margin:0;">';
-
                     foreach ($l['note_line_material'] as $line_material) {
                         if ($l['product_id'] <> $line_material['name']){
+                              $res[$no]['name'].='<br/>Consist Of : <ul style="margin:0;">';
                               $modelprod = ProductProduct::findOne($line_material['name']);
                         $uom = ProductUom::findOne($line_material['product_uom']);
 

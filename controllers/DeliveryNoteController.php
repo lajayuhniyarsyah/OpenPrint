@@ -5,6 +5,8 @@ namespace app\controllers;
 use Yii;
 use app\models\DeliveryNote;
 use app\models\ProductProduct;
+use app\models\productUom;
+use app\models\StockProductionLot;
 use app\models\DeliveryNoteSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -299,15 +301,37 @@ class DeliveryNoteController extends Controller
             }
 
             if (isset($l['note_line_material'])){
-                if (count($l['note_line_material']) > 1) {
-                    
+
+                if (count($l['note_line_material']) == 1){
+
                     $res[$no]['name'].='<br/>Consist Of : <ul style="margin:0;">';
 
                     foreach ($l['note_line_material'] as $line_material) {
-                        $modelprod = ProductProduct::findOne($line_material['name']);
-                        $res[$no]['name'] .= '<li>['.$modelprod['default_code'].'] ' .$modelprod['name_template'].'</li>';
+                        if ($l['product_id'] <> $line_material['name']){
+                              $modelprod = ProductProduct::findOne($line_material['name']);
+                        $uom = ProductUom::findOne($line_material['product_uom']);
+
+                        $res[$no]['name'] .= '<li>['.$modelprod['default_code'].'] ' .$modelprod['name_template'].' <strong>('.$line_material['qty'].' '.$uom['name'].'</strong>)</li>';
+                        }
                     }
-                }   
+                }else if (count($l['note_line_material']) > 1) {
+                    
+                    $res[$no]['name'].='<br/>Consist Of : <ul style="margin:0;">';
+                    $batch = "";
+
+                    foreach ($l['note_line_material'] as $line_material) {
+
+                        if ($line_material['prodlot_id']){
+                            $prodlot = StockProductionLot::findOne($line_material['prodlot_id']);
+                            $batch = '<strong>SN:</strong> '.$prodlot['name'].' '. $line_material['desc'];
+                        }
+
+                        $modelprod = ProductProduct::findOne($line_material['name']);
+                        $uom = ProductUom::findOne($line_material['product_uom']);
+
+                        $res[$no]['name'] .= '<li>['.$modelprod['default_code'].'] ' .$modelprod['name_template'].' <strong>('.$line_material['qty'].' '.$uom['name'].'</strong>) <br/>'.$batch.'</li>';
+                    }
+                }
             }            
 
             

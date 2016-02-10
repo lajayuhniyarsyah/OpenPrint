@@ -8,6 +8,7 @@ use app\models\ProductProduct;
 use app\models\productUom;
 use app\models\StockProductionLot;
 use app\models\DeliveryNoteSearch;
+use app\models\SuperNotes;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -299,22 +300,26 @@ class DeliveryNoteController extends Controller
 
                 $res[$no]['name'] = $l['name'];
             }
-
             if (isset($l['note_line_material'])){
 
                 if (count($l['note_line_material']) == 1){
 
                     foreach ($l['note_line_material'] as $line_material) {
                         if ($l['product_id'] <> $line_material['name']){
-                              $res[$no]['name'].='<br/>Consist Of : <ul style="margin:0;">';
-                              $modelprod = ProductProduct::findOne($line_material['name']);
-                        $uom = ProductUom::findOne($line_material['product_uom']);
+                            $res[$no]['name'].='<br/>Consist Of : <ul style="margin:0;">';
+                            $modelprod = ProductProduct::findOne($line_material['name']);
+                            $uom = ProductUom::findOne($line_material['product_uom']);
 
-                        $res[$no]['name'] .= '<li>['.$modelprod['default_code'].'] ' .$modelprod['name_template'].' <strong>('.$line_material['qty'].' '.$uom['name'].'</strong>)</li>';
+                            $printSp_note = '';
+                            foreach ($modelprod->superNoteProductRels as $spnotes){
+                                $superNotes = SuperNotes::findOne($spnotes['super_note_id']);
+                                $printSp_note .= '<br/>'.$superNotes['template_note'];
+                            }
+
+                            $res[$no]['name'] .= '<li>['.$modelprod['default_code'].'] ' .$modelprod['name_template'].' <strong>('.$line_material['qty'].' '.$uom['name'].'</strong>)'.$printSp_note.'</li>';
                         }
                     }
                 }else if (count($l['note_line_material']) > 1) {
-                    
                     $res[$no]['name'].='<br/>Consist Of : <ul style="margin:0;">';
                     $batch = "";
 
@@ -328,7 +333,14 @@ class DeliveryNoteController extends Controller
                         $modelprod = ProductProduct::findOne($line_material['name']);
                         $uom = ProductUom::findOne($line_material['product_uom']);
 
-                        $res[$no]['name'] .= '<li>['.$modelprod['default_code'].'] ' .$modelprod['name_template'].' <strong>('.$line_material['qty'].' '.$uom['name'].'</strong>) <br/>'.$batch.'</li>';
+                        
+                        $printSp_note = '';
+                        foreach ($modelprod->superNoteProductRels as $spnotes){
+                            $superNotes = SuperNotes::findOne($spnotes['super_note_id']);
+                            $printSp_note .=$superNotes['template_note'];
+                        }
+                        
+                        $res[$no]['name'] .= '<li>['.$modelprod['default_code'].'] ' .$modelprod['name_template'].' <strong>('.$line_material['qty'].' '.$uom['name'].'</strong>) <br/>'.$batch.$printSp_note.'</li>';
                     }
                 }
             }            
@@ -576,6 +588,7 @@ class DeliveryNoteController extends Controller
                 ];
         }
 
+        
         if($line->product->superNotes):
             foreach($line->product->superNotes as $notes):
                 if($notes->show_in_do_line) $res['name'].='<br/>'.$notes->template_note; #SHOW ETRA NOTES PRODUCT INTO LINE

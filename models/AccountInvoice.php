@@ -554,8 +554,37 @@ class AccountInvoice extends \yii\db\ActiveRecord
 		// die();
 		// var_dump($counterLinePriced);
 		if($counterLinePriced==1){
+
 			$invoice['total']['amountUntaxedMainCurr'] = floor($lines[0]['priceSubtotalMainCurr'])-floor($lines[0]['discountMainCurr']);
-			$invoice['total']['amountTaxMainCurr'] = floor((10/100)*$invoice['total']['amountUntaxedMainCurr']);
+			$taxes =  ['status'=>true];
+			if($isMainCurrency){
+				// if idr
+				// if ppn total not same with counted then
+
+				if(isset($this->accountInvoiceTaxes)){
+					
+					foreach($this->accountInvoiceTaxes as $tax)
+					{
+						if(preg_match('/10\%/', $tax->name)){
+							if($tax->amount!=floor($invoice['total']['amountTaxMainCurr'])){
+								$taxes=['status'=>false,'amount'=>$tax->amount];
+							}
+						}
+					}
+				}
+			}
+
+			// if tax not same with amount in account.invoice.tax ->amount
+
+			if(!$taxes['status'])
+			{
+				$invoice['total']['amountTaxMainCurr'] = $taxes['amount'];
+			}
+			else
+			{
+				$invoice['total']['amountTaxMainCurr'] = floor((10/100)*$invoice['total']['amountUntaxedMainCurr']);
+			}
+			
 
 		}
 		/*var_dump(intval($lines[0]['priceSubtotalMainCurr']));

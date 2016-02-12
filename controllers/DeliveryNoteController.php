@@ -4,7 +4,11 @@ namespace app\controllers;
 
 use Yii;
 use app\models\DeliveryNote;
+use app\models\ProductProduct;
+use app\models\productUom;
+use app\models\StockProductionLot;
 use app\models\DeliveryNoteSearch;
+use app\models\SuperNotes;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -132,7 +136,9 @@ class DeliveryNoteController extends Controller
         $sets = [];
         
         $prepLines = $this->prepareLineData($model->deliveryNoteLines); 
+        // echo '<pre>';
         // var_dump($prepLines);
+        // echo '</pre>';
         $linesData = $this->renderLinesPrint($prepLines);
 
         if(!$test):
@@ -142,7 +148,26 @@ class DeliveryNoteController extends Controller
         endif;
     }
 
-    
+
+    public function actionPrintnew($id,$test=0){
+        $this->layout = 'printout';
+        
+        $model = $this->findModel($id);
+
+        // PREPARE LINE DATA FOR PRINT
+        
+        $sets = [];
+
+        $prepLines = $this->prepareLineDataNew($model->deliveryNoteLines);
+
+        $linesData = $this->renderLinesPrintNew($prepLines);
+
+        if(!$test):
+            return $this->render('print/print_dn_new',['model'=>$model,'linesData'=>$linesData]);
+        else:
+            return $this->render('print/print_dn_new',['model'=>$model,'linesData'=>$linesData]);
+        endif;
+    }
 
     /**
      * Print Action For Packing List
@@ -232,10 +257,105 @@ class DeliveryNoteController extends Controller
                         $res[$no]['name'].=$this->prepareBathesRender($set);
                     endif;
                 }
+
                 $res[$no]['name'].='</ul>';
             }
 
 
+            if(array_key_exists('batches', $l) && count($l['batches'])>=1)
+            {
+                $res[$no]['name'].='<br/>'.$this->prepareBathesRender($l);
+            }
+            $no++;
+        endforeach;
+        /*echo '----------';
+        var_dump($res);*/
+
+        return $res;
+    }
+
+
+
+    private function renderLinesPrintNew($preparedLines)
+    {
+        $res = [];
+        // var_dump($preparedLines);
+        $no = 0;    
+        foreach($preparedLines as $k=>$l):
+            $res[$no]=[
+                'qty'=>'<div style="float:left;width:10mm;">'.($l['no'] ? $l['no']:'&nbsp;').'</div>
+                    <div>'.floatval($l['qty']).' '.$l['uom'].'</div><div style="clear:both;"></div>',
+                
+                'part_no'=>$l['part_no']
+            ];
+            // var_dump($l);
+            if(isset($l['name2'])){
+                if(array_key_exists('set', $l) && count($l['set']) && isset($l['name'])){
+                    $res[$no]['name'] = $l['name'];
+                }else{
+                    $res[$no]['name'] = $l['name2'];
+                }
+                
+            }else{
+
+                $res[$no]['name'] = $l['name'];
+            }
+            if (isset($l['note_line_material'])){
+
+                if (count($l['note_line_material']) == 1){
+
+                    foreach ($l['note_line_material'] as $line_material) {
+                        if ($l['product_id'] <> $line_material['name']){
+                            $res[$no]['name'].='<br/>Consist Of : <ul style="margin:0;">';
+                            $modelprod = ProductProduct::findOne($line_material['name']);
+                            $uom = ProductUom::findOne($line_material['product_uom']);
+
+                            $printSp_note = '';
+                            foreach ($modelprod->superNoteProductRels as $spnotes){
+                                $superNotes = SuperNotes::findOne($spnotes['super_note_id']);
+                                $printSp_note .= '<br/>'.$superNotes['template_note'];
+                            }
+
+                            $res[$no]['name'] .= '<li>['.$modelprod['default_code'].'] ' .$modelprod['name_template'].' <strong>('.$line_material['qty'].' '.$uom['name'].'</strong>)'.$printSp_note.'</li>';
+                        }
+                    }
+                }else if (count($l['note_line_material']) > 1) {
+                    $res[$no]['name'].='<br/>Consist Of : <ul style="margin:0;">';
+                    $batch = "";
+
+                    foreach ($l['note_line_material'] as $line_material) {
+
+                        if ($line_material['prodlot_id']){
+                            $prodlot = StockProductionLot::findOne($line_material['prodlot_id']);
+                            $batch = '<strong>SN:</strong> '.$prodlot['name'].' '. $line_material['desc'];
+                        }
+
+                        $modelprod = ProductProduct::findOne($line_material['name']);
+                        $uom = ProductUom::findOne($line_material['product_uom']);
+
+                        
+                        $printSp_note = '';
+                        foreach ($modelprod->superNoteProductRels as $spnotes){
+                            $superNotes = SuperNotes::findOne($spnotes['super_note_id']);
+                            $printSp_note .=$superNotes['template_note'];
+                        }
+                        
+                        $res[$no]['name'] .= '<li>['.$modelprod['default_code'].'] ' .$modelprod['name_template'].' <strong>('.$line_material['qty'].' '.$uom['name'].'</strong>) <br/>'.$batch.$printSp_note.'</li>';
+                    }
+                }
+            }            
+
+            
+            // if PRODUCT IS SET TYPE
+            if(array_key_exists('set', $l)){
+                $res[$no]['name'].='<br/>Consist Of : <ul style="margin:0;">';
+                foreach($l['set'] as $set){
+                    $res[$no]['name'] .= '<li>'.$set['name'].'</li>';
+                }
+                $res[$no]['name'].='</ul>';
+            }
+
+            
             if(array_key_exists('batches', $l) && count($l['batches'])>=1)
             {
                 $res[$no]['name'].='<br/>'.$this->prepareBathesRender($l);
@@ -258,6 +378,7 @@ class DeliveryNoteController extends Controller
         $res .='</ul>';
         return $res;
     }
+
 
     private function prepareLineData($lines)
     {
@@ -324,6 +445,73 @@ class DeliveryNoteController extends Controller
         return $res;
     }
 
+
+
+
+    private function prepareLineDataNew($lines)
+    {
+        $res = [];
+
+        foreach($lines as $k=>$line):
+
+            // if set
+            
+            if(isset($line->opLine->move->move_dest_id) && $line->opLine->move->move_dest_id)
+            {
+
+                $moveDest = $line->opLine->move->moveDest;
+                // before we must check if move dest id setted
+                if(array_key_exists($moveDest->id, $res))
+                {
+                    $res[$moveDest->id]['set'][] = $this->prepareSetPrintNew($line);
+                }
+                else
+                {
+                    // init to be printed
+                    // TOP LEVEL PRINTED
+                    $res[$moveDest->id] = [
+                        'no'=>$line->no,
+                        'qty'=>$moveDest->product_qty,
+                        // 'qty'=>$line->product_qty,
+                        'uom'=>$moveDest->productUom->name,
+                        'name'=>($moveDest->desc ? nl2br($moveDest->desc):nl2br($moveDest->product->name_template)),
+                        'name2'=>$moveDest->name,
+                        'desc'=>$moveDest->desc,
+                        'set'=>[
+                            $this->prepareSetPrintNew($line),
+                        ],
+                        'part_no'=>$moveDest->product->default_code,
+                    ];
+                    // CHECK SET QTY
+                    if($moveDest->product->mrpBoms){
+
+                        $bomId = $moveDest->product->mrpBoms[0]->id;
+                        $bomObj = \app\models\MrpBom::find()->where('product_id=:prodId AND bom_id = :bomId')
+                            ->addParams([':prodId'=>$line->product_id,':bomId'=>$bomId])->one();
+                            $res[$moveDest->id]['qty'] = $line->product_qty/$bomObj->product_qty;
+                    }
+
+                }
+                /*var_dump($line->product->name_template);
+                if($line->product->superNotes):
+                    foreach($line->product->superNotes as $notes):
+                        if($notes->show_in_do_line && isset($res[$moveDest->id]['name'])) $res[$moveDest->id]['name'].='<br/>'.$notes->template_note; #SHOW ETRA NOTES PRODUCT INTO LINE
+                    endforeach;
+                endif;*/
+            }
+            else
+            {
+
+                // not set
+                
+                $res[$line->id]=$this->prepareLinenew($line);
+            }
+        endforeach;
+
+        
+        return $res;
+    }
+
     private function prepareLine($line,$printHead=true)
     {
         $res = [];
@@ -364,6 +552,53 @@ class DeliveryNoteController extends Controller
         return $res;
     }
 
+
+
+  private function prepareLinenew($line,$printHead=true)
+    {
+        $res = [];
+        if(isset($line->opLine->orderPreparationBatches) && $line->opLine->orderPreparationBatches)
+        {
+            if($printHead==true):
+                $res =[
+                    'product_id'=>$line->product_id,
+                    'no'=>$line->no,
+                    'qty'=>$line->product_qty,
+                    'uom'=>$line->productUom->name,
+                    'name'=>nl2br($line->name),
+                    'part_no'=>$line->product->default_code,
+                    'batches'=>[]
+                ];
+            endif;
+            foreach($line->opLine->orderPreparationBatches as $batch):
+                $res['batches'][]=['name'=>$batch->name0->name,'desc'=>$batch->desc,'qty'=>$batch->qty,'exp_date'=>$batch->exp_date];
+            endforeach;
+        }
+        else
+        {
+            if($printHead==true)
+                $res=[
+                    'product_id'=>$line->product_id,
+                    'no'=>$line->no,
+                    'qty'=>$line->product_qty,
+                    'uom'=>(isset($line->productUom->name) ? $line->productUom->name:'-'),
+                    'name'=>nl2br($line->name),
+                    'part_no'=>(isset($line->product->default_code) ? $line->product->default_code:'-'),
+                    'note_line_material'=>$line->deliveryNoteLineMaterials
+                ];
+        }
+
+        
+        if($line->product->superNotes):
+            foreach($line->product->superNotes as $notes):
+                if($notes->show_in_do_line) $res['name'].='<br/>'.$notes->template_note; #SHOW ETRA NOTES PRODUCT INTO LINE
+            endforeach;
+        endif;
+
+        return $res;
+    }
+
+
     private function prepareBatches($line){
         $res = [];
         if($line->opLine->orderPreparationBatches)
@@ -379,6 +614,27 @@ class DeliveryNoteController extends Controller
     // METHOD TO PRINT SET PRODUCT
     // IT A CONSIST OF PART
     private function prepareSetPrint($line){
+        $res =  [
+            'qty'=>$line->product_qty,
+            'uom'=>$line->productUom->name,
+            'name'=>($line->name ? nl2br('['.$line->product->default_code.'] '.$line->name):'['.$line->product->default_code.']'.$line->product->name),
+            'batches'=>$this->prepareBatches($line),
+            'part_no'=>$line->product->default_code,
+        ];
+
+        if($line->product->superNotes):
+            foreach($line->product->superNotes as $note):
+                $res['name'].='<br/>'.$note->template_note;
+            endforeach;
+        endif;
+
+        return $res;
+    }
+
+
+    // METHOD TO PRINT SET PRODUCT
+    // IT A CONSIST OF PART
+    private function prepareSetPrintNew($line){
         $res =  [
             'qty'=>$line->product_qty,
             'uom'=>$line->productUom->name,

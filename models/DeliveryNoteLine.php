@@ -23,16 +23,20 @@ use Yii;
  * @property string $itemno
  * @property string $no_moved0
  * @property integer $no_moved1
- * @property string $no
+ * @property string $no_moved2
  * @property integer $op_line_id
+ * @property integer $no
+ * @property string $state
  *
+ * @property DeliveryNote $note
  * @property OrderPreparationLine $opLine
+ * @property ProductPackaging $productPackaging
  * @property ProductProduct $product
  * @property ProductUom $productUom
- * @property DeliveryNote $note
- * @property ProductPackaging $productPackaging
- * @property ResUsers $writeU
  * @property ResUsers $createU
+ * @property ResUsers $writeU
+ * @property DeliveryNoteLineMaterial[] $deliveryNoteLineMaterials
+ * @property DeliveryNoteLineReturn[] $deliveryNoteLineReturns
  */
 class DeliveryNoteLine extends \yii\db\ActiveRecord
 {
@@ -50,13 +54,13 @@ class DeliveryNoteLine extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['create_uid', 'write_uid', 'note_id', 'product_uom', 'product_packaging', 'product_id', 'no_moved1', 'op_line_id'], 'integer'],
+            [['create_uid', 'write_uid', 'note_id', 'product_uom', 'product_packaging', 'product_id', 'no_moved1', 'op_line_id', 'no'], 'integer'],
             [['create_date', 'write_date'], 'safe'],
             [['note_id'], 'required'],
             [['product_qty'], 'number'],
-            [['name'], 'string'],
+            [['name', 'state'], 'string'],
             [['measurement', 'weight', 'itemno'], 'string', 'max' => 64],
-            [['no_moved0', 'no'], 'string', 'max' => 3]
+            [['no_moved0', 'no_moved2'], 'string', 'max' => 3]
         ];
     }
 
@@ -71,20 +75,30 @@ class DeliveryNoteLine extends \yii\db\ActiveRecord
             'create_date' => 'Create Date',
             'write_date' => 'Write Date',
             'write_uid' => 'Write Uid',
-            'note_id' => 'Delivery Note',
-            'product_uom' => 'UoM',
+            'note_id' => 'Note ID',
+            'product_uom' => 'Product Uom',
             'measurement' => 'Measurement',
             'weight' => 'Weight',
-            'product_qty' => 'Quantity',
-            'product_packaging' => 'Packaging',
-            'product_id' => 'Product',
+            'product_qty' => 'Product Qty',
+            'product_packaging' => 'Product Packaging',
+            'product_id' => 'Product ID',
             'name' => 'Name',
             'itemno' => 'Itemno',
-            'no_moved0' => 'No',
-            'no_moved1' => 'No',
+            'no_moved0' => 'No Moved0',
+            'no_moved1' => 'No Moved1',
+            'no_moved2' => 'No Moved2',
+            'op_line_id' => 'Op Line ID',
             'no' => 'No',
-            'op_line_id' => 'OP Line',
+            'state' => 'State',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getNote()
+    {
+        return $this->hasOne(DeliveryNote::className(), ['id' => 'note_id']);
     }
 
     /**
@@ -93,6 +107,14 @@ class DeliveryNoteLine extends \yii\db\ActiveRecord
     public function getOpLine()
     {
         return $this->hasOne(OrderPreparationLine::className(), ['id' => 'op_line_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProductPackaging()
+    {
+        return $this->hasOne(ProductPackaging::className(), ['id' => 'product_packaging']);
     }
 
     /**
@@ -114,17 +136,9 @@ class DeliveryNoteLine extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getNote()
+    public function getCreateU()
     {
-        return $this->hasOne(DeliveryNote::className(), ['id' => 'note_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getProductPackaging()
-    {
-        return $this->hasOne(ProductPackaging::className(), ['id' => 'product_packaging']);
+        return $this->hasOne(ResUsers::className(), ['id' => 'create_uid']);
     }
 
     /**
@@ -138,8 +152,16 @@ class DeliveryNoteLine extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCreateU()
+    public function getDeliveryNoteLineMaterials()
     {
-        return $this->hasOne(ResUsers::className(), ['id' => 'create_uid']);
+        return $this->hasMany(DeliveryNoteLineMaterial::className(), ['note_line_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDeliveryNoteLineReturns()
+    {
+        return $this->hasMany(DeliveryNoteLineReturn::className(), ['delivery_note_line_id' => 'id']);
     }
 }

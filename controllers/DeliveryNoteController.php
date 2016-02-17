@@ -305,9 +305,9 @@ class DeliveryNoteController extends Controller
                 if (count($l['note_line_material']) == 1){
 
                     foreach ($l['note_line_material'] as $line_material) {
-                        if ($l['product_id'] <> $line_material['name']){
+                        if ($l['product_id'] <> $line_material['product_id']){
                             $res[$no]['name'].='<br/>Consist Of : <ul style="margin:0;">';
-                            $modelprod = ProductProduct::findOne($line_material['name']);
+                            $modelprod = ProductProduct::findOne($line_material['product_id']);
                             $uom = ProductUom::findOne($line_material['product_uom']);
 
                             $printSp_note = '';
@@ -330,11 +330,11 @@ class DeliveryNoteController extends Controller
                             $batch = '<strong>SN:</strong> '.$prodlot['name'].' '. $line_material['desc'];
                         }
 
-                        $modelprod = ProductProduct::findOne($line_material['name']);
+                        $modelprod = ProductProduct::findOne($line_material['product_id']);
                         $uom = ProductUom::findOne($line_material['product_uom']);
 
-                        
                         $printSp_note = '';
+                      
                         foreach ($modelprod->superNoteProductRels as $spnotes){
                             $superNotes = SuperNotes::findOne($spnotes['super_note_id']);
                             $printSp_note .=$superNotes['template_note'];
@@ -555,7 +555,7 @@ class DeliveryNoteController extends Controller
 
 
   private function prepareLinenew($line,$printHead=true)
-    {
+    {   
         $res = [];
         if(isset($line->opLine->orderPreparationBatches) && $line->opLine->orderPreparationBatches)
         {

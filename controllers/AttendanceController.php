@@ -249,8 +249,10 @@ FULL JOIN
             SELECT DISTINCT(employee_id) as eid, hrd.name as dept_name FROM hr_attendance_log hrl
             JOIN hr_employee hre ON hre.id = hrl.employee_id
             JOIN hr_department hrd ON hrd.id = hre.department_id
+            JOIN resource_resource rs_rs ON hre.resource_id = rs_rs.id
             WHERE hrd.name like '$department_query'
                 AND hre.address_id = {$site}
+                AND rs_rs.active is True
         ) AS eids ON eids.eid > 0
         -- WHERE h_emp.eid ilike '%{$where['employee']}%'
         -- order by eids.eid asc, date_series.i asc

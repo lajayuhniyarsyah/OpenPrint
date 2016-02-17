@@ -651,4 +651,12 @@ class DeliveryNoteController extends Controller
 
         return $res;
     }
+    
+    
+    #show delivery note kpi report
+    public function actionReportKPI($year,$month=null){
+        #here report of kpi process
+        
+        return $this->render('report_kpi',[]);
+    }
 }

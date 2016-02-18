@@ -20,6 +20,7 @@ use yii\db\Query;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\data\ActiveDataProvider;
+use yii\base\Model;
 // use app\models\PackingListLine;
 
 /**
@@ -672,13 +673,7 @@ class DeliveryNoteController extends Controller
 	public function actionReportkpi()
 	{
 		$searchModel = new DeliveryNoteSearch();
-		$searchModel->search(Yii::$app->request->queryParams);
-		
-		$query = DeliveryNote::find();
-
-		$dataProvider = new ActiveDataProvider([
-			'query' => $query,
-		]);
+		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 		
 		return $this->render('reportkpi', [
 			'dataProvider' => $dataProvider,

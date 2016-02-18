@@ -3,6 +3,9 @@
 namespace app\models;
 
 use Yii;
+use yii\base\Model;
+use yii\data\ActiveDataProvider;
+use app\models\SaleOrder;
 
 /**
  * This is the model class for table "delivery_note".
@@ -43,6 +46,8 @@ use Yii;
  */
 class DeliveryNote extends \yii\db\ActiveRecord
 {
+    public $selisih_hari;
+
     /**
      * @inheritdoc
      */
@@ -58,7 +63,7 @@ class DeliveryNote extends \yii\db\ActiveRecord
     {
         return [
             [['create_uid', 'write_uid', 'partner_id', 'partner_shipping_id', 'prepare_id', 'work_order_id', 'work_order_in', 'attn'], 'integer'],
-            [['create_date', 'write_date', 'tanggal'], 'safe'],
+            [['create_date', 'write_date', 'tanggal', 'selisih_hari'], 'safe'],
             [['name'], 'required'],
             [['note', 'state', 'terms'], 'string'],
             [['special'], 'boolean'],
@@ -191,6 +196,14 @@ class DeliveryNote extends \yii\db\ActiveRecord
 
     public function getStockPicking0(){
         return $this->hasOne(StockPicking::className(),['id'=>'partner_id']);
+    }
+
+
+    public function afterFind(){
+
+        $this->selisih_hari = 'test';
+
+        return true;
     }
 
 }

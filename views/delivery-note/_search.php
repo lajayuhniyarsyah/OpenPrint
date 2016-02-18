@@ -11,27 +11,27 @@ use yii\widgets\ActiveForm;
 <div class="delivery-note-search">
 
     <?php $form = ActiveForm::begin([
-        'action' => ['index'],
+        'action' => ['reportkpi'],
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'id') ?>
+    <?php //echo $form->field($model, 'id') ?>
 
-    <?= $form->field($model, 'create_uid') ?>
+    <?php //echo $form->field($model, 'create_uid') ?>
 
-    <?= $form->field($model, 'create_date') ?>
+    <?php //echo $form->field($model, 'create_date') ?>
 
-    <?= $form->field($model, 'write_date') ?>
+    <?php //echo $form->field($model, 'write_date') ?>
 
-    <?= $form->field($model, 'write_uid') ?>
+    <?php //echo $form->field($model, 'write_uid') ?>
 
     <?php // echo $form->field($model, 'colorcode') ?>
 
-    <?php // echo $form->field($model, 'partner_id') ?>
+    <?php echo $form->field($model, 'partner_id')->textInput()->label('Address') ?>
 
     <?php // echo $form->field($model, 'poc') ?>
 
-    <?php // echo $form->field($model, 'name') ?>
+    <?php //echo $form->field($model, 'name') ?>
 
     <?php // echo $form->field($model, 'partner_shipping_id') ?>
 

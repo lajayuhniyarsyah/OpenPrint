@@ -18,11 +18,16 @@ class DeliveryNoteSearch extends DeliveryNote
     public function rules()
     {
         return [
-            [['id', 'create_uid', 'write_uid', 'partner_id', 'partner_shipping_id', 'prepare_id', 'work_order_id', 'work_order_in'], 'integer'],
-            [['create_date', 'write_date', 'colorcode', 'poc', 'name', 'note', 'state', 'tanggal', 'ekspedisi', 'jumlah_coli', 'terms'], 'safe'],
+            [['id', 'create_uid', 'write_uid', 'partner_shipping_id', 'prepare_id', 'work_order_id', 'work_order_in'], 'integer'],
+            [['create_date', 'write_date', 'colorcode', 'poc', 'name', 'note', 'state', 'tanggal', 'ekspedisi', 'jumlah_coli', 'terms', 'partner_id', /*'partner.display_name'*/], 'safe'],
             [['special'], 'boolean'],
         ];
     }
+
+    /*public function attributes()
+    {
+        return array_merge(parent::attributes(),['partner.display_name']);
+    }*/
 
     /**
      * @inheritdoc
@@ -43,6 +48,7 @@ class DeliveryNoteSearch extends DeliveryNote
     public function search($params)
     {
         $query = DeliveryNote::find();
+        $query->joinWith(['partner']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -58,7 +64,6 @@ class DeliveryNoteSearch extends DeliveryNote
             'create_date' => $this->create_date,
             'write_date' => $this->write_date,
             'write_uid' => $this->write_uid,
-            'partner_id' => $this->partner_id,
             'partner_shipping_id' => $this->partner_shipping_id,
             'tanggal' => $this->tanggal,
             'prepare_id' => $this->prepare_id,
@@ -74,7 +79,8 @@ class DeliveryNoteSearch extends DeliveryNote
             ->andFilterWhere(['like', 'state', $this->state])
             ->andFilterWhere(['like', 'ekspedisi', $this->ekspedisi])
             ->andFilterWhere(['like', 'jumlah_coli', $this->jumlah_coli])
-            ->andFilterWhere(['like', 'terms', $this->terms]);
+            ->andFilterWhere(['like', 'terms', $this->terms])
+            ->andFilterWhere(['ilike', 'res_partner.display_name', $this->partner_id]);
 
         return $dataProvider;
     }

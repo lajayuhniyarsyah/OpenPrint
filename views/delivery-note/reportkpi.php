@@ -5,7 +5,12 @@ use yii\grid\GridView;
 
 <div>
 
+
 <h3>Rekap KPI</h3>
+
+	<?php echo $this->render('_search', [
+	    'model' => $searchModel,
+	]); ?>
 
 	<?= GridView::widget([
 		'dataProvider' => $dataProvider,
@@ -14,29 +19,28 @@ use yii\grid\GridView;
 			['class' => 'yii\grid\SerialColumn'],
 
 			[
-				'attribute' => 'Delivery Note',
-				'value' => 'name',
+				'attribute' => 'name',
+				'header'=>'Delivery Note',
 			],
 			[
-				'attribute' => 'DN / SJ Date',
-				'value' => 'stockPicking0.date_done',
+				'attribute' => 'stockPicking0.date_done',
+				'header' => 'DN/SJ Date',
 			],
 			[
-				'attribute' => 'Address Name',
-				'value' => 'partner.display_name',
+				'attribute' => 'partner.display_name',
+				'header' => 'Address',
 			],
 			[
-				'attribute' => 'Tgl PO / Barang Masuk',
-				'value' => 'saleOrder.date_order',
+				'attribute' => 'saleOrder.date_order',
+				'header' => 'Tgl PO/Barang Masuk',
 			],
 			[
-				'attribute' => 'Tanggal Kirim',
-				'value' => 'tanggal',
+				'attribute' => 'tanggal',
+				'header' => 'Tanggal Kirim',
 			],
-			// [
-			// 	'attribute' => 'Selisih Hari',
-			// 	'value' => '',
-			// ],
+			[
+				'attribute' => 'selisih_hari',
+			],
 
 			// ['class' => 'yii\grid\ActionColumn'],
 		],

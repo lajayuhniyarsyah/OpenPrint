@@ -184,4 +184,13 @@ class DeliveryNote extends \yii\db\ActiveRecord
     {
         return $this->hasMany(DeliveryNoteLine::className(), ['note_id' => 'id'])->orderBy('no, id ASC');
     }
+
+    public function getSaleOrder(){
+        return $this->hasOne(SaleOrder::className(),['id'=>'sale_id'])->via('prepare');
+    }
+
+    public function getStockPicking0(){
+        return $this->hasOne(StockPicking::className(),['id'=>'partner_id']);
+    }
+
 }

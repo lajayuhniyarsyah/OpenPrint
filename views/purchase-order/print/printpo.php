@@ -1,7 +1,5 @@
 <?php
 use yii\helpers\Url;
-
-
 ?>
 <style type="text/css">
 	#pageContainer{

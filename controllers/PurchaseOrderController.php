@@ -70,6 +70,11 @@ class PurchaseOrderController extends Controller
         return $this->render('print/printpo',['model'=>$model]);
     }
 
+    public function actionPrintpoimport($id){
+        $this->layout = 'printout';
+        $model = $this->findModel($id);
+        return $this->render('print/printpoimport',['model'=>$model]);
+    }
 
     public function actionSupplierlist($search = null, $id = null) 
     {

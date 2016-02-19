@@ -202,32 +202,56 @@ class DeliveryNote extends \yii\db\ActiveRecord
         return $this->hasOne(StockPicking::className(),['id'=>'partner_id']);
     }
 
+    public function countSelisihHari(){
+        $res = null;
+
+        if(!$this->saleOrder){
+            $date1 = date_create($this->workOrder->date);
+        }else{
+            $date1 = date_create($this->saleOrder->date_order);
+        }
+
+        $date2 = date_create($this->tanggal);
+
+        $res = date_diff($date1,$date2);
+
+        return $res;
+    }
+
+    public function setSelisihHari(){
+        $res = null;
+
+        $diff = $this->countSelisihHari();
+
+        if($diff->m === 0) {
+            $res = $diff->d." Hari ";
+        }
+        else {
+            $res = $diff->m." Bulan ".$diff->d." Hari ";
+        }
+        $this->selisih_hari = $res;
+    }
+
+
+    public function setStatus(){
+        //tercapai jika diff <= 7 hari
+        // tidak tercapai jika > 7 hari
+        $diff = $this->countSelisihHari();
+
+        if($diff->days<=7){
+            $this->status = 'Tercapai';
+        }else{
+            $this->status = 'Tidak Tercapai';
+        }
+        
+    }
+
 
     public function afterFind(){
 
-        // var_dump($this->saleOrder->date_order);
-        
-        $date1 = date_create($this->saleOrder->date_order);
-        $date2 = date_create($this->tanggal);
-        if($this->tanggal === null) {
-            $this->selisih_hari = null;
-            $this->status = 'Tidak Tercapai';
-        }
-        else {
-            $diff = date_diff($date1,$date2);
-            if($diff->m === 0) {
-                $this->selisih_hari = $diff->d." Hari ";
-            }
-            else {
-                $this->selisih_hari = $diff->m." Bulan ".$diff->d." Hari ";
-            }
-            if($diff->m === 0 && $diff->d <= 7) {
-                $this->status = 'Tercapai';
-            }
-            else {
-                $this->status = 'Tidak Tercapai';
-            }
-        }
+
+        $this->setSelisihHari();
+        $this->setStatus();
 
         return true;
     }

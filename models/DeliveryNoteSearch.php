@@ -22,8 +22,9 @@ class DeliveryNoteSearch extends DeliveryNote
         return [
             [['id', 'create_uid', 'write_uid', 'partner_shipping_id', 'prepare_id', 'work_order_id', 'work_order_in'], 'integer'],
             [['create_date', 'write_date', 'colorcode', 'poc', 'name', 'note', 'state', 'tanggal', 'ekspedisi', 'jumlah_coli', 'terms', 'partner_id', /*'partner.display_name'*/], 'safe'],
-            [['special'], 'boolean'],
-            [['year_tanggal', 'month_tanggal', 'year_po', 'month_po'], 'integer'],
+            [['special'], 'boolean',],
+            [['year_tanggal'],'integer','max'=>date("Y"),'min'=>2014],
+            [[ 'month_tanggal', 'year_po', 'month_po'], 'integer'],
         ];
     }
 
@@ -103,15 +104,19 @@ class DeliveryNoteSearch extends DeliveryNote
             return $dataProvider;
         }
 
-        if($this->year_tanggal != null) {
+        if($this->year_tanggal /*&& $this->year_po*/ != null) {
             $query->andWhere(['and','EXTRACT(YEAR FROM "tanggal") = '.$this->year_tanggal]);
+            // $query->andWhere(['and','EXTRACT(YEAR FROM "date_order") = '.$this->year_po]);
         }
-        if($this->month_tanggal != null) {
+        if($this->month_tanggal /*&& $this->month_po*/ != null) {
             $query->andWhere(['and','EXTRACT(MONTH FROM "tanggal") = '.$this->month_tanggal]);
+            // $query->andWhere(['and','EXTRACT(YEAR FROM "date_order") = '.$this->month_po]);
         }
-        if($this->year_tanggal && $this->month_tanggal != null) {
+        if($this->year_tanggal && $this->month_tanggal/* && $this->year_po && $this->month_po*/ != null) {
             $query->andWhere(['and','EXTRACT(YEAR FROM "tanggal") = '.$this->year_tanggal]);
             $query->andWhere(['and','EXTRACT(MONTH FROM "tanggal") = '.$this->month_tanggal]);
+            // $query->andWhere(['and','EXTRACT(YEAR FROM "date_order") = '.$this->year_po]);
+            // $query->andWhere(['and','EXTRACT(YEAR FROM "date_order") = '.$this->month_po]);
         }
 
         $query->andFilterWhere(['ilike', 'res_partner.display_name', $this->partner_id]);

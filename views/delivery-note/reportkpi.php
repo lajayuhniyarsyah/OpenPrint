@@ -12,7 +12,13 @@ use yii\grid\GridView;
 	    'model' => $searchModel,
 	]); ?>
 
-	<?= GridView::widget([
+	<?=\kartik\export\ExportMenu::widget([
+		'dataProvider'=>$dataProvider,
+	])?>
+
+	<?php //echo var_dump($dataProvider) ?>
+
+	<?= \kartik\grid\GridView::widget([
 		'dataProvider' => $dataProvider,
 		// 'filterModel' => $searchModel,
 		'columns' => [

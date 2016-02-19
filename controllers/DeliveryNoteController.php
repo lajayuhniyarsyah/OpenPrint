@@ -661,19 +661,13 @@ class DeliveryNoteController extends Controller
 		return $res;
 	}
 	
-	
-	#show delivery note kpi report
-	// public function actionReportKPI($year,$month=null){
-	//     #here report of kpi process
-		
-	//     return $this->render('report_kpi');
-	// }
 
-	
+	#show delivery note kpi report
 	public function actionReportkpi()
 	{
+		#here report of kpi process
 		$searchModel = new DeliveryNoteSearch();
-		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+		$dataProvider = $searchModel->searchKPI(Yii::$app->request->queryParams);
 		
 		return $this->render('reportkpi', [
 			'dataProvider' => $dataProvider,

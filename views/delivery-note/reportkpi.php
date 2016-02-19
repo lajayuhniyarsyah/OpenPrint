@@ -8,7 +8,7 @@ use yii\grid\GridView;
 
 <h3>Rekap KPI</h3>
 
-	<?php echo $this->render('_search', [
+	<?php echo $this->render('_searchKPI', [
 	    'model' => $searchModel,
 	]); ?>
 
@@ -28,7 +28,7 @@ use yii\grid\GridView;
 			],
 			[
 				'attribute' => 'partner.display_name',
-				'header' => 'Address',
+				'header' => 'Address Name',
 			],
 			[
 				'attribute' => 'saleOrder.date_order',

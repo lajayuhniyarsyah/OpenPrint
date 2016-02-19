@@ -12,6 +12,8 @@ use app\models\DeliveryNote;
  */
 class DeliveryNoteSearch extends DeliveryNote
 {
+    public $status, $year_tanggal, $month_tanggal, $year_po, $month_po;
+
     /**
      * @inheritdoc
      */
@@ -21,6 +23,7 @@ class DeliveryNoteSearch extends DeliveryNote
             [['id', 'create_uid', 'write_uid', 'partner_shipping_id', 'prepare_id', 'work_order_id', 'work_order_in'], 'integer'],
             [['create_date', 'write_date', 'colorcode', 'poc', 'name', 'note', 'state', 'tanggal', 'ekspedisi', 'jumlah_coli', 'terms', 'partner_id', /*'partner.display_name'*/], 'safe'],
             [['special'], 'boolean'],
+            [['year_tanggal', 'month_tanggal', 'year_po', 'month_po'], 'integer'],
         ];
     }
 
@@ -48,7 +51,6 @@ class DeliveryNoteSearch extends DeliveryNote
     public function search($params)
     {
         $query = DeliveryNote::find();
-        $query->joinWith(['partner']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -66,6 +68,7 @@ class DeliveryNoteSearch extends DeliveryNote
             'write_uid' => $this->write_uid,
             'partner_shipping_id' => $this->partner_shipping_id,
             'tanggal' => $this->tanggal,
+            'partner_id' => $this->partner_id,
             'prepare_id' => $this->prepare_id,
             'special' => $this->special,
             'work_order_id' => $this->work_order_id,
@@ -79,8 +82,39 @@ class DeliveryNoteSearch extends DeliveryNote
             ->andFilterWhere(['like', 'state', $this->state])
             ->andFilterWhere(['like', 'ekspedisi', $this->ekspedisi])
             ->andFilterWhere(['like', 'jumlah_coli', $this->jumlah_coli])
-            ->andFilterWhere(['like', 'terms', $this->terms])
-            ->andFilterWhere(['ilike', 'res_partner.display_name', $this->partner_id]);
+            ->andFilterWhere(['like', 'terms', $this->terms]);
+
+        return $dataProvider;
+    }
+
+    // search untuk report KPI
+    public function searchKPI($params)
+    {
+        $query = DeliveryNote::find()
+            ->where(['state' => 'done']);
+
+        $query->joinWith(['partner']);
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        if (!($this->load($params) && $this->validate())) {
+            return $dataProvider;
+        }
+
+        if($this->year_tanggal != null) {
+            $query->andWhere(['and','EXTRACT(YEAR FROM "tanggal") = '.$this->year_tanggal]);
+        }
+        if($this->month_tanggal != null) {
+            $query->andWhere(['and','EXTRACT(MONTH FROM "tanggal") = '.$this->month_tanggal]);
+        }
+        if($this->year_tanggal && $this->month_tanggal != null) {
+            $query->andWhere(['and','EXTRACT(YEAR FROM "tanggal") = '.$this->year_tanggal]);
+            $query->andWhere(['and','EXTRACT(MONTH FROM "tanggal") = '.$this->month_tanggal]);
+        }
+
+        $query->andFilterWhere(['ilike', 'res_partner.display_name', $this->partner_id]);
 
         return $dataProvider;
     }

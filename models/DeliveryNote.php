@@ -46,8 +46,7 @@ use app\models\SaleOrder;
  */
 class DeliveryNote extends \yii\db\ActiveRecord
 {
-    public $selisih_hari;
-    public $status;
+    public $selisih_hari, $status/*, $year_tanggal, $month_tanggal*/;
 
     /**
      * @inheritdoc
@@ -64,12 +63,13 @@ class DeliveryNote extends \yii\db\ActiveRecord
     {
         return [
             [['create_uid', 'write_uid', 'partner_id', 'partner_shipping_id', 'prepare_id', 'work_order_id', 'work_order_in', 'attn'], 'integer'],
-            [['create_date', 'write_date', 'tanggal', 'selisih_hari', 'status'], 'safe'],
+            [['create_date', 'write_date', 'tanggal', 'state', 'selisih_hari', 'status'], 'safe'],
             [['name'], 'required'],
             [['note', 'state', 'terms'], 'string'],
             [['special'], 'boolean'],
             [['colorcode', 'poc', 'name', 'jumlah_coli'], 'string', 'max' => 64],
-            [['ekspedisi'], 'string', 'max' => 128]
+            [['ekspedisi'], 'string', 'max' => 128],
+            // [['year_tanggal','month_tanggal'], 'integer'],
         ];
     }
 
@@ -87,11 +87,11 @@ class DeliveryNote extends \yii\db\ActiveRecord
             'colorcode' => 'Colorcode',
             'partner_id' => 'Partner ID',
             'poc' => 'Poc',
-            'name' => 'Name',
+            'name' => 'Delivery Note',
             'partner_shipping_id' => 'Partner Shipping ID',
             'note' => 'Note',
             'state' => 'State',
-            'tanggal' => 'Tanggal',
+            'tanggal' => 'Tanggal Kirim',
             'prepare_id' => 'Prepare ID',
             'ekspedisi' => 'Ekspedisi',
             'jumlah_coli' => 'Jumlah Coli',
@@ -100,6 +100,9 @@ class DeliveryNote extends \yii\db\ActiveRecord
             'work_order_id' => 'Work Order ID',
             'work_order_in' => 'Work Order In',
             'attn' => 'Attn',
+            'stockPicking0.date_done' => 'DN/SJ Date',
+            'partner.display_name' => 'Address Name',
+            'saleOrder.date_order' => 'Tgl PO/Barang Masuk',
         ];
     }
 
@@ -206,12 +209,24 @@ class DeliveryNote extends \yii\db\ActiveRecord
         
         $date1 = date_create($this->saleOrder->date_order);
         $date2 = date_create($this->tanggal);
-        if($this->tanggal==null) {
-            $this->selisih_hari == null;
+        if($this->tanggal === null) {
+            $this->selisih_hari = null;
+            $this->status = 'Tidak Tercapai';
         }
         else {
             $diff = date_diff($date1,$date2);
-            $this->selisih_hari = $diff->m." bulan ".$diff->d." hari ";
+            if($diff->m === 0) {
+                $this->selisih_hari = $diff->d." Hari ";
+            }
+            else {
+                $this->selisih_hari = $diff->m." Bulan ".$diff->d." Hari ";
+            }
+            if($diff->m === 0 && $diff->d <= 7) {
+                $this->status = 'Tercapai';
+            }
+            else {
+                $this->status = 'Tidak Tercapai';
+            }
         }
 
         return true;

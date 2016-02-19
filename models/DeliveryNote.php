@@ -47,6 +47,7 @@ use app\models\SaleOrder;
 class DeliveryNote extends \yii\db\ActiveRecord
 {
     public $selisih_hari;
+    public $status;
 
     /**
      * @inheritdoc
@@ -63,7 +64,7 @@ class DeliveryNote extends \yii\db\ActiveRecord
     {
         return [
             [['create_uid', 'write_uid', 'partner_id', 'partner_shipping_id', 'prepare_id', 'work_order_id', 'work_order_in', 'attn'], 'integer'],
-            [['create_date', 'write_date', 'tanggal', 'selisih_hari'], 'safe'],
+            [['create_date', 'write_date', 'tanggal', 'selisih_hari', 'status'], 'safe'],
             [['name'], 'required'],
             [['note', 'state', 'terms'], 'string'],
             [['special'], 'boolean'],
@@ -201,7 +202,17 @@ class DeliveryNote extends \yii\db\ActiveRecord
 
     public function afterFind(){
 
-        $this->selisih_hari = 'test';
+        // var_dump($this->saleOrder->date_order);
+        
+        $date1 = date_create($this->saleOrder->date_order);
+        $date2 = date_create($this->tanggal);
+        if($this->tanggal==null) {
+            $this->selisih_hari == null;
+        }
+        else {
+            $diff = date_diff($date1,$date2);
+            $this->selisih_hari = $diff->m." bulan ".$diff->d." hari ";
+        }
 
         return true;
     }

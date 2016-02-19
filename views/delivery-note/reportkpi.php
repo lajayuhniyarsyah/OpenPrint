@@ -41,6 +41,9 @@ use yii\grid\GridView;
 			[
 				'attribute' => 'selisih_hari',
 			],
+			[
+				'attribute' => 'status',
+			],
 
 			// ['class' => 'yii\grid\ActionColumn'],
 		],

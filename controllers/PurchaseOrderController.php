@@ -154,7 +154,7 @@ class PurchaseOrderController extends Controller
             'query' => $query,
             'key'=>'id',
             'pagination' => [
-                'pageSize' => 100,
+                'pageSize' => 500,
             ],
         ]);
 

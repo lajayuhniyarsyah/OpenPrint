@@ -4,15 +4,21 @@ namespace app\models;
 
 use Yii;
 use yii\base\Model;
+use yii\base\InvalidConfigException;
 use yii\data\ActiveDataProvider;
 use app\models\DeliveryNote;
+use yii\db\Query;
+use yii\db\ActiveQuery;
+use yii\db\ActiveQueryInterface;
+use yii\db\Connection;
+use yii\db\QueryInterface;
 
 /**
  * DeliveryNoteSearch represents the model behind the search form about `app\models\DeliveryNote`.
  */
 class DeliveryNoteSearch extends DeliveryNote
 {
-    public $status, $year_tanggal, $month_tanggal, $year_po, $month_po;
+    public $year_tanggal, $month_tanggal, $year_po, $month_po, $query;
 
     /**
      * @inheritdoc
@@ -21,17 +27,17 @@ class DeliveryNoteSearch extends DeliveryNote
     {
         return [
             [['id', 'create_uid', 'write_uid', 'partner_shipping_id', 'prepare_id', 'work_order_id', 'work_order_in'], 'integer'],
-            [['create_date', 'write_date', 'colorcode', 'poc', 'name', 'note', 'state', 'tanggal', 'ekspedisi', 'jumlah_coli', 'terms', 'partner_id', /*'partner.display_name'*/], 'safe'],
+            [['create_date', 'write_date', 'colorcode', 'poc', 'name', 'note', 'state', 'tanggal', 'ekspedisi', 'jumlah_coli', 'terms', 'partner_id', 'saleOrder.date_order'], 'safe'],
             [['special'], 'boolean',],
-            [['year_tanggal'],'integer','max'=>date("Y"),'min'=>2014],
-            [[ 'month_tanggal', 'year_po', 'month_po'], 'integer'],
+            [['year_tanggal', 'year_po'],'integer','max'=>date("Y"),'min'=>2014],
+            [['month_tanggal', 'month_po'], 'integer'],
         ];
     }
 
-    /*public function attributes()
+    public function attributes()
     {
-        return array_merge(parent::attributes(),['partner.display_name']);
-    }*/
+        return array_merge(parent::attributes(),['saleOrder.date_order']);
+    }
 
     /**
      * @inheritdoc
@@ -92,35 +98,97 @@ class DeliveryNoteSearch extends DeliveryNote
     public function searchKPI($params)
     {
         $query = DeliveryNote::find()
-            ->where(['state' => 'done']);
+            ->where(['delivery_note.state' => 'done']);
 
-        $query->joinWith(['partner']);
+        /*$dataProvider->sort->attributes['saleOrder.date_order'] = [
+            'asc' => ['saleOrder.date_order' => SORT_ASC],
+            'desc' => ['saleOrder.date_order' => SORT_DESC],
+        ];*/
+
+        $query->joinWith(['partner','saleOrder']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            /*'pagination' => [
+                'pageSize' => 50
+            ],*/
         ]);
 
         if (!($this->load($params) && $this->validate())) {
             return $dataProvider;
         }
 
-        if($this->year_tanggal /*&& $this->year_po*/ != null) {
-            $query->andWhere(['and','EXTRACT(YEAR FROM "tanggal") = '.$this->year_tanggal]);
-            // $query->andWhere(['and','EXTRACT(YEAR FROM "date_order") = '.$this->year_po]);
+        if($this->year_tanggal != null) {
+            $query->andWhere(['and','EXTRACT(YEAR FROM delivery_note.tanggal) = '.$this->year_tanggal]);
         }
-        if($this->month_tanggal /*&& $this->month_po*/ != null) {
-            $query->andWhere(['and','EXTRACT(MONTH FROM "tanggal") = '.$this->month_tanggal]);
-            // $query->andWhere(['and','EXTRACT(YEAR FROM "date_order") = '.$this->month_po]);
+        if($this->month_tanggal != null) {
+            $query->andWhere(['and','EXTRACT(MONTH FROM delivery_note.tanggal) = '.$this->month_tanggal]);
         }
-        if($this->year_tanggal && $this->month_tanggal/* && $this->year_po && $this->month_po*/ != null) {
-            $query->andWhere(['and','EXTRACT(YEAR FROM "tanggal") = '.$this->year_tanggal]);
-            $query->andWhere(['and','EXTRACT(MONTH FROM "tanggal") = '.$this->month_tanggal]);
-            // $query->andWhere(['and','EXTRACT(YEAR FROM "date_order") = '.$this->year_po]);
-            // $query->andWhere(['and','EXTRACT(YEAR FROM "date_order") = '.$this->month_po]);
+        /*if($this->year_tanggal && $this->month_tanggal != null) {
+            $query->andWhere(['and','EXTRACT(YEAR FROM delivery_note.tanggal) = '.$this->year_tanggal]);
+            $query->andWhere(['and','EXTRACT(MONTH FROM delivery_note.tanggal) = '.$this->month_tanggal]);
+        }*/
+        if($this->year_po != null) {
+            $query->andWhere(['and','EXTRACT(YEAR FROM sale_order.date_order) = '.$this->year_po]);
         }
+        if($this->month_po != null) {
+            $query->andWhere(['and','EXTRACT(MONTH FROM sale_order.date_order) = '.$this->month_po]);
+        }
+        /*if($this->year_po && $this->month_po != null) {
+            $query->andWhere(['and','EXTRACT(YEAR FROM sale_order.date_order) = '.$this->year_po]);
+            $query->andWhere(['and','EXTRACT(MONTH FROM sale_order.date_order) = '.$this->month_po]);
+        }*/
 
-        $query->andFilterWhere(['ilike', 'res_partner.display_name', $this->partner_id]);
+        if($this->partner_id != null) {
+            $query->andFilterWhere([
+                'ilike', 'res_partner.display_name', $this->partner_id,
+            ]);
+        }
 
         return $dataProvider;
     }
+
+    /*public function reportKPI($params)
+    {
+        // $query = new Query;
+        $query = <<<query
+SELECT
+    delivery_note.name AS "Delivery Note",
+    stock_picking.date_done AS "DN/SJ Date",
+    res_partner.display_name AS "Address Name",
+    sale_order.date_order AS "Tgl PO/Barang Masuk",
+    delivery_note.tanggal AS "Tanggal Kirim"
+FROM 
+    delivery_note
+LEFT JOIN
+    res_partner ON delivery_note.partner_id = res_partner.id
+LEFT JOIN 
+    stock_picking ON res_partner.id = stock_picking.partner_id
+LEFT JOIN 
+    order_preparation ON delivery_note.prepare_id = order_preparation.id
+LEFT JOIN 
+    sale_order ON order_preparation.sale_id = sale_order.id 
+WHERE 
+    delivery_note.state='done' 
+    AND EXTRACT(YEAR FROM delivery_note.tanggal) = 2015
+    AND EXTRACT(MONTH FROM delivery_note.tanggal) = 1
+    AND EXTRACT(YEAR FROM sale_order.date_order) = 2015
+    AND EXTRACT(MONTH FROM sale_order.date_order) = 1
+    AND res_partner.display_name ILIKE '%FREEPORT INDONESIA, PT%'
+query;
+
+        $connection = Yii::$app->db;
+        $res = $connection->createCommand($query)->queryAll();
+
+        $dataProvider = new \yii\data\ArrayDataProvider([
+            'allModels' => $res,
+        ]);
+
+        if (!($this->load($params) && $this->validate())) {
+            return $dataProvider;
+        }
+
+        return $dataProvider;
+    }*/
+
 }

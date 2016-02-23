@@ -21,6 +21,11 @@ use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\data\ActiveDataProvider;
 use yii\base\Model;
+
+use arturoliveira\ExcelView;
+
+use kartik\grid\GridView;
+
 // use app\models\PackingListLine;
 
 /**
@@ -674,5 +679,29 @@ class DeliveryNoteController extends Controller
 			'searchModel' => $searchModel,
 		]);
 	}
+
+	/*public function actionExportkpi()
+	{
+		$searchModel = new DeliveryNoteSearch();
+		$dataProvider = $searchModel->reportKPI(Yii::$app->request->queryParams);
+		
+		ExcelView::widget([
+			'dataProvider' => $dataProvider,
+			'filterModel' => $searchModel,
+			'fullExportType'=> 'xlsx', //can change to html,xls,csv and so on
+			'grid_mode' => 'export',
+			'columns' => [
+			   	// ['class' => 'yiigridSerialColumn'],
+			   	'name',
+				'stockPicking0.date_done',
+				'partner.display_name',
+				'saleOrder.date_order',
+				'tanggal',
+				'selisih_hari',
+				'status',
+			],
+		]);
+	}*/
+
 
 }

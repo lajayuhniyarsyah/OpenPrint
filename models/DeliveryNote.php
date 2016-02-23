@@ -46,7 +46,7 @@ use app\models\SaleOrder;
  */
 class DeliveryNote extends \yii\db\ActiveRecord
 {
-    public $selisih_hari, $status/*, $year_tanggal, $month_tanggal*/;
+    public $selisih_hari, $status, $address_name/*, $year_tanggal, $month_tanggal*/;
 
     /**
      * @inheritdoc
@@ -248,7 +248,6 @@ class DeliveryNote extends \yii\db\ActiveRecord
 
 
     public function afterFind(){
-
 
         $this->setSelisihHari();
         $this->setStatus();

@@ -673,10 +673,13 @@ class DeliveryNoteController extends Controller
 		#here report of kpi process
 		$searchModel = new DeliveryNoteSearch();
 		$dataProvider = $searchModel->searchKPI(Yii::$app->request->queryParams);
+
+		$dataProviderExport = $searchModel->searchKPI(Yii::$app->request->queryParams,0);
 		
 		return $this->render('reportkpi', [
 			'dataProvider' => $dataProvider,
 			'searchModel' => $searchModel,
+			'dataProviderExport'=>$dataProviderExport,
 		]);
 	}
 

@@ -95,7 +95,7 @@ class DeliveryNoteSearch extends DeliveryNote
     }
 
     // search untuk report KPI
-    public function searchKPI($params)
+    public function searchKPI($params,$pageSize=20)
     {
         $query = DeliveryNote::find()
             ->where(['delivery_note.state' => 'done']);
@@ -109,9 +109,9 @@ class DeliveryNoteSearch extends DeliveryNote
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            /*'pagination' => [
-                'pageSize' => 50
-            ],*/
+            'pagination' => [
+                'pageSize' => $pageSize
+            ],
         ]);
 
         if (!($this->load($params) && $this->validate())) {

@@ -149,7 +149,7 @@ class PurchaseOrderController extends Controller
             'query' => $query,
             'key'=>'id',
             'pagination' => [
-                'pageSize' => 100,
+                'pageSize' => 500,
             ],
         ]);
 
@@ -177,8 +177,6 @@ class PurchaseOrderController extends Controller
         }else{
             $product=$params['product_id'];
         }
-        
-
         if($params['state']){
             $state=$params['state'];
         }else{
@@ -192,8 +190,6 @@ class PurchaseOrderController extends Controller
             $dattefrom='0';
             $dateto='0';
         }
-
-
         // if($params['pricelist']){
         //     if(is_array($params['pricelist'])){
         //         $pricelist=implode(",", $params['pricelist']);  

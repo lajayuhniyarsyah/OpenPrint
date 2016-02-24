@@ -315,8 +315,7 @@ class DeliveryNoteController extends Controller
                                 $superNotes = SuperNotes::findOne($spnotes['super_note_id']);
                                 $printSp_note .= '<br/>'.$superNotes['template_note'];
                             }
-
-                            $res[$no]['name'] .= '<li>['.$modelprod['default_code'].'] ' .$modelprod['name_template'].' <strong>('.$line_material['qty'].' '.$uom['name'].'</strong>)'.$printSp_note.'</li>';
+                            $res[$no]['name'] .= '<li>['.$modelprod['default_code'].'] ' .$modelprod['name_template'].' <strong>('.$line_material['qty'].' '.$uom['name'].'</strong>)<br/>'.$line_material['desc'].$printSp_note.'</li>';
                         }
                     }
                 }else if (count($l['note_line_material']) > 1) {
@@ -340,7 +339,7 @@ class DeliveryNoteController extends Controller
                             $printSp_note .=$superNotes['template_note'];
                         }
                         
-                        $res[$no]['name'] .= '<li>['.$modelprod['default_code'].'] ' .$modelprod['name_template'].' <strong>('.$line_material['qty'].' '.$uom['name'].'</strong>) <br/>'.$batch.$printSp_note.'</li>';
+                        $res[$no]['name'] .= '<li>['.$modelprod['default_code'].'] ' .$modelprod['name_template'].' <strong>('.$line_material['qty'].' '.$uom['name'].'</strong>) <br/>'.$line_material['desc'].$batch.$printSp_note.'</li>';
                     }
                 }
             }            

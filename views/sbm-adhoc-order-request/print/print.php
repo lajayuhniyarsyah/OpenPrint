@@ -126,7 +126,7 @@ use yii\helpers\Url;
 	.headtablepages tr th{
 		border: 1px solid black;
 		/*font-family: Times New Roman;*/
-		font-size: 13px;
+		font-size: 12px;
 		line-height: 15px;
 		text-align: center;
 	}
@@ -199,14 +199,22 @@ use yii\helpers\Url;
 		page-break-after: always;
 	}
 	.contentFooter{
-	 	border: 1px solid black;
+	 	border-top: 1px solid black;
 	    border-collapse: collapse;
-	    margin-left: 15px;
+	    margin-left: 0px;
 	    margin-top: 0;
 	    width: 186mm;
 	    text-align: justify;
 	}
 
+.contentFooter tbody tr td {
+  border-collapse: collapse;
+  border-left: 0px solid black !important;
+  border-right: 0px solid black !important;
+  font-size: 14px;
+  line-height: 20px;
+  vertical-align: top;
+}
 
 	.contentLines{
 		border-collapse: collapse;
@@ -220,7 +228,7 @@ use yii\helpers\Url;
 		border-right:  1px solid black;
 		border-collapse: collapse;
 		line-height: 20px;
-		font-size: 14px;
+		font-size: 13px;
 		vertical-align: top;
 	}
 	.lineTable{
@@ -228,7 +236,8 @@ use yii\helpers\Url;
 	}
 	.leftdata{
 		float: left;
-		width: 75%;
+		width: 95%;
+		text-align: justify;
 		margin-left: 10px;
 	}
 	.rightdata{
@@ -319,20 +328,14 @@ use yii\helpers\Url;
 	<?php 
 		$no=1;
 		foreach ($model->sbmAdhocOrderRequestOutputs as $value){
-				$data2[]=array(
-								$no,
-                                '['.$value->item->default_code.'] '. $value->item->name_template,
-								$value->desc,
-								$value->qty,
-								$value->uom->name);
-						$no++;
-				}
-
-		// $note=explode("^^^",$model->notes);
-
-		// foreach ($note as $notes) {
-		// 	$data2[]=array('',str_replace("^^^", "", nl2br($notes)),'','','','','');
-		// }
+			$data2[]=array(
+				$no,
+                '['.$value->item->default_code.'] '. $value->item->name_template,
+				$value->desc,
+				$value->qty,
+				$value->uom->name);
+			$no++;
+		}
 		
 	?>
 <div id="pageContainer">
@@ -403,50 +406,6 @@ use yii\helpers\Url;
 							</div>
 						</td>
 					</tr>
-					<tr>
-						<td>
-							<div>
-								<table class="contentFooter">
-									<tr>
-										<td><p class="judulfooter">Scope Of Work</p></td>
-									</tr>
-									<tr>
-										<td><p class="isi"><?php echo $model->scope_of_work; ?></p></td>
-									</tr>
-									<tr>
-										<td><p class="judulfooter">Term Condition</p></td>
-									</tr>
-									<tr>
-										<td><p class="isi"><?php echo $model->term_condition; ?></p></td>
-									</tr>
-									<tr>
-										<td><p class="judulfooter">Notes</p></td>
-									</tr>
-									<tr>
-										<td><p class="isi"><?php echo $model->notes; ?></p></td>
-									</tr>
-									<tr>
-										<td>
-											<div class="leftheadtablefooter">
-												<span class="isi" style="margin-left:-10px;"><center>Product / Regional Manager</center></span>
-												<br/>
-												<br/>
-												<span class="isi"><center><?=$model->salesMan->name?></center></span>
-											</div>
-											<div class="rigthheadtablefooter">
-											<span class="isi"><center>General Manager</center></span>
-												<br/>
-												<br/>
-												<span class="isi"><center>(........................)</center></span>
-											</div>
-										</td>
-
-									</tr>
-								</table>
-
-							</div>
-						</td>
-					</tr>
 				</table>
 			</td>
 		</tr>
@@ -456,7 +415,12 @@ use yii\helpers\Url;
 
 <?php
 
-$footer ='""';
+$scope_of_work = preg_replace('#\R+#', '<br/>', str_replace('"','', $model->scope_of_work));
+$term_condition = preg_replace('#\R+#', '<br/>', str_replace('"','', $model->term_condition));
+$notes = preg_replace('#\R+#', '<br/>', str_replace('"','`', $model->notes));
+$sales =$model->salesMan->name;
+
+$footer ='"<tr><td colspan=5><table class=\"contentFooter\"><tr><td><p class=\"judulfooter\">Scope Of Work</p></td></tr><tr><td><p class=\"isi\">'.$scope_of_work.'</p></td></tr><tr><td><p class=\"judulfooter\">Term Condition</p></td></tr><tr><td><p class=\"isi\">'.$term_condition.'</p></td></tr><tr><td><p class=\"judulfooter\">Notes</p></td></tr><tr><td><p class=\"isi\">'.$notes.'</p></td></tr><tr><td><div class=\"leftheadtablefooter\"><span class=\"isi\" style=\"margin-left:-10px;\"><center>Product / Regional Manager</center></span><br/><br/><span class=\"isi\"><center>'.$sales.'</center></span></div><div class=\"rigthheadtablefooter\"><span class=\"isi\"><center>General Manager</center></span><br/><br/><span class=\"isi\"><center>(........................)</center></span></div></td></tr></table></td></tr>"';
 
 
 $this->registerJs('

@@ -11,7 +11,7 @@ use yii\helpers\Url;
 <STYLE type="text/css">
 body {margin-top: 0px;margin-left: 0px;}
 #content{margin-left: auto; margin-right: auto;}
-#page_1 {position:relative; overflow: hidden;margin: 147px 0px 34px 35px;padding: 0px;border: none;width: 759px;}
+#page_1 {position:relative; overflow: hidden;margin: 0px 0px 34px 35px;padding: 0px;border: none;width: 759px;}
 #page_1 #id_1 {border:none;margin: 0px 0px 0px 0px;padding: 0px;border:none;width: 759px;overflow: hidden;}
 
 .ft0{font: 12pt 'Arial';text-decoration: underline;line-height: 22px;}
@@ -92,6 +92,18 @@ body {margin-top: 0px;margin-left: 0px;}
 .t0{width: 741px;font: 13px 'Arial';}
 .t1{width: 601px;margin-left: 85px;margin-top: 13px;font: 15px 'Arial';}
 .square{border:1px solid black;}
+footer{
+	height: 150px;
+}
+.thead{
+    	height: 150px;
+    }
+@media print {
+    .thead{
+    	page-break-before: always;
+    	height: 150px;
+    }
+}
 </STYLE>
 
 <?php 
@@ -180,9 +192,16 @@ body {margin-top: 0px;margin-left: 0px;}
 ?>
 <BODY>
 	<DIV id="page_1">
-		<P class="p0 ft0">PURCHASE ORDER</P>
 		<TABLE cellpadding=0 cellspacing=0 class="t0">
+			<THEAD class="thead">
+			  <TR>
+			     <TH colspan=7></TH>
+			  </TR>
+			 </thead>
+			 </TFOOT>
+			 <TBODY>
 			<!-- Start Header -->
+			<TR><TD colspan=7><P class="p0 ft0">PURCHASE ORDER</P></TD></TR>
 			<TR>
 				<TD colspan=3 class="tr0 td0"><P class="p1 ft1">No. : <?php  echo $model->name; ?> </P></TD>
 				<TD colspan=4 class="tr0 td1"><P class="p2 ft1">Form : <NOBR>No.SBM-F-adm-07a/00</NOBR></P></TD>
@@ -240,7 +259,7 @@ body {margin-top: 0px;margin-left: 0px;}
 
 			<!--Content -->
 			<?php foreach ($data2 as $value) { ?>
-			<TR>
+			<TR class="content_table">
 				<TD class="tr4 td2"><P class="p9 ft4"><?php echo $value[0] ?></P></TD>
 				<TD class="tr4 td10"><P class="p10 ft4"><?php echo $value[3].' '.$value[4] ?></P></TD>
 				<TD class="tr4 td8" colspan="2"><P class="p9 ft1"><?php echo $value[1] ?></P></TD>
@@ -317,7 +336,9 @@ body {margin-top: 0px;margin-left: 0px;}
 				<TD class="tr1 td6"><P class="p2 ft2">&nbsp;</P></TD>
 				<TD class="tr1 td7"><P class="p2 ft2">&nbsp;</P></TD>
 			</TR>
+			</TBODY>
 		</TABLE>
+
 				<P class="p16 ft8">PT. SUPRABAKTI MANDIRI</P>
 				<P class="p16 ft9">Jl. Danau Sunter Utara Blok A No. 9</P>
 				<P class="p16 ft9">Jakarta Utara - 14350</P>

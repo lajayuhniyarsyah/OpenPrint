@@ -1032,5 +1032,22 @@ EOQ;
 			return '<div class="alert alert-danger">No data found</div>';
 		}
 	}
+
+	public function actionReportQuotation()
+	{
+		#here report of kpi process
+		$searchModel = new SaleOrderSearch();
+		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+		//$dataProviderExport = $searchModel->search(Yii::$app->request->queryParams,0);
+		
+		return $this->render('report_quotation', [
+			'dataProvider' => $dataProvider,
+			'searchModel' => $searchModel,
+			//'dataProviderExport'=>$dataProviderExport,
+		]);
+	}
+
+
 }
 

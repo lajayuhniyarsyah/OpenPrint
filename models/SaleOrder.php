@@ -86,6 +86,7 @@ use Yii;
  * @property ResUsers $createU
  * @property StockPicking[] $stockPickings
  * @property SaleOrderLine[] $saleOrderLines
+ * @property SaleOrderRevisionHistories[] $saleOrderRevisionHistories
  * @property SaleLineRel[] $saleLineRels
  * @property MrpProduction[] $mrpProductions
  * @property OrderPreparation[] $orderPreparations
@@ -153,7 +154,7 @@ use Yii;
 class SaleOrder extends \yii\db\ActiveRecord
 {
 
-    public $sales_man;
+    public $sales_man, $revisi;
 
     private static $state_aliases = [
         'draft'=>'Draft',
@@ -270,6 +271,9 @@ class SaleOrder extends \yii\db\ActiveRecord
     public function afterFind(){
         if($this->user){
             $this->sales_man=$this->user->partner->name;
+        }
+        if($this->quotation_state != 'win' and 'lost'){
+            $this->quotation_state = 'on process';
         }
     }
     /**
@@ -426,6 +430,14 @@ class SaleOrder extends \yii\db\ActiveRecord
     public function getStockPickings()
     {
         return $this->hasMany(StockPicking::className(), ['sale_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSaleOrderRevisionHistories()
+    {
+        return $this->hasMany(SaleOrderRevisionHistory::className(), ['sale_order_id' => 'id']);
     }
 
     /**
@@ -948,6 +960,10 @@ class SaleOrder extends \yii\db\ActiveRecord
     
     public function getDeliveryNotes(){
         return $this->hasMany(DeliveryNote::className(),['prepare_id'=>'id'])->via('orderPreparations');
+    }
+
+    public function getGroup(){
+        return $this->hasOne(GroupSales::className(),['id'=>'kelompok_id'])->via('user');
     }
 
 

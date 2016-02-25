@@ -287,7 +287,21 @@ class PurchaseOrderController extends Controller
             }else{
                 if($params['state']!='0')
                 {
-                    $query->andWhere(['pol.state'=>explode(',',$params['state'])]); 
+                    $to_state = [];
+
+                    $exps = explode(',',urldecode($params['state']));
+
+                    foreach($exps as $exp){
+                        if($exp=='purchased'){
+                            $to_state[] = 'confirmed';
+                            $to_state[] = 'approved';
+                            $to_state[] = 'done';
+                        }else{
+                            $to_state[] = $exp;
+                        }
+                        
+                    }
+                    $query->andWhere(['pol.state'=>$to_state]); 
                 }
             }
             

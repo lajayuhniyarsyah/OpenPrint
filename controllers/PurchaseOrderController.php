@@ -70,6 +70,11 @@ class PurchaseOrderController extends Controller
         return $this->render('print/printpo',['model'=>$model]);
     }
 
+    public function actionPrintpoimport($id){
+        $this->layout = 'printout';
+        $model = $this->findModel($id);
+        return $this->render('print/printpoimport',['model'=>$model]);
+    }
 
     public function actionSupplierlist($search = null, $id = null) 
     {
@@ -149,7 +154,7 @@ class PurchaseOrderController extends Controller
             'query' => $query,
             'key'=>'id',
             'pagination' => [
-                'pageSize' => 100,
+                'pageSize' => 500,
             ],
         ]);
 
@@ -177,8 +182,6 @@ class PurchaseOrderController extends Controller
         }else{
             $product=$params['product_id'];
         }
-        
-
         if($params['state']){
             $state=$params['state'];
         }else{
@@ -192,8 +195,6 @@ class PurchaseOrderController extends Controller
             $dattefrom='0';
             $dateto='0';
         }
-
-
         // if($params['pricelist']){
         //     if(is_array($params['pricelist'])){
         //         $pricelist=implode(",", $params['pricelist']);  
@@ -286,7 +287,21 @@ class PurchaseOrderController extends Controller
             }else{
                 if($params['state']!='0')
                 {
-                    $query->andWhere(['pol.state'=>explode(',',$params['state'])]); 
+                    $to_state = [];
+
+                    $exps = explode(',',urldecode($params['state']));
+
+                    foreach($exps as $exp){
+                        if($exp=='purchased'){
+                            $to_state[] = 'confirmed';
+                            $to_state[] = 'approved';
+                            $to_state[] = 'done';
+                        }else{
+                            $to_state[] = $exp;
+                        }
+                        
+                    }
+                    $query->andWhere(['pol.state'=>$to_state]); 
                 }
             }
             

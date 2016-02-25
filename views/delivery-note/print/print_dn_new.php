@@ -311,4 +311,5 @@ if($model->terms){
 	$this->registerJs($scr2);
 }
 
+echo $model->terms;
 ?>

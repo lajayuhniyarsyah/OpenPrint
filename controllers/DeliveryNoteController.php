@@ -685,28 +685,20 @@ class DeliveryNoteController extends Controller
 
 
 	#show summary kpi
-	public function actionYearSummaryKpi($tahun_create=null,$bulan_create=null)
+	public function actionYearSummaryKpi($tahun_create=null)
 	{
 		if(!$tahun_create){
             $tahun_create = date('Y');
         }
-        if(!$bulan_create){
-            $bulan_create = date('n');
-        }
-
-        // $first = date('Y-m-d', mktime(0, 0, 0, $bulan_create, 1, $tahun_create));
-        // $last = date('Y-m-t', mktime(0, 0, 0, $bulan_create, 1, $tahun_create));
 
         $dataToRender = [];
         $where = [
             'tahun_create'=>"%%",
-            'bulan_create'=>'%%',
         ];
         $dataToRender['deliveryNote'] = new \app\models\DeliveryNote;
 
-        if($dataToRender['deliveryNote']->load(Yii::$app->request->get())){
+        if($dataToRender['deliveryNote']->load(Yii::$app->request->post())){
             $where['tahun_create'] = $dataToRender['deliveryNote']['tahun_create'];
-            $where['bulan_create'] = $dataToRender['deliveryNote']['bulan_create'];
         }
 
 		$query = <<<query
@@ -764,7 +756,7 @@ FROM
 
 	WHERE 
 		dn.state NOT IN ('draft','cancel')
-		--AND dn.create_date BETWEEN '2015-01-01' AND '2015-12-31'
+		AND EXTRACT(YEAR FROM dn.create_date) = '$tahun_create'
 ) AS dn_kpi
 GROUP BY EXTRACT(YEAR FROM dn_kpi.create_date),EXTRACT(MONTH FROM dn_kpi.create_date)
 query;
@@ -781,7 +773,6 @@ query;
         ]);
 
         $dataToRender['tahun_create'] = $tahun_create;
-        $dataToRender['bulan_create'] = $bulan_create;
 
 		return $this->render('year_summary_kpi',$dataToRender);
 	}

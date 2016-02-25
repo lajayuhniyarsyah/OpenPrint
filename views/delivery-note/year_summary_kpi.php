@@ -15,20 +15,7 @@ use yii\bootstrap\Dropdown;
 			$end = date('Y');
 			$items = [];
 			for($iTahunCreate=$start;$iTahunCreate<=$end;$iTahunCreate++){
-				$items[] = ['label' => $iTahunCreate, 'url' => ['','tahun_create'=>$iTahunCreate,'bulan_create'=>$bulan_create]];
-			}
-			echo Dropdown::widget([
-				'items' => $items,
-			]);
-		?>
-	</span>
-	-
-	<span id="bulanCreateTitle" class="dropdown">
-		<a href="#"  data-toggle="dropdown" class="dropdown-toggle"><?=Html::encode($bulan_create)?></a>
-		<?php
-			$items = [];
-			for($m=1;$m<=12;$m++){
-				$items[] = ['label' => $m, 'url' => ['','tahun_create'=>$tahun_create,'bulan_create'=>$m]];
+				$items[] = ['label' => $iTahunCreate, 'url' => ['','tahun_create'=>$iTahunCreate]];
 			}
 			echo Dropdown::widget([
 				'items' => $items,
@@ -37,16 +24,37 @@ use yii\bootstrap\Dropdown;
 	</span>
 </h3>
 
+<?php /*echo ExportMenu::widget([
+	'dataProvider'=>$dataProvider,
+]);*/ ?>
+
 <?= GridView::widget([
 	'dataProvider'=>$dataProvider,
 	'emptyCell'=>"&nbsp;",
 	'columns'=>[
-		'po_total',
-		'tercapai_persen',
-		'tdk_tercapai_persen',
-		'blm_terkirim_persen',
-		'tahun_create',
-		'bulan_create',
-		'total_persen',
+		[
+			'header'=>'Bulan',
+			'attribute'=>'bulan_create',
+		],
+		[
+			'header'=>'PO Total',
+			'attribute'=>'po_total',
+		],
+		[
+			'header'=>'Tercapai %',
+			'attribute'=>'tercapai_persen',	
+		],
+		[
+			'header'=>'Tidak Tercapai %',
+			'attribute'=>'tdk_tercapai_persen',
+		],
+		[
+			'header'=>'Belum Terkirim %',
+			'attribute'=>'blm_terkirim_persen',
+		],
+		[
+			'header'=>'Total %',
+			'attribute'=>'total_persen',
+		],	
 	]
 ])?>

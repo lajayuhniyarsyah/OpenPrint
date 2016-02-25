@@ -124,71 +124,21 @@ class DeliveryNoteSearch extends DeliveryNote
         if($this->month_tanggal != null) {
             $query->andWhere(['and','EXTRACT(MONTH FROM delivery_note.tanggal) = '.$this->month_tanggal]);
         }
-        /*if($this->year_tanggal && $this->month_tanggal != null) {
-            $query->andWhere(['and','EXTRACT(YEAR FROM delivery_note.tanggal) = '.$this->year_tanggal]);
-            $query->andWhere(['and','EXTRACT(MONTH FROM delivery_note.tanggal) = '.$this->month_tanggal]);
-        }*/
         if($this->year_po != null) {
             $query->andWhere(['and','EXTRACT(YEAR FROM sale_order.date_order) = '.$this->year_po]);
         }
         if($this->month_po != null) {
             $query->andWhere(['and','EXTRACT(MONTH FROM sale_order.date_order) = '.$this->month_po]);
         }
-        /*if($this->year_po && $this->month_po != null) {
-            $query->andWhere(['and','EXTRACT(YEAR FROM sale_order.date_order) = '.$this->year_po]);
-            $query->andWhere(['and','EXTRACT(MONTH FROM sale_order.date_order) = '.$this->month_po]);
-        }*/
 
         if($this->partner_id != null) {
-            $query->andFilterWhere([
-                'ilike', 'res_partner.display_name', $this->partner_id,
-            ]);
+            $query->andFilterWhere(['ilike', 'res_partner.display_name', $this->partner_id]);
         }
-
+        /*if($this->name != null) {
+            $query->andFilterWhere(['ilike', 'delivery_note.name', $this->name]);
+        }*/
+        
         return $dataProvider;
     }
-
-    /*public function reportKPI($params)
-    {
-        // $query = new Query;
-        $query = <<<query
-SELECT
-    delivery_note.name AS "Delivery Note",
-    stock_picking.date_done AS "DN/SJ Date",
-    res_partner.display_name AS "Address Name",
-    sale_order.date_order AS "Tgl PO/Barang Masuk",
-    delivery_note.tanggal AS "Tanggal Kirim"
-FROM 
-    delivery_note
-LEFT JOIN
-    res_partner ON delivery_note.partner_id = res_partner.id
-LEFT JOIN 
-    stock_picking ON res_partner.id = stock_picking.partner_id
-LEFT JOIN 
-    order_preparation ON delivery_note.prepare_id = order_preparation.id
-LEFT JOIN 
-    sale_order ON order_preparation.sale_id = sale_order.id 
-WHERE 
-    delivery_note.state='done' 
-    AND EXTRACT(YEAR FROM delivery_note.tanggal) = 2015
-    AND EXTRACT(MONTH FROM delivery_note.tanggal) = 1
-    AND EXTRACT(YEAR FROM sale_order.date_order) = 2015
-    AND EXTRACT(MONTH FROM sale_order.date_order) = 1
-    AND res_partner.display_name ILIKE '%FREEPORT INDONESIA, PT%'
-query;
-
-        $connection = Yii::$app->db;
-        $res = $connection->createCommand($query)->queryAll();
-
-        $dataProvider = new \yii\data\ArrayDataProvider([
-            'allModels' => $res,
-        ]);
-
-        if (!($this->load($params) && $this->validate())) {
-            return $dataProvider;
-        }
-
-        return $dataProvider;
-    }*/
 
 }

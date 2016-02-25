@@ -667,7 +667,7 @@ class DeliveryNoteController extends Controller
 	
 
 	#show delivery note kpi report
-	public function actionReportKpi()
+	public function actionReportkpi()
 	{
 		#here report of kpi process
 		$searchModel = new DeliveryNoteSearch();
@@ -675,7 +675,7 @@ class DeliveryNoteController extends Controller
 
 		$dataProviderExport = $searchModel->searchKPI(Yii::$app->request->queryParams,0);
 		
-		return $this->render('report_kpi', [
+		return $this->render('reportkpi', [
 			'dataProvider' => $dataProvider,
 			'searchModel' => $searchModel,
 			'dataProviderExport'=>$dataProviderExport,

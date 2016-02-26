@@ -299,6 +299,14 @@ class SaleOrder extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getTermConditions()
+    {
+        return $this->hasMany(TermCondition::className(), ['id' => 'order_id'])->via('termConditionRels');
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getSaleOrderInvoiceRels()
     {
         return $this->hasMany(SaleOrderInvoiceRel::className(), ['order_id' => 'id']);

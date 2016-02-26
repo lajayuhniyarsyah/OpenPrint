@@ -950,5 +950,13 @@ class SaleOrder extends \yii\db\ActiveRecord
         return $this->hasMany(DeliveryNote::className(),['prepare_id'=>'id'])->via('orderPreparations');
     }
 
+     /**
+     * @return Delivery Note
+     */
+    public function getTermCondition(){
+        return $this->hasMany(TermCondition::className(),['id'=>'order_id'])->via('termConditionRels');
+    }
+
+
 
 }

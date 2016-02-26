@@ -964,6 +964,13 @@ class SaleOrder extends \yii\db\ActiveRecord
     public function getTermCondition(){
         return $this->hasMany(TermCondition::className(),['id'=>'order_id'])->via('termConditionRels');
     }
+      /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGroup()
+    {
+        return $this->hasOne(GroupSales::className(), ['id' => 'group_id']);
+    }
 
 
 

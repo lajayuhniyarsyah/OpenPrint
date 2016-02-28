@@ -311,7 +311,7 @@ use yii\helpers\Url;
 				<div class="amLine2 am">
 					<div class="am2Words" contenteditable="true"><?=($data['total']['discountSubtotal'] ? 'DISCOUNT':'&nbsp;')?></div>
 					<div class="kursAm2" contenteditable="true"><?=($data['total']['discountSubtotal'] ? $data['currency']:'&nbsp;')?></div>
-					<div class="valAm2" contenteditable="true"><?=($data['total']['discountSubtotal'] ? $formated($data['total']['discountSubtotal']):'&nbsp;')?></div>
+					<div class="valAm2" contenteditable="true"><?=($data['total']['discountSubtotal'] ? ($model->currency_id==13?$formated($data['total']['discountSubtotalMainCurr']):$formated($data['total']['discountSubtotal'])):'&nbsp;')?></div>
 				</div>
 				<div class="amLine3 am"><?='<div class="currSymbol">'.$model->currency->name.'</div><div class="amountNumber">'.$formated(($model->currency_id==13 ? $data['total']['amountUntaxedMainCurr']:$model->amount_untaxed)).'</div><div class="clear"></div>'?></div>
 				<div class="amLine4 am"><?='<div class="currSymbol">'.$model->currency->name.'</div><div class="amountNumber">'.$formated(($model->currency_id==13 ? $data['total']['amountTaxMainCurr']:$model->amount_tax)).'</div><div class="clear"></div>'?></div>

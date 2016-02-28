@@ -340,7 +340,7 @@
 			var contentElement = jQuery('page#page-'+cursor+' .content');
 			var tinggiContent = contentElement.height();
 			if (tinggiContent<=261){
-				contentfooter.append("<table width='45%'><tr><td width='40%'><b>Term Of Payment</b></td><td width='3%'><b>:</b></td><td><?php if($model->paymentTerm!==null){echo $model->paymentTerm->name;}?></td></tr><tr><td valign='top'><b>Term Condition</b></td><td valign='top'><b>:</b></td><td><?php echo '<ul>';foreach ($model->termCondition as $key_term => $value_term) {	echo '<li>'.$value_term->name.'</li>';}echo '</ul>'?></td></tr><tr><td><b>Note</b></td><td><b>:</b></td><td><?= $model->note?></td></tr></table><br/><table width='30%'><tr> <td valign='top' style='text-align:center' height='80'>Thank you and best regards</td></tr><tr><td valign='top' style='text-align:center'>"+"<?=$model->user->name ?>"+"</td></tr></table>");
+				contentfooter.append("<table width='45%'><tr><td width='40%'><b>Term Of Payment</b></td><td width='3%'><b>:</b></td><td><?php if($model->paymentTerm!==null){echo $model->paymentTerm->name;}?></td></tr><tr><td valign='top'><b>Term Condition</b></td><td valign='top'><b>:</b></td><td><?php echo '<ul>';foreach ($model->termConditions as $key_term => $value_term) {	echo '<li>'.$value_term->name.'</li>';}echo '</ul>'?></td></tr><tr><td valign='top'><b>Note</b></td><td valign='top'><b>:</b></td><td><?= preg_replace('#\R+#','<br/>',$model->note)?></td></tr></table><br/><table width='30%'><tr> <td valign='top' style='text-align:center' height='80'>Thank you and best regards</td></tr><tr><td valign='top' style='text-align:center'>"+"<?=$model->user->name ?>"+"</td></tr></table>");
 
 			}
 			else{
@@ -350,7 +350,7 @@
 				jQuery("page#page-"+cursorLama).after(template);
 				jQuery("page:last").attr("id","page-"+cursor);
 				var contentfooter= jQuery('page#page-'+cursor+' .footer');
-				contentfooter.append("<table width='45%'><tr><td width='40%'><b>Term Of Payment</b></td><td width='3%'><b>:</b></td><td><?php if($model->paymentTerm!==null){echo $model->paymentTerm->name;}?></td></tr><tr><td valign='top'><b>Term Condition</b></td><td valign='top'><b>:</b></td><td><?php echo '<ul>';foreach ($model->termCondition as $key_term => $value_term) {	echo '<li>'.$value_term->name.'</li>';}echo '</ul>'?></td></tr><tr><td><b>Note</b></td><td><b>:</b></td><td><?= $model->note?></td></tr></table><br/><table width='30%'><tr> <td valign='top' style='text-align:center' height='80'>Thank you and best regards</td></tr><tr><td valign='top' style='text-align:center'>"+"<?=$model->user->name ?>"+"</td></tr></table>");
+				contentfooter.append("<table width='45%'><tr><td width='40%'><b>Term Of Payment</b></td><td width='3%'><b>:</b></td><td><?php if($model->paymentTerm!==null){echo $model->paymentTerm->name;}?></td></tr><tr><td valign='top'><b>Term Condition</b></td><td valign='top'><b>:</b></td><td><?php echo '<ul>';foreach ($model->termConditions as $key_term => $value_term) {	echo '<li>'.$value_term->name.'</li>';}echo '</ul>'?></td></tr><tr><td valign='top'><b>Note</b></td><td valign='top'><b>:</b></td><td><?= preg_replace('#\R+#','<br/>',$model->note)?>?></td></tr></table><br/><table width='30%'><tr> <td valign='top' style='text-align:center' height='80'>Thank you and best regards</td></tr><tr><td valign='top' style='text-align:center'>"+"<?=$model->user->name ?>"+"</td></tr></table>");
 
 			}
 

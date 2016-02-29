@@ -24,7 +24,7 @@
 		page .header{
 			margin: auto;
 			width: 780px;
-			height:126mm;
+			height:132mm;
 			
 		} 
 		page .content{
@@ -113,7 +113,7 @@
 						</tr>
 					   
 			
-		   
+		   				
 					</table>
 
 				</td>
@@ -162,10 +162,15 @@
 			
 			<p contenteditable='true'>We would like to offer our product as your requirement as following :</p>
 			
-	  
+  				<!-- <table width="100%" border="1px" style='border-collapse:collapse; margin-top:-1px;'>
+					<tr><td width="5%"><center><b>No</b></center></td><td width="10%"><center><b>Qty</b></center></td><td width="5%"><center><b>Unit</b></center></td><td width="45%"><center><b>Description</b></center></td><td width="15%"><center><b>Price Unit</b></center></td><td width="20%"><center><b>Price Sub</b></center></td></tr>
+				</table> -->
 				</div>
+
 				<div class="content">
-					
+					<table width="100%" border='1px' style='border-collapse:collapse;'>
+						<tr><td width='5%'><center><b>No</b></center></td><td width='10%'><center><b>Qty</b></center></td><td width='5%'><center><b>Unit</b></center></td><td width='45%'><center><b>Description</b></center></td><td width='15%'><center><b>Price Unit</b></center></td><td width='20%'><center><b>Price Sub</b></center></td></tr>
+					</table>
 				</div>
 				<div class="footer">
 					
@@ -180,189 +185,127 @@
 			var data = <?php echo json_encode($dataContent); ?>;
 			var cursor = 1;
 			var template = jQuery('#dokument').html();
+			// var headerTable="<table width='100%' border='1px' style='border-collapse:collapse; margin-top:-1px;'><tr><td width='5%''><center><b>No</b></center></td><td width='10%''><center><b>Qty</b></center></td><td width='5%'><center><b>Unit</b></center></td><td width='45%'><center><b>Description</b></center></td><td width='15%'><center><b>Price Unit</b></center></td><td width='20%'><center><b>Price Sub</b></center></td></tr></table>"
+			var footerTable = "<tr>"+"<td style='border:none;' width='33px'>"+"</td>"+"<td style='border:none;' width='44px'>"+"</td>"+"<td style='border:none;' width='44px'>"+"</td>"+"<td style='border:none;' width='400px' >"+"</td>"+"<td width='130px'>"+"Base Total"+"</td>"+"<td>"+'<?= number_format($model->base_total,2)?>'+"</td>"+"</tr>"+"<tr>"+"<td style='border:none;' width='30px'>"+"</td>"+"<td style='border:none;' width='44px'>"+"</td>"+"<td style='border:none;' width='30px'>"+"</td>"+"<td style='border:none;' width='400px' >"+"</td>"+"<td width='130px'>"+"Discount"+"</td>"+"<td>"+"<?= number_format($model->total_amount_discount,2)?>"+"</td>"+"</tr>"+"<tr>"+"<td style='border:none;' width='30px'>"+"</td>"+"<td style='border:none;' width='44px'>"+"</td>"+"<td style='border:none;' width='30px'>"+"</td>"+"<td style='border:none;' width='400px' >"+"</td>"+"<td width='130px'>"+"Sub Total"+"</td>"+"<td>"+"<?= number_format($model->amount_untaxed,2)?>"+"</td>"+"</tr>"+"<tr>"+"<td style='border:none;' width='30px'>"+"</td>"+"<td style='border:none;' width='44px'>"+"</td>"+"<td style='border:none;' width='30px'>"+"</td>"+"<td style='border:none;' width='400px' >"+"</td>"+"<td width='130px'>"+"Tax"+"</td>"+"<td>"+'<?= number_format($model->amount_tax,2)?>'+"</td>"+"</tr>"+"<tr>"+"<td style='border:none;' width='30px'>"+"</td>"+"<td style='border:none;' width='44px'>"+"</td>"+"<td style='border:none;' width='30px'>"+"</td>"+"<td style='border:none;' width='400px' >"+"</td>"+"<td width='130px'>"+"Total"+"</td>"+"<td>"+'<?= number_format($model->amount_total,2)?>'+"</td>"+"</tr>";
 			jQuery('page').attr('id','page-'+cursor);
-
+			// var cursor_table =1;
+			// var cursor_header=1;
 			// console.log(data[0].name_product);
 			noMaterial = 1
+			headerElement = jQuery('page#page-'+cursor+' .header');
+			// headerElement.append(headerTable)
 			jQuery.each(data,function(index,value){
 
 				var contentElement = jQuery('page#page-'+cursor+' .content');
-			
-
+				var isi_table = jQuery('page#page-'+cursor+' .content table');
 				var tinggiContent = contentElement.height();
+				var elTable = "<tr><td valign='top' width='5%'>"+value.no +"</td>"+"<td valign='top' width='10%' >"+value.product_uom_qty +"</td>"+"<td valign='top' width='5%'>"+value.unit +"</td>"+"<td width=45%>"+"["+value.default_code+"]"+value.name_product+"<br/>"+value.deskription_orderline+"<div class='isi-"+noMaterial+"'></div>"+"</td>"+"<td width='15%' valign='top'>"+value.unit_price +"</td>"+"<td width='20%' valign='top'>"+value.price_sub +"</td>"+"</tr>";
 				// console.log(value.material_line);
+				
+				if (tinggiContent<600){
+					// console.log(tinggiContent)
 
-
-				if(tinggiContent<600){
-					// console.log("no"+value.no+index+" Masuk "+value.material);
-					if (tinggiContent ===0){
-						contentElement.append("<table width='100%' style='border-collapse:collapse;' border='1px'><th style='text-align:center' width='30px'>No</th><th width='44px' style='text-align:center'>Qty</th><th style='text-align:center' width='30px'>Unit</th><th width='400px' style='text-align:center'>Description"+"</th><th width='130px' style='text-align:center'>Price Unit <?php echo'<br/>'.$model->pricelist->name ?></th><th style='text-align:center'>Price Sub<?php echo'<br/>'.$model->pricelist->name ?></th></table>");
-
-					}
-		// 			$dataContent[$key]['no']=$no;	
-		// $dataContent[$key]['product_uom_qty']=$value->product_uom_qty;
-		// $dataContent[$key]['default_code']=$value->product->default_code;
-		// $dataContent[$key]['name_product']=$value->product->name_template;
-		// $dataContent[$key]['unit_price']=$value->price_unit;
-		// $dataContent[$key]['price_sub']=$value->product_uom_qty*$value->price_unit
-		// $no++;	
-					
-					contentElement.append("<table width='100%' style='border-collapse:collapse; margin-top:-1px;'border='1px' >"+"<tr>"+"<td width='30px' valign='top'>"+value.no+"</td>"+"<td valign='top' width='44px'>"+value.product_uom_qty+"</td>"+"<td width='30px' valign='top'>"+value.unit+"</td>"+"<td width='400px' contenteditable='true'>"+"["+value.default_code+"]"+value.name_product+"<br/>"+value.deskription_orderline+"<div class='isi-"+noMaterial+"'></div>"+"</td>"+"<td valign='top' width='130px'>"+value.unit_price+"</td>"+"<td valign='top'>"+value.price_sub+"</td>"+"</tr></table>");
-					// console.log(value.material_line.length+"<<<<<<<<<<<<<<<<")
-					// console.log(value.material_line)
-
+					isi_table.append(elTable)
 					if(value.material_line.length>1){
-						
-					
-						// console.log(value.material_line)
 						jQuery.each(value.material_line,function(indexMaterial,valueMaterial){
 							var materialElement = jQuery('page#page-'+cursor+' .content'+' .isi-'+noMaterial);
-							// console.log(materialElement+">>>>>>>>>>>>>>>"+cursor)
-
 							if (indexMaterial==0){
 								materialElement.append("Consist of:<ul style='margin-top:0px'><li>"+"["+valueMaterial.partNumber+"]"+valueMaterial.product_id+"("+valueMaterial.qty+" "+valueMaterial.uom+")"+"<br/>"+valueMaterial.descriptionMaterial+"</li></ul>")
-								}
+							}
 							else{
 								var contentElement = jQuery('page#page-'+cursor+' .content');
 								var tinggiContent = contentElement.height();
-								// console.log(value.name_product +"---"+valueMaterial.product_id)
-								// console.log(tinggiContent +indexMaterial+"->>>>>"+value.name_product+"---"+valueMaterial.product_id)
-								if (tinggiContent<500){
-								console.log(indexMaterial+"->>>>>"+valueMaterial.product_id)
+								if (tinggiContent<400){
+									materialElement.append("<ul  style='margin-top:-16px'><li>"+"["+valueMaterial.partNumber+"]"+valueMaterial.product_id+"("+valueMaterial.qty+" "+valueMaterial.uom+")"+"<br/>"+valueMaterial.descriptionMaterial+"</li></ul>")
 
-								// console.log('Masuk')
-								materialElement.append("<ul  style='margin-top:-16px'><li>"+"["+valueMaterial.partNumber+"]"+valueMaterial.product_id+"("+valueMaterial.qty+" "+valueMaterial.uom+")"+"<br/>"+valueMaterial.descriptionMaterial+"</li></ul>")
 								}
 								else{
-
-									var cursorLama = cursor;
-									cursor++;
-									jQuery("page#page-"+cursorLama).after(template);
-									jQuery("page:last").attr("id","page-"+cursor);	
-									var contentElement = jQuery('page#page-'+cursor+' .content');
-									// console.log(contentElement)
-
-									jQuery('page#page-'+cursor+' .content').append("<table width='100%' border='1px' style='border-collapse:collapse';><th style='text-align:center' width='30px'>No</th><th width='44px' style='text-align:center'>Qty</th><th style='text-align:center' width='30px'>Unit</th><th width='400px' style='text-align:center'>Description"+"</th><th width='130px' style='text-align:center'>Price Unit<?php echo'<br/>'.$model->pricelist->name ?></th><th style='text-align:center'>Price Sub<?php echo'<br/>'.$model->pricelist->name ?></th></table>");
-									if (indexMaterial==0){
-										contentElement.append("<table border='1px' width='100%' style='border-collapse:collapse ; margin-top:-1px;' >"+"<tr>"+"<td width='30px'>"+value.no+"</td>"+"<td width='44px'>"+value.product_uom_qty+"</td>"+"<td width='30px'>"+value.unit+"</td>"+"<td width='400px' contenteditable='true'>"+"["+value.default_code+"]"+value.name_product+"Consist of:<ul style='margin-top:0px'>"+"<div class='isi-"+noMaterial+"'></div>"+"</ul>"+"</td>"+"<td width='130px'>"+value.unit_price+"</td>"+"<td>"+value.price_sub+"</td>"+"</tr></table>");
-
-									}
-									else {
-										var contentElement = jQuery('page#page-'+cursor+' .content');
-										var tinggiContent = contentElement.height();
-										// console.log(tinggiContent+"tingggiii"+valueMaterial.product_id)
-										contentElement.append("<div class=test><table border='1px' width='100%' style='border-collapse:collapse ; margin-top:-1px;'; >"+"<tr>"+"<td width='30px'>"+"</td>"+"<td width='44px'>"+"</td>"+"<td width='30px'>"+"</td>"+"<td width='400px' contenteditable='true'>"+"<div class='isi-"+noMaterial+"'></div>"+"</td>"+"<td width='130px'>"+"</td>"+"<td>"+"</td>"+"</tr></table></div>");
-										var contentElement = jQuery('page#page-'+cursor+' .content');
-										var tinggiContent = contentElement.height();
-										var materialElement = jQuery('page#page-'+cursor+' .content'+' .isi-'+noMaterial);
-										// console.log(tinggiContent+"tingggiii")
+									var cursorLama = cursor
+									cursor++
+									jQuery('page#page-'+cursorLama).after(template);
+									jQuery('page:last').attr('id','page-'+cursor);
+									// var headerTable="<table width='100%' border='1px' style='border-collapse:collapse; margin-top:0px;'><tr><td width='5%''><center><b>No</b></center></td><td width='10%''><center><b>Qty</b></center></td><td width='5%'><center><b>Unit</b></center></td><td width='45%'><center><b>Description</b></center></td><td width='15%'><center><b>Price Unit</b></center></td><td width='20%'><center><b>Price Sub</b></center></td></tr></table>"
 									
-										if (!value.material_line[indexMaterial+1]){
+									var contentElement = jQuery('page#page-'+cursor+' .content');
+									var isi_table = jQuery('page#page-'+cursor+' .content table');
 
-											$("div").remove(" .test")
-										}
-										materialElement.append("<ul><li>"+"["+valueMaterial.partNumber+"]"+valueMaterial.product_id+"<br/>"+valueMaterial.descriptionMaterial+"</li></ul>")
-										console.log(valueMaterial.product_id+"????????")
+									isi_table.append("<tr><td valign='top' width='5%'>"+"</td>"+"<td valign='top' width='10%' >"+"</td>"+"<td valign='top' width='5%'>"+"</td>"+"<td width=45%>"+"<div class='isi-"+noMaterial+"'></div>"+"</td>"+"<td width='15%' valign='top'>"+"</td>"+"<td width='20%' valign='top'>"+"</td>"+"</tr>")
+									var materialElement = jQuery('page#page-'+cursor+' .content'+' .isi-'+noMaterial);
+									// headerElement = jQuery('page#page-'+cursor+' .header');
+									if (indexMaterial==0){
+										materialElement.append("Consist of:<ul style='margin-top:0px'><li>"+"["+valueMaterial.partNumber+"]"+valueMaterial.product_id+"("+valueMaterial.qty+" "+valueMaterial.uom+")"+"<br/>"+valueMaterial.descriptionMaterial+"</li></ul>")
+									}
+									else{
+										var contentElement = jQuery('page#page-'+cursor+' .content');
+										var tinggiContent = contentElement.height();
+									
+										materialElement.append("<ul><li>"+"["+valueMaterial.partNumber+"]"+valueMaterial.product_id+"("+valueMaterial.qty+" "+valueMaterial.uom+")"+"<br/>"+valueMaterial.descriptionMaterial+"</li></ul>")
+
 									}
 
-
 								}
-								// else{
-								// 	// console.log("else")
-								// 	contentfooter.remove();
-								// 	var cursorLama = cursor;
-								// 	cursor++;
-								// 	jQuery("page#page-"+cursorLama).after(template);
-								// 	jQuery("page:last").attr("id","page-"+cursor);
-								// 	var contentElement = jQuery('page#page-'+cursor+' .content');
-								// 	jQuery('page#page-'+cursor+' .content').append("<table width='100%' border='1px' style='border-collapse:collapse';><th style='text-align:center' width='30px'>No</th><th width='44px' style='text-align:center'>Qty</th><th style='text-align:center' width='30px'>Unit</th><th width='400px' style='text-align:center'>Description"+"</th><th width='130px' style='text-align:center'>Price Unit</th><th style='text-align:center'>Price Sub</th></table>");
-								// 	// contentElement.append("<table border='1px' width='100%' style='border-collapse:collapse ;border-top-style: none;'; >"+"<tr>"+"<td width='30px'>"+value.no+"</td>"+"<td width='44px'>"+value.product_uom_qty+"</td>"+"<td width='30px'>"+value.unit+"</td>"+"<td width='400px' contenteditable='true'>"+"["+value.default_code+"]"+value.name_product+"<br/>Consist of:<ul>"+"<div class='isi-"+noMaterial+"'></div>"+"</ul>"+"</td>"+"<td width='130px'>"+value.unit_price+"</td>"+"<td>"+value.price_sub+"</td>"+"</tr></table>");
-								// 	// materialElement.append("<li>"+valueMaterial.product_id+"</li>")
-
-								// }
-							
-								}
-
-						});
-						// materialElement.append("</ul>")
-						noMaterial++
-					}
-
-					else if(value.material_line.length==1){
-						var materialElement = jQuery(' .isi-'+noMaterial); 	
-
-						jQuery.each(value.material_line,function(indexMaterial,valueMaterial){ 
-							// console.log(value.name_product+"==================="+valueMaterial.product_id)
-							if (value.name_product!==valueMaterial.product_id){
-								// console.log("sip")
-								materialElement.append("Consist of:<ul style='margin-top:0px'><li>"+"["+valueMaterial.partNumber+"]"+valueMaterial.product_id+"("+valueMaterial.qty+" "+valueMaterial.uom+")"+"<br/>"+valueMaterial.descriptionMaterial+"</li></ul>")
-
 							}
-						});
+
+							
+						})
 						noMaterial++
-
 					}
-						
-				}
-				else
-				{	
-					// contentfooter.remove();
-					// console.log(tinggiContent+" <--- else");
-					var cursorLama = cursor;
-					cursor++;
-					jQuery("page#page-"+cursorLama).after(template);
-					jQuery("page:last").attr("id","page-"+cursor);
-					var contentElement = jQuery('page#page-'+cursor+' .content');
+						else if(value.material_line.length==1){
+							var materialElement = jQuery(' .isi-'+noMaterial); 	
 
+							jQuery.each(value.material_line,function(indexMaterial,valueMaterial){ 
+								// console.log(value.name_product+"==================="+valueMaterial.product_id)
+								if (value.name_product!==valueMaterial.product_id){
+									// console.log("sip")
+									materialElement.append("Consist of:<ul style='margin-top:0px'><li>"+"["+valueMaterial.partNumber+"]"+valueMaterial.product_id+"("+valueMaterial.qty+" "+valueMaterial.uom+")"+"<br/>"+valueMaterial.descriptionMaterial+"</li></ul>")
 
-					jQuery('page#page-'+cursor+' .content').append("<table width='100%' border='1px' style='border-collapse:collapse';><th style='text-align:center' width='30px'>No</th><th width='44px' style='text-align:center'>Qty</th><th style='text-align:center' width='30px'>Unit</th><th width='400px' style='text-align:center'>Description"+"</th><th width='130px' style='text-align:center'>Price Unit <?php echo'<br/>'.$model->pricelist->name ?></th><th style='text-align:center'>Price Sub <?php echo'<br/>'.$model->pricelist->name ?></th></table>");
-					
-					contentElement.append("<table width='100%' style='border-collapse:collapse; margin-top:-1px;'border='1px' >"+"<tr>"+"<td width='30px' valign='top'>"+value.no+"</td>"+"<td valign='top' width='44px'>"+value.product_uom_qty+"</td>"+"<td width='30px' valign='top'>"+value.unit+"</td>"+"<td width='400px' contenteditable='true'>"+"["+value.default_code+"]"+value.name_product+"<div class='isi-"+noMaterial+"'></div>"+"</td>"+"<td valign='top' width='130px'>"+value.unit_price+"</td>"+"<td valign='top'>"+value.price_sub+"</td>"+"</tr></table>");
+								}
+							});
+							noMaterial++
+
 						
-					jQuery.each(value.material_line,function(indexMaterial,valueMaterial){
-					var materialElement = jQuery(' .isi-'+noMaterial);
-					// console.log(valueMaterial.product_id);
-					materialElement.append("<ul  style='margin-top:0px'><li>"+"["+valueMaterial.partNumber+"]"+valueMaterial.product_id+"("+valueMaterial.qty+" "+valueMaterial.uom+")"+"<br/>"+valueMaterial.descriptionMaterial+"</li><ul>");
-					// console.log(tinggiContent+" <--- else")
-				});
-					noMaterial++
 					}
-
-			});
-			var contentfooter= jQuery('page#page-'+cursor+' .footer');
-			var contentElement = jQuery('page#page-'+cursor+' .content');
-			var tinggiContent = contentElement.height();
-			// console.log(tinggiContent);
-			if (tinggiContent<=517)	{
-				contentfooter.append("<table border='1px' width='100%' style='border-collapse:collapse ; margin-top:-1px;' >"+"<tr>"+"<td style='border:none;' width='33px'>"+"</td>"+"<td style='border:none;' width='44px'>"+"</td>"+"<td style='border:none;' width='30px'>"+"</td>"+"<td style='border:none;' width='400px' >"+"</td>"+"<td width='130px'>"+"Base Total"+"</td>"+"<td>"+'<?= number_format($model->base_total,2)?>'+"</td>"+"</tr>"+"<tr>"+"<td style='border:none;' width='30px'>"+"</td>"+"<td style='border:none;' width='44px'>"+"</td>"+"<td style='border:none;' width='30px'>"+"</td>"+"<td style='border:none;' width='400px' >"+"</td>"+"<td width='130px'>"+"Discount"+"</td>"+"<td>"+"<?= number_format($model->total_amount_discount,2)?>"+"</td>"+"</tr>"+"<tr>"+"<td style='border:none;' width='30px'>"+"</td>"+"<td style='border:none;' width='44px'>"+"</td>"+"<td style='border:none;' width='30px'>"+"</td>"+"<td style='border:none;' width='400px' >"+"</td>"+"<td width='130px'>"+"Sub Total"+"</td>"+"<td>"+"<?= number_format($model->amount_untaxed,2)?>"+"</td>"+"</tr>"+"<tr>"+"<td style='border:none;' width='30px'>"+"</td>"+"<td style='border:none;' width='44px'>"+"</td>"+"<td style='border:none;' width='30px'>"+"</td>"+"<td style='border:none;' width='400px' >"+"</td>"+"<td width='130px'>"+"Tax"+"</td>"+"<td>"+'<?= number_format($model->amount_tax,2)?>'+"</td>"+"</tr>"+"<tr>"+"<td style='border:none;' width='30px'>"+"</td>"+"<td style='border:none;' width='44px'>"+"</td>"+"<td style='border:none;' width='30px'>"+"</td>"+"<td style='border:none;' width='400px' >"+"</td>"+"<td width='130px'>"+"Total"+"</td>"+"<td>"+'<?= number_format($model->amount_total,2)?>'+"</td>"+"</tr>"+"</table>");
-			}
-			else{
-				var cursorLama = cursor;
-				cursor++;
-				jQuery("page#page-"+cursorLama).after(template);
-				jQuery("page:last").attr("id","page-"+cursor);
-				var contentElement = jQuery('page#page-'+cursor+' .content');
-				var contentfooter= jQuery('page#page-'+cursor+' .footer');
-				jQuery('page#page-'+cursor+' .content').append("<table width='100%' border='1px' style='border-collapse:collapse';><th style='text-align:center' width='30px'>No</th><th width='44px' style='text-align:center'>Qty</th><th style='text-align:center' width='30px'>Unit</th><th width='400px' style='text-align:center'>Description"+"</th><th width='130px' style='text-align:center'>Price Unit <?php echo'<br/>'.$model->pricelist->name ?></th><th style='text-align:center'>Price Sub <?php echo'<br/>'.$model->pricelist->name ?></th></table>");
-				contentfooter.append("<table border='1px' width='100%' style='border-collapse:collapse ; margin-top:-1px;' >"+"<tr>"+"<td style='border:none;' width='33px'>"+"</td>"+"<td style='border:none;' width='44px'>"+"</td>"+"<td style='border:none;' width='30px'>"+"</td>"+"<td style='border:none;' width='400px' >"+"</td>"+"<td width='130px'>"+"Base Total"+"</td>"+"<td>"+'<?= number_format($model->base_total,2)?>'+"</td>"+"</tr>"+"<tr>"+"<td style='border:none;' width='30px'>"+"</td>"+"<td style='border:none;' width='44px'>"+"</td>"+"<td style='border:none;' width='30px'>"+"</td>"+"<td style='border:none;' width='400px' >"+"</td>"+"<td width='130px'>"+"Discount"+"</td>"+"<td>"+"<?= number_format($model->total_amount_discount,2)?>"+"</td>"+"</tr>"+"<tr>"+"<td style='border:none;' width='30px'>"+"</td>"+"<td style='border:none;' width='44px'>"+"</td>"+"<td style='border:none;' width='30px'>"+"</td>"+"<td style='border:none;' width='400px' >"+"</td>"+"<td width='130px'>"+"Sub Total"+"</td>"+"<td>"+"<?= number_format($model->amount_untaxed,2)?>"+"</td>"+"</tr>"+"<tr>"+"<td style='border:none;' width='30px'>"+"</td>"+"<td style='border:none;' width='44px'>"+"</td>"+"<td style='border:none;' width='30px'>"+"</td>"+"<td style='border:none;' width='400px' >"+"</td>"+"<td width='130px'>"+"Tax"+"</td>"+"<td>"+'<?= number_format($model->amount_tax,2)?>'+"</td>"+"</tr>"+"<tr>"+"<td style='border:none;' width='30px'>"+"</td>"+"<td style='border:none;' width='44px'>"+"</td>"+"<td style='border:none;' width='30px'>"+"</td>"+"<td style='border:none;' width='400px' >"+"</td>"+"<td width='130px'>"+"Total"+"</td>"+"<td>"+'<?= number_format($model->amount_total,2)?>'+"</td>"+"</tr>"+"</table>");
-			}
-			var contentfooter= jQuery('page#page-'+cursor+' .footer');
-			var contentElement = jQuery('page#page-'+cursor+' .content');
-			var tinggiContent = contentElement.height();
-			if (tinggiContent<=261){
-				contentfooter.append("<table width='45%'><tr><td width='40%'><b>Term Of Payment</b></td><td width='3%'><b>:</b></td><td><?php if($model->paymentTerm!==null){echo $model->paymentTerm->name;}?></td></tr><tr><td valign='top'><b>Term Condition</b></td><td valign='top'><b>:</b></td><td><?php echo '<ul>';foreach ($model->termCondition as $key_term => $value_term) {	echo '<li>'.$value_term->name.'</li>';}echo '</ul>'?></td></tr><tr><td valign='top'><b>Note</b></td><td valign='top'><b>:</b></td><td><?=preg_replace('#\R+#','<br/>',$model->note)?></td></tr></table><br/><table width='30%'><tr> <td valign='top' style='text-align:center' height='80'>Thank you and best regards</td></tr><tr><td valign='top' style='text-align:center'>"+"<?=$model->user->name ?>"+"</td></tr></table>");
-
-			}
-			else{
-				var cursorLama = cursor;
-				cursor++;
+					}
+				else{
+					var cursorLama = cursor
+					cursor++
+					jQuery('page#page-'+cursorLama).after(template);
+					jQuery('page:last').attr('id','page-'+cursor);
+					// var headerTable="<table width='100%' border='1px' style='border-collapse:collapse; margin-top:0px;'><tr><td width='5%''><center><b>No</b></center></td><td width='10%''><center><b>Qty</b></center></td><td width='5%'><center><b>Unit</b></center></td><td width='45%'><center><b>Description</b></center></td><td width='15%'><center><b>Price Unit</b></center></td><td width='20%'><center><b>Price Sub</b></center></td></tr></table>"
+					var isi_table = jQuery('page#page-'+cursor+' .content table');
+					// headerElement = jQuery('page#page-'+cursor+' .header');
+					// headerElement.append(headerTable)
+					isi_table.append(elTable);
 				
-				jQuery("page#page-"+cursorLama).after(template);
-				jQuery("page:last").attr("id","page-"+cursor);
-				var contentfooter= jQuery('page#page-'+cursor+' .footer');
-				contentfooter.append("<table width='45%'><tr><td width='40%'><b>Term Of Payment</b></td><td width='3%'><b>:</b></td><td><?php if($model->paymentTerm!==null){echo $model->paymentTerm->name;}?></td></tr><tr><td valign='top'><b>Term Condition</b></td><td valign='top'><b>:</b></td><td><?php echo '<ul>';foreach ($model->termCondition as $key_term => $value_term) {	echo '<li>'.$value_term->name.'</li>';}echo '</ul>'?></td></tr><tr><td valign='top'><b>Note</b></td><td valign='top'><b>:</b></td><td><?=preg_replace('#\R+#','<br/>',$model->note)?></td></tr></table><br/><table width='30%'><tr> <td valign='top' style='text-align:center' height='80'>Thank you and best regards</td></tr><tr><td valign='top' style='text-align:center'>"+"<?=$model->user->name ?>"+"</td></tr></table>");
+				}
+
+			
+				});
+			var contentElement = jQuery('page#page-'+cursor+' .content');
+			var tinggiContent = contentElement.height();
+
+			console.log(tinggiContent)
+			if (tinggiContent <=400){
+				var isi_table = jQuery('page#page-'+cursor+' .content table');
+				isi_table.append(footerTable);
+			}
+			else{
+				var cursorLama = cursor
+					cursor++
+					jQuery('page#page-'+cursorLama).after(template);
+					jQuery('page:last').attr('id','page-'+cursor);
+					// var headerTable="<table width='100%' border='1px' style='border-collapse:collapse; margin-top:0px;'><tr><td width='5%''><center><b>No</b></center></td><td width='10%''><center><b>Qty</b></center></td><td width='5%'><center><b>Unit</b></center></td><td width='45%'><center><b>Description</b></center></td><td width='15%'><center><b>Price Unit</b></center></td><td width='20%'><center><b>Price Sub</b></center></td></tr></table>"
+					var isi_table = jQuery('page#page-'+cursor+' .content table');
+					headerElement = jQuery('page#page-'+cursor+' .header');
+					// headerElement.append(headerTable)
+					isi_table.append(footerTable);
 
 			}
+			// console.log(tinggiContent)
+			var contentElement = jQuery('page#page-'+cursor+' .content');
+			var tinggiContent = contentElement.height();
+			var contentfooter= jQuery('page#page-'+cursor+' .footer');
+			contentfooter.append("<table width='45%'><tr><td width='40%'><b>Term Of Payment</b></td><td width='3%'><b>:</b></td><td><?php if($model->paymentTerm!==null){echo $model->paymentTerm->name;}?></td></tr><tr><td valign='top'><b>Term Condition</b></td><td valign='top'><b>:</b></td><td><?php echo '<ul>';foreach ($model->termConditions as $key_term => $value_term) {	echo '<li>'.$value_term->name.'</li>';}echo '</ul>'?></td></tr><tr><td valign='top'><b>Note</b></td><td valign='top'><b>:</b></td><td><?= preg_replace('#\R+#','<br/>',$model->note)?></td></tr></table><br/><table width='30%'><tr> <td valign='top' style='text-align:center' height='80'>Thank you and best regards</td></tr><tr><td valign='top' style='text-align:center'>"+"<?=$model->user->name ?>"+"</td></tr></table>");
 
 		});
 	</script>

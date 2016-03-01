@@ -1,7 +1,13 @@
 <?php
 use yii\helpers\Html;
 use yii\helpers\Url;
+if(isset($_GET['layout'])){
+	$height=$_GET['layout'];
+}else{
+	$height='5';
+}
 ?>
+
 <style type="text/css">
 /*	body{
 		background-color: #ccc;
@@ -209,6 +215,9 @@ use yii\helpers\Url;
 		#formSelectPrinter{
 			display: none;
 		}
+		#formSetLayout{
+			display: none;
+		}
 	}
 	.pages{
 		height: 245mm;
@@ -356,9 +365,12 @@ use yii\helpers\Url;
 		opacity: 0;
 
 	}
+	.leftdata li{
+		margin-left: 20px;
+	}
 	.material{
-		font-size: 11pt;
-		margin-left: 25px;
+		font-size: 14pt;
+		margin-left: 0px;
 		font-weight: bold;
 	}
 	ul{
@@ -367,6 +379,10 @@ use yii\helpers\Url;
 	.new_hadi_tglkontrak{
 		line-height: 35px;
 	}
+	.no_spk{
+		white-space: nowrap;
+	}
+
 </style>
 
 <?php if($printer=='hadi'){ ?>
@@ -468,25 +484,37 @@ use yii\helpers\Url;
 	<?php 
 		$no=1;
 		foreach ($model->sbmWorkOrderOutputs as $value){
+			
+			$pekerjaan ='<strong>['.$value->item->default_code.'] '.$value->item->name_template.'<br/>'.$value->desc.'</strong>';
+			$qty = '<strong>'.$value->qty.' '.$value->uom->name.'</strong><br/>('.Yii::$app->numericLib->convertToBahasa(floatval($value->qty)).')';
+
+			$data2[]=array(
+				$no,
+	            $qty,
+				$pekerjaan);
+			$no++;
 
 		if($value->sbmWorkOrderOutputRawMaterials){
 			$detail='';
+			$no_detail='';
+			$qty_detail='';
+
+			$pekerjaan ='<span class=material>Material Detail</span>:<ul>'.$detail.'</ul>';
+			$data2[]=array(
+					$no_detail,
+					$qty_detail,
+					$pekerjaan);
 
 			foreach ($value->sbmWorkOrderOutputRawMaterials as $material) {
-				$detail.='<li>'.'['.$material->item->default_code.'] '.$material->item->name_template.' ('.$material->qty.' '.$material->uom->name.')<br/>'.$material->desc.'</li>';
+				$detail='<li>'.'['.$material->item->default_code.'] '.$material->item->name_template.' ('.$material->qty.' '.$material->uom->name.')<br/>'.$material->desc.'</li>';
+				$data2[]=array(
+					$no_detail,
+					$qty_detail,
+					$detail);
 			}
-			$pekerjaan ='<strong>['.$value->item->default_code.'] '.$material->item->name_template.'<br/>'.$value->desc.'</strong>
-						<br/><span class=material>Material Detail</span>:<ul>'.$detail.'</ul>';
-		}else{
-			$pekerjaan ='<strong>['.$value->item->default_code.'] '.$value->item->name_template.'<br/>'.$value->desc.'</strong>';
-		}
 
-		$qty = '<strong>'.$value->qty.' '.$value->uom->name.'</strong><br/>('.Yii::$app->numericLib->convertToBahasa(floatval($value->qty)).')';
-		$data2[]=array(
-			$no,
-            $qty,
-			$pekerjaan);
-		$no++;
+		
+		}
 	}
 		
 	  if($model->adhoc_order_request_id){
@@ -521,6 +549,13 @@ use yii\helpers\Url;
 	</form>
 </div>
 <div id="pageContainer">
+	<form method="get" id="formSetLayout">
+		<input type="hidden" value="<?=Url::to('sbm-work-order/print')?>" name="r" />
+		<input type="hidden" value="<?=$model->id?>" name="id" />
+		<input type="hidden" value="<?=Yii::$app->request->get('uid')?>" name="uid" />
+		<input type="text" value="<?=$height?>" name="layout" class="setlayout"/>
+		<!-- <input type="text" value="<?=$height?>" name="layout" onchange="jQuery('#formSetLayout').submit();" style="width:100%" /> -->
+	</form>
 <div class="pages">
 	<table style="margin-top:20px;">
 		<tr style="vertical-align:top;">
@@ -568,9 +603,7 @@ use yii\helpers\Url;
 												<td width="81px;"><div style="opacity:0">Nomor SPK</div></td>
 												<td width="6px;"></td>
 												<td>
-												<?php 
-												echo $no_spk;
-												?>
+													<div contenteditable="true"><?php echo $no_spk; ?></div>
 												</td>
 											</tr>
 											<tr>
@@ -672,6 +705,12 @@ use yii\helpers\Url;
 
 
 $this->registerJs('
+
+	jQuery(".setlayout").keyup(function(){
+		var nilai=jQuery(".setlayout").val()+\'px\';
+		$(".pages").css("margin-top", nilai);
+	});
+
 	var currPage = 1;
 
 	// save page template to var
@@ -713,6 +752,8 @@ $this->registerJs('
 		rowPage = rowPage+1;
 
 		var currLineHeight = jQuery(\'#lines\'+currPage).height();
+		
+
 		// var currLineHeight = jQuery(\'#tdLine\'+currPage).height();
 		console.log(\'Key \'+key+\' \'+currLineHeight);
 

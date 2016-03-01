@@ -9,6 +9,7 @@ use app\models\ResUsers;
 use app\models\ResPartner;
 use app\models\GroupSales;
 use kartik\select2\Select2;
+use kartik\widgets\DatePicker;
 ?>
 
 <?php $form = ActiveForm::begin([
@@ -17,11 +18,29 @@ use kartik\select2\Select2;
 ]); ?>
 
 <div class="col-md-6">
-	<?php echo $form->field($model, 'tanggal_awal')->label('Start Date') ?>
+	<?php /*echo $form->field($model, 'tanggal_awal')->label('Start Date')*/ ?>
 </div>
 
 <div class="col-md-6">
-	<?php echo $form->field($model, 'tanggal_akhir')->label('End Date') ?>
+	<?php /*echo $form->field($model, 'tanggal_akhir')->label('End Date')*/ ?>
+</div>
+
+<div class="col-md-12">
+	<?=DatePicker::widget([
+		'model' => $model,
+		'attribute' => 'tanggal_awal',
+		'attribute2' => 'tanggal_akhir',
+		'options' => ['placeholder' => 'Start date'],
+		'options2' => ['placeholder' => 'End date'],
+		'type' => DatePicker::TYPE_RANGE,
+		'form' => $form,
+		'pluginOptions' => [
+			'format' => 'yyyy-MM-dd',
+			'autoclose' => true,
+			'startDate'=>'01/07/2014',
+		],
+		'convertFormat'=>true,
+	]);?>
 </div>
 
 <div class="col-md-12">

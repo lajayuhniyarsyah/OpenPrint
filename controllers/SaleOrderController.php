@@ -1048,7 +1048,7 @@ EOQ;
 		]);
 	}
 
-    public function actionCostumerlist($search = null, $id = null) 
+    public function actionSupplierlist($search = null, $id = null) 
     {
         $out = ['more' => false];
         if (!is_null($search)) {

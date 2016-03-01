@@ -45,19 +45,19 @@ use kartik\select2\Select2;
 		],
 	])->textInput()->label('Group')*/ ?>
 	<?php 
-	$data = ArrayHelper::getColumn(GroupSales::find()->select('name')->distinct()->all(),'name');
-	echo $form->field($model, 'kelompok_id')->widget(Select2::classname(),[
-	    'name' => 'kelompok_id',
-	    // 'data' => $data,
+	// $data = ArrayHelper::getColumn(GroupSales::find()->select('name')->distinct()->all(),'name');
+	echo $form->field($model, 'tag_group')->widget(Select2::classname(),[
+	    'name' => 'tag_group',
+	    'data' => ArrayHelper::map(GroupSales::find()->select('name')->distinct()->all(), 'name', 'name'),
 	    'options' => [
 	    	'placeholder' => 'Cari Group...', 
 	    	'class' => 'form-controler',
 	    	'multiple' => true
 	    ],
-	    'pluginOptions' => [
+	    /*'pluginOptions' => [
 	    	'tags' => $data,
-	    ]
-	]) 
+	    ]*/
+	])->label('Group');
 	?>
 </div>
 
@@ -72,19 +72,19 @@ use kartik\select2\Select2;
 		],
 	])->textInput()->label('Group')*/ ?>
 	<?php 
-	$data = ArrayHelper::getColumn(ResUsers::find()->select('login')->distinct()->all(),'login');
-	echo $form->field($model, 'user_id')->widget(Select2::classname(),[
-	    'name' => 'user_id',
-	    // 'data' => $data,
+	// $data = ArrayHelper::getColumn(ResUsers::find()->select('login')->distinct()->all(),'login');
+	echo $form->field($model, 'tag_user')->widget(Select2::classname(),[
+	    'name' => 'tag_user',
+	    'data' => ArrayHelper::map(ResUsers::find()->select('login')->distinct()->all(), 'login', 'login'),
 	    'options' => [
 	    	'placeholder' => 'Cari Sales...', 
 	    	'class' => 'form-controler',
 	    	'multiple' => true
 	    ],
-	    'pluginOptions' => [
+	    /*'pluginOptions' => [
 	    	'tags' => $data,
-	    ]
-	]) 
+	    ]*/
+	])->label('Sales Man');
 	?>
 </div>
 
@@ -101,48 +101,19 @@ use kartik\select2\Select2;
 	])->textInput()->label('Costumer') */
 	?>
 	<?php 
-	/*$data = ArrayHelper::getColumn(ResPartner::find()->select('display_name')->distinct()->all(),'display_name');
-	echo $form->field($model, 'partner_id')->widget(Select2::classname(),[
-	    'name' => 'partner_id',
-	    // 'data' => $data,
+	// $data = ArrayHelper::getColumn(ResPartner::find()->select('display_name')->distinct()->all(),'display_name');
+	echo $form->field($model, 'tag_partner')->widget(Select2::classname(),[
+	    'name' => 'tag_partner',
+	    'data' => ArrayHelper::map(ResPartner::find()->select('display_name')->distinct()->all(), 'display_name', 'display_name'),
 	    'options' => [
 	    	'placeholder' => 'Cari Costumer...', 
 	    	'class' => 'form-controler',
 	    	'multiple' => true
 	    ],
-	    'pluginOptions' => [
+	    /*'pluginOptions' => [
 	    	'tags' => $data,
-	    ]
-	]) */
-	?>
-	<?php
-		echo $form->field($model, 'partner_id')->widget(Select2::classname(), [
-			'name'=>'partner_id',
-			'pluginOptions'=>[
-				'tags'=>true,
-				'ajax'=>[
-					'url'=>Url::to(['costumerlist']),
-					'dataType'=>'json',
-					'data'=>new JsExpression('function(term,page){return {search:term.term}; }'),
-					'results'=>new JsExpression('function(data,page){ return {results:data.results}; }'),
-				],
-				'allowClear'=>true,
-				'initSelection' => new JsExpression('function (element, callback) {
-					var id=$(element).val();
-					console.log("CONSOLLLLLLLE ID"+id);
-					if (id !== "") {
-						$.ajax("'.Url::to(['costumerlist']).'&id=" + id, {
-							dataType: "json"
-							}).done(function(data) { 
-								callback(data.results);
-							}
-						);
-					}
-				}'),
-			],
-			'value'=>Yii::$app->request->get('partner_id'),
-			'options' => ['placeholder' => 'Cari Costumer ...', 'multiple' => true],
-		]);
+	    ]*/
+	])->label('Costumer');
 	?>
 </div>
 

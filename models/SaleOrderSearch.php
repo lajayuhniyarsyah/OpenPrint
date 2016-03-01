@@ -14,6 +14,9 @@ use yii\db\Query;
 class SaleOrderSearch extends SaleOrder
 {
     public $tanggal_awal, $tanggal_akhir, $kelompok_id;
+    public $tag_partner = [];
+    public $tag_group = [];
+    public $tag_user = [];
 
     /**
      * @inheritdoc
@@ -24,6 +27,7 @@ class SaleOrderSearch extends SaleOrder
             [['id', 'create_uid', 'write_uid', 'shop_id', 'fiscal_position', 'payment_term', 'company_id', 'partner_invoice_id', 'project_id', 'partner_shipping_id', 'incoterm', 'carrier_id', 'week', 'attention'], 'integer'],
             [['create_date', 'write_date', 'origin', 'order_policy', 'client_order_ref', 'date_order', 'note', 'state', 'date_confirm', 'name', 'invoice_quantity', 'picking_policy', 'worktype', 'delivery_date', 'attention_moved0', 'internal_notes', 'due_date', 'sales_man', 'group.name', 'pricelist_id', 'user_id', 'partner_id', 'kelompok_id', 'tanggal_awal', 'tanggal_akhir'], 'safe'],
             [['amount_tax', 'amount_untaxed', 'amount_total'], 'number'],
+            [['tag_partner','tag_group','tag_user'],'safe'],
             [['shipped', 'sow12', 'sow11', 'sowC', 'sowA', 'sow9', 'sow8', 'sow3', 'sow2', 'sow1', 'sow7', 'sow6', 'sow5', 'sow4', 'sowB', 'sow14', 'sow13', 'sow10', 'kondisi3', 'kondisi2', 'kondisi1'], 'boolean'],
         ];
     }
@@ -210,16 +214,16 @@ class SaleOrderSearch extends SaleOrder
             $query->andFilterWhere(['ilike', 'product_pricelist.name', $this->pricelist_id]);
         }
 
-        if($this->kelompok_id != null) {
-            $query->andFilterWhere(['or ilike', 'group_sales.name', $this->kelompok_id]);
+        if($this->tag_group != null) {
+            $query->andFilterWhere(['or ilike', 'group_sales.name', $this->tag_group]);
         }
 
-        if($this->user_id != null) {
-            $query->andFilterWhere(['or ilike', 'res_users.login', $this->user_id]);
+        if($this->tag_user != null) {
+            $query->andFilterWhere(['or ilike', 'res_users.login', $this->tag_user]);
         }
 
-        if($this->partner_id != null) {
-            $query->andFilterWhere(['or ilike', 'res_partner.display_name', $this->partner_id]);
+        if($this->tag_partner != null) {
+            $query->andFilterWhere(['or ilike', 'res_partner.display_name', $this->tag_partner]);
         }
         
         return $dataProvider;

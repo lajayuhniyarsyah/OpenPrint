@@ -709,7 +709,7 @@ EOQ;
             $out['results'] = $data;
         }
         else {
-            $out['results'] = ['id' => 0, 'text' => 'No matching records found'];
+            $out['results'] = ['id' => 0, 'text' => 'No matching records found!'];
         }
 
         echo \yii\helpers\Json::encode($out);
@@ -1035,11 +1035,11 @@ EOQ;
 
 	public function actionReportQuotation()
 	{
-		#here report of kpi process
+		#here report of quotation
 		$searchModel = new SaleOrderSearch();
-		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+		$dataProvider = $searchModel->searchReportQuotation(Yii::$app->request->queryParams);
 
-		//$dataProviderExport = $searchModel->search(Yii::$app->request->queryParams,0);
+		//$dataProviderExport = $searchModel->searchReportQuotation(Yii::$app->request->queryParams,0);
 		
 		return $this->render('report_quotation', [
 			'dataProvider' => $dataProvider,
@@ -1048,6 +1048,32 @@ EOQ;
 		]);
 	}
 
+    public function actionCostumerlist($search = null, $id = null) 
+    {
+        $out = ['more' => false];
+        if (!is_null($search)) {
+            $command = new Query;
+            $lowerchr=strtolower($search);
+            $command = Yii::$app->db->createCommand("SELECT DISTINCT id, name as text FROM res_partner WHERE lower(name) LIKE '%".$lowerchr."%' LIMIT 20");
+            $data = $command->queryAll();
+            $out['results'] = array_values($data);
+        }
+
+        elseif ($id > 0) {
+
+            $ids=explode(',', $id);
+            foreach ($ids as $value) {
+                $data[] = ['id' => $value, 'text' => ResPartner::find()->where(['id' => $value])->one()->name];
+            }
+
+            $out['results'] = $data;
+        }
+        else {
+            $out['results'] = ['id' => 0, 'text' => 'No matching records found'];
+        }
+
+        echo \yii\helpers\Json::encode($out);
+    }
 
 }
 

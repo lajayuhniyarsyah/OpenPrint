@@ -6,6 +6,10 @@ use kartik\export\ExportMenu;
 
 <h3 class="page-header">Report Quotation</h3>
 
+<?php echo $this->render('_searchReportQuotation', [
+    'model' => $searchModel,
+]); ?>
+
 <?php 
 	$gridColumns = [
 		['class' => 'yii\grid\SerialColumn'],
@@ -20,8 +24,8 @@ use kartik\export\ExportMenu;
 		],
 		[
 			'attribute'=>'revisi',
-			'value'=>function($a){
-				return count($a->saleOrderRevisionHistories);
+			'value'=>function($n){
+				return count($n->saleOrderRevisionHistories);
 			}
 		],
 		[
@@ -48,6 +52,46 @@ use kartik\export\ExportMenu;
 			'attribute'=>'quotation_state',
 			'header'=>'Status',
 		],
+
+		/*[
+			'attribute'=>'no',
+			'header'=>'NO',
+		],
+		[
+			'attribute'=>'date',
+			'header'=>'Date',
+		],
+		// [
+		// 	'attribute'=>'revisi',
+		// 	'value'=>function($n){
+		// 		return count($n->saleOrderRevisionHistories);
+		// 	}
+		// ],
+		[
+			'attribute'=>'currency',
+			'header'=>'Currency',
+		],
+		[
+			'attribute'=>'group',
+			'header'=>'Group',
+		],
+		[
+			'attribute'=>'sales',
+			'header'=>'Sales Man',
+		],
+		[
+			'attribute'=>'costumer',
+			'header'=>'Costumer',
+		],
+		[
+			'attribute'=>'total_tax',
+			'header'=>'Total TAX',
+		],
+		[
+			'attribute'=>'status',
+			'header'=>'Status',
+		],*/
+
 	];
 
 	echo GridView::widget([

@@ -215,15 +215,15 @@ class SaleOrder extends \yii\db\ActiveRecord
             'shop_id' => 'Shop ID',
             'client_order_ref' => 'Client Order Reference',
             'date_order' => 'Date Order',
-            'partner_id' => 'Partner ID',
+            'partner_id' => 'Costumer',
             'note' => 'Note',
             'fiscal_position' => 'Fiscal Position',
-            'user_id' => 'User ID',
+            'user_id' => 'Sales Man',
             'payment_term' => 'Payment Term',
             'company_id' => 'Company ID',
             'amount_tax' => 'Amount Tax',
             'state' => 'State',
-            'pricelist_id' => 'Pricelist ID',
+            'pricelist_id' => 'Currency',
             'partner_invoice_id' => 'Partner Invoice ID',
             'amount_untaxed' => 'Amount Untaxed',
             'date_confirm' => 'Date Confirm',
@@ -263,7 +263,8 @@ class SaleOrder extends \yii\db\ActiveRecord
             'attention' => 'Attention',
             'internal_notes' => 'Internal Notes',
             'due_date' => 'Due Date',
-            'sales_man'=>'Sales Man',
+            'sales_man' => 'Sales Man',
+            'kelompok_id' => 'Group',
         ];
     }
 
@@ -965,6 +966,8 @@ class SaleOrder extends \yii\db\ActiveRecord
     public function getGroup(){
         return $this->hasOne(GroupSales::className(),['id'=>'kelompok_id'])->via('user');
     }
+
+    
 
 
 }

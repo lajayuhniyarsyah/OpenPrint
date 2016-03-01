@@ -1,21 +1,28 @@
 <?php
+use yii\helpers\Html;
 use yii\helpers\Url;
 ?>
 <style type="text/css">
-	body{
+/*	body{
 		background-color: #ccc;
-	}
+	}*/
 	#pageContainer{
 		background-color: #fff;
-		width: 198mm;
+		width: 200mm;
 		margin-left: auto; margin-right: auto;
 		page-break-after: always;
 		font-family: Arial, Helvetica, sans-serif;
 		margin-top: -8px;
+		padding-left: 10px;
 	}
 	table{
 		/* border-top: 1px solid black;
 		border-bottom: 1px solid black; */
+	}
+		.choosePrinter{
+		position: absolute;
+		z-index: 9999;
+		right: 0;
 	}
 	.contener{
 		border: 1px solid black;
@@ -44,6 +51,7 @@ use yii\helpers\Url;
 	}
 	.logo img{
 		display: block;
+		opacity: 0;
 	}
 	.judul{
 		font-size: 27px;
@@ -53,6 +61,7 @@ use yii\helpers\Url;
 		font-weight: bold;
 		float: center;
 		letter-spacing: 1px;
+		opacity: 0;
 	}
 	.iso{
 		margin-top:10px;
@@ -123,9 +132,10 @@ use yii\helpers\Url;
 		border-collapse: collapse;
 	}
 	.headtablepages tr th{
-		border: 1px solid black;
+		/*border: 1px solid black;*/
 		/*font-family: Times New Roman;*/
 		font-size: 13pt;
+		opacity: 0;
 		line-height: 15px;
 		text-align: center;
 	}
@@ -133,8 +143,12 @@ use yii\helpers\Url;
 		border: 1px solid black;
 	}
 	.tablefooter{
-		float:left; width:100%; border-left:1px solid black; border-right:1px solid black; height:100px;
-		border-bottom:1px solid black;
+		float:left; width:100%; 
+		/*border-left:1px solid black; border-right:1px solid black; */
+		height:100px;
+		/*border-bottom:1px */
+		/*solid black;*/
+		margin-left: 25px;
 		/*margin-top: 90px;*/
 		clear: both;
 	}
@@ -142,7 +156,7 @@ use yii\helpers\Url;
 		border: medium none !important;
 		/*font-family: Times New Roman;*/
 		vertical-align: top;
-		font-size: 12px;
+		font-size: 16px;
 		padding-left: 10px;
 		line-height: 19px;
 	}
@@ -177,8 +191,9 @@ use yii\helpers\Url;
 	}
 	.tablecontent{
 		/*line-height: 50px;*/
-		font-size: 14px;
+		font-size: 16px;
 		/*font-family: Times New Roman;*/
+		font-weight: bold;
 	}
 	@media all {
 		.page-break	{ display: none; }
@@ -191,7 +206,9 @@ use yii\helpers\Url;
 		.tglkirim{
 			width: 203px !important;
 		}
-
+		#formSelectPrinter{
+			display: none;
+		}
 	}
 	.pages{
 		height: 245mm;
@@ -220,12 +237,12 @@ use yii\helpers\Url;
 		border-collapse: collapse;
 		width: 186mm;
 		margin-top: -9px;
-		border-bottom:  1px solid black;
+		/*border-bottom:  1px solid black;*/
 		font-size: 12pt;
 	}
 	.contentLines tbody tr td {
-		border-left:  1px solid black;
-		border-right:  1px solid black;
+/*		border-left:  1px solid black;
+		border-right:  1px solid black;*/
 		border-collapse: collapse;
 		line-height: 20px;
 		font-size: 13pt;
@@ -238,7 +255,7 @@ use yii\helpers\Url;
 		float: left;
 		width: 95%;
 		text-align: justify;
-		margin-left: 10px;
+		margin-left: 25px;
 	}
 	.rightdata{
 		width: 18%;
@@ -268,16 +285,17 @@ use yii\helpers\Url;
 		text-align: center;
 		width: 100px;
 		float: left;
+		opacity: 0;
 		font-size: 9px;
 	}
 	.rigthheadtable{
 		float: right;
-		width: 48%;
-		margin-top: -60px;
+		width: 42%;
+		margin-top: -95px;
 	}
 	.leftheadtable{
 		float: left;
-		width: 52%;
+		width: 58%;
 		/*border-right: 1px solid black;*/
 	}
 
@@ -328,10 +346,14 @@ use yii\helpers\Url;
 		clear: both;
 	    font-size: 12px;
 	    margin-left: 5px;
+	    opacity: 0;
 	}
+
+
 	.name{
 		font-size: 15pt;
-		margin-top:5px;
+		margin-top:25px;
+		opacity: 0;
 
 	}
 	.material{
@@ -342,7 +364,107 @@ use yii\helpers\Url;
 	ul{
 		margin-top: -2px;
 	}
+	.new_hadi_tglkontrak{
+		line-height: 35px;
+	}
 </style>
+
+<?php if($printer=='hadi'){ ?>
+	<style type="text/css">
+	.name{
+		margin-top:0px !important;
+	}
+	#pageContainer{
+		padding-left: 0px !important;
+	}
+	.pages{
+		margin-left: -10px;
+	}
+	.tablecontent {
+  		font-size: 14px !important;
+	}
+	.leftheadtable{
+		margin-top: -22px !important;
+		margin-left: -5px !important;
+	}
+	.contentArea{
+		margin-top: -15px;
+	}
+	.contentLines tbody tr td{
+		font-size: 11pt !important;
+	}
+	.hadi_nokontrak{
+		line-height: 13px !important;
+	}
+	.hadi_tglkontrak{
+		line-height: 8px !important;	
+	}
+	.hadi_tglspk{
+		/*line-height: 35px !important;*/
+	}
+	.rigthheadtable{
+		margin-left: -10px !important;
+		 margin-top: -100px;
+		 width: 43% !important;
+	}
+	/*.tablefooter{
+		margin-top: -100px !important;
+	}*/
+	.width_table_rigth{
+		width: 78px !important;
+	}
+	.hadi_delivery_date{
+		line-height: 20px !important;
+	}
+	.hadi_dibuat{
+		margin-left: 10px !important;
+		font-size: 11px !important;
+	}
+	.location{
+		line-height: 20px !important;
+	}
+	.headtable{
+		margin-bottom: 5px !important;
+	}
+	.new_hadi_tglkontrak{
+		line-height: 30px;
+	}
+	@media print {
+		.hadi_tglkontrak{
+			line-height: 0px !important;
+		}
+	}
+	</style>
+	<?php $maxHeight = '126mm'; ?>
+<?php }else if($printer=='novri'){  ?>
+	<style type="text/css">
+		.name{
+			margin-top:10px !important;
+		}
+		#pageContainer{
+			padding-left: 0px !important;
+		}
+		.pages{
+			margin-left: -15px;
+		}
+		.tablefooter{
+			margin-top: -5px;
+			margin-left: 30px !important;
+		}
+		.rigthheadtable{
+			margin-top: -90px !important;
+			padding-left: 5px !important;
+		}
+		.contentArea{
+			padding-top: 0px !important;
+		}
+		.contentLines{
+			margin-top: -5px !important;
+		}
+	</style>
+	<?php $maxHeight = '161mm'; ?>
+<?php } ?>
+
 	<?php 
 		$no=1;
 		foreach ($model->sbmWorkOrderOutputs as $value){
@@ -353,15 +475,16 @@ use yii\helpers\Url;
 			foreach ($value->sbmWorkOrderOutputRawMaterials as $material) {
 				$detail.='<li>'.'['.$material->item->default_code.'] '.$material->item->name_template.' ('.$material->qty.' '.$material->uom->name.')<br/>'.$material->desc.'</li>';
 			}
-			$pekerjaan ='['.$value->item->default_code.'] '.$material->item->name_template.'<br/>'.$value->desc.'
+			$pekerjaan ='<strong>['.$value->item->default_code.'] '.$material->item->name_template.'<br/>'.$value->desc.'</strong>
 						<br/><span class=material>Material Detail</span>:<ul>'.$detail.'</ul>';
 		}else{
-			$pekerjaan ='['.$value->item->default_code.'] '.$value->item->name_template.'<br/>'.$value->desc;
+			$pekerjaan ='<strong>['.$value->item->default_code.'] '.$value->item->name_template.'<br/>'.$value->desc.'</strong>';
 		}
 
+		$qty = '<strong>'.$value->qty.' '.$value->uom->name.'</strong><br/>('.Yii::$app->numericLib->convertToBahasa(floatval($value->qty)).')';
 		$data2[]=array(
 			$no,
-            $value->qty.' '.$value->uom->name,
+            $qty,
 			$pekerjaan);
 		$no++;
 	}
@@ -384,10 +507,22 @@ use yii\helpers\Url;
 	  }
 
 	  $no_spk=$model->wo_no;
+
 	?>
+<div class="choosePrinter">
+	<form method="get" id="formSelectPrinter">
+			<input type="hidden" value="<?=Url::to('sbm-work-order/print')?>" name="r" />
+			<input type="hidden" value="<?=$model->id?>" name="id" />
+			<input type="hidden" value="<?=Yii::$app->request->get('uid')?>" name="uid" />
+		Print To : <select name="printer" onchange="jQuery('#formSelectPrinter').submit();">
+			<option <?=($printer=='novri' ? 'selected ':null)?> value="novri">Novri</option>
+			<option <?=($printer=='hadi' ? 'selected ':null)?> value="hadi">Hadi</option>
+		</select>
+	</form>
+</div>
 <div id="pageContainer">
 <div class="pages">
-	<table style="margin-top:50px;">
+	<table style="margin-top:20px;">
 		<tr style="vertical-align:top;">
 			<td>
 				<table style="width:100%;" cellpadding="3" cellspacing="2">
@@ -407,28 +542,31 @@ use yii\helpers\Url;
 								</div>
 								<div class="name"><strong>SURAT PERINTAH KERJA</strong></div>
 
-								<div class="headtable" style="line-height:22px;">
-										<table class="tablecontent leftheadtable" border="1">
+								<div class="headtable" style="line-height:20px;">
+										<table class="tablecontent leftheadtable" border="0">
 											<tr style="height:50px;">
-												<td width="108px;">Untuk Customer</td>
-												<td width="6px;">:</td>
+												<td width="75px;"><div style="opacity:0;">Untuk Customer</div></td>
+												<td width="6px;"></td>
 												<td width="237px;">
-												<?php 
-												echo $model->customer->name.'<br/>'.$alamat; 
-												?></td>
+													<div style="line-height:25px">
+														<?php 
+														echo $model->customer->name.'<br/>'.$alamat; 
+														?>
+													</div>
+												</td>
 											</tr>
 											
 											<tr>
-												<td>Dikerjaka Di</td>
-												<td>:</td>
-												<td><?php 
-												echo $model->location->name; ?></td>
+												<td><div style="opacity:0;">Dikerjaka Di</div></td>
+												<td></td>
+												<td><div style="line-height:30px;" class="location"><?php 
+												echo $model->location->name; ?></div></td>
 											</tr>
 										</table>
-										<table class="tablecontent rigthheadtable" border="1">
+										<table class="tablecontent rigthheadtable" border="0">
 											<tr>
-												<td width="110px;">Nomor SPK</td>
-												<td width="6px;">:</td>
+												<td width="81px;"><div style="opacity:0">Nomor SPK</div></td>
+												<td width="6px;"></td>
 												<td>
 												<?php 
 												echo $no_spk;
@@ -436,32 +574,32 @@ use yii\helpers\Url;
 												</td>
 											</tr>
 											<tr>
-												<td>Tanggal SPK</td>
-												<td>:</td>
-												<td><?php 
-												echo Yii::$app->formatter->asDatetime(date("d-M-Y"), "php:d-M-Y") ?></td>
+												<td><div style="opacity:0">Tanggal SPK</div></td>
+												<td></td>
+												<td><div style="line-height:45px;" class="hadi_tglspk"><?php 
+												echo Yii::$app->formatter->asDatetime(date("d-M-Y"), "php:d-M-Y") ?></div></td>
 											</tr>
 											<tr>
-												<td>No. Kontrak</td>
-												<td>:</td>
-												<td><?php 
-												echo $nokontrak; ?></td>
+												<td><div style="opacity:0">No. Kontrak</div></td>
+												<td></td>
+												<td><div style="line-height:35px;" class="hadi_nokontrak"><?php 
+												echo $nokontrak; ?></div></td>
 											</tr>
 											<tr>
-												<td>Tgl.Kontrak</td>
-												<td>:</td>
-												<td>
+												<td><div style="opacity:0">Tgl.Kontrak</div></td>
+												<td></td>
+												<td><div class="new_hadi_tglkontrak">
 												<?php 
 												echo Yii::$app->formatter->asDatetime($model->order_date, "php:d-M-Y")
-												?>
+												?></div>
 												</td>
 											</tr>
 											<tr>
-												<td>Delivery Time</td>
-												<td>:</td>
-												<td><?php 
+												<td><div style="opacity:0">Delivery Time</div></td>
+												<td></td>
+												<td><div style="line-height:30px;" class="hadi_delivery_date"><?php 
 												// echo $model->salesMan->name; ?> / <span style="text-transform: uppercase;"><?php 
-												// 	echo $model->saleGroup->name; ?> </span></td>
+												// 	echo $model->saleGroup->name; ?> </span></div></td>
 											</tr>
 										</table>
 									<div style="clear:both;"></div>
@@ -472,29 +610,35 @@ use yii\helpers\Url;
 					<tfoot>
 						<tr>
 							<td>
-								<table border="1" class="tablefooter">
+								<table border="0" class="tablefooter">
 									<tr>
 										<td>
-											<center>Dibuat Oleh</center>
+											<center><div style="opacity:0;">Dibuat Oleh</div></center>
 										</td>
 										<td>
-											<center>Diperiksa Oleh</center>
+											<center<div style="opacity:0;">>Diperiksa Oleh</div></center>
 										</td>
 										<td>
-											<center>Disetujui Oleh, <br/> General Manager</center>
+											<center><div style="opacity:0;">Disetujui Oleh, <br/> General Manager</div></center>
 											<br/>
 											<br/>
 										</td>
 									</tr>
 									<tr>
 										<td>
-											<center>(........................)</center>
+											<center><span class="hadi_dibuat"><?php echo $model->createU->name; ?></span></center>
 										</td>
 										<td>
-											<center>(........................)</center>
+											<center><?php 
+											if($model->approver2){
+												echo $model->approver20->name;
+											} ?></center>
 										</td>
 										<td>
-											<center>(........................)</center>
+											<center><?php 
+											if($model->approver3){
+												echo $model->approver30->name;
+											} ?></center>
 										</td>
 									</tr>
 								</table>
@@ -505,9 +649,9 @@ use yii\helpers\Url;
 					<tbody>
 						<tr>
 							<td>
-							<?php $maxHeight = '150mm'; ?>
+							
 								<div class="tdLines" style="height:<?=$maxHeight?>;vertical-align:top;">
-									<div class="contentArea">
+									<div class="contentArea" style="padding-top:5px;">
 										<table class="headtablepages contentLines">
 												
 												
@@ -552,7 +696,7 @@ $this->registerJs('
 	function prepareRow(rowNo,data)
 	{
 		console.log(data[0]);
-		return "<tr class=\'cRows rows"+rowNo+"\'><td width=\'50px\' style=\"text-align:center;\">"+data[0]+"</td><td style=\"text-align:center;\" width=\'170px\'>"+data[1]+"</td><td width=\'451px\'><div class=\"leftdata\">"+data[2]+"</div></td></tr>";
+		return "<tr class=\'cRows rows"+rowNo+"\'><td width=\'40px\' style=\"text-align:center;font-weight:bold;\">"+data[0]+"</td><td style=\"text-align:center;\" width=\'170px\'>"+data[1]+"</td><td width=\'451px\'><div class=\"leftdata\">"+data[2]+"</div></td></tr>";
 	}
 
 	var rowPage = 0;
@@ -580,8 +724,8 @@ $this->registerJs('
 			// alert(pageHeight);
 			var setLineHeight=439-pageHeight;
 			
-			var resLine1 = "<tr><th width=50px height=25px>No.</th><th width=170px>Jumlah</th><th width=451px>Uraian Pekerjaan</th></tr>";
-			var resLine = "<tr><td style=\"width:50px; height:"+setLineHeight+"px;  text-align:center;\"></td><td style=\"width:170px; text-align:center;\"></td><td style=\"width:451px; text-align:center;\"><div class=\"leftdata\"></div><div class=\"rightdata\"></div></td></tr>";
+			var resLine1 = "<tr><th width=40px height=25px>No.</th><th width=170px>Jumlah</th><th width=451px>Uraian Pekerjaan</th></tr>";
+			var resLine = "<tr><td style=\"width:40px; height:"+setLineHeight+"px;  text-align:center;\"></td><td style=\"width:170px; text-align:center;\"></td><td style=\"width:451px; text-align:center;\"><div class=\"leftdata\"></div><div class=\"rightdata\"></div></td></tr>";
 			jQuery(\'#lines\'+currPage+\' tr:first\').before(resLine1);
 			jQuery(\'#lines\'+currPage+\' tr:last\').after(resLine);
 
@@ -612,14 +756,14 @@ $this->registerJs('
 
 		if(currPage){
 			if (cektable < HeightTable){
-				var res1 = "<tr><th width=50px height=25px>No.</th><th width=170px>Jumlah</th><th width=451px>Uraian Pekerjaan</th></tr>";
-				var res = "<tr><td style=\"width:50px; height:"+SetHeight+"px;  text-align:center;\"></td><td style=\"width:170px; text-align:center;\"></td><td style=\"width:451px; text-align:center;\"><div class=\"leftdata\"></div><div class=\"rightdata\"></div></td></tr>";
+				var res1 = "<tr><th width=40px height=25px>No.</th><th width=170px>Jumlah</th><th width=451px>Uraian Pekerjaan</th></tr>";
+				var res = "<tr><td style=\"width:40px; height:"+SetHeight+"px;  text-align:center;\"></td><td style=\"width:170px; text-align:center;\"></td><td style=\"width:451px; text-align:center;\"><div class=\"leftdata\"></div><div class=\"rightdata\"></div></td></tr>";
 				jQuery(\'#lines\'+currPage+\' tr:first\').before(res1);
 				jQuery(\'#lines\'+currPage+\' tr:last\').after(res);
 				jQuery(\'#page\'+currPage+\' .hideprint\').show();
 			}else{
-				var res1 = "<tr><th width=50px height=25px>No.</th><th width=170px>ITEM / PN</th><th width=451px>DESCRIPTION</th></tr>";
-				var res = "<tr><td style=\"width:50px; height:"+SetHeight+"px;  text-align:center;\"></td><td style=\"width:170px; text-align:center;\"></td><td style=\"width:451px; text-align:center;\"><div class=\"leftdata\"></div><div class=\"rightdata\"></div></td></tr>";
+				var res1 = "<tr><th width=40px height=25px>No.</th><th width=170px>ITEM / PN</th><th width=451px>DESCRIPTION</th></tr>";
+				var res = "<tr><td style=\"width:40px; height:"+SetHeight+"px;  text-align:center;\"></td><td style=\"width:170px; text-align:center;\"></td><td style=\"width:451px; text-align:center;\"><div class=\"leftdata\"></div><div class=\"rightdata\"></div></td></tr>";
 				jQuery(\'#lines\'+currPage+\' tr:first\').before(res1);
 				jQuery(\'#lines\'+currPage+\' tr:last\').after(res);
 				jQuery(\'#page\'+currPage+\' .hideprint\').show();

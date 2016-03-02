@@ -36,6 +36,10 @@ use miloschuman\highcharts\Highcharts;
 		[
 			'header'=>'Group',
 			'attribute'=>'group',
+			'format'=>'html',
+			'value'=>function($data) use ($tahun_create){
+				return Html::a($data['group'],['sale-order/detail-summary-quotation','group'=>$data['group'],'year'=>$tahun_create]);
+			},
 		],
 		[
 			'header'=>'Win',

@@ -1098,6 +1098,7 @@ FROM
 		group_sales gs on gs.id = so.group_id
 ) AS rfq 
 GROUP BY rfq.group
+ORDER BY rfq.group
 query;
 
 		$connection = Yii::$app->db;
@@ -1126,6 +1127,63 @@ query;
         // var_dump($series);
 
 		return $this->render('year_summary_quotation',$dataToRender);
+	}
+
+
+	// detail quotation
+	public function actionDetailSummaryQuotation($year,$group)
+	{
+		$query = <<<query
+SELECT
+	rfq.currency AS currency
+	, rfq.status
+	, SUM(CASE
+		WHEN status = 'win' THEN total_tax 
+		WHEN status = 'lost' THEN total_tax
+		WHEN status = 'on process' THEN total_tax
+	END) AS value
+FROM
+(
+	SELECT 
+		so.quotation_no AS "no"
+		, so.create_date AS "date"
+		, pp.name AS "currency"
+		, gs.name AS "group"
+		, ru.login AS "sales"
+		, rp.display_name AS "costumer"
+		, so.amount_untaxed AS "total_tax"
+		, CASE
+			WHEN so.quotation_state NOT IN('win','lost')
+			THEN 'on process' ELSE so.quotation_state
+			END AS "status"
+	FROM 
+		sale_order so
+	JOIN 
+		product_pricelist pp ON pp.id = so.pricelist_id
+	LEFT JOIN
+		res_users ru on ru.id = so.user_id
+	JOIN
+		res_partner rp on rp.id = so.partner_id
+	JOIN
+		group_sales gs on gs.id = so.group_id
+	WHERE gs.name = '$group' AND EXTRACT(YEAR FROM so.create_date) = '$year'
+) AS rfq 
+GROUP BY rfq.currency, rfq.status
+ORDER BY rfq.currency
+query;
+
+		$connection = Yii::$app->db;
+        $res = $connection->createCommand($query)->queryAll();
+
+        $dataToRender['dataProvider'] = new \yii\data\ArrayDataProvider([
+            'allModels'=>$res,
+            'pagination'=>[
+                'pageSize'=>-1
+            ]
+
+        ]);
+		
+		return $this->render('detail_summary_quotation',$dataToRender);
 	}
 
 }

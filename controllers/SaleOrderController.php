@@ -1048,32 +1048,85 @@ EOQ;
 		]);
 	}
 
-    public function actionSupplierlist($search = null, $id = null) 
-    {
-        $out = ['more' => false];
-        if (!is_null($search)) {
-            $command = new Query;
-            $lowerchr=strtolower($search);
-            $command = Yii::$app->db->createCommand("SELECT DISTINCT id, name as text FROM res_partner WHERE lower(name) LIKE '%".$lowerchr."%' LIMIT 20");
-            $data = $command->queryAll();
-            $out['results'] = array_values($data);
+
+	// group quotation
+	public function actionYearSummaryQuotation($tahun_create=null)
+	{
+		if(!$tahun_create){
+            $tahun_create = date('Y');
         }
 
-        elseif ($id > 0) {
+        $dataToRender = [];
+        $where = [
+            'tahun_create'=>"%%",
+        ];
+        $dataToRender['saleOrder'] = new \app\models\SaleOrder;
 
-            $ids=explode(',', $id);
-            foreach ($ids as $value) {
-                $data[] = ['id' => $value, 'text' => ResPartner::find()->where(['id' => $value])->one()->name];
-            }
-
-            $out['results'] = $data;
-        }
-        else {
-            $out['results'] = ['id' => 0, 'text' => 'No matching records found'];
+        if($dataToRender['saleOrder']->load(Yii::$app->request->post())){
+            $where['tahun_create'] = $dataToRender['saleOrder']['tahun_create'];
         }
 
-        echo \yii\helpers\Json::encode($out);
-    }
+		$query = <<<query
+SELECT
+	rfq.group AS group,
+	COUNT(CASE WHEN status = 'win' THEN status END) AS win
+	, COUNT(CASE WHEN status = 'lost' THEN status END) AS lost
+	, COUNT(CASE WHEN status = 'on process' THEN status END) AS on_process
+FROM
+(
+	SELECT 
+		so.quotation_no AS "no"
+		, so.create_date AS "date"
+		, pp.name AS "currency"
+		, gs.name AS "group"
+		, ru.login AS "sales"
+		, rp.display_name AS "costumer"
+		, so.amount_untaxed AS "total_tax"
+		, CASE
+			WHEN so.quotation_state NOT IN('win','lost')
+			THEN 'on process' ELSE so.quotation_state
+			END AS "status"
+	FROM 
+		sale_order so
+	JOIN 
+		product_pricelist pp ON pp.id = so.pricelist_id
+	LEFT JOIN
+		res_users ru on ru.id = so.user_id
+	JOIN
+		res_partner rp on rp.id = so.partner_id
+	JOIN
+		group_sales gs on gs.id = so.group_id
+) AS rfq 
+GROUP BY rfq.group
+query;
+
+		$connection = Yii::$app->db;
+        $res = $connection->createCommand($query)->queryAll();
+
+        $dataToRender['dataProvider'] = new \yii\data\ArrayDataProvider([
+            'allModels'=>$res,
+            'pagination'=>[
+                'pageSize'=>-1
+            ]
+
+        ]);
+
+        $series = [];
+
+        foreach($res as $data){
+        	$series[] = [
+        		'name'=>$data['group'],
+        		'data'=>[floatval($data['win']),floatval($data['lost']),floatval($data['on_process'])]    		
+        	];
+        }
+
+        $dataToRender['tahun_create'] = $tahun_create;
+        $dataToRender['series'] = $series;
+
+        // var_dump($series);
+
+		return $this->render('year_summary_quotation',$dataToRender);
+	}
 
 }
 

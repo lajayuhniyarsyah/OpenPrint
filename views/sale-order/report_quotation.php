@@ -52,46 +52,6 @@ use kartik\export\ExportMenu;
 			'attribute'=>'quotation_state',
 			'header'=>'Status',
 		],
-
-		/*[
-			'attribute'=>'no',
-			'header'=>'NO',
-		],
-		[
-			'attribute'=>'date',
-			'header'=>'Date',
-		],
-		// [
-		// 	'attribute'=>'revisi',
-		// 	'value'=>function($n){
-		// 		return count($n->saleOrderRevisionHistories);
-		// 	}
-		// ],
-		[
-			'attribute'=>'currency',
-			'header'=>'Currency',
-		],
-		[
-			'attribute'=>'group',
-			'header'=>'Group',
-		],
-		[
-			'attribute'=>'sales',
-			'header'=>'Sales Man',
-		],
-		[
-			'attribute'=>'costumer',
-			'header'=>'Costumer',
-		],
-		[
-			'attribute'=>'total_tax',
-			'header'=>'Total TAX',
-		],
-		[
-			'attribute'=>'status',
-			'header'=>'Status',
-		],*/
-
 	];
 
 	echo GridView::widget([
@@ -109,7 +69,7 @@ use kartik\export\ExportMenu;
 			'target'=>GridView::TARGET_SELF
 		],
 		'panel'=>[
-			'before'=>'Report KPI',
+			'before'=>'Report Quotation',
 			// 'type' => GridView::TYPE_PRIMARY,
 		],
 		'columns' => $gridColumns

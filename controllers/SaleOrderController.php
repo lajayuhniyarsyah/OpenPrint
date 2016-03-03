@@ -1050,25 +1050,25 @@ EOQ;
 
 
 	// group quotation
-	public function actionYearSummaryQuotation($tahun_create=null)
+	public function actionYearSummaryQuotation($year=null)
 	{
-		if(!$tahun_create){
-            $tahun_create = date('Y');
+		if(!$year){
+            $year = date('Y');
         }
 
         $dataToRender = [];
         $where = [
-            'tahun_create'=>"%%",
+            'year'=>"%%",
         ];
         $dataToRender['saleOrder'] = new \app\models\SaleOrder;
 
         if($dataToRender['saleOrder']->load(Yii::$app->request->post())){
-            $where['tahun_create'] = $dataToRender['saleOrder']['tahun_create'];
+            $where['year'] = $dataToRender['saleOrder']['year'];
         }
 
 		$query = <<<query
 SELECT
-	rfq.group AS group,
+	initcap(rfq.group) AS group,
 	COUNT(CASE WHEN status = 'win' THEN status END) AS win
 	, COUNT(CASE WHEN status = 'lost' THEN status END) AS lost
 	, COUNT(CASE WHEN status = 'on process' THEN status END) AS on_process
@@ -1096,6 +1096,8 @@ FROM
 		res_partner rp on rp.id = so.partner_id
 	JOIN
 		group_sales gs on gs.id = so.group_id
+	WHERE 
+		EXTRACT(YEAR FROM so.create_date) = '$year'
 ) AS rfq 
 GROUP BY rfq.group
 ORDER BY rfq.group
@@ -1121,7 +1123,7 @@ query;
         	];
         }
 
-        $dataToRender['tahun_create'] = $tahun_create;
+        $dataToRender['year'] = $year;
         $dataToRender['series'] = $series;
 
         // var_dump($series);
@@ -1136,12 +1138,12 @@ query;
 		$query = <<<query
 SELECT
 	rfq.currency AS currency
-	, rfq.status
+	, rfq.status AS status
 	, SUM(CASE
 		WHEN status = 'win' THEN total_tax 
 		WHEN status = 'lost' THEN total_tax
 		WHEN status = 'on process' THEN total_tax
-	END) AS value
+	END) AS total
 FROM
 (
 	SELECT 
@@ -1166,7 +1168,7 @@ FROM
 		res_partner rp on rp.id = so.partner_id
 	JOIN
 		group_sales gs on gs.id = so.group_id
-	WHERE gs.name = '$group' AND EXTRACT(YEAR FROM so.create_date) = '$year'
+	WHERE gs.name ILIKE '%$group%' AND EXTRACT(YEAR FROM so.create_date) = '$year'
 ) AS rfq 
 GROUP BY rfq.currency, rfq.status
 ORDER BY rfq.currency
@@ -1182,6 +1184,17 @@ query;
             ]
 
         ]);
+
+        $series = [];
+
+        foreach($res as $data){
+        	$series[] = [
+        		$data['status'],
+        		floatval($data['total'])
+        	];
+        }
+
+        $dataToRender['series'] = $series;
 		
 		return $this->render('detail_summary_quotation',$dataToRender);
 	}

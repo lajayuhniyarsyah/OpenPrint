@@ -10,13 +10,13 @@ use miloschuman\highcharts\Highcharts;
 <h3 class="page-header">
 	<span class="page-header">Quotation By Group : </span>
 	<span id="tahunCreateTitle" class="dropdown">
-		<a href="#"  data-toggle="dropdown" class="dropdown-toggle"><?=Html::encode($tahun_create)?></a>
+		<a href="#"  data-toggle="dropdown" class="dropdown-toggle"><?=Html::encode($year)?></a>
 		<?php
 			$start = 2015;
 			$end = date('Y');
 			$items = [];
-			for($iTahunCreate=$start;$iTahunCreate<=$end;$iTahunCreate++){
-				$items[] = ['label' => $iTahunCreate, 'url' => ['','tahun_create'=>$iTahunCreate]];
+			for($iYear=$start;$iYear<=$end;$iYear++){
+				$items[] = ['label' => $iYear, 'url' => ['','year'=>$iYear]];
 			}
 			echo Dropdown::widget([
 				'items' => $items,
@@ -37,8 +37,8 @@ use miloschuman\highcharts\Highcharts;
 			'header'=>'Group',
 			'attribute'=>'group',
 			'format'=>'html',
-			'value'=>function($data) use ($tahun_create){
-				return Html::a($data['group'],['sale-order/detail-summary-quotation','group'=>$data['group'],'year'=>$tahun_create]);
+			'value'=>function($data) use ($year){
+				return Html::a($data['group'],['sale-order/detail-summary-quotation','group'=>$data['group'],'year'=>$year]);
 			},
 		],
 		[
@@ -61,13 +61,13 @@ echo Highcharts::widget([
 	'scripts' => [
 		'highcharts-more',   // enables supplementary chart types (gauge, arearange, columnrange, etc.)
 		'modules/exporting', // adds Exporting button/menu to chart
-		'themes/grid'        // applies global 'grid' theme to all charts
+		// 'themes/grid'        // applies global 'grid' theme to all charts
 	],
 	'options' => [
 		'chart' => ['type' => 'bar'],
 		'title' => ['text' => 'Quotation By Group'],
 		'xAxis' => [
-			'categories' => ['On Process', 'Win', 'Lost'],
+			'categories' => ['Win', 'Lost', 'On Process'],
 		],
 		'yAxis' => [
 			'title' => ['text' => 'Value']

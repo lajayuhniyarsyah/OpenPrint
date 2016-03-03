@@ -19,17 +19,18 @@
 		display: block;
 		margin: 0 auto;
 		margin-bottom: 0.5cm;
+		padding: 11px;
 		
 	}
 		page .header{
 			margin: auto;
-			width: 780px;
+			
 			height:132mm;
 			
 		} 
 		page .content{
 			margin: auto;
-			width: 780px;
+			width: 21cm;
 			max-height: 1000px;
 			
 		} 
@@ -39,6 +40,20 @@
 			max-height: 1000px;
 			/*background-color: green;*/
 		} 
+
+		.content table tr td {
+			padding: 10px;
+
+
+		}
+		 @media print{
+            .hideOnPrint{
+                display: none;
+                position: absolute;
+    			right: 0px;
+
+            }
+        }
 
 		
 
@@ -167,9 +182,9 @@
 				</table> -->
 				</div>
 
-				<div class="content">
-					<table width="100%" border='1px' style='border-collapse:collapse;'>
-						<tr><td width='5%'><center><b>No</b></center></td><td width='10%'><center><b>Qty</b></center></td><td width='5%'><center><b>Unit</b></center></td><td width='45%'><center><b>Description</b></center></td><td width='15%'><center><b>Price Unit</b></center></td><td width='20%'><center><b>Price Sub</b></center></td></tr>
+				<div class="content">	
+					<table  border='1px' style='border-collapse:collapse; width:21cm;'>
+						<tr><td style="width:21cm;"><center><b>No</b></center></td><td width='10%'><center><b>Qty</b></center></td><td width='5%'><center><b>Unit</b></center></td><td width='45%'><center><b>Description</b></center></td><td width='15%'><center><b>Price Unit</b></center></td><td width='20%'><center><b>Price Sub</b></center></td></tr>
 					</table>
 				</div>
 				<div class="footer">
@@ -199,7 +214,7 @@
 				var contentElement = jQuery('page#page-'+cursor+' .content');
 				var isi_table = jQuery('page#page-'+cursor+' .content table');
 				var tinggiContent = contentElement.height();
-				var elTable = "<tr><td valign='top' width='5%'>"+value.no +"</td>"+"<td valign='top' width='10%' >"+value.product_uom_qty +"</td>"+"<td valign='top' width='5%'>"+value.unit +"</td>"+"<td width=45%>"+"["+value.default_code+"]"+value.name_product+"<br/>"+value.deskription_orderline+"<div class='isi-"+noMaterial+"'></div>"+"</td>"+"<td width='15%' valign='top'>"+value.unit_price +"</td>"+"<td width='20%' valign='top'>"+value.price_sub +"</td>"+"</tr>";
+				var elTable = "<tr><td valign='top' width='5%'>"+value.no +"</td>"+"<td valign='top' width='10%' >"+value.product_uom_qty +"</td>"+"<td valign='top' width='5%'>"+value.unit +"</td>"+"<td contenteditable='True' width=45%>"+"["+value.default_code+"]"+value.name_product+"<br/>"+value.deskription_orderline+"<div class='isi-"+noMaterial+"'></div>"+"</td>"+"<td width='15%' valign='top'>"+value.unit_price +"</td>"+"<td width='20%' valign='top'>"+value.price_sub+"<div class='hideOnPrint'><img class='buttonAddRowBefore' src='up.png' alt='upRow' height='20px'width='20px' style='cursor:pointer;position: absolute; right:248px'><br/><img class='buttonAddRowAfter' src='down.png' alt='downRow' height='20px'width='20px' style='cursor:pointer;position: absolute; right:248px'></div>"+"</td>"+"</tr>";
 				// console.log(value.material_line);
 				
 				if (tinggiContent<600){
@@ -210,12 +225,31 @@
 						jQuery.each(value.material_line,function(indexMaterial,valueMaterial){
 							var materialElement = jQuery('page#page-'+cursor+' .content'+' .isi-'+noMaterial);
 							if (indexMaterial==0){
-								materialElement.append("Consist of:<ul style='margin-top:0px'><li>"+"["+valueMaterial.partNumber+"]"+valueMaterial.product_id+"("+valueMaterial.qty+" "+valueMaterial.uom+")"+"<br/>"+valueMaterial.descriptionMaterial+"</li></ul>")
+								var contentElement = jQuery('page#page-'+cursor+' .content');
+								var tinggiContent = contentElement.height();
+								if (tinggiContent<420){
+										materialElement.append("Consist of:<ul style='margin-top:0px'><li>"+"["+valueMaterial.partNumber+"]"+valueMaterial.product_id+"("+valueMaterial.qty+" "+valueMaterial.uom+")"+"<br/>"+valueMaterial.descriptionMaterial+"</li></ul>")
+								}
+								else{
+									var cursorLama = cursor
+									cursor++
+									jQuery('page#page-'+cursorLama).after(template);
+									jQuery('page:last').attr('id','page-'+cursor);
+									// var headerTable="<table width='100%' border='1px' style='border-collapse:collapse; margin-top:0px;'><tr><td width='5%''><center><b>No</b></center></td><td width='10%''><center><b>Qty</b></center></td><td width='5%'><center><b>Unit</b></center></td><td width='45%'><center><b>Description</b></center></td><td width='15%'><center><b>Price Unit</b></center></td><td width='20%'><center><b>Price Sub</b></center></td></tr></table>"
+									
+									var contentElement = jQuery('page#page-'+cursor+' .content');
+									var isi_table = jQuery('page#page-'+cursor+' .content table');
+									isi_table.append("<tr><td valign='top' width='5%'>"+"</td>"+"<td valign='top' width='10%' >"+"</td>"+"<td valign='top' width='5%'>"+"</td>"+"<td contenteditable='True' width=45%>"+"<div class='isi-"+noMaterial+"'></div>"+"</td>"+"<td width='15%' valign='top'>"+"</td>"+"<td width='20%' valign='top'>"+"</td>"+"</tr>")
+									var materialElement = jQuery('page#page-'+cursor+' .content'+' .isi-'+noMaterial);
+									materialElement.append("Consist of:<ul style='margin-top:0px'><li>"+"["+valueMaterial.partNumber+"]"+valueMaterial.product_id+"("+valueMaterial.qty+" "+valueMaterial.uom+")"+"<br/>"+valueMaterial.descriptionMaterial+"</li></ul>")
+
+
+								}
 							}
 							else{
 								var contentElement = jQuery('page#page-'+cursor+' .content');
 								var tinggiContent = contentElement.height();
-								if (tinggiContent<400){
+								if (tinggiContent<420){
 									materialElement.append("<ul  style='margin-top:-16px'><li>"+"["+valueMaterial.partNumber+"]"+valueMaterial.product_id+"("+valueMaterial.qty+" "+valueMaterial.uom+")"+"<br/>"+valueMaterial.descriptionMaterial+"</li></ul>")
 
 								}
@@ -229,7 +263,7 @@
 									var contentElement = jQuery('page#page-'+cursor+' .content');
 									var isi_table = jQuery('page#page-'+cursor+' .content table');
 
-									isi_table.append("<tr><td valign='top' width='5%'>"+"</td>"+"<td valign='top' width='10%' >"+"</td>"+"<td valign='top' width='5%'>"+"</td>"+"<td width=45%>"+"<div class='isi-"+noMaterial+"'></div>"+"</td>"+"<td width='15%' valign='top'>"+"</td>"+"<td width='20%' valign='top'>"+"</td>"+"</tr>")
+									isi_table.append("<tr><td valign='top' width='5%'>"+"</td>"+"<td valign='top' width='10%' >"+"</td>"+"<td valign='top' width='5%'>"+"</td>"+"<td contenteditable='True' width=45%>"+"<div class='isi-"+noMaterial+"'></div>"+"</td>"+"<td width='15%' valign='top'>"+"</td>"+"<td width='20%' valign='top'>"+"</td>"+"</tr>")
 									var materialElement = jQuery('page#page-'+cursor+' .content'+' .isi-'+noMaterial);
 									// headerElement = jQuery('page#page-'+cursor+' .header');
 									if (indexMaterial==0){
@@ -283,7 +317,6 @@
 				});
 			var contentElement = jQuery('page#page-'+cursor+' .content');
 			var tinggiContent = contentElement.height();
-
 			console.log(tinggiContent)
 			if (tinggiContent <=400){
 				var isi_table = jQuery('page#page-'+cursor+' .content table');
@@ -301,12 +334,46 @@
 					isi_table.append(footerTable);
 
 			}
-			// console.log(tinggiContent)
 			var contentElement = jQuery('page#page-'+cursor+' .content');
 			var tinggiContent = contentElement.height();
 			var contentfooter= jQuery('page#page-'+cursor+' .footer');
-			contentfooter.append("<table width='45%'><tr><td width='40%'><b>Term Of Payment</b></td><td width='3%'><b>:</b></td><td><?php if($model->paymentTerm!==null){echo $model->paymentTerm->name;}?></td></tr><tr><td valign='top'><b>Term Condition</b></td><td valign='top'><b>:</b></td><td><?php echo '<ul>';foreach ($model->termConditions as $key_term => $value_term) {	echo '<li>'.$value_term->name.'</li>';}echo '</ul>'?></td></tr><tr><td valign='top'><b>Note</b></td><td valign='top'><b>:</b></td><td><?= preg_replace('#\R+#','<br/>',$model->note)?></td></tr></table><br/><table width='30%'><tr> <td valign='top' style='text-align:center' height='80'>Thank you and best regards</td></tr><tr><td valign='top' style='text-align:center'>"+"<?=$model->user->name ?>"+"</td></tr></table>");
+			console.log(tinggiContent)
+			if (tinggiContent<500){
+				contentfooter.append("<table width='45%'><tr><td width='40%'><b>Term Of Payment</b></td><td width='3%'><b>:</b></td><td><?php if($model->paymentTerm!==null){echo $model->paymentTerm->name;}?></td></tr><tr><td valign='top'><b>Term Condition</b></td><td valign='top'><b>:</b></td><td><?php echo '<ul>';foreach ($model->termConditions as $key_term => $value_term) {	echo '<li>'.$value_term->name.'</li>';}echo '</ul>'?></td></tr><tr><td valign='top'><b>Note</b></td><td valign='top'><b>:</b></td><td><?= preg_replace('#\R+#','<br/>',$model->note)?></td></tr></table><br/><table width='30%'><tr> <td valign='top' style='text-align:center' height='80'>Thank you and best regards</td></tr><tr><td valign='top' style='text-align:center'>"+"<?=$model->user->name ?>"+"</td></tr></table>");
 
+			}
+			else{
+				var cursorLama = cursor
+				cursor++
+				jQuery('page#page-'+cursorLama).after(template);
+				jQuery('page:last').attr('id','page-'+cursor);
+				var contentfooter= jQuery('page#page-'+cursor+' .footer');
+				var isi_table = jQuery('page#page-'+cursor+' .content table');
+				isi_table.remove()
+				contentfooter.append("<table width='45%'><tr><td width='40%'><b>Term Of Payment</b></td><td width='3%'><b>:</b></td><td><?php if($model->paymentTerm!==null){echo $model->paymentTerm->name;}?></td></tr><tr><td valign='top'><b>Term Condition</b></td><td valign='top'><b>:</b></td><td><?php echo '<ul>';foreach ($model->termConditions as $key_term => $value_term) {	echo '<li>'.$value_term->name.'</li>';}echo '</ul>'?></td></tr><tr><td valign='top'><b>Note</b></td><td valign='top'><b>:</b></td><td><?= preg_replace('#\R+#','<br/>',$model->note)?></td></tr></table><br/><table width='30%'><tr> <td valign='top' style='text-align:center' height='80'>Thank you and best regards</td></tr><tr><td valign='top' style='text-align:center'>"+"<?=$model->user->name ?>"+"</td></tr></table>");
+
+
+			}
+			
+			jQuery('.buttonAddRowAfter').click(function(){
+				// console.log($(this)[0].parentElement)
+				console.log($(this).closest('tr'))
+				jQuery($(this).closest('tr')).after("<tr><td colspan='6'><div contenteditable='True'></div><div class='hideOnPrint'><img class='buttonRemove' src='remove.png' alt='remove' height='20px'width='20px' style='cursor:pointer; position: absolute; right:248px'></div></td></tr>")
+
+				jQuery('.buttonRemove').click(function(){
+				
+					jQuery($(this).closest('tr')).remove()
+					})
+			})
+			jQuery('.buttonAddRowBefore').click(function(){
+				// console.log($(this)[0].parentElement)
+				console.log($(this).closest('tr'))
+				jQuery($(this).closest('tr')).before("<tr><td colspan='6' ><div contenteditable='True'></div><div class='hideOnPrint'><img class='buttonRemove' src='remove.png' alt='remove' height='20px'width='20px' style='cursor:pointer;position: absolute; right:248px'></div> <div class='hideOnPrint'></td></tr>")
+				jQuery('.buttonRemove').click(function(){
+					jQuery($(this).closest('tr')).remove()
+					})
+	
+			})
 		});
 	</script>
 

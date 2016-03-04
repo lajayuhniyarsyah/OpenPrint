@@ -966,25 +966,11 @@ class SaleOrder extends \yii\db\ActiveRecord
     /**
      * @return Delivery Note
      */
-    
     public function getDeliveryNotes(){
         return $this->hasMany(DeliveryNote::className(),['prepare_id'=>'id'])->via('orderPreparations');
     }
 
-<<<<<<< HEAD
-    public function getGroup(){
-        return $this->hasOne(GroupSales::className(),['id'=>'kelompok_id'])->via('user');
-    }
-
-    
-=======
-     /**
-     * @return Delivery Note
-     */
-    public function getTermCondition(){
-        return $this->hasMany(TermCondition::className(),['id'=>'order_id'])->via('termConditionRels');
-    }
-      /**
+    /**
      * @return \yii\db\ActiveQuery
      */
     public function getGroup()
@@ -992,7 +978,5 @@ class SaleOrder extends \yii\db\ActiveRecord
         return $this->hasOne(GroupSales::className(), ['id' => 'group_id']);
     }
 
->>>>>>> 6e575b3e9f3d9722f8876b42b01a8db27609940f
-
-
+    //6e575b3e9f3d9722f8876b42b01a8db27609940f
 }

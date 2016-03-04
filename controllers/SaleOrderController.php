@@ -1175,19 +1175,34 @@ ORDER BY rfq.currency
 query;
 
 		$connection = Yii::$app->db;
-        $res = $connection->createCommand($query)->queryAll();
+        $model = $connection->createCommand($query)->queryAll();
 
         $dataToRender['dataProvider'] = new \yii\data\ArrayDataProvider([
-            'allModels'=>$res,
+            'allModels'=>$model,
             'pagination'=>[
                 'pageSize'=>-1
             ]
-
         ]);
 
-        $series = [];
+        $res = [];
+        foreach($model as $key => $value){
+        	$res[$value['currency']][$value['status']] = $value['total'];
+        }
+        foreach ($res as $currency => $values) {
+        	if(!isset($values['win'])){
+        		$res[$currency]['win'] = 0;
+        	}
+        	if(!isset($values['lost'])){
+        		$res[$currency]['lost'] = 0;
+        	}
+        	if(!isset($values['on process'])){
+        		$res[$currency]['on process'] = 0;
+        	}
+        }
+        var_dump($res);
 
-        foreach($res as $data){
+        $series = [];
+        foreach($model as $data){
         	$series[] = [
         		$data['status'],
         		floatval($data['total'])
@@ -1195,6 +1210,7 @@ query;
         }
 
         $dataToRender['series'] = $series;
+        $dataToRender['res'] = $res;
 		
 		return $this->render('detail_summary_quotation',$dataToRender);
 	}

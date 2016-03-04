@@ -111,6 +111,14 @@ class AccountInvoiceController extends Controller
 		]);
 	}
 
+	/**
+	* print-e-faktur
+	* required sbm_invoice_main_currency module
+	**/
+	public function actionPrintEFaktur($id,$uid=null,$printer=null,$block=False){
+		return $this->actionPrint($id,$uid,$printer,$block);
+	}
+
 	// action print
 	public function actionPrint($id,$uid=null,$printer=null,$block=False){
 		if($block){

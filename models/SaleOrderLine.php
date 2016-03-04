@@ -198,6 +198,13 @@ class SaleOrderLine extends \yii\db\ActiveRecord
     {
         return $this->hasOne(ProductUom::className(), ['id' => 'product_uos']);
     }
+     /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getMaterialLines()
+    {
+        return $this->hasMany(SaleOrderMaterialLine::className(), ['sale_order_line_id' => 'id']);
+    }
 
     /**
      * @return \yii\db\ActiveQuery
@@ -222,4 +229,9 @@ class SaleOrderLine extends \yii\db\ActiveRecord
     {
         return $this->hasMany(SaleOrderLinePropertyRel::className(), ['order_id' => 'id']);
     }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+   
 }

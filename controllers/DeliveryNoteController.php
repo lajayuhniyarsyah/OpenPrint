@@ -682,28 +682,99 @@ class DeliveryNoteController extends Controller
 		]);
 	}
 
-	/*public function actionExportkpi()
+
+	#show summary kpi
+	public function actionYearSummaryKpi($tahun_create=null)
 	{
-		$searchModel = new DeliveryNoteSearch();
-		$dataProvider = $searchModel->reportKPI(Yii::$app->request->queryParams);
+		if(!$tahun_create){
+            $tahun_create = date('Y');
+        }
+
+        $dataToRender = [];
+        $where = [
+            'tahun_create'=>"%%",
+        ];
+        $dataToRender['deliveryNote'] = new \app\models\DeliveryNote;
+
+        if($dataToRender['deliveryNote']->load(Yii::$app->request->post())){
+            $where['tahun_create'] = $dataToRender['deliveryNote']['tahun_create'];
+        }
+
+		$query = <<<query
+SELECT
+	COUNT(DISTINCT no_po) AS po_total
+	, COUNT(CASE WHEN status = 'Tercapai' THEN status END) AS tercapai
+	, COUNT(CASE WHEN status = 'Tidak Tercapai' THEN status END) AS tdk_tercapai
+	, COUNT(CASE WHEN status = 'Belum Terkirim' THEN status END) AS blm_terkirim
+	--, COUNT(status) AS total
+	, ROUND((COUNT(CASE WHEN status = 'Tercapai' THEN status END) * 100)::NUMERIC / COUNT(status), 2) AS tercapai_persen
+	, ROUND((COUNT(CASE WHEN status = 'Tidak Tercapai' THEN status END) * 100)::NUMERIC / COUNT(status), 2) AS tdk_tercapai_persen
+	, ROUND((COUNT(CASE WHEN status = 'Belum Terkirim' THEN status END) * 100)::NUMERIC / COUNT(status), 2) AS blm_terkirim_persen
+	, ROUND((COUNT(CASE WHEN status = 'Tercapai' THEN status END) * 100)::NUMERIC / COUNT(status)
+		+ (COUNT(CASE WHEN status = 'Tidak Tercapai' THEN status END) * 100)::NUMERIC / COUNT(status)
+		+ (COUNT(CASE WHEN status = 'Belum Terkirim' THEN status END) * 100)::NUMERIC / COUNT(status), 2) AS total_persen
+	, EXTRACT(YEAR FROM dn_kpi.create_date) AS tahun_create
+	, EXTRACT(MONTH FROM dn_kpi.create_date) AS bulan_create
+FROM
+(
+	SELECT
+		dn.create_date,
+		dn.name AS "dn_note",
+		sp.date_done AS "sj_date",
+		rp.display_name AS "add_name",
+		so.name AS "no_po",
+		so.date_order AS "tgl_po",
+		dn.tanggal AS "tgl_kirim",
+		CASE 
+			WHEN
+				DATE_PART('month', dn.tanggal::date) - DATE_PART('month', so.date_order::date) = 0
+				AND DATE_PART('days', dn.tanggal::date) - DATE_PART('days', so.date_order::date) <= 7
+				THEN DATE_PART('days', dn.tanggal::date) - DATE_PART('days', so.date_order::date)
+			ELSE NULL
+		END AS "selisih",
+		CASE 
+			WHEN sp.date_done IS NULL THEN 'Belum Terkirim'
+			WHEN
+				DATE_PART('month', dn.tanggal::date) - DATE_PART('month', so.date_order::date) = 0
+				AND DATE_PART('days', dn.tanggal::date) - DATE_PART('days', so.date_order::date) <= 7
+				AND sp.date_done IS NOT NULL
+				THEN 'Tercapai'
+			ELSE 'Tidak Tercapai'
+		END AS "status"
+	FROM
+		delivery_note dn
+
+	LEFT JOIN
+		res_partner rp ON rp.id = dn.partner_id
+	LEFT JOIN 
+		stock_picking sp on sp.note_id = dn.id
+	LEFT JOIN 
+		order_preparation op ON op.id = dn.prepare_id
+	LEFT JOIN 
+		sale_order so ON so.id = op.sale_id
+
+	WHERE 
+		dn.state NOT IN ('draft','cancel')
+		AND EXTRACT(YEAR FROM dn.create_date) = '$tahun_create'
+) AS dn_kpi
+GROUP BY EXTRACT(YEAR FROM dn_kpi.create_date),EXTRACT(MONTH FROM dn_kpi.create_date)
+query;
 		
-		ExcelView::widget([
-			'dataProvider' => $dataProvider,
-			'filterModel' => $searchModel,
-			'fullExportType'=> 'xlsx', //can change to html,xls,csv and so on
-			'grid_mode' => 'export',
-			'columns' => [
-			   	// ['class' => 'yiigridSerialColumn'],
-			   	'name',
-				'stockPicking0.date_done',
-				'partner.display_name',
-				'saleOrder.date_order',
-				'tanggal',
-				'selisih_hari',
-				'status',
-			],
-		]);
-	}*/
+		$connection = Yii::$app->db;
+        $res = $connection->createCommand($query)->queryAll();
+
+        $dataToRender['dataProvider'] = new \yii\data\ArrayDataProvider([
+            'allModels'=>$res,
+            'pagination'=>[
+                'pageSize'=>-1
+            ]
+
+        ]);
+
+        $dataToRender['tahun_create'] = $tahun_create;
+
+		return $this->render('year_summary_kpi',$dataToRender);
+	}
 
 
 }

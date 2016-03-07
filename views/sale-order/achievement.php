@@ -189,7 +189,7 @@ if(isset($salesManSearchGrid) && $salesManSearchGrid){
 								'dataLabels'=>[
 									'enabled'=>true,
 									'format'=>'<b>{point.name}</b>: {point.percentage:.1f} %'
-								]
+								],
 							]
 						],
 						'series'=>[

@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\Html;
-use \kartik\grid\GridView;
+use kartik\grid\GridView;
+use kartik\export\ExportMenu;
 ?>
 
 <h3 class="page-header">Report KPI</h3>
@@ -9,17 +10,7 @@ use \kartik\grid\GridView;
 	    'model' => $searchModel,
 	]); ?>
 
-	<?php /*echo \kartik\export\ExportMenu::widget([
-		'dataProvider'=>$dataProvider,
-		// 'stream' => false,
-		// 'streamAfterSave' => true, // this by default is `false` and this will generate a link to the saved file
-	    // 'afterSaveView' => '_view', // this view file can be overwritten with your own that displays the generated file link
-	    // 'folder' => '@webroot/tmp', // this is default save folder on server
-	    // 'linkPath' => '/tmp', // the web accessible location to the above folder
-	])*/ ?>
-
 	<?php 
-
 	$gridColumns = [
 		['class' => 'yii\grid\SerialColumn'],
 		'name',
@@ -31,15 +22,19 @@ use \kartik\grid\GridView;
 		'status',
 	];
 
-	echo \kartik\export\ExportMenu::widget([
+	echo ExportMenu::widget([
 	    'dataProvider' => $dataProviderExport,
+	    // 'target' => ExportMenu::TARGET_SELF,
+	    'asDropdown' => false,
+	    // 'showColumnSelector' => true,
+	    // 'columnSelectorMenuOptions' => [],
 	    'exportConfig' => [
-			\kartik\export\ExportMenu::FORMAT_HTML => false,
-			\kartik\export\ExportMenu::FORMAT_CSV => false,
-			\kartik\export\ExportMenu::FORMAT_TEXT => false,
-			\kartik\export\ExportMenu::FORMAT_PDF => false,
-			\kartik\export\ExportMenu::FORMAT_EXCEL => false,
-			\kartik\export\ExportMenu::FORMAT_EXCEL_X  => ['label' => 'Export to Excel'],
+			ExportMenu::FORMAT_HTML => false,
+			ExportMenu::FORMAT_CSV => false,
+			ExportMenu::FORMAT_TEXT => false,
+			ExportMenu::FORMAT_PDF => false,
+			ExportMenu::FORMAT_EXCEL => false,
+			ExportMenu::FORMAT_EXCEL_X  => ['label' => 'Export to Excel'],
 		],
 	    'columns' => $gridColumns
 	]);
@@ -52,7 +47,7 @@ use \kartik\grid\GridView;
 			'{export}'
 		],
 		'exportConfig' => [
-            \kartik\grid\GridView::EXCEL => ['label' => 'Export to Excel'],
+            GridView::EXCEL => ['label' => 'Export to Excel'],
         ],
 		'export'=>[
 			'label'=>'Export',

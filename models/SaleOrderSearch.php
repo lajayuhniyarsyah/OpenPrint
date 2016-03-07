@@ -6,23 +6,35 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\SaleOrder;
+use yii\db\Query;
 
 /**
  * SaleOrderSearch represents the model behind the search form about `app\models\SaleOrder`.
  */
 class SaleOrderSearch extends SaleOrder
 {
+    public $tanggal_awal, $tanggal_akhir, $kelompok_id;
+    public $tag_partner = [];
+    public $tag_group = [];
+    public $tag_user = [];
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['id', 'create_uid', 'write_uid', 'shop_id', 'partner_id', 'fiscal_position', 'user_id', 'payment_term', 'company_id', 'pricelist_id', 'partner_invoice_id', 'project_id', 'partner_shipping_id', 'incoterm', 'carrier_id', 'week', 'attention'], 'integer'],
-            [['create_date', 'write_date', 'origin', 'order_policy', 'client_order_ref', 'date_order', 'note', 'state', 'date_confirm', 'name', 'invoice_quantity', 'picking_policy', 'worktype', 'delivery_date', 'attention_moved0', 'internal_notes', 'due_date','sales_man'], 'safe'],
+            [['id', 'create_uid', 'write_uid', 'shop_id', 'fiscal_position', 'payment_term', 'company_id', 'partner_invoice_id', 'project_id', 'partner_shipping_id', 'incoterm', 'carrier_id', 'week', 'attention'], 'integer'],
+            [['create_date', 'write_date', 'origin', 'order_policy', 'client_order_ref', 'date_order', 'note', 'state', 'date_confirm', 'name', 'invoice_quantity', 'picking_policy', 'worktype', 'delivery_date', 'attention_moved0', 'internal_notes', 'due_date', 'sales_man', 'group.name', 'pricelist_id', 'user_id', 'partner_id', 'kelompok_id', 'tanggal_awal', 'tanggal_akhir'], 'safe'],
             [['amount_tax', 'amount_untaxed', 'amount_total'], 'number'],
+            [['tag_partner','tag_group','tag_user'],'safe'],
             [['shipped', 'sow12', 'sow11', 'sowC', 'sowA', 'sow9', 'sow8', 'sow3', 'sow2', 'sow1', 'sow7', 'sow6', 'sow5', 'sow4', 'sowB', 'sow14', 'sow13', 'sow10', 'kondisi3', 'kondisi2', 'kondisi1'], 'boolean'],
         ];
+    }
+
+    public function attributes()
+    {
+        return array_merge(parent::attributes(),['group.name']);
     }
 
     /**
@@ -175,4 +187,46 @@ class SaleOrderSearch extends SaleOrder
 
         return $dataProvider;
     }
+
+    // search untuk report Quotation
+    public function searchReportQuotation($params,$pageSize=20)
+    {
+        $query = SaleOrder::find();
+
+        $query->joinWith(['partner','group','user','pricelist']);
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => $pageSize
+            ],
+        ]);
+
+        if (!($this->load($params) && $this->validate())) {
+            return $dataProvider;
+        }
+
+        if($this->tanggal_awal && $this->tanggal_akhir != null) {
+            $query->where(['between', 'sale_order.create_date', $this->tanggal_awal, $this->tanggal_akhir]);
+        }
+
+        if($this->pricelist_id != null) {
+            $query->andFilterWhere(['ilike', 'product_pricelist.name', $this->pricelist_id]);
+        }
+
+        if($this->tag_group != null) {
+            $query->andFilterWhere(['or ilike', 'group_sales.name', $this->tag_group]);
+        }
+
+        if($this->tag_user != null) {
+            $query->andFilterWhere(['or ilike', 'res_users.login', $this->tag_user]);
+        }
+
+        if($this->tag_partner != null) {
+            $query->andFilterWhere(['or ilike', 'res_partner.display_name', $this->tag_partner]);
+        }
+        
+        return $dataProvider;
+    }
+
 }

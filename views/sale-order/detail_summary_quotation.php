@@ -22,17 +22,20 @@ use miloschuman\highcharts\Highcharts;
 ])?>
 
 <?php
+foreach($series as $serie):
+
 echo Highcharts::widget([
 	'scripts' => [
 		'highcharts-more',
 		'modules/exporting',
+		'highcharts-3d',
 	],
 	'options' => [
 		'chart' => [
 			'type' => 'pie',
 			'options3d' => [
 				'enabled' => true,
-                'alpha' => 45
+                'alpha' => 45,
 			]
 		],
 		'title' => ['text' => 'Quotation By Group'],
@@ -45,7 +48,7 @@ echo Highcharts::widget([
 		'series' => [
 			[
 				'name' => 'Detail Quotation Composition',
-				'data' => $series,
+				'data' => $serie,
 			]
 		]
 		/*'series' => [[
@@ -64,4 +67,6 @@ echo Highcharts::widget([
         ]]*/
 	],
 ]);
+
+endforeach;
 ?>

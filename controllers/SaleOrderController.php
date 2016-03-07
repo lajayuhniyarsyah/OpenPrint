@@ -1199,15 +1199,18 @@ query;
         		$res[$currency]['on process'] = 0;
         	}
         }
-        var_dump($res);
+        // var_dump($res);
 
         $series = [];
-        foreach($model as $data){
-        	$series[] = [
-        		$data['status'],
-        		floatval($data['total'])
-        	];
+        foreach($res as $k => $data){
+        	foreach($data as $i => $value){
+        		$series[$k][] = [
+	        		$i,
+	        		floatval($value)
+	        	];
+        	}
         }
+        var_dump($series);
 
         $dataToRender['series'] = $series;
         $dataToRender['res'] = $res;

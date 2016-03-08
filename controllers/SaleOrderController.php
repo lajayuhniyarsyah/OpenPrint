@@ -1415,7 +1415,7 @@ query;
 		// var_dump($series);
 
 		$queryGroup = <<<query
-SELECT DISTINCT(id), name FROM group_sales WHERE is_main_group = true ORDER BY name ASC
+SELECT DISTINCT(id), name FROM group_sales WHERE is_main_group = true AND parent_id IS NULL ORDER BY name ASC
 query;
 		$modelGroup = $connection->createCommand($queryGroup)->queryAll();
 		// var_dump($modelGroup);

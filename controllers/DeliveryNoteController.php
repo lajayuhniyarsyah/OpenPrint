@@ -761,17 +761,56 @@ GROUP BY EXTRACT(YEAR FROM dn_kpi.create_date),EXTRACT(MONTH FROM dn_kpi.create_
 query;
 		
 		$connection = Yii::$app->db;
-        $res = $connection->createCommand($query)->queryAll();
+        $model = $connection->createCommand($query)->queryAll();
 
         $dataToRender['dataProvider'] = new \yii\data\ArrayDataProvider([
-            'allModels'=>$res,
+            'allModels'=>$model,
             'pagination'=>[
                 'pageSize'=>-1
             ]
-
         ]);
 
+        $series = [];
+        $categories = [];
+        $data = [];
+
+        foreach($model as $key => $value){
+            $categories[] = $value['bulan_create'];
+            $data[$value['tahun_create']][$value['bulan_create']] = [
+                'reached'=>$value['tercapai_persen'],
+                'notreached'=>$value['tdk_tercapai_persen']
+            ];
+        }
+        // var_dump($data);
+
+        $a = 0;
+        foreach ($data as $i => $d) {
+            $series[$a] = [
+                'name'=>'Tercapai',
+                'data'=>[]          
+            ];
+
+            $res = ['reached'=>[],'notreached'=>[]];
+            foreach ($d as $bln) {
+                $res['reached'][] = floatval($bln['reached']);
+                $res['notreached'][] = floatval($bln['notreached']);
+            }
+
+            $series[$a]['data'] = $res['reached'];
+            $a++;
+
+            $series[$a] = [
+                'name'=>'Tidak Tercapai',
+                'data'=>[]          
+            ];
+
+            $series[$a]['data'] = $res['notreached'];
+        }
+        // var_dump($data);
+
         $dataToRender['tahun_create'] = $tahun_create;
+        $dataToRender['series'] = $series;
+        $dataToRender['categories'] = $categories;
 
 		return $this->render('year_summary_kpi',$dataToRender);
 	}

@@ -4,6 +4,7 @@ use kartik\grid\GridView;
 use kartik\export\ExportMenu;
 use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Dropdown;
+use miloschuman\highcharts\Highcharts;
 ?>
 
 <h3 class="page-header">
@@ -58,3 +59,26 @@ use yii\bootstrap\Dropdown;
 		],	
 	]
 ])?>
+
+<?php
+echo Highcharts::widget([
+	'scripts' => [
+		'highcharts-more',   // enables supplementary chart types (gauge, arearange, columnrange, etc.)
+		'modules/exporting', // adds Exporting button/menu to chart
+		// 'themes/grid'        // applies global 'grid' theme to all charts
+	],
+	'options' => [
+		'chart' => ['type' => 'column'],
+		'title' => ['text' => 'Year Summary KPI'],
+		'xAxis' => [
+			'categories' => $categories,
+			'title' => ['text' => 'Bulan']
+		],
+		'yAxis' => [
+			'title' => ['text' => 'Value Dalam Persen']
+		],
+		'series' => $series,
+
+	],
+]);
+?>

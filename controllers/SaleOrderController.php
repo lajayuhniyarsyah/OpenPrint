@@ -1238,14 +1238,6 @@ query;
 			$where['group'] = $dataToRender['saleOrder']['group'];
 		}
 
-		/*if($group == 'All group' || $group == ''){
-			$group = 'All group';
-			// settype($group_query, 'integer');
-			$group_query = 0;
-		}else{
-			$group_query = $group;
-		}*/
-
 		$query = <<<query
 SELECT
 	gs.name as group_name,
@@ -1393,28 +1385,6 @@ query;
 				'po'=>$value['order']
 			];
 		}
-		/*$contoh = [
-			[
-				'name' => 'PO-G1',
-				'data' => [5, 3, 4, 7, 2, 1],
-				'stack' => 'PO'
-			],
-			[
-				'name' => 'PO-G2',
-				'data' => [2, 3, 3, 1, 2, 1],
-				'stack' => 'PO'
-			],
-			[
-				'name' => 'Inv-G1',
-				'data' => [2, 3, 3, 1, 2, 1],
-				'stack' => 'Inv'
-			],
-			[
-				'name' => 'INv-G2',
-				'data' => [7, 3, 1, 4, 6, 1],
-				'stack' => 'Inv'
-			]
-		];*/
 		// var_dump($data);
 
 		$a = 0;
@@ -1442,7 +1412,6 @@ query;
 
 			$series[$a]['data'] = $res['inv'];
 		}
-
 		// var_dump($series);
 
 		$queryGroup = <<<query
@@ -1451,8 +1420,18 @@ query;
 		$modelGroup = $connection->createCommand($queryGroup)->queryAll();
 		// var_dump($modelGroup);
 
+		// untuk group link active dropdown
+		$link = <<<query
+SELECT name FROM group_sales WHERE is_main_group = true AND id = '$group'
+query;
+		$modelLink = $connection->createCommand($link)->queryAll();
+		foreach ($modelLink as $dataLink) {
+			$group_link = $dataLink['name'];
+		}
+		
 		$dataToRender['year'] = $year;
 		$dataToRender['group_active'] = $group;
+		$dataToRender['group_link'] = $group_link;
 		$dataToRender['series'] = $series;
 		$dataToRender['categories'] = $categories;
 		$dataToRender['modelGroup'] = $modelGroup;

@@ -9,8 +9,8 @@ use miloschuman\highcharts\Highcharts;
 
 <h3 class="page-header">
 	<span class="page-header">Sales Amount Status: </span>
-	<span id="tahunCreateTitle" class="dropdown">Tahun : 
-		<a href="#"  data-toggle="dropdown" class="dropdown-toggle"><?=Html::encode($year)?></a>
+	<span id="tahunCreateTitle" class="dropdown">
+		<a href="#" data-toggle="dropdown" class="dropdown-toggle"><?=Html::encode($year)?></a>
 		<?php
 			$start = 2015;
 			$end = date('Y');
@@ -24,11 +24,10 @@ use miloschuman\highcharts\Highcharts;
 		?>
 	</span>
 	-
-	<span id="groupTitle" class="dropdown">Group : 
-		<a href="#"  data-toggle="dropdown" class="dropdown-toggle"><?=Html::encode($group_active)?></a>
+	<span id="groupTitle" class="dropdown">
+		<a href="#" data-toggle="dropdown" class="dropdown-toggle"><?php echo Html::encode($group_link); ?></a>
 		<?php
 			$items = [];
-			// $items[] = ['label'=>'All Group','url'=>['','group'=>'All group']];
 			foreach ($modelGroup as $sales) {
 				$items[] = ['label'=>$sales['name'],'url'=>['','year'=>$year,'group'=>$sales['id']]];
 			}

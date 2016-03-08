@@ -862,4 +862,80 @@ class SiteController extends Controller
     {
         return $this->render('about');
     }
+
+     public function actionRecordbulan(){
+
+        $dataToRender = [];
+        $formModel = new \app\models\ReportYearSummaryProductSalesByCategoryForm;
+        
+        $param = Yii::$app->request->get();
+        
+        
+        if($formModel->load($param)){
+
+        }
+
+        $dataToRender['dataProvider'] = new \yii\data\SqlDataProvider([
+            'sql'=>"select 
+            kategory
+            ,sum(case when doc_month = 1 then total_idr else 0 end) as January
+            ,sum(case when doc_month = 2 then total_idr else 0 end) as February
+            ,sum(case when doc_month = 3 then total_idr else 0 end) as Maret
+            ,sum(case when doc_month = 4 then total_idr else 0 end) as April
+            ,sum(case when doc_month = 5 then total_idr else 0 end) as Mei
+            ,sum(case when doc_month = 6 then total_idr else 0 end) as Juni
+            ,sum(case when doc_month = 7 then total_idr else 0 end) as Juli
+            ,sum(case when doc_month = 8 then total_idr else 0 end) as Agustus
+            ,sum(case when doc_month = 9 then total_idr else 0 end) as September
+            ,sum(case when doc_month = 10 then total_idr else 0 end) as Oktober
+            ,sum(case when doc_month = 11 then total_idr else 0 end) as November
+            ,sum(case when doc_month = 12 then total_idr else 0 end) as Desember
+
+
+            from
+            (SELECT
+                    so.name as No_So 
+                    ,so.date_order
+                    , EXTRACT(MONTH FROM date_order) as doc_month
+                    , sol.name as product
+                    ,prod_cat.name as kategory
+                    , sol.product_uom_qty as qty
+                    , sol.product_uom as Uom
+                    , rc.name as currency
+                    , sol.price_unit as price_unit
+                    , (sol.price_unit * sol.product_uom_qty) AS total
+                    ,(
+                        select rating from res_currency_rate where currency_id = rc.id and name<=so.date_order order by name desc limit 1
+                        
+                    ) as Kurs
+                    
+                    ,((sol.price_unit * sol.product_uom_qty) * (select rating from res_currency_rate where currency_id = rc.id and name<=so.date_order order by name desc limit 1)) as total_idr
+                    
+                FROM sale_order_line AS sol
+                JOIN sale_order so ON so.id = sol.order_id
+                join product_product prod on prod.id = sol.product_id
+                join product_template prod_tem on prod_tem.id = prod.product_tmpl_id
+                join product_category prod_cat on prod_cat.id = prod_tem.categ_id
+                JOIN product_pricelist as ppr ON ppr.id = so.pricelist_id
+                JOIN res_currency AS rc ON rc.id = ppr.currency_id
+                
+                WHERE 
+                    so.state not in ('cancel', 'draft')
+                    AND
+                    EXTRACT(YEAR FROM so.date_order) = :year)
+                    as so_line 
+                    group by kategory  order by kategory",
+            'params'=>[':year'=>$formModel->year]
+        ]);
+
+        // var_dump($sqlDp);
+
+        $dataToRender['year'] = $formModel->year;
+
+        $dataToRender['formModel'] = $formModel;
+
+    // var_dump($dataProvider);
+
+    return $this->render('record_bulan', $dataToRender);
+    }
 }

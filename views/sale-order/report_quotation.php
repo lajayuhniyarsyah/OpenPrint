@@ -47,6 +47,9 @@ use kartik\export\ExportMenu;
 		[
 			'attribute'=>'amount_untaxed',
 			'header'=>'Total TAX',
+			'value'=>function($model){
+				return Yii::$app->numericLib->indoStyle($model['amount_untaxed']);
+			}
 		],
 		[
 			'attribute'=>'quotation_state',

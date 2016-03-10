@@ -1188,6 +1188,8 @@ query;
 		foreach($model as $key => $value){
 			$res[$value['currency']][$value['status']] = $value['total'];
 		}
+		// var_dump($value);
+
 		foreach ($res as $currency => $values) {
 			if(!isset($values['win'])){
 				$res[$currency]['win'] = 0;
@@ -1210,17 +1212,26 @@ query;
 				];
 			}
 		}
-		var_dump($series);
+		// var_dump($series);
 
+		$queryGroup = <<<query
+SELECT DISTINCT(id), initcap(name) AS name FROM group_sales WHERE is_main_group = true AND parent_id IS NULL ORDER BY name ASC
+query;
+		$modelGroup = $connection->createCommand($queryGroup)->queryAll();
+		// var_dump($modelGroup);
+
+		$dataToRender['year'] = $year;
 		$dataToRender['series'] = $series;
 		$dataToRender['res'] = $res;
+		$dataToRender['group_active'] = $group;
+		$dataToRender['modelGroup'] = $modelGroup;
 		
 		return $this->render('detail_summary_quotation',$dataToRender);
 	}
 
 
 	// sales amount status
-	public function actionSalesAmountStatus($year=null,$group=1)
+	public function actionSalesAmountStatus($year=null,$group=null)
 	{
 		if(!$year){
 			$year = date('Y');
@@ -1237,6 +1248,13 @@ query;
 			$where['year'] = $dataToRender['saleOrder']['year'];
 			$where['group'] = $dataToRender['saleOrder']['group'];
 		}
+
+		if($group == 'All' || $group == ''){
+            $group = 'All';
+            $group_query = '%%';
+        } else {
+            $group_query = $group;
+        }
 
 		$query = <<<query
 SELECT
@@ -1299,12 +1317,15 @@ FROM
 
 				join
 					product_pricelist ppr ON ppr.id = so.pricelist_id
+				join 
+					group_sales gs ON gs.id = so.group_id
 
 				where 
-					--EXTRACT(MONTH FROM so.date_order) BETWEEN 1 AND 3
 					EXTRACT(YEAR FROM so.date_order) = '$year'
-					AND so.group_id = '$group'
 					AND so.state not in ('draft','cancel')
+					AND gs.name ILIKE '$group_query'
+					AND gs.is_main_group = true 
+					AND gs.parent_id IS NULL
 			) solog
 
 		) AS so_rated
@@ -1348,12 +1369,14 @@ FROM
 			) AS amount_untaxed_rated
 		FROM account_invoice ai
 
+		JOIN group_sales gs ON gs.id = ai.group_id
 
 		WHERE
 			ai.state not in ('draft','cancel')
-			--AND EXTRACT(MONTH FROM ai.date_invoice) BETWEEN 1 AND 3
 			AND EXTRACT(YEAR FROM ai.date_invoice) = '$year'
-			AND ai.group_id = '$group'
+			AND gs.name ILIKE '$group_query'
+			AND gs.is_main_group = true 
+			AND gs.parent_id IS NULL
 	) ais
 	GROUP BY ais.group_id,ais.year_inv, ais.month_inv
 	ORDER BY ais.group_id, ais.year_inv, ais.month_inv
@@ -1380,20 +1403,22 @@ query;
 
 		foreach($model as $key => $value){
 			// $categories[] = JDMonthName($value['doc_month'], 0);
-			$categories[] = date('F',strtotime('2016-'.$value['doc_month'].'-'.'01'));
+			$categories[$value['doc_month']] = date('F',strtotime('2016-'.$value['doc_month'].'-'.'01'));
 			$data[$value['group_name']][$value['doc_month']] = [
 				'invoice'=>$value['invoice'],
 				'po'=>$value['order']
 			];
 		}
 		// var_dump($data);
+		$categories = array_values($categories);
 
 		$a = 0;
 		foreach($data as $nama => $d){
+			// $res = [];
 			$series[$a] = [
 				'name'=>'PO-'.$nama,
 				'data'=>[],
-				'stack'=>'po'
+				'stack'=>'PO-'.$nama
 			];
 			
 			$res = ['inv'=>[],'po'=>[]];
@@ -1408,10 +1433,11 @@ query;
 			$series[$a] = [
 				'name'=>'INV-'.$nama,
 				'data'=>[],
-				'stack'=>'invoice'
+				'stack'=>'INV-'.$nama
 			];
 
 			$series[$a]['data'] = $res['inv'];
+			$a++;
 		}
 		// var_dump($series);
 
@@ -1422,17 +1448,17 @@ query;
 		// var_dump($modelGroup);
 
 		// untuk group link active dropdown
-		$link = <<<query
-SELECT initcap(name) AS name FROM group_sales WHERE is_main_group = true AND id = '$group'
+		/*$link = <<<query
+SELECT initcap(name) AS name FROM group_sales WHERE is_main_group = true AND name ILIKE '$group'
 query;
 		$modelLink = $connection->createCommand($link)->queryAll();
 		foreach ($modelLink as $dataLink) {
 			$group_link = $dataLink['name'];
-		}
+		}*/
 		
 		$dataToRender['year'] = $year;
 		$dataToRender['group_active'] = $group;
-		$dataToRender['group_link'] = $group_link;
+		// $dataToRender['group_link'] = $group_link;
 		$dataToRender['series'] = $series;
 		$dataToRender['categories'] = $categories;
 		$dataToRender['modelGroup'] = $modelGroup;

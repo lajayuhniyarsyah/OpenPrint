@@ -369,7 +369,7 @@ use yii\helpers\Url;
 										<tr>
 											<td>Site</td>
 											<td>:</td>
-											<td><?php echo $model->customerSite->name; ?></td>
+											<td><?=(isset($model->customerSite->name) ? $model->customerSite->name:null)?></td>
 										</tr>
 									</table>
 									<table class="tablecontent rigthheadtable">

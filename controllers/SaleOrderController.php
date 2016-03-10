@@ -1324,6 +1324,8 @@ FROM
 					EXTRACT(YEAR FROM so.date_order) = '$year'
 					AND so.state not in ('draft','cancel')
 					AND gs.name ILIKE '$group_query'
+					AND gs.is_main_group = true 
+					AND gs.parent_id IS NULL
 			) solog
 
 		) AS so_rated
@@ -1373,6 +1375,8 @@ FROM
 			ai.state not in ('draft','cancel')
 			AND EXTRACT(YEAR FROM ai.date_invoice) = '$year'
 			AND gs.name ILIKE '$group_query'
+			AND gs.is_main_group = true 
+			AND gs.parent_id IS NULL
 	) ais
 	GROUP BY ais.group_id,ais.year_inv, ais.month_inv
 	ORDER BY ais.group_id, ais.year_inv, ais.month_inv

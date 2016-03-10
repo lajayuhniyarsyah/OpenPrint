@@ -29,8 +29,8 @@ use miloschuman\highcharts\Highcharts;
 		<?php
 			$items = [];
 			$items[] = ['label'=>'All','url'=>['','year'=>$year,'group'=>'All']];
-			foreach ($modelGroup as $sales) {
-				$items[] = ['label'=>$sales['name'],'url'=>['','year'=>$year,'group'=>$sales['name']]];
+			foreach ($modelGroup as $groupSales) {
+				$items[] = ['label'=>$groupSales['name'],'url'=>['','year'=>$year,'group'=>$groupSales['name']]];
 			}
 			echo Dropdown::widget([
 				'items' => $items,

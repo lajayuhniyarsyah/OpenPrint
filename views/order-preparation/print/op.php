@@ -278,7 +278,9 @@ use yii\helpers\Url;
 				}
 				// end foreach
 
-				$desc=$value->name.($value->detail ? '<br/>'.$value->detail:"").(count($databatch) ? '<br/>'.implode($databatch):"");
+				$product_name = '['.$value->product->default_code.'] '.$value->product->name_template;
+
+				$desc=$product_name.($value->name ? '<br/>'.$value->name:"").($value->detail ? '<br/>'.$value->detail:"").(count($databatch) ? '<br/>'.implode($databatch):"");
 
 
 				if($value->product->superNotes):
@@ -297,7 +299,7 @@ use yii\helpers\Url;
 				// JIKA ADA EXTRA MAKA TARUH DI ROW BARU
 				if($extra)
 				{
-					$extraDesc=$value->name.($value->detail ? '<br/>'.$value->detail:"").(count($extraDatabatch) ? '<br/>'.implode($extraDatabatch):"");
+					$extraDesc=$product_name.($value->name ? '<br/>'.$value->name:"").($value->detail ? '<br/>'.$value->detail:"").(count($extraDatabatch) ? '<br/>'.implode($extraDatabatch):"");
 					$data2[]=array($no,$value->product_qty.' '.$value->productUom->name,$extraDesc,$value->product->default_code);
 				}
 
@@ -328,7 +330,7 @@ use yii\helpers\Url;
 								<div class="yth">
 									Kepada Yth.<br/>
 									Sdr. Kepala Gudang<br/>
-									Di tempat<br/><br/>
+									Di <?php echo $model->location->name; ?><br/><br/>
 									Harap disiapkan sejumlah barang dibawah ini :
 								</div>
 								<div class="customer">

@@ -9,6 +9,33 @@ use miloschuman\highcharts\Highcharts;
 
 <h3 class="page-header">
 	<span class="page-header">Detail Quotation Report :</span>
+	<span id="tahunCreateTitle" class="dropdown">
+		<a href="#" data-toggle="dropdown" class="dropdown-toggle"><?=Html::encode($year)?></a>
+		<?php
+			$start = 2015;
+			$end = date('Y');
+			$items = [];
+			for($iYear=$start;$iYear<=$end;$iYear++){
+				$items[] = ['label' => $iYear, 'url' => ['','year'=>$iYear,'group'=>$group_active]];
+			}
+			echo Dropdown::widget([
+				'items' => $items,
+			]);
+		?>
+	</span>
+	-
+	<span id="groupTitle" class="dropdown">
+		<a href="#" data-toggle="dropdown" class="dropdown-toggle"><?php echo Html::encode($group_active); ?></a>
+		<?php
+			$items = [];
+			foreach ($modelGroup as $sales) {
+				$items[] = ['label'=>$sales['name'],'url'=>['','year'=>$year,'group'=>$sales['name']]];
+			}
+			echo Dropdown::widget([
+				'items' => $items,
+			]);
+		?>
+	</span>
 </h3>
 
 <?= GridView::widget([
@@ -17,18 +44,24 @@ use miloschuman\highcharts\Highcharts;
 	'columns'=>[
 		'currency',
 		'status',
-		'total',
+		[
+			'attribute' => 'total',
+			'value'=>function($model){
+				return Yii::$app->numericLib->indoStyle($model['total']);
+			}
+		]
 	]
 ])?>
 
 <?php
 foreach($series as $serie):
-
+echo "<div class='col-md-12' style='padding-bottom:15px;'>";
 echo Highcharts::widget([
 	'scripts' => [
 		'highcharts-more',
 		'modules/exporting',
 		'highcharts-3d',
+		'themes/grid'        // applies global 'grid' theme to all charts
 	],
 	'options' => [
 		'chart' => [
@@ -39,6 +72,7 @@ echo Highcharts::widget([
 			]
 		],
 		'title' => ['text' => 'Quotation By Group'],
+		'subtitle' => ['text' => 'On Chart'],
 		'plotOptions' => [
 			'pie' => [
 				'innerSize' => 200,
@@ -67,6 +101,6 @@ echo Highcharts::widget([
         ]]*/
 	],
 ]);
-
+echo "</div>";
 endforeach;
 ?>

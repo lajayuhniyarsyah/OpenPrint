@@ -8,7 +8,7 @@ use miloschuman\highcharts\Highcharts;
 ?>
 
 <h3 class="page-header">
-	<span class="page-header">Sales Amount Status: </span>
+	<span class="page-header">Sales Amount Status : </span>
 	<span id="tahunCreateTitle" class="dropdown">
 		<a href="#" data-toggle="dropdown" class="dropdown-toggle"><?=Html::encode($year)?></a>
 		<?php
@@ -28,7 +28,10 @@ use miloschuman\highcharts\Highcharts;
 		<a href="#" data-toggle="dropdown" class="dropdown-toggle"><?php echo Html::encode($group_link); ?></a>
 		<?php
 			$items = [];
+			// $items[] = ['label'=>'All Groups','url'=>['','group'=>'All Groups']];
 			foreach ($modelGroup as $sales) {
+				echo $sales['id'].',';
+				// $items[] = ['label'=>'All Groups','url'=>['','group'=>'All Groups']];
 				$items[] = ['label'=>$sales['name'],'url'=>['','year'=>$year,'group'=>$sales['id']]];
 			}
 			echo Dropdown::widget([
@@ -45,8 +48,18 @@ use miloschuman\highcharts\Highcharts;
 		'group_name',
 		'doc_year',
 		'doc_month',
-		'order',
-		'invoice'
+		[
+			'attribute'=>'order',
+			'value'=>function($model){
+				return Yii::$app->numericLib->indoStyle($model['order']);
+			}
+		],
+		[
+			'attribute'=>'invoice',
+			'value'=>function($model){
+				return Yii::$app->numericLib->indoStyle($model['invoice']);
+			}
+		],
 	]
 ])?>
 

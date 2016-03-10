@@ -1188,6 +1188,8 @@ query;
 		foreach($model as $key => $value){
 			$res[$value['currency']][$value['status']] = $value['total'];
 		}
+		// var_dump($value);
+
 		foreach ($res as $currency => $values) {
 			if(!isset($values['win'])){
 				$res[$currency]['win'] = 0;
@@ -1210,10 +1212,19 @@ query;
 				];
 			}
 		}
-		var_dump($series);
+		// var_dump($series);
 
+		$queryGroup = <<<query
+SELECT DISTINCT(id), initcap(name) AS name FROM group_sales WHERE is_main_group = true AND parent_id IS NULL ORDER BY name ASC
+query;
+		$modelGroup = $connection->createCommand($queryGroup)->queryAll();
+		// var_dump($modelGroup);
+
+		$dataToRender['year'] = $year;
 		$dataToRender['series'] = $series;
 		$dataToRender['res'] = $res;
+		$dataToRender['group_active'] = $group;
+		$dataToRender['modelGroup'] = $modelGroup;
 		
 		return $this->render('detail_summary_quotation',$dataToRender);
 	}
@@ -1237,6 +1248,13 @@ query;
 			$where['year'] = $dataToRender['saleOrder']['year'];
 			$where['group'] = $dataToRender['saleOrder']['group'];
 		}
+
+		/*if($group == 'All Groups' || $group == ''){
+            $group = 'All Groups';
+            $group_query = '%%';
+        } else {
+            $group_query = $group;
+        }*/
 
 		$query = <<<query
 SELECT
@@ -1303,7 +1321,7 @@ FROM
 				where 
 					--EXTRACT(MONTH FROM so.date_order) BETWEEN 1 AND 3
 					EXTRACT(YEAR FROM so.date_order) = '$year'
-					AND so.group_id = '$group'
+					AND so.group_id IN ($group)
 					AND so.state not in ('draft','cancel')
 			) solog
 
@@ -1353,7 +1371,7 @@ FROM
 			ai.state not in ('draft','cancel')
 			--AND EXTRACT(MONTH FROM ai.date_invoice) BETWEEN 1 AND 3
 			AND EXTRACT(YEAR FROM ai.date_invoice) = '$year'
-			AND ai.group_id = '$group'
+			AND ai.group_id IN ($group)
 	) ais
 	GROUP BY ais.group_id,ais.year_inv, ais.month_inv
 	ORDER BY ais.group_id, ais.year_inv, ais.month_inv
@@ -1422,7 +1440,7 @@ query;
 
 		// untuk group link active dropdown
 		$link = <<<query
-SELECT initcap(name) AS name FROM group_sales WHERE is_main_group = true AND id = '$group'
+SELECT initcap(name) AS name FROM group_sales WHERE is_main_group = true AND id IN($group)
 query;
 		$modelLink = $connection->createCommand($link)->queryAll();
 		foreach ($modelLink as $dataLink) {

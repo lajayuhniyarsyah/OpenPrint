@@ -1397,7 +1397,8 @@ query;
 		$data = [];
 
 		foreach($model as $key => $value){
-			$categories[] = $value['doc_month'];
+			// $categories[] = JDMonthName($value['doc_month'], 0);
+			$categories[] = date('F',strtotime('2016-'.$value['doc_month'].'-'.'01'));
 			$data[$value['group_name']][$value['doc_month']] = [
 				'invoice'=>$value['invoice'],
 				'po'=>$value['order']
@@ -1410,7 +1411,7 @@ query;
 			$series[$a] = [
 				'name'=>'PO-'.$nama,
 				'data'=>[],
-				'stack'=>'group'
+				'stack'=>'po'
 			];
 			
 			$res = ['inv'=>[],'po'=>[]];
@@ -1425,7 +1426,7 @@ query;
 			$series[$a] = [
 				'name'=>'INV-'.$nama,
 				'data'=>[],
-				'stack'=>'group'
+				'stack'=>'invoice'
 			];
 
 			$series[$a]['data'] = $res['inv'];

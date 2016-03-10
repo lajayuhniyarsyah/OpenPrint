@@ -255,6 +255,16 @@ use yii\helpers\Url;
 				$extraDatabatch=[];
 				// var_dump($value->product->superNotes);
 
+				$barangsupplai = '';
+				
+				if ($value->sale_line_id){
+					if($value->sale_line_id<>$value->product_id){
+						$barangsupplai = '<br/>u/ supply barang ['.$value->saleLine->product->default_code.'] '.$value->saleLine->product->name_template;
+					}	
+				}
+				
+
+				echo $barangsupplai;
 				foreach ($value->orderPreparationBatches as $index=>$batch) {
 					if($index<6):
 						if ($batch->exp_date=="")
@@ -280,7 +290,7 @@ use yii\helpers\Url;
 
 				$product_name = '['.$value->product->default_code.'] '.$value->product->name_template;
 
-				$desc=$product_name.($value->name ? '<br/>'.$value->name:"").($value->detail ? '<br/>'.$value->detail:"").(count($databatch) ? '<br/>'.implode($databatch):"");
+				$desc=$product_name.($value->name ? '<br/>'.$value->name:"").($value->detail ? '<br/>'.$value->detail:"").$barangsupplai.(count($databatch) ? '<br/>'.implode($databatch):"");
 
 
 				if($value->product->superNotes):
@@ -299,7 +309,7 @@ use yii\helpers\Url;
 				// JIKA ADA EXTRA MAKA TARUH DI ROW BARU
 				if($extra)
 				{
-					$extraDesc=$product_name.($value->name ? '<br/>'.$value->name:"").($value->detail ? '<br/>'.$value->detail:"").(count($extraDatabatch) ? '<br/>'.implode($extraDatabatch):"");
+					$extraDesc=$product_name.($value->name ? '<br/>'.$value->name:"").($value->detail ? '<br/>'.$value->detail:"").$barangsupplai.(count($extraDatabatch) ? '<br/>'.implode($extraDatabatch):"");
 					$data2[]=array($no,$value->product_qty.' '.$value->productUom->name,$extraDesc,$value->product->default_code);
 				}
 

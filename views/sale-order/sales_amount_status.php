@@ -25,14 +25,12 @@ use miloschuman\highcharts\Highcharts;
 	</span>
 	-
 	<span id="groupTitle" class="dropdown">
-		<a href="#" data-toggle="dropdown" class="dropdown-toggle"><?php echo Html::encode($group_link); ?></a>
+		<a href="#" data-toggle="dropdown" class="dropdown-toggle"><?php echo Html::encode($group_active); ?></a>
 		<?php
 			$items = [];
-			// $items[] = ['label'=>'All Groups','url'=>['','group'=>'All Groups']];
+			$items[] = ['label'=>'All','url'=>['','year'=>$year,'group'=>'All']];
 			foreach ($modelGroup as $sales) {
-				echo $sales['id'].',';
-				// $items[] = ['label'=>'All Groups','url'=>['','group'=>'All Groups']];
-				$items[] = ['label'=>$sales['name'],'url'=>['','year'=>$year,'group'=>$sales['id']]];
+				$items[] = ['label'=>$sales['name'],'url'=>['','year'=>$year,'group'=>$sales['name']]];
 			}
 			echo Dropdown::widget([
 				'items' => $items,
@@ -64,6 +62,7 @@ use miloschuman\highcharts\Highcharts;
 ])?>
 
 <?php
+// var_dump($categories);
 echo Highcharts::widget([
 	'scripts' => [
 		'highcharts-more',

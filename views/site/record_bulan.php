@@ -3,19 +3,9 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
-    $url= Url::to(['site/recordbulan','year']);
+   
 ?>
 
-
-
-
-         <!-- <form action="index.php?r=site/recordbulan" method='get'>
-              Tahun :
-              <input type="hidden" name="r" value="site/recordbulan" />
-              <input type="year" name="year" />
-
-              <input type="submit">
-         </form>    -->
 
 <?php
 $form = ActiveForm::begin([
@@ -24,7 +14,7 @@ $form = ActiveForm::begin([
     'method'=>'get'
 ]);
 ?>
-    <?=Html::input('char','year')?>
+   <!--  <?=Html::input('char','year')?> -->
 
     <?=$form->field($formModel,'year')?>
 
@@ -34,11 +24,6 @@ $form = ActiveForm::begin([
 
 
 <?php ActiveForm::end() ?>
-	<?php 
-		// use yii\grid\GridView;
-
-		// var_dump($dataProvider)
-		?>
 
 
 		 <?= \yii\grid\GridView::widget([

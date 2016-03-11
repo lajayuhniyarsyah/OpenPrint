@@ -863,7 +863,7 @@ class SiteController extends Controller
         return $this->render('about');
     }
 
-     public function actionRecordbulan(){
+     public function actionRecordBulan(){
 
         $dataToRender = [];
         $formModel = new \app\models\ReportYearSummaryProductSalesByCategoryForm;
@@ -877,28 +877,26 @@ class SiteController extends Controller
 
         $dataToRender['dataProvider'] = new \yii\data\SqlDataProvider([
             'sql'=>"select 
-            kategory
-            ,sum(case when doc_month = 1 then total_idr else 0 end) as January
-            ,sum(case when doc_month = 2 then total_idr else 0 end) as February
-            ,sum(case when doc_month = 3 then total_idr else 0 end) as Maret
-            ,sum(case when doc_month = 4 then total_idr else 0 end) as April
-            ,sum(case when doc_month = 5 then total_idr else 0 end) as Mei
-            ,sum(case when doc_month = 6 then total_idr else 0 end) as Juni
-            ,sum(case when doc_month = 7 then total_idr else 0 end) as Juli
-            ,sum(case when doc_month = 8 then total_idr else 0 end) as Agustus
-            ,sum(case when doc_month = 9 then total_idr else 0 end) as September
-            ,sum(case when doc_month = 10 then total_idr else 0 end) as Oktober
-            ,sum(case when doc_month = 11 then total_idr else 0 end) as November
-            ,sum(case when doc_month = 12 then total_idr else 0 end) as Desember
-
-
+            kategori
+            ,sum(case when doc_month = 1 then total_idr else 0 end) as januari
+            ,sum(case when doc_month = 2 then total_idr else 0 end) as februari
+            ,sum(case when doc_month = 3 then total_idr else 0 end) as maret
+            ,sum(case when doc_month = 4 then total_idr else 0 end) as april
+            ,sum(case when doc_month = 5 then total_idr else 0 end) as mei
+            ,sum(case when doc_month = 6 then total_idr else 0 end) as juni
+            ,sum(case when doc_month = 7 then total_idr else 0 end) as juli
+            ,sum(case when doc_month = 8 then total_idr else 0 end) as agustus
+            ,sum(case when doc_month = 9 then total_idr else 0 end) as september
+            ,sum(case when doc_month = 10 then total_idr else 0 end) as oktober
+            ,sum(case when doc_month = 11 then total_idr else 0 end) as november
+            ,sum(case when doc_month = 12 then total_idr else 0 end) as desember
             from
             (SELECT
                     so.name as No_So 
                     ,so.date_order
                     , EXTRACT(MONTH FROM date_order) as doc_month
                     , sol.name as product
-                    ,prod_cat.name as kategory
+                    ,prod_cat.name as kategori
                     , sol.product_uom_qty as qty
                     , sol.product_uom as Uom
                     , rc.name as currency
@@ -924,15 +922,42 @@ class SiteController extends Controller
                     AND
                     EXTRACT(YEAR FROM so.date_order) = :year)
                     as so_line 
-                    group by kategory  order by kategory",
+                    group by kategori order by kategori",
             'params'=>[':year'=>$formModel->year]
         ]);
-
         // var_dump($sqlDp);
 
-        $dataToRender['year'] = $formModel->year;
+        $models = $dataToRender['dataProvider']->getModels();
+        // var_dump($models);
 
+        $series = [];
+
+        foreach ($models as $key => $value) {
+            // var_dump($value);
+            var_dump($key['januari']);
+            $series[] = [
+                'name'=>$value['kategori'],
+                'data'=>[
+                    floatval($value['januari'])
+                    ,floatval($value['februari'])
+                    ,floatval($value['maret'])
+                    ,floatval($value['april'])
+                    ,floatval($value['mei'])
+                    ,floatval($value['juni'])
+                    ,floatval($value['juli'])
+                    ,floatval($value['agustus'])
+                    ,floatval($value['september'])
+                    ,floatval($value['oktober'])
+                    ,floatval($value['november'])
+                    ,floatval($value['desember'])
+                ]          
+            ];
+        }
+        // $kategori = array_values($kategori);
+
+        $dataToRender['year'] = $formModel->year;
         $dataToRender['formModel'] = $formModel;
+        $dataToRender['series'] = $series;
 
     // var_dump($dataProvider);
 

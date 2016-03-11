@@ -805,6 +805,7 @@ query;
             ];
 
             $series[$a]['data'] = $res['notreached'];
+            $a++;
         }
         // var_dump($data);
 

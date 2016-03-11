@@ -934,7 +934,6 @@ class SiteController extends Controller
 
         foreach ($models as $key => $value) {
             // var_dump($value);
-            var_dump($key['januari']);
             $series[] = [
                 'name'=>$value['kategori'],
                 'data'=>[

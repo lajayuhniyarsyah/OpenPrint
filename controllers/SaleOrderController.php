@@ -1176,6 +1176,7 @@ query;
 
 		$connection = Yii::$app->db;
 		$model = $connection->createCommand($query)->queryAll();
+		// var_dump($model);
 
 		$dataToRender['dataProvider'] = new \yii\data\ArrayDataProvider([
 			'allModels'=>$model,
@@ -1188,7 +1189,7 @@ query;
 		foreach($model as $key => $value){
 			$res[$value['currency']][$value['status']] = $value['total'];
 		}
-		var_dump($value);
+		// var_dump($value);
 
 		foreach ($res as $currency => $values) {
 			if(!isset($values['win'])){

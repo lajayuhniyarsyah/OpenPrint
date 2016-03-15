@@ -1176,6 +1176,7 @@ query;
 
 		$connection = Yii::$app->db;
 		$model = $connection->createCommand($query)->queryAll();
+		// var_dump($model);
 
 		$dataToRender['dataProvider'] = new \yii\data\ArrayDataProvider([
 			'allModels'=>$model,

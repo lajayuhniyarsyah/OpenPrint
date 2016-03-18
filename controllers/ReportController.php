@@ -14,7 +14,7 @@ use yii\filters\VerbFilter;
  */
 class ReportController extends Controller
 {
-	 public function actionReportsaldostockbarang 
+	 public function actionReportsaldostockbarang()
 	 {
 	 	$dataTorender = [];
 	 	$formModel= new \app\models\ReportBalanceOfItemStock;

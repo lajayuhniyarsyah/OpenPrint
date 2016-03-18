@@ -963,7 +963,7 @@ class SiteController extends Controller
         return $this->render('record_bulan', $dataToRender);
     }
 
-    public function actionReportSaldo()
+    /*public function actionReportSaldo()
     {
         $dataToRender = [];
         $formModel= new \app\models\ReportBalanceOfItemStock;
@@ -1037,7 +1037,8 @@ class SiteController extends Controller
         // var_dump($dataProvider);
 
         return $this->render('reportsaldo', $dataToRender);
-    }
+    }*/
+
 
     public function actionReportSaldo()
      {

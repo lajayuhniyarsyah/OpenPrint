@@ -269,19 +269,19 @@ use yii\helpers\Url;
 					if($index<6):
 						if ($batch->exp_date=="")
 						{
-							$databatch[]='Batch No : '.$batch->name0->name.' '.$batch->name0->desc.' Qty :'.$batch->qty.' '.$no=$value->productUom->name.'<br/>';
+							$databatch[]='<strong>Batch No : </strong> '.$batch->name0->name.' '.$batch->name0->desc.' <strong>Qty :</strong>'.$batch->qty.' '.$no=$value->productUom->name.'<br/>';
 						}
 						else{
-							$databatch[]='Batch No : '.$batch->name0->name.' '.$batch->name0->desc.' Exp Date : '.$batch->name0->exp_date.' Qty :'.$batch->qty.' '.$no=$value->productUom->name.'<br/>';	
+							$databatch[]='<strong>Batch No : </strong> '.$batch->name0->name.' '.$batch->name0->desc.' <strong>Exp Date : </strong>'.$batch->name0->exp_date.'<strong> Qty :</strong>'.$batch->qty.' '.$no=$value->productUom->name.'<br/>';	
 						}
 					else:
 						$extra = true;
 						if ($batch->exp_date=="")
 						{
-							$extraDatabatch[]='Batch No : '.$batch->name0->name.' '.$batch->name0->desc.' Qty :'.$batch->qty.' '.$no=$value->productUom->name.'<br/>';
+							$extraDatabatch[]='<strong>Batch No : </strong>'.$batch->name0->name.' '.$batch->name0->desc.' <strong>Qty :</strong>'.$batch->qty.' '.$no=$value->productUom->name.'<br/>';
 						}
 						else{
-							$extraDatabatch[]='Batch No : '.$batch->name0->name.' '.$batch->name0->desc.' Exp Date : '.$batch->name0->exp_date.' Qty :'.$batch->qty.' '.$no=$value->productUom->name.'<br/>';	
+							$extraDatabatch[]='<strong>Batch No : </strong> '.$batch->name0->name.' '.$batch->name0->desc.'<strong> Exp Date : </strong>'.$batch->name0->exp_date.'<strong> Qty :</strong>'.$batch->qty.' '.$no=$value->productUom->name.'<br/>';	
 						}
 					endif;
 					

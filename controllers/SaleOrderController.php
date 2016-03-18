@@ -688,58 +688,58 @@ EOQ;
 		return $res;
 	}
 
-    public function actionCustomerlist($search = null, $id = null) 
-    {
-        $out = ['more' => false];
-        if (!is_null($search)) {
-            $command = new Query;
-            $lowerchr=strtolower($search);
-            $command = Yii::$app->db->createCommand("SELECT DISTINCT id, name as text FROM res_partner WHERE lower(name) LIKE '%".$lowerchr."%' AND customer=true AND is_company=true LIMIT 20");
-            $data = $command->queryAll();
-            $out['results'] = array_values($data);
-        }
+	public function actionCustomerlist($search = null, $id = null) 
+	{
+		$out = ['more' => false];
+		if (!is_null($search)) {
+			$command = new Query;
+			$lowerchr=strtolower($search);
+			$command = Yii::$app->db->createCommand("SELECT DISTINCT id, name as text FROM res_partner WHERE lower(name) LIKE '%".$lowerchr."%' AND customer=true AND is_company=true LIMIT 20");
+			$data = $command->queryAll();
+			$out['results'] = array_values($data);
+		}
 
-        elseif ($id > 0) {
+		elseif ($id > 0) {
 
-            $ids=explode(',', $id);
-            foreach ($ids as $value) {
-                $data[] = ['id' => $value, 'text' => ResPartner::find()->where(['id' => $value])->one()->name];
-            }
+			$ids=explode(',', $id);
+			foreach ($ids as $value) {
+				$data[] = ['id' => $value, 'text' => ResPartner::find()->where(['id' => $value])->one()->name];
+			}
 
-            $out['results'] = $data;
-        }
-        else {
-            $out['results'] = ['id' => 0, 'text' => 'No matching records found'];
-        }
+			$out['results'] = $data;
+		}
+		else {
+			$out['results'] = ['id' => 0, 'text' => 'No matching records found!'];
+		}
 
-        echo \yii\helpers\Json::encode($out);
-    }
+		echo \yii\helpers\Json::encode($out);
+	}
 
 
-    public function actionProductlist($search = null, $id = null) 
-    {
-        $out = ['more' => false];
-        if (!is_null($search)) {
-            $query = new Query;
-            $lowerchr=strtolower($search);
-            $command = Yii::$app->db->createCommand("SELECT DISTINCT id, '[' || default_code || '] ' || name_template as text FROM product_product WHERE lower(name_template) LIKE '%".$lowerchr."%' OR lower(default_code) LIKE '%".$lowerchr."%' LIMIT 20");
-            $data = $command->queryAll();
-            $out['results'] = array_values($data);
-        }
-        elseif ($id > 0) {
+	public function actionProductlist($search = null, $id = null) 
+	{
+		$out = ['more' => false];
+		if (!is_null($search)) {
+			$query = new Query;
+			$lowerchr=strtolower($search);
+			$command = Yii::$app->db->createCommand("SELECT DISTINCT id, '[' || default_code || '] ' || name_template as text FROM product_product WHERE lower(name_template) LIKE '%".$lowerchr."%' OR lower(default_code) LIKE '%".$lowerchr."%' LIMIT 20");
+			$data = $command->queryAll();
+			$out['results'] = array_values($data);
+		}
+		elseif ($id > 0) {
 
-            $ids=explode(',', $id);
-            foreach ($ids as $value) {
-                $data[] = ['id' => $value, 'text' => '['.ProductProduct::find()->where(['id' => $value])->one()->default_code.'] '.ProductProduct::find()->where(['id' => $value])->one()->name_template];
-            }
-            
-            $out['results'] = $data;
-        }
-        else {
-            $out['results'] = ['id' => 0, 'text' => 'No matching records found'];
-        }
-        echo Json::encode($out);
-    }
+			$ids=explode(',', $id);
+			foreach ($ids as $value) {
+				$data[] = ['id' => $value, 'text' => '['.ProductProduct::find()->where(['id' => $value])->one()->default_code.'] '.ProductProduct::find()->where(['id' => $value])->one()->name_template];
+			}
+			
+			$out['results'] = $data;
+		}
+		else {
+			$out['results'] = ['id' => 0, 'text' => 'No matching records found'];
+		}
+		echo Json::encode($out);
+	}
 
 
 	public function actionProductcategory($search = null, $id = null) 
@@ -924,7 +924,7 @@ EOQ;
 		}
 		if(isset($params['product']) && $params['product']){
 			 if($params['product']!='0')
-		 	{
+			{
 				$query->andWhere(['sol.product_id'=>explode(',',$params['product'])]); 
 			}
 		}
@@ -947,35 +947,35 @@ EOQ;
 		// }
 
 
-        if(isset($params['state']) && $params['state']){
-            
-            if ($params['state']=="order"){
-                $cekstate = 'confirmed, approved, done';
-                if($params['state']!='0')
-                {
-                    $query->andWhere(['sol.state'=>explode(',', $cekstate)]); 
-                }
+		if(isset($params['state']) && $params['state']){
+			
+			if ($params['state']=="order"){
+				$cekstate = 'confirmed, approved, done';
+				if($params['state']!='0')
+				{
+					$query->andWhere(['sol.state'=>explode(',', $cekstate)]); 
+				}
 
-            }else{
-                if($params['state']!='0')
-                {
-                    $query->andWhere(['sol.state'=>explode(',',$params['state'])]); 
-                }
-            }
-            
+			}else{
+				if($params['state']!='0')
+				{
+					$query->andWhere(['sol.state'=>explode(',',$params['state'])]); 
+				}
+			}
+			
 
-        }else{
-            $query->andWhere(['in', 'sol.state', ['confirmed', 'approved', 'done']]); 
-        }
+		}else{
+			$query->andWhere(['in', 'sol.state', ['confirmed', 'approved', 'done']]); 
+		}
 
-        
+		
 		
 		if(isset($params['date_from']) && $params['date_from']){
 			 if($params['date_from'] !='0')
-			 	{
-			 		$query->andWhere(['>=','so.date_order',$params['date_from']]);
-			 		$query->andWhere(['<=','so.date_order',$params['date_to']]);
-			 	}
+				{
+					$query->andWhere(['>=','so.date_order',$params['date_from']]);
+					$query->andWhere(['<=','so.date_order',$params['date_to']]);
+				}
 		}
 
 		$query->andWhere(['not', ['sol.product_id' => null]]); 
@@ -1032,5 +1032,440 @@ EOQ;
 			return '<div class="alert alert-danger">No data found</div>';
 		}
 	}
+
+	public function actionReportQuotation()
+	{
+		#here report of quotation
+		$searchModel = new SaleOrderSearch();
+		$dataProvider = $searchModel->searchReportQuotation(Yii::$app->request->queryParams);
+
+		//$dataProviderExport = $searchModel->searchReportQuotation(Yii::$app->request->queryParams,0);
+		
+		return $this->render('report_quotation', [
+			'dataProvider' => $dataProvider,
+			'searchModel' => $searchModel,
+			//'dataProviderExport'=>$dataProviderExport,
+		]);
+	}
+
+
+	// group quotation
+	public function actionYearSummaryQuotation($year=null)
+	{
+		if(!$year){
+			$year = date('Y');
+		}
+
+		$dataToRender = [];
+		$where = [
+			'year'=>"%%",
+		];
+		$dataToRender['saleOrder'] = new \app\models\SaleOrder;
+
+		if($dataToRender['saleOrder']->load(Yii::$app->request->post())){
+			$where['year'] = $dataToRender['saleOrder']['year'];
+		}
+
+		$query = <<<query
+SELECT
+	initcap(rfq.group) AS group,
+	COUNT(CASE WHEN status = 'win' THEN status END) AS win
+	, COUNT(CASE WHEN status = 'lost' THEN status END) AS lost
+	, COUNT(CASE WHEN status = 'on process' THEN status END) AS on_process
+FROM
+(
+	SELECT 
+		so.quotation_no AS "no"
+		, so.create_date AS "date"
+		, pp.name AS "currency"
+		, gs.name AS "group"
+		, ru.login AS "sales"
+		, rp.display_name AS "costumer"
+		, so.amount_untaxed AS "total_tax"
+		, CASE
+			WHEN so.quotation_state NOT IN('win','lost')
+			THEN 'on process' ELSE so.quotation_state
+			END AS "status"
+	FROM 
+		sale_order so
+	JOIN 
+		product_pricelist pp ON pp.id = so.pricelist_id
+	LEFT JOIN
+		res_users ru on ru.id = so.user_id
+	JOIN
+		res_partner rp on rp.id = so.partner_id
+	JOIN
+		group_sales gs on gs.id = so.group_id
+	WHERE 
+		EXTRACT(YEAR FROM so.create_date) = '$year'
+) AS rfq 
+GROUP BY rfq.group
+ORDER BY rfq.group
+query;
+
+		$connection = Yii::$app->db;
+		$res = $connection->createCommand($query)->queryAll();
+
+		$dataToRender['dataProvider'] = new \yii\data\ArrayDataProvider([
+			'allModels'=>$res,
+			'pagination'=>[
+				'pageSize'=>-1
+			]
+
+		]);
+
+		$series = [];
+
+		foreach($res as $data){
+			$series[] = [
+				'name'=>$data['group'],
+				'data'=>[floatval($data['win']),floatval($data['lost']),floatval($data['on_process'])]    		
+			];
+		}
+
+		$dataToRender['year'] = $year;
+		$dataToRender['series'] = $series;
+
+		// var_dump($series);
+
+		return $this->render('year_summary_quotation',$dataToRender);
+	}
+
+
+	// detail quotation
+	public function actionDetailSummaryQuotation($year,$group)
+	{
+		$query = <<<query
+SELECT
+	rfq.currency AS currency
+	, rfq.status AS status
+	, SUM(CASE
+		WHEN status = 'win' THEN total_tax 
+		WHEN status = 'lost' THEN total_tax
+		WHEN status = 'on process' THEN total_tax
+	END) AS total
+FROM
+(
+	SELECT 
+		so.quotation_no AS "no"
+		, so.create_date AS "date"
+		, pp.name AS "currency"
+		, gs.name AS "group"
+		, ru.login AS "sales"
+		, rp.display_name AS "costumer"
+		, so.amount_untaxed AS "total_tax"
+		, CASE
+			WHEN so.quotation_state NOT IN('win','lost')
+			THEN 'on process' ELSE so.quotation_state
+			END AS "status"
+	FROM 
+		sale_order so
+	JOIN 
+		product_pricelist pp ON pp.id = so.pricelist_id
+	LEFT JOIN
+		res_users ru on ru.id = so.user_id
+	JOIN
+		res_partner rp on rp.id = so.partner_id
+	JOIN
+		group_sales gs on gs.id = so.group_id
+	WHERE gs.name ILIKE '%$group%' AND EXTRACT(YEAR FROM so.create_date) = '$year'
+) AS rfq 
+GROUP BY rfq.currency, rfq.status
+ORDER BY rfq.currency
+query;
+
+		$connection = Yii::$app->db;
+		$model = $connection->createCommand($query)->queryAll();
+		// var_dump($model);
+
+		$dataToRender['dataProvider'] = new \yii\data\ArrayDataProvider([
+			'allModels'=>$model,
+			'pagination'=>[
+				'pageSize'=>-1
+			]
+		]);
+
+		$res = [];
+		foreach($model as $key => $value){
+			$res[$value['currency']][$value['status']] = $value['total'];
+		}
+		// var_dump($value);
+
+		foreach ($res as $currency => $values) {
+			if(!isset($values['win'])){
+				$res[$currency]['win'] = 0;
+			}
+			if(!isset($values['lost'])){
+				$res[$currency]['lost'] = 0;
+			}
+			if(!isset($values['on process'])){
+				$res[$currency]['on process'] = 0;
+			}
+		}
+		// var_dump($res);
+
+		$series = [];
+		foreach($res as $k => $data){
+			foreach($data as $i => $value){
+				$series[$k][] = [
+					$i,
+					floatval($value)
+				];
+			}
+		}
+		// var_dump($series);
+
+		$queryGroup = <<<query
+SELECT DISTINCT(id), initcap(name) AS name FROM group_sales WHERE is_main_group = true AND parent_id IS NULL ORDER BY name ASC
+query;
+		$modelGroup = $connection->createCommand($queryGroup)->queryAll();
+		// var_dump($modelGroup);
+
+		$dataToRender['year'] = $year;
+		$dataToRender['series'] = $series;
+		$dataToRender['res'] = $res;
+		$dataToRender['group_active'] = $group;
+		$dataToRender['modelGroup'] = $modelGroup;
+		
+		return $this->render('detail_summary_quotation',$dataToRender);
+	}
+
+
+	// sales amount status
+	public function actionSalesAmountStatus($year=null,$group=null)
+	{
+		if(!$year){
+			$year = date('Y');
+		}
+
+		$dataToRender = [];
+		$where = [
+			'year'=>"%%",
+			'group'=>"%%",
+		];
+		$dataToRender['saleOrder'] = new \app\models\SaleOrder;
+
+		if($dataToRender['saleOrder']->load(Yii::$app->request->post())){
+			$where['year'] = $dataToRender['saleOrder']['year'];
+			$where['group'] = $dataToRender['saleOrder']['group'];
+		}
+
+		if($group == 'All' || $group == ''){
+            $group = 'All';
+            $group_query = '%%';
+        } else {
+            $group_query = $group;
+        }
+
+		$query = <<<query
+SELECT
+	initcap(gs.name) as group_name,
+	doc.doc_year,
+	doc.doc_month,
+	SUM(
+		CASE WHEN doc.doc = 'so' THEN doc.untaxed_sum ELSE 0 END
+	) AS order,
+	SUM(
+		CASE WHEN doc.doc = 'inv' THEN doc.untaxed_sum ELSE 0 END
+	) AS invoice
+
+FROM
+(
+
+	(
+	SELECT
+		'so' AS doc,
+		so_rated.group_id AS group_id,
+		so_rated.year_order AS doc_year,
+		so_rated.month_order AS doc_month,
+		SUM(amount_untaxed_rated) AS untaxed_sum
+		
+	FROM
+
+		(
+			SELECT
+				solog.id,
+				solog.month_order,
+				solog.year_order,
+				solog.currency_id,
+				
+				solog.name,
+				solog.amount_untaxed,
+				solog.date_order,
+				solog.group_id,
+				--solog.amount_untaxed_rated,
+				(
+					(SELECT
+						rating
+					FROM
+						res_currency_rate rcr
+					WHERE
+						rcr.currency_id = solog.currency_id
+
+					ORDER BY id desc
+					LIMIT 1) * solog.amount_untaxed
+				) AS amount_untaxed_rated
+
+			FROM(
+				select
+					EXTRACT(MONTH FROM so.date_order) as month_order, 
+					EXTRACT(YEAR FROM so.date_order) as year_order,
+					ppr.currency_id,
+					so.id, so.name, so.group_id, so.amount_untaxed, so.date_order
+				from
+
+					sale_order so
+
+				join
+					product_pricelist ppr ON ppr.id = so.pricelist_id
+				join 
+					group_sales gs ON gs.id = so.group_id
+
+				where 
+					EXTRACT(YEAR FROM so.date_order) = '$year'
+					AND so.state not in ('draft','cancel')
+					AND gs.name ILIKE '$group_query'
+					AND gs.is_main_group = true 
+					AND gs.parent_id IS NULL
+			) solog
+
+		) AS so_rated
+	GROUP BY so_rated.group_id, so_rated.year_order, so_rated.month_order
+	ORDER BY so_rated.group_id,so_rated.year_order, so_rated.month_order
+
+	)
+
+	UNION
+	(
+
+	SELECT
+		'inv' AS doc,
+		ais.group_id AS group_id,
+		ais.year_inv AS doc_year,
+		ais.month_inv AS doc_month,
+		
+		SUM(ais.amount_untaxed_rated) AS untaxed_sum
+
+	FROM 
+	(
+		SELECT 
+			ai.id, 
+			EXTRACT(MONTH FROM ai.date_invoice) as month_inv, 
+			EXTRACT(YEAR FROM ai.date_invoice) as year_inv,
+			ai.group_id,
+			ai.name, 
+			ai.kwitansi,
+			ai.amount_untaxed,
+			ai.currency_id,
+			(
+				(SELECT
+					rating
+				FROM
+					res_currency_rate rcr
+				WHERE
+					rcr.currency_id = ai.currency_id
+
+				ORDER BY id desc
+				LIMIT 1) * ai.amount_untaxed
+			) AS amount_untaxed_rated
+		FROM account_invoice ai
+
+		JOIN group_sales gs ON gs.id = ai.group_id
+
+		WHERE
+			ai.state not in ('draft','cancel')
+			AND EXTRACT(YEAR FROM ai.date_invoice) = '$year'
+			AND gs.name ILIKE '$group_query'
+			AND gs.is_main_group = true 
+			AND gs.parent_id IS NULL
+	) ais
+	GROUP BY ais.group_id,ais.year_inv, ais.month_inv
+	ORDER BY ais.group_id, ais.year_inv, ais.month_inv
+	)
+) AS doc
+LEFT JOIN group_sales gs ON gs.id = doc.group_id
+GROUP BY gs.name, doc.doc_year, doc.doc_month
+ORDER BY gs.name, doc.doc_year, doc.doc_month
+query;
+		
+		$connection = Yii::$app->db;
+		$model = $connection->createCommand($query)->queryAll();
+
+		$dataToRender['dataProvider'] = new \yii\data\ArrayDataProvider([
+			'allModels'=>$model,
+			'pagination'=>[
+				'pageSize'=>-1
+			]
+		]);
+
+		$series = [];
+		$categories = [];
+		$data = [];
+
+		foreach($model as $key => $value){
+			// $categories[] = JDMonthName($value['doc_month'], 0);
+			$categories[$value['doc_month']] = date('F',strtotime('2016-'.$value['doc_month'].'-'.'01'));
+			$data[$value['group_name']][$value['doc_month']] = [
+				'invoice'=>$value['invoice'],
+				'po'=>$value['order']
+			];
+		}
+		// var_dump($data);
+		$categories = array_values($categories);
+
+		$a = 0;
+		foreach($data as $nama => $d){
+			// $res = [];
+			$series[$a] = [
+				'name'=>'PO-'.$nama,
+				'data'=>[],
+				'stack'=>'PO-'.$nama
+			];
+			
+			$res = ['inv'=>[],'po'=>[]];
+			foreach($d as $bln){
+				$res['inv'][] = floatval($bln['invoice']);
+				$res['po'][] = floatval($bln['po']);
+			}
+
+			$series[$a]['data'] = $res['po'];
+			$a++;
+
+			$series[$a] = [
+				'name'=>'INV-'.$nama,
+				'data'=>[],
+				'stack'=>'INV-'.$nama
+			];
+
+			$series[$a]['data'] = $res['inv'];
+			$a++;
+		}
+		// var_dump($series);
+
+		$queryGroup = <<<query
+SELECT DISTINCT(id), initcap(name) AS name FROM group_sales WHERE is_main_group = true AND parent_id IS NULL ORDER BY name ASC
+query;
+		$modelGroup = $connection->createCommand($queryGroup)->queryAll();
+		// var_dump($modelGroup);
+
+		// untuk group link active dropdown
+		/*$link = <<<query
+SELECT initcap(name) AS name FROM group_sales WHERE is_main_group = true AND name ILIKE '$group'
+query;
+		$modelLink = $connection->createCommand($link)->queryAll();
+		foreach ($modelLink as $dataLink) {
+			$group_link = $dataLink['name'];
+		}*/
+		
+		$dataToRender['year'] = $year;
+		$dataToRender['group_active'] = $group;
+		// $dataToRender['group_link'] = $group_link;
+		$dataToRender['series'] = $series;
+		$dataToRender['categories'] = $categories;
+		$dataToRender['modelGroup'] = $modelGroup;
+
+		return $this->render('sales_amount_status',$dataToRender);
+	}
+
 }
 

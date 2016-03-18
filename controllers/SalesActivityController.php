@@ -68,8 +68,12 @@ class SalesActivityController extends Controller
 	 * @param integer $uid instead user_id
 	 * @return mixed
 	 */
-	public function actionViewTimeLine(integer $uid=null,$customer=null,$start=null)
+	public function actionViewTimeLine(integer $uid=null,$customer=null,$start=null,$year=null,$group=null)
 	{
+		if(!$year){
+			$year = date('Y');
+		}
+
 		$salesActivityForm = new SalesActivityForm;
 
 		$charts = ['pie'=>[],'line'=>[]]; #prepared for all chart
@@ -83,7 +87,26 @@ class SalesActivityController extends Controller
 		$salesActivityForm->customer = $customer;
 		$salesActivityForm->date_begin = $start;
 
+		if($group){
+			// jika ada group id
+			// cari user nya
+			$userIds = \app\models\GroupSalesLine::find()->select('name')->where(['kelompok_id'=>$group])->column();
+			// var_dump($users);
+		}
 
+		// untuk filter dropdown by year
+        if($year){
+			$plan->andWhere('EXTRACT(YEAR FROM sales_activity_plan.the_date) = '.$year);
+		}
+
+		// untuk filter dropdown by group
+		$connection = Yii::$app->db;
+		$queryGroup = <<<query
+SELECT DISTINCT(id), initcap(name) AS name FROM group_sales WHERE is_main_group = true AND parent_id IS NULL ORDER BY name ASC
+query;
+		$modelGroup = $connection->createCommand($queryGroup)->queryAll();
+
+		// untuk filter dari form input
 		if ($salesActivityForm->load(Yii::$app->request->get()) && $salesActivityForm->validate())
 		{
 			/*var_dump($salesActivityForm->date_begin);
@@ -95,7 +118,6 @@ class SalesActivityController extends Controller
 				$plan->where('sales_activity_plan.user_id = :uid')
 					->addParams([':uid'=>$uid]);
 				$pieType = 'customer';
-
 			}
 			
 			if($salesActivityForm->customer){
@@ -116,10 +138,17 @@ class SalesActivityController extends Controller
 			}
 			
 		}
-		// if defined start and end date
+
+		// filter user berdasarkan group dropdown
+		if($group){
+			$plan->andWhere(['user_id'=>$userIds]);
+		}
+
+		// if defined start and end date	
 		if($start){
 			$now = false;
 		}
+
 		if($now){
 			$plan->andWhere('sales_activity_plan.the_date <= :now')->addParams([':now'=>date('Y-m-d')]);
 		}
@@ -165,7 +194,16 @@ class SalesActivityController extends Controller
 		
 		$charts['pie'] = $pies;
 		// var_dump($charts);
-		return $this->render('viewTimeLine',['dataProvider'=>$dataProvider,'salesActivityForm'=>$salesActivityForm,'series'=>$series,'charts'=>$charts]);
+
+		return $this->render('viewTimeLine',[
+			'dataProvider'=>$dataProvider,
+			'salesActivityForm'=>$salesActivityForm,
+			'series'=>$series,
+			'charts'=>$charts,
+			'year'=>$year,
+			'group_active'=>$group,
+			'modelGroup'=>$modelGroup
+		]);
 	}
 
 	public function actionProspect(){

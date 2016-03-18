@@ -23,15 +23,18 @@ use Yii;
  * @property integer $partner_id
  * @property string $poc
  * @property string $terms
+ * @property string $pick
+ * @property integer $location_id
  *
- * @property OrderPreparationLine[] $orderPreparationLines
- * @property SaleOrder $sale
- * @property ResPartner $partnerShipping
- * @property StockPicking $picking
- * @property ResPartner $partner
- * @property ResUsers $writeU
- * @property ResUsers $createU
  * @property DeliveryNote[] $deliveryNotes
+ * @property ResPartner $partnerShipping
+ * @property ResPartner $partner
+ * @property ResUsers $createU
+ * @property ResUsers $writeU
+ * @property SaleOrder $sale
+ * @property StockLocation $location
+ * @property StockPicking $picking
+ * @property OrderPreparationLine[] $orderPreparationLines
  * @property ProductBatchLine[] $productBatchLines
  */
 class OrderPreparation extends \yii\db\ActiveRecord
@@ -50,10 +53,10 @@ class OrderPreparation extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['create_uid', 'write_uid', 'partner_shipping_id', 'sale_id', 'picking_id', 'partner_id'], 'integer'],
+            [['create_uid', 'write_uid', 'partner_shipping_id', 'sale_id', 'picking_id', 'partner_id', 'location_id'], 'integer'],
             [['create_date', 'write_date', 'duedate', 'tanggal'], 'safe'],
-            [['name', 'sale_id', 'picking_id'], 'required'],
-            [['note', 'state', 'terms'], 'string'],
+            [['name', 'sale_id', 'location_id'], 'required'],
+            [['note', 'state', 'terms', 'pick'], 'string'],
             [['name', 'poc'], 'string', 'max' => 64]
         ];
     }
@@ -69,34 +72,28 @@ class OrderPreparation extends \yii\db\ActiveRecord
             'create_date' => 'Create Date',
             'write_date' => 'Write Date',
             'write_uid' => 'Write Uid',
-            'name' => 'Reference',
-            'partner_shipping_id' => 'Delivery Address',
-            'sale_id' => 'Sale Order',
-            'duedate' => 'Due Date',
-            'note' => 'Notes',
+            'name' => 'Name',
+            'partner_shipping_id' => 'Partner Shipping ID',
+            'sale_id' => 'Sale ID',
+            'duedate' => 'Duedate',
+            'note' => 'Note',
             'state' => 'State',
-            'tanggal' => 'Date Preparation',
-            'picking_id' => 'Delivery Order',
-            'partner_id' => 'Customer',
-            'poc' => 'Customer Reference',
-            'terms' => 'Terms & Condition',
+            'tanggal' => 'Tanggal',
+            'picking_id' => 'Picking ID',
+            'partner_id' => 'Partner ID',
+            'poc' => 'Poc',
+            'terms' => 'Terms',
+            'pick' => 'Pick',
+            'location_id' => 'Location ID',
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getOrderPreparationLines()
+    public function getDeliveryNotes()
     {
-        return $this->hasMany(OrderPreparationLine::className(), ['preparation_id' => 'id'])->orderBy('no ASC');
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getSale()
-    {
-        return $this->hasOne(SaleOrder::className(), ['id' => 'sale_id']);
+        return $this->hasMany(DeliveryNote::className(), ['prepare_id' => 'id']);
     }
 
     /**
@@ -110,25 +107,9 @@ class OrderPreparation extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getPicking()
-    {
-        return $this->hasOne(StockPicking::className(), ['id' => 'picking_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getPartner()
     {
         return $this->hasOne(ResPartner::className(), ['id' => 'partner_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getWriteU()
-    {
-        return $this->hasOne(ResUsers::className(), ['id' => 'write_uid']);
     }
 
     /**
@@ -142,9 +123,41 @@ class OrderPreparation extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getDeliveryNotes()
+    public function getWriteU()
     {
-        return $this->hasMany(DeliveryNote::className(), ['prepare_id' => 'id']);
+        return $this->hasOne(ResUsers::className(), ['id' => 'write_uid']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSale()
+    {
+        return $this->hasOne(SaleOrder::className(), ['id' => 'sale_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getLocation()
+    {
+        return $this->hasOne(StockLocation::className(), ['id' => 'location_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPicking()
+    {
+        return $this->hasOne(StockPicking::className(), ['id' => 'picking_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOrderPreparationLines()
+    {
+        return $this->hasMany(OrderPreparationLine::className(), ['preparation_id' => 'id']);
     }
 
     /**

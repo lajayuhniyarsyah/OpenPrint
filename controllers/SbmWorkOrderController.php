@@ -120,14 +120,19 @@ class SbmWorkOrderController extends Controller
     }
 
     // action print
-    public function actionPrint($id,$test=0){
+    public function actionPrint($id,$uid=null,$printer=null){
         $this->layout = 'printout';
         
         $model = $this->findModel($id);
 
         // PREPARE LINE DATA FOR PRINT
-        
+        if($uid==100 && !$printer){
+            $printer='novri';
+        }elseif(!$printer){
+            $printer = 'hadi';
+        }
+
         $sets = [];
-        return $this->render('print/print',['model'=>$model]);
+        return $this->render('print/print',['model'=>$model,'uid'=>$uid,'printer'=>$printer]);
     }
 }

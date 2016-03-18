@@ -23,17 +23,23 @@ use Yii;
  * @property string $detail
  * @property integer $prodlot_id
  * @property integer $move_id
+ * @property integer $sale_line_material_id
+ * @property double $product_qty_cek
+ * @property integer $sale_line_id
  *
+ * @property DeliveryNoteLine[] $deliveryNoteLines
+ * @property DeliveryNoteLineMaterial[] $deliveryNoteLineMaterials
+ * @property OrderPreparationBatch[] $orderPreparationBatches
+ * @property OrderPreparation $preparation
+ * @property ProductPackaging $productPackaging
+ * @property ProductProduct $product
+ * @property ProductUom $productUom
+ * @property ResUsers $createU
+ * @property ResUsers $writeU
+ * @property SaleOrderLine $saleLine
+ * @property SaleOrderMaterialLine $saleLineMaterial
  * @property StockMove $move
  * @property StockProductionLot $prodlot
- * @property ProductPackaging $productPackaging
- * @property ProductUom $productUom
- * @property OrderPreparation $preparation
- * @property ProductProduct $product
- * @property ResUsers $writeU
- * @property ResUsers $createU
- * @property DeliveryNoteLine[] $deliveryNoteLines
- * @property OrderPreparationBatch[] $orderPreparationBatches
  */
 class OrderPreparationLine extends \yii\db\ActiveRecord
 {
@@ -51,10 +57,10 @@ class OrderPreparationLine extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['create_uid', 'write_uid', 'preparation_id', 'product_uom', 'product_packaging', 'product_id', 'no', 'prodlot_id', 'move_id'], 'integer'],
+            [['create_uid', 'write_uid', 'preparation_id', 'product_uom', 'product_packaging', 'product_id', 'no', 'prodlot_id', 'move_id', 'sale_line_material_id', 'sale_line_id'], 'integer'],
             [['create_date', 'write_date'], 'safe'],
             [['preparation_id'], 'required'],
-            [['product_qty'], 'number'],
+            [['product_qty', 'product_qty_cek'], 'number'],
             [['name', 'detail'], 'string'],
             [['no_moved0'], 'string', 'max' => 3]
         ];
@@ -71,18 +77,109 @@ class OrderPreparationLine extends \yii\db\ActiveRecord
             'create_date' => 'Create Date',
             'write_date' => 'Write Date',
             'write_uid' => 'Write Uid',
-            'preparation_id' => 'Order Preparation',
-            'product_uom' => 'UoM',
-            'product_qty' => 'Quantity',
-            'product_packaging' => 'Packaging',
-            'product_id' => 'Product',
+            'preparation_id' => 'Preparation ID',
+            'product_uom' => 'Product Uom',
+            'product_qty' => 'Product Qty',
+            'product_packaging' => 'Product Packaging',
+            'product_id' => 'Product ID',
             'name' => 'Name',
-            'no_moved0' => 'No',
+            'no_moved0' => 'No Moved0',
             'no' => 'No',
-            'detail' => 'Detail Product',
-            'prodlot_id' => 'Serial Number',
-            'move_id' => 'Move',
+            'detail' => 'Detail',
+            'prodlot_id' => 'Prodlot ID',
+            'move_id' => 'Move ID',
+            'sale_line_material_id' => 'Sale Line Material ID',
+            'product_qty_cek' => 'Product Qty Cek',
+            'sale_line_id' => 'Sale Line ID',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDeliveryNoteLines()
+    {
+        return $this->hasMany(DeliveryNoteLine::className(), ['op_line_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDeliveryNoteLineMaterials()
+    {
+        return $this->hasMany(DeliveryNoteLineMaterial::className(), ['op_line_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOrderPreparationBatches()
+    {
+        return $this->hasMany(OrderPreparationBatch::className(), ['batch_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPreparation()
+    {
+        return $this->hasOne(OrderPreparation::className(), ['id' => 'preparation_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProductPackaging()
+    {
+        return $this->hasOne(ProductPackaging::className(), ['id' => 'product_packaging']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProduct()
+    {
+        return $this->hasOne(ProductProduct::className(), ['id' => 'product_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProductUom()
+    {
+        return $this->hasOne(ProductUom::className(), ['id' => 'product_uom']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCreateU()
+    {
+        return $this->hasOne(ResUsers::className(), ['id' => 'create_uid']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getWriteU()
+    {
+        return $this->hasOne(ResUsers::className(), ['id' => 'write_uid']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSaleLine()
+    {
+        return $this->hasOne(SaleOrderLine::className(), ['id' => 'sale_line_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSaleLineMaterial()
+    {
+        return $this->hasOne(SaleOrderMaterialLine::className(), ['id' => 'sale_line_material_id']);
     }
 
     /**
@@ -99,69 +196,5 @@ class OrderPreparationLine extends \yii\db\ActiveRecord
     public function getProdlot()
     {
         return $this->hasOne(StockProductionLot::className(), ['id' => 'prodlot_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getProductPackaging()
-    {
-        return $this->hasOne(ProductPackaging::className(), ['id' => 'product_packaging']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getProductUom()
-    {
-        return $this->hasOne(ProductUom::className(), ['id' => 'product_uom']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getPreparation()
-    {
-        return $this->hasOne(OrderPreparation::className(), ['id' => 'preparation_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getProduct()
-    {
-        return $this->hasOne(ProductProduct::className(), ['id' => 'product_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getWriteU()
-    {
-        return $this->hasOne(ResUsers::className(), ['id' => 'write_uid']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getCreateU()
-    {
-        return $this->hasOne(ResUsers::className(), ['id' => 'create_uid']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getDeliveryNoteLines()
-    {
-        return $this->hasMany(DeliveryNoteLine::className(), ['op_line_id' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getOrderPreparationBatches()
-    {
-        return $this->hasMany(OrderPreparationBatch::className(), ['batch_id' => 'id']);
     }
 }

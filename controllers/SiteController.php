@@ -862,4 +862,265 @@ class SiteController extends Controller
     {
         return $this->render('about');
     }
+
+     public function actionRecordBulan(){
+
+        $dataToRender = [];
+        $formModel = new \app\models\ReportYearSummaryProductSalesByCategoryForm;
+        
+        $param = Yii::$app->request->get();
+        
+        
+        if($formModel->load($param)){
+
+        }
+
+        $dataToRender['dataProvider'] = new \yii\data\SqlDataProvider([
+            'sql'=>"select 
+            kategori
+            ,sum(case when doc_month = 1 then total_idr else 0 end) as januari
+            ,sum(case when doc_month = 2 then total_idr else 0 end) as februari
+            ,sum(case when doc_month = 3 then total_idr else 0 end) as maret
+            ,sum(case when doc_month = 4 then total_idr else 0 end) as april
+            ,sum(case when doc_month = 5 then total_idr else 0 end) as mei
+            ,sum(case when doc_month = 6 then total_idr else 0 end) as juni
+            ,sum(case when doc_month = 7 then total_idr else 0 end) as juli
+            ,sum(case when doc_month = 8 then total_idr else 0 end) as agustus
+            ,sum(case when doc_month = 9 then total_idr else 0 end) as september
+            ,sum(case when doc_month = 10 then total_idr else 0 end) as oktober
+            ,sum(case when doc_month = 11 then total_idr else 0 end) as november
+            ,sum(case when doc_month = 12 then total_idr else 0 end) as desember
+            from
+            (SELECT
+                    so.name as No_So 
+                    ,so.date_order
+                    , EXTRACT(MONTH FROM date_order) as doc_month
+                    , sol.name as product
+                    ,prod_cat.name as kategori
+                    , sol.product_uom_qty as qty
+                    , sol.product_uom as Uom
+                    , rc.name as currency
+                    , sol.price_unit as price_unit
+                    , (sol.price_unit * sol.product_uom_qty) AS total
+                    ,(
+                        select rating from res_currency_rate where currency_id = rc.id and name<=so.date_order order by name desc limit 1
+                        
+                    ) as Kurs
+                    
+                    ,((sol.price_unit * sol.product_uom_qty) * (select rating from res_currency_rate where currency_id = rc.id and name<=so.date_order order by name desc limit 1)) as total_idr
+                    
+                FROM sale_order_line AS sol
+                JOIN sale_order so ON so.id = sol.order_id
+                join product_product prod on prod.id = sol.product_id
+                join product_template prod_tem on prod_tem.id = prod.product_tmpl_id
+                join product_category prod_cat on prod_cat.id = prod_tem.categ_id
+                JOIN product_pricelist as ppr ON ppr.id = so.pricelist_id
+                JOIN res_currency AS rc ON rc.id = ppr.currency_id
+                
+                WHERE 
+                    so.state not in ('cancel', 'draft')
+                    AND
+                    EXTRACT(YEAR FROM so.date_order) = :year)
+                    as so_line 
+                    group by kategori order by kategori",
+            'params'=>[':year'=>$formModel->year]
+        ]);
+        // var_dump($sqlDp);
+
+        $models = $dataToRender['dataProvider']->getModels();
+        // var_dump($models);
+
+        $series = [];
+
+        foreach ($models as $key => $value) {
+            // var_dump($value);
+            $series[] = [
+                'name'=>$value['kategori'],
+                'data'=>[
+                    floatval($value['januari'])
+                    ,floatval($value['februari'])
+                    ,floatval($value['maret'])
+                    ,floatval($value['april'])
+                    ,floatval($value['mei'])
+                    ,floatval($value['juni'])
+                    ,floatval($value['juli'])
+                    ,floatval($value['agustus'])
+                    ,floatval($value['september'])
+                    ,floatval($value['oktober'])
+                    ,floatval($value['november'])
+                    ,floatval($value['desember'])
+                ]          
+            ];
+        }
+        // $kategori = array_values($kategori);
+
+        $dataToRender['year'] = $formModel->year;
+        $dataToRender['formModel'] = $formModel;
+        $dataToRender['series'] = $series;
+
+        // var_dump($dataProvider);
+
+        return $this->render('record_bulan', $dataToRender);
+    }
+
+    public function actionReportSaldo()
+    {
+        $dataToRender = [];
+        $formModel= new \app\models\ReportBalanceOfItemStock;
+
+        $param = Yii::$app->request->get();
+
+        if ($formModel->load($param)) 
+        {
+            // do nothing
+        }
+
+        $dataToRender['dataProvider'] = new \yii\data\SqlDataProvider ([
+            'sql'=>"with r_c(id,pn,rf,src,st,pr,uom,srl,slc,dlc,dd,scdd,sts,mst,qty,qty1) as
+                    (
+                    select 
+                             stv.id 
+                            ,stv.name  
+                            ,sp.name 
+                            ,stv.origin 
+                            ,spt.type
+                            ,pp.name_template 
+                            ,po.name 
+                            ,spl.company_id 
+                            ,sls.complete_name 
+                            ,sld.complete_name 
+                            ,stv.date 
+                            ,stv.create_date 
+                            ,stv.state
+                            ,case when sls.complete_name = (select complete_name from stock_location as sl where sl.id = 12) then 'keluar' else 'masuk' end as move_status
+                            ,case when sls.complete_name = (select complete_name from stock_location as sl where sl.id = 12) then -(stv.product_qty) else stv.product_qty end
+                            ,sum(stv.product_qty) 
+
+                    from 
+                    stock_move as stv
+                    JOIN stock_picking sp ON sp.id = stv.picking_id
+                    JOIN stock_picking spt ON spt.id = stv.picking_id
+                    JOIN product_product pp ON pp.id = stv.product_id
+                    JOIN product_uom po ON po.id = stv.product_uom
+                    JOIN stock_production_lot spl on spl.id = stv.prodlot_id
+                    JOIN stock_location sls on sls.id = stv.location_id
+                    JOIN stock_location sld on sld.id = stv.location_dest_id
+
+                    where stv.state in('done') and pp.name_template = :product or sls.complete_name = :warelct or sld.complete_name = :warelct group by stv.id,sp.id,spt.id,pp.id,po.id,spl.id,sls.id,sld.id order by date
+                    )
+
+                    SELECT
+
+                     pn as product_name
+                    ,rf as referensi
+                    ,src as source
+                    ,st as shipping_type
+                    ,pr as product
+                    ,uom as unit_of_measure
+                    ,srl as serial
+                    ,slc as source_location
+                    ,dlc as destination_location
+                    ,dd as date
+                    ,scdd as schedule_date
+                    ,sts as status
+                    ,mst as move_status
+                    ,qty as quantity
+                    ,sum(qty) over (order by id asc) as saldo
+                    from r_c",
+                    'params'=>[':product'=>$formModel->product,':warelct'=>$formModel->warelct],
+        ]);
+
+        $dataToRender[':product'] = $formModel->product;
+        $dataToRender[':warelct'] = $formModel->warelct;
+        $dataToRender['formModel'] = $formModel;
+
+        // var_dump($dataProvider);
+
+        return $this->render('reportsaldo', $dataToRender);
+    }
+
+    public function actionReportSaldo()
+     {
+        $dataToRender = [];
+        $formModel= new \app\models\ReportBalanceOfItemStock;
+
+        $param = Yii::$app->request->get();
+
+        if ($formModel->load($param)) 
+        {
+
+        }
+
+        $dataToRender['dataProvider'] = new \yii\data\SqlDataProvider ([
+            'sql'=>"with r_c(id,pn,rf,src,st,pr,uom,srl,slc,dlc,dd,scdd,sts,mst,qty) as
+                    (select 
+                         stv.id 
+                        ,stv.name  
+                        ,sp.name 
+                        ,stv.origin 
+                        ,sp.type
+                        ,pp.name_template 
+                        ,po.name 
+                        ,spl.company_id 
+                        ,sls.complete_name 
+                        ,sld.complete_name 
+                        ,stv.date 
+                        ,stv.create_date 
+                        ,stv.state
+                        ,case when sls.complete_name = (select complete_name from stock_location as sl where sl.id = :warelct) then 'keluar' else 'masuk' end as move_status
+                        ,case when sls.complete_name = (select complete_name from stock_location as sl where sl.id = :warelct) then -(stv.product_qty) else stv.product_qty end
+
+
+
+                    from 
+                        stock_move as stv
+                    LEFT JOIN stock_picking sp ON sp.id = stv.picking_id
+                    JOIN product_product pp ON pp.id = stv.product_id
+                    JOIN product_uom po ON po.id = stv.product_uom
+
+                    JOIN stock_location sls on sls.id = stv.location_id
+                    JOIN stock_location sld on sld.id = stv.location_dest_id
+                    LEFT JOIN stock_production_lot spl on spl.id = stv.prodlot_id
+
+                    where stv.state in('done') 
+                        and stv.product_id = :product_id
+                        AND(
+                            stv.location_id=:warelct
+                            OR stv.location_dest_id=:warelct
+                        )
+                    order by date
+                    )
+
+                    SELECT
+
+                     pn as product_name
+                    ,rf as referensi
+                    ,src as source
+                    ,st as shipping_type
+                    ,pr as product
+                    ,uom as unit_of_measure
+                    ,srl as serial
+                    ,slc as source_location
+                    ,dlc as destination_location
+                    ,dd as date
+                    ,scdd as schedule_date
+                    ,sts as status
+                    ,mst as move_status
+                    ,qty as quantity
+                    ,sum(qty) over (order by dd asc) as saldo
+                    from r_c",
+                    'params'=>[':product_id'=>$formModel->product_id,':warelct'=>$formModel->warelct],
+                    'pagination'=>false
+                    ]);
+
+             $dataToRender[':product_id'] = $formModel->product_id;
+             $dataToRender[':warelct'] = $formModel->warelct;
+
+             $dataToRender['formModel'] = $formModel;
+
+
+    // var_dump($dataProvider);
+
+             return $this->render('reportsaldo', $dataToRender);
+     }
 }

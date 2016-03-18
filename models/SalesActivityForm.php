@@ -22,7 +22,7 @@ class SalesActivityForm extends Model
         return [
             // name, email, subject and body are required
             // [['sales', 'customer'], 'required'],
-            [['sales', 'customer','date_begin'], 'safe'],
+            [['sales', 'customer', 'date_begin'], 'safe'],
             [['sales', 'customer'],'number','integerOnly'=>true,]
             // email has to be a valid email address
             // ['email', 'email'],

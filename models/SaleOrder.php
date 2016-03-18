@@ -86,6 +86,7 @@ use Yii;
  * @property ResUsers $createU
  * @property StockPicking[] $stockPickings
  * @property SaleOrderLine[] $saleOrderLines
+ * @property SaleOrderRevisionHistories[] $saleOrderRevisionHistories
  * @property SaleLineRel[] $saleLineRels
  * @property MrpProduction[] $mrpProductions
  * @property OrderPreparation[] $orderPreparations
@@ -153,7 +154,7 @@ use Yii;
 class SaleOrder extends \yii\db\ActiveRecord
 {
 
-    public $sales_man;
+    public $sales_man, $revisi;
 
     private static $state_aliases = [
         'draft'=>'Draft',
@@ -214,15 +215,15 @@ class SaleOrder extends \yii\db\ActiveRecord
             'shop_id' => 'Shop ID',
             'client_order_ref' => 'Client Order Reference',
             'date_order' => 'Date Order',
-            'partner_id' => 'Partner ID',
+            'partner_id' => 'Costumer',
             'note' => 'Note',
             'fiscal_position' => 'Fiscal Position',
-            'user_id' => 'User ID',
+            'user_id' => 'Sales Man',
             'payment_term' => 'Payment Term',
             'company_id' => 'Company ID',
             'amount_tax' => 'Amount Tax',
             'state' => 'State',
-            'pricelist_id' => 'Pricelist ID',
+            'pricelist_id' => 'Currency',
             'partner_invoice_id' => 'Partner Invoice ID',
             'amount_untaxed' => 'Amount Untaxed',
             'date_confirm' => 'Date Confirm',
@@ -262,7 +263,8 @@ class SaleOrder extends \yii\db\ActiveRecord
             'attention' => 'Attention',
             'internal_notes' => 'Internal Notes',
             'due_date' => 'Due Date',
-            'sales_man'=>'Sales Man',
+            'sales_man' => 'Sales Man',
+            'kelompok_id' => 'Group',
         ];
     }
 
@@ -270,6 +272,9 @@ class SaleOrder extends \yii\db\ActiveRecord
     public function afterFind(){
         if($this->user){
             $this->sales_man=$this->user->partner->name;
+        }
+        if($this->quotation_state != 'win' and 'lost'){
+            $this->quotation_state = 'on process';
         }
     }
     /**
@@ -434,6 +439,14 @@ class SaleOrder extends \yii\db\ActiveRecord
     public function getStockPickings()
     {
         return $this->hasMany(StockPicking::className(), ['sale_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSaleOrderRevisionHistories()
+    {
+        return $this->hasMany(SaleOrderRevisionHistory::className(), ['sale_order_id' => 'id']);
     }
 
     /**
@@ -953,18 +966,11 @@ class SaleOrder extends \yii\db\ActiveRecord
     /**
      * @return Delivery Note
      */
-    
     public function getDeliveryNotes(){
         return $this->hasMany(DeliveryNote::className(),['prepare_id'=>'id'])->via('orderPreparations');
     }
 
-     /**
-     * @return Delivery Note
-     */
-    public function getTermCondition(){
-        return $this->hasMany(TermCondition::className(),['id'=>'order_id'])->via('termConditionRels');
-    }
-      /**
+    /**
      * @return \yii\db\ActiveQuery
      */
     public function getGroup()
@@ -972,6 +978,5 @@ class SaleOrder extends \yii\db\ActiveRecord
         return $this->hasOne(GroupSales::className(), ['id' => 'group_id']);
     }
 
-
-
+    //6e575b3e9f3d9722f8876b42b01a8db27609940f
 }

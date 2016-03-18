@@ -255,30 +255,42 @@ use yii\helpers\Url;
 				$extraDatabatch=[];
 				// var_dump($value->product->superNotes);
 
+				$barangsupplai = '';
+				
+				if ($value->sale_line_id){
+					if($value->saleLine->product_id<>$value->product_id){
+						$barangsupplai = '<br/>u/ supply barang ['.$value->saleLine->product->default_code.'] '.$value->saleLine->product->name_template;
+					}	
+				}
+				
+
+				// echo $barangsupplai;
 				foreach ($value->orderPreparationBatches as $index=>$batch) {
 					if($index<6):
 						if ($batch->exp_date=="")
 						{
-							$databatch[]='Batch No : '.$batch->name0->name.' '.$batch->name0->desc.' Qty :'.$batch->qty.' '.$no=$value->productUom->name.'<br/>';
+							$databatch[]='<strong>Batch No : </strong> '.$batch->name0->name.' '.$batch->name0->desc.' <strong>Qty :</strong>'.$batch->qty.' '.$no=$value->productUom->name.'<br/>';
 						}
 						else{
-							$databatch[]='Batch No : '.$batch->name0->name.' '.$batch->name0->desc.' Exp Date : '.$batch->name0->exp_date.' Qty :'.$batch->qty.' '.$no=$value->productUom->name.'<br/>';	
+							$databatch[]='<strong>Batch No : </strong> '.$batch->name0->name.' '.$batch->name0->desc.' <strong>Exp Date : </strong>'.$batch->name0->exp_date.'<strong> Qty :</strong>'.$batch->qty.' '.$no=$value->productUom->name.'<br/>';	
 						}
 					else:
 						$extra = true;
 						if ($batch->exp_date=="")
 						{
-							$extraDatabatch[]='Batch No : '.$batch->name0->name.' '.$batch->name0->desc.' Qty :'.$batch->qty.' '.$no=$value->productUom->name.'<br/>';
+							$extraDatabatch[]='<strong>Batch No : </strong>'.$batch->name0->name.' '.$batch->name0->desc.' <strong>Qty :</strong>'.$batch->qty.' '.$no=$value->productUom->name.'<br/>';
 						}
 						else{
-							$extraDatabatch[]='Batch No : '.$batch->name0->name.' '.$batch->name0->desc.' Exp Date : '.$batch->name0->exp_date.' Qty :'.$batch->qty.' '.$no=$value->productUom->name.'<br/>';	
+							$extraDatabatch[]='<strong>Batch No : </strong> '.$batch->name0->name.' '.$batch->name0->desc.'<strong> Exp Date : </strong>'.$batch->name0->exp_date.'<strong> Qty :</strong>'.$batch->qty.' '.$no=$value->productUom->name.'<br/>';	
 						}
 					endif;
 					
 				}
 				// end foreach
 
-				$desc=$value->name.($value->detail ? '<br/>'.$value->detail:"").(count($databatch) ? '<br/>'.implode($databatch):"");
+				$product_name = '['.$value->product->default_code.'] '.$value->product->name_template;
+
+				$desc=$product_name.($value->name ? '<br/>'.$value->name:"").($value->detail ? '<br/>'.$value->detail:"").$barangsupplai.(count($databatch) ? '<br/>'.implode($databatch):"");
 
 
 				if($value->product->superNotes):
@@ -297,7 +309,7 @@ use yii\helpers\Url;
 				// JIKA ADA EXTRA MAKA TARUH DI ROW BARU
 				if($extra)
 				{
-					$extraDesc=$value->name.($value->detail ? '<br/>'.$value->detail:"").(count($extraDatabatch) ? '<br/>'.implode($extraDatabatch):"");
+					$extraDesc=$product_name.($value->name ? '<br/>'.$value->name:"").($value->detail ? '<br/>'.$value->detail:"").$barangsupplai.(count($extraDatabatch) ? '<br/>'.implode($extraDatabatch):"");
 					$data2[]=array($no,$value->product_qty.' '.$value->productUom->name,$extraDesc,$value->product->default_code);
 				}
 
@@ -328,7 +340,7 @@ use yii\helpers\Url;
 								<div class="yth">
 									Kepada Yth.<br/>
 									Sdr. Kepala Gudang<br/>
-									Di tempat<br/><br/>
+									Di <?php echo $model->location->name; ?><br/><br/>
 									Harap disiapkan sejumlah barang dibawah ini :
 								</div>
 								<div class="customer">

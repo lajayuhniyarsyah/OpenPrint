@@ -199,7 +199,7 @@ class DeliveryNote extends \yii\db\ActiveRecord
     }
 
     public function getStockPicking0(){
-        return $this->hasOne(StockPicking::className(),['id'=>'partner_id']);
+        return $this->hasOne(StockPicking::className(),['note_id'=>'id']);
     }
 
     public function countSelisihHari(){
@@ -232,7 +232,6 @@ class DeliveryNote extends \yii\db\ActiveRecord
         $this->selisih_hari = $res;
     }
 
-
     public function setStatus(){
         //tercapai jika diff <= 7 hari
         // tidak tercapai jika > 7 hari
@@ -245,7 +244,6 @@ class DeliveryNote extends \yii\db\ActiveRecord
         }
         
     }
-
 
     public function afterFind(){
 

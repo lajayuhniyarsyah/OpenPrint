@@ -785,7 +785,7 @@ class AccountInvoice extends \yii\db\ActiveRecord
 		$invoice['total']['subtotalMainCurr']           = floor($invoice['total']['subtotalMainCurr']);
 		$invoice['total']['discountSubtotal']           = round($invoice['total']['discountSubtotal'],2);
 
-		$invoice['total']['discountSubtotalMainCurr']   = floor($invoice['total']['discountSubtotalMainCurr']);
+		$invoice['total']['discountSubtotalMainCurr']   = round($invoice['total']['discountSubtotalMainCurr']);
 		$invoice['total']['amountUntaxed']              = round($invoice['total']['amountUntaxed'],2);
 		// echo $invTotalTmp['amountUntaxedMainCurr'].'<br/>';
 		$invoice['total']['amountUntaxedMainCurr']      = floor($invoice['total']['amountUntaxedMainCurr']);

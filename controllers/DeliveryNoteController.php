@@ -309,10 +309,10 @@ class DeliveryNoteController extends Controller
                 }else{
                     $res[$no]['name'] = $l['name2'];
                 }
-                
             }else{
+                $prod = ProductProduct::findOne($l['product_id']);
 
-                $res[$no]['name'] = $l['name'];
+                $res[$no]['name'] = '['.$prod['default_code'].'] ' .$prod['name_template'].'<br/>'.$l['name'];
             }
             if (isset($l['note_line_material'])){
 
@@ -320,9 +320,12 @@ class DeliveryNoteController extends Controller
 
                     foreach ($l['note_line_material'] as $line_material) {
                         if ($l['product_id'] <> $line_material['product_id']){
-                            $res[$no]['name'].='<br/>Consist Of : <ul style="margin:0;">';
                             $modelprod = ProductProduct::findOne($line_material['product_id']);
                             $uom = ProductUom::findOne($line_material['product_uom']);
+
+
+                            $res[$no]['name'].='<br/>Consist Of : <ul style="margin:0;">';
+                            
 
                             $printSp_note = '';
                             foreach ($modelprod->superNoteProductRels as $spnotes){

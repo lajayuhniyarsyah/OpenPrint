@@ -16,6 +16,8 @@ use yii\filters\VerbFilter;
 
 use yii\db\Query;
 
+use yii\helpers\Json;
+
 class ServiceController extends Controller{
 	public function behaviors()
 	{
@@ -65,7 +67,7 @@ class ServiceController extends Controller{
 		else {
 			$out['results'] = ['id' => 0, 'text' => 'No matching records found'];
 		}
-		echo \yii\helpers\Json::encode($out);
+		echo Json::encode($out);
 	}
 
 	public function actionSearchCurrency($search=null,$id=null){
@@ -88,7 +90,7 @@ class ServiceController extends Controller{
 		else {
 			$out['results'] = ['id' => 0, 'text' => 'No matching records found'];
 		}
-		echo \yii\helpers\Json::encode($out);
+		echo Json::encode($out);
 	}
 
 	/**
@@ -118,7 +120,7 @@ class ServiceController extends Controller{
 		else {
 			$out['results'] = ['id' => 0, 'text' => 'No matching records found'];
 		}
-		echo \yii\helpers\Json::encode($out);
+		echo Json::encode($out);
 	}
 
 
@@ -670,6 +672,27 @@ class ServiceController extends Controller{
 
 		return $res;
 	}
+
+
+	public function actionProductList($search = null, $id = null) 
+    {
+        $out = ['more' => false];
+        if (!is_null($search)) {
+            $query = new Query;
+            $lowerchr=strtolower($search);
+            $command = Yii::$app->db->createCommand("SELECT id, CONCAT('[',default_code,'] ',name_template) as text FROM product_product WHERE active=true AND (name_template ILIKE '%".$lowerchr."%' OR default_code ilike '%".$lowerchr."%') LIMIT 20");
+            $data = $command->queryAll();
+            $out['results'] = array_values($data);
+        }
+        elseif ($id > 0) {
+        	$one = \app\models\ProductProduct::findOne($id);
+            $out['results'] = ['id' => $id, 'text' => '['.$one->default_code.'] '.$one->name_template];
+        }
+        else {
+            $out['results'] = ['id' => 0, 'text' => 'No matching records found'];
+        }
+        echo Json::encode($out);
+    }
 
 }
 ?>

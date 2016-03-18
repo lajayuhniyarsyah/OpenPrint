@@ -264,7 +264,7 @@ use yii\helpers\Url;
 				}
 				
 
-				echo $barangsupplai;
+				// echo $barangsupplai;
 				foreach ($value->orderPreparationBatches as $index=>$batch) {
 					if($index<6):
 						if ($batch->exp_date=="")

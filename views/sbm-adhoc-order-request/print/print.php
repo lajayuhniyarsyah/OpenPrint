@@ -240,6 +240,10 @@ use yii\helpers\Url;
 		text-align: justify;
 		margin-left: 10px;
 	}
+	.leftdata li{
+
+		margin-left: 10px !important;
+	}
 	.rightdata{
 		width: 18%;
 		float: right;
@@ -328,12 +332,42 @@ use yii\helpers\Url;
 	<?php 
 		$no=1;
 		foreach ($model->sbmAdhocOrderRequestOutputs as $value){
+
+			if ($value->desc==null){
+				$desc='';
+			}else{
+				$desc = $value->desc;
+			}
+
+			$noData = ' ';
+
 			$data2[]=array(
 				$no,
                 '['.$value->item->default_code.'] '. $value->item->name_template,
-				$value->desc,
+				$desc,
 				$value->qty,
 				$value->uom->name);
+
+			if ($value->sbmAdhocOrderRequestOutputMaterials){
+				$data2[]=array(
+					$noData,
+					$noData,
+					'<strong>Consist Of :</strong>',
+					$noData,
+					$noData,
+				);
+			}
+
+			foreach ($value->sbmAdhocOrderRequestOutputMaterials as $detail) {
+				$data2[]=array(
+					$noData,
+					$noData,
+					'<li>['.$detail->item->default_code.'] '. $detail->item->name_template.'<br/>'.$detail->desc.' <strong>('.$detail->qty.' '.$detail->uom->name.')</strong></li>',
+					$noData,
+					$noData,
+				);
+			}
+
 			$no++;
 		}
 		

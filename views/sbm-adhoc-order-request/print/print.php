@@ -429,7 +429,7 @@ use yii\helpers\Url;
 					</tr>
 					<tr>
 						<td>
-						<?php $maxHeight = '100mm'; ?>
+						<?php $maxHeight = '170mm'; ?>
 							<div class="tdLines" style="height:<?=$maxHeight?>;vertical-align:top;">
 								<div class="contentArea">
 									<table class="headtablepages contentLines">

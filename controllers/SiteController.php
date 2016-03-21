@@ -1053,7 +1053,7 @@ class SiteController extends Controller
         }
 
         $dataToRender['dataProvider'] = new \yii\data\SqlDataProvider ([
-            'sql'=>"with r_c(id,pn,rf,src,st,pr,uom,srl,slc,dlc,dd,scdd,sts,mst,qty) as
+            'sql'=>"with r_c(id,pn,rf,src,st,pr,uom,srl,slc,dlc,dd,scdd,sts,mst,qty,lbm_no,cust_doc_ref,pol_name,dn_name,iml_name,origin,rp_name) as
                     (select 
                          stv.id 
                         ,stv.name  
@@ -1070,26 +1070,35 @@ class SiteController extends Controller
                         ,stv.state
                         ,case when sls.complete_name = (select complete_name from stock_location as sl where sl.id = :warelct) then 'keluar' else 'masuk' end as move_status
                         ,case when sls.complete_name = (select complete_name from stock_location as sl where sl.id = :warelct) then -(stv.product_qty) else stv.product_qty end
+                        ,lbm_no
+                        ,cust_doc_ref
+                        ,pol.name as pol_name
+                        ,dn.name as dn_name
+                        ,iml.name as iml_name
+                        ,stv.origin
+                        ,rp.display_name as rp_name
 
+                        from 
+                            stock_move as stv
+                        LEFT JOIN stock_picking sp ON sp.id = stv.picking_id
+                        JOIN product_product pp ON pp.id = stv.product_id
+                        JOIN product_uom po ON po.id = stv.product_uom
 
+                        JOIN stock_location sls on sls.id = stv.location_id
+                        JOIN stock_location sld on sld.id = stv.location_dest_id
+                        LEFT JOIN stock_production_lot spl on spl.id = stv.prodlot_id
+                        LEFT JOIN purchase_order_line pol on pol.id = stv.purchase_line_id
+                        LEFT JOIN internal_move_line iml on iml.id = stv.internal_move_line_id
+                        LEFT JOIN res_partner rp on rp.id = stv.partner_id
+                        LEFT JOIN delivery_note dn on dn.id = sp.note_id
 
-                    from 
-                        stock_move as stv
-                    LEFT JOIN stock_picking sp ON sp.id = stv.picking_id
-                    JOIN product_product pp ON pp.id = stv.product_id
-                    JOIN product_uom po ON po.id = stv.product_uom
-
-                    JOIN stock_location sls on sls.id = stv.location_id
-                    JOIN stock_location sld on sld.id = stv.location_dest_id
-                    LEFT JOIN stock_production_lot spl on spl.id = stv.prodlot_id
-
-                    where stv.state in('done') 
-                        and stv.product_id = :product_id
-                        AND(
-                            stv.location_id=:warelct
-                            OR stv.location_dest_id=:warelct
-                        )
-                    order by date
+                        where stv.state in('done') 
+                            and stv.product_id = :product_id
+                            AND(
+                                stv.location_id=:warelct
+                                OR stv.location_dest_id=:warelct
+                            )
+                        order by date
                     )
 
                     SELECT
@@ -1109,10 +1118,37 @@ class SiteController extends Controller
                     ,mst as move_status
                     ,qty as quantity
                     ,sum(qty) over (order by dd asc) as saldo
+                    ,lbm_no
+                    ,cust_doc_ref
+                    ,pol_name as purchase_name
+                    ,dn_name as stock_name
+                    ,iml_name as internal_move_name
+                    ,origin
+                    ,rp_name as partner_name
+
                     from r_c",
-                    'params'=>[':product_id'=>$formModel->product_id,':warelct'=>$formModel->warelct],
-                    'pagination'=>false
-                    ]);
+
+                'params'=>[':product_id'=>$formModel->product_id,':warelct'=>$formModel->warelct],
+                'pagination'=>false,
+
+                'sort' => [
+                    'attributes' => [
+                        /*'title' => [
+                            'asc' => ['title' => SORT_ASC],
+                            'desc' => ['title' => SORT_DESC],
+                            'default' => SORT_DESC,
+                            'label' => 'Post Title',
+                        ],
+                        'author' => [
+                            'asc' => ['author' => SORT_ASC],
+                            'desc' => ['author' => SORT_DESC],
+                            'default' => SORT_DESC,
+                            'label' => 'Name',
+                        ],*/
+                        'date'
+                    ],
+                ],
+            ]);
 
              $dataToRender[':product_id'] = $formModel->product_id;
              $dataToRender[':warelct'] = $formModel->warelct;

@@ -1132,9 +1132,8 @@ class SiteController extends Controller
                 'pagination'=>false,
 
                 'sort' => [
-                    'attributes' => [
-                        'date'
-                    ],
+                    'attributes' => ['date'],
+                    'defaultOrder' => ['date'=>SORT_DESC]
                 ],
             ]);
 

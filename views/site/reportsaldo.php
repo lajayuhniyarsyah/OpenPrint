@@ -90,11 +90,11 @@ $form = ActiveForm::begin([
             'saldo',
             'lbm_no',
             'cust_doc_ref',
-            'purchase_name',
-            'stock_name',
-            'internal_move_name',
+            'purchase_order',
+            'delivery_note',
+            'internal_move',
             'origin',
-            'partner_name'
+            'partner'
 
 
             // ['class' => 'yii\grid\ActionColumn'],

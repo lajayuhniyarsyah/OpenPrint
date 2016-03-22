@@ -1053,7 +1053,7 @@ class SiteController extends Controller
         }
 
         $dataToRender['dataProvider'] = new \yii\data\SqlDataProvider ([
-            'sql'=>"with r_c(id,pn,rf,src,st,pr,uom,srl,slc,dlc,dd,scdd,sts,mst,qty,lbm_no,cust_doc_ref,pol_name,dn_name,iml_name,origin,rp_name) as
+            'sql'=>"with r_c(id,pn,rf,src,st,pr,uom,srl,slc,dlc,dd,scdd,sts,mst,qty,lbm_no,cust_doc_ref,po_name,dn_name,im_name,origin,rp_name) as
                     (select 
                          stv.id 
                         ,stv.name  
@@ -1061,7 +1061,7 @@ class SiteController extends Controller
                         ,stv.origin 
                         ,sp.type
                         ,pp.name_template 
-                        ,po.name 
+                        ,pu.name 
                         ,spl.company_id 
                         ,sls.complete_name 
                         ,sld.complete_name 
@@ -1072,24 +1072,24 @@ class SiteController extends Controller
                         ,case when sls.complete_name = (select complete_name from stock_location as sl where sl.id = :warelct) then -(stv.product_qty) else stv.product_qty end
                         ,lbm_no
                         ,cust_doc_ref
-                        ,pol.name as pol_name
+                        ,po.name as po_name
                         ,dn.name as dn_name
-                        ,iml.name as iml_name
+                        ,im.name as im_name
                         ,stv.origin
                         ,rp.display_name as rp_name
 
                         from 
                             stock_move as stv
-                        LEFT JOIN stock_picking sp ON sp.id = stv.picking_id
+                        
                         JOIN product_product pp ON pp.id = stv.product_id
-                        JOIN product_uom po ON po.id = stv.product_uom
-
+                        JOIN product_uom pu ON pu.id = stv.product_uom
                         JOIN stock_location sls on sls.id = stv.location_id
                         JOIN stock_location sld on sld.id = stv.location_dest_id
+                        LEFT JOIN stock_picking sp ON sp.id = stv.picking_id
                         LEFT JOIN stock_production_lot spl on spl.id = stv.prodlot_id
-                        LEFT JOIN purchase_order_line pol on pol.id = stv.purchase_line_id
-                        LEFT JOIN internal_move_line iml on iml.id = stv.internal_move_line_id
-                        LEFT JOIN res_partner rp on rp.id = stv.partner_id
+                        LEFT JOIN purchase_order po on po.id = sp.purchase_id
+                        LEFT JOIN internal_move im on im.id = sp.internal_move_id
+                        LEFT JOIN res_partner rp on rp.id = sp.partner_id
                         LEFT JOIN delivery_note dn on dn.id = sp.note_id
 
                         where stv.state in('done') 
@@ -1098,7 +1098,7 @@ class SiteController extends Controller
                                 stv.location_id=:warelct
                                 OR stv.location_dest_id=:warelct
                             )
-                        order by date
+                        --order by date
                     )
 
                     SELECT
@@ -1120,11 +1120,11 @@ class SiteController extends Controller
                     ,sum(qty) over (order by dd asc) as saldo
                     ,lbm_no
                     ,cust_doc_ref
-                    ,pol_name as purchase_name
-                    ,dn_name as stock_name
-                    ,iml_name as internal_move_name
+                    ,po_name as purchase_order
+                    ,dn_name as delivery_note
+                    ,im_name as internal_move
                     ,origin
-                    ,rp_name as partner_name
+                    ,rp_name as partner
 
                     from r_c",
 
@@ -1133,18 +1133,6 @@ class SiteController extends Controller
 
                 'sort' => [
                     'attributes' => [
-                        /*'title' => [
-                            'asc' => ['title' => SORT_ASC],
-                            'desc' => ['title' => SORT_DESC],
-                            'default' => SORT_DESC,
-                            'label' => 'Post Title',
-                        ],
-                        'author' => [
-                            'asc' => ['author' => SORT_ASC],
-                            'desc' => ['author' => SORT_DESC],
-                            'default' => SORT_DESC,
-                            'label' => 'Name',
-                        ],*/
                         'date'
                     ],
                 ],

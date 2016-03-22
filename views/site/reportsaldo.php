@@ -88,6 +88,13 @@ $form = ActiveForm::begin([
             'move_status',
             'quantity',
             'saldo',
+            'lbm_no',
+            'cust_doc_ref',
+            'purchase_order',
+            'delivery_note',
+            'internal_move',
+            'origin',
+            'partner'
 
 
             // ['class' => 'yii\grid\ActionColumn'],

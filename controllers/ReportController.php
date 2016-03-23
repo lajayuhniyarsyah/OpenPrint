@@ -90,4 +90,11 @@ class ReportController extends Controller
   		 	 return $this->render('reportsaldostockbarang', $dataToRender);
 	 }
 
+
+	 public function actionStockSplitOrder()
+	 {
+	 	$this->layout = false;
+	 	return $this->render('stock_split_order',[]);
+	 }
+
 }

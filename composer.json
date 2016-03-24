@@ -52,7 +52,8 @@
         "kartik-v/yii2-mpdf":"*",
         "miloschuman/yii2-highcharts-widget": "dev-master",
         "warrence/yii2-kartikgii": "dev-master",
-        "kop/yii2-scroll-pager": "dev-master"
+        "kop/yii2-scroll-pager": "dev-master",
+        "phpxmlrpc/phpxmlrpc":"4.0"
     },
     "config": {
         "process-timeout": 1800

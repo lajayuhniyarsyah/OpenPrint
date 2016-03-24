@@ -1147,4 +1147,12 @@ class SiteController extends Controller
 
              return $this->render('reportsaldo', $dataToRender);
      }
+
+
+    public function actionOpenErpConnection(){
+        # write your code here
+        
+        return $this->render('open_erp_connection',[]);
+    }
+
 }

@@ -46,7 +46,10 @@ $config = [
         'db' => require(__DIR__ . '/db.php'),
         'numericLib'=>[
             'class'=>'app\components\NumericLib',
-        ]
+        ],
+        'openERPLib'=>[
+            'class'=>'app\components\OpenERPLib',
+        ],
     ],
     'modules'=>[
         'gridview'=>[

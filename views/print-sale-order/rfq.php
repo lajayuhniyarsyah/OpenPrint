@@ -19,7 +19,7 @@
 		width: 22cm;
 		height: 29.7cm;
 		display: block;
-		
+
 		margin: 0 auto;
 		margin-bottom: 0.5cm;
 		padding: 11px;
@@ -240,7 +240,7 @@
 			var contentElement = jQuery('page#page-'+cursor+' .content');
 			var tinggiContent = contentElement.height();
 
-			console.log(tinggiContent)
+			// console.log(tinggiContent)
 			if (tinggiContent <=400){
 				var isi_table = jQuery('page#page-'+cursor+' .content table');
 				isi_table.append(footerTable);
@@ -263,10 +263,98 @@
 			var contentElement = jQuery('page#page-'+cursor+' .content');
 			var tinggiContent = contentElement.height();
 			var contentfooter= jQuery('page#page-'+cursor+' .footer');
-			console.log(tinggiContent)
+			// console.log(tinggiContent)
 			if (tinggiContent<500){
-				contentfooter.append("<table width='100%'><tr><td width='18%'><b>Term Of Payment</b></td><td width='3%'><b>:</b></td><td><?php if($model->paymentTerm!==null){echo $model->paymentTerm->name;}?></td></tr><tr><td valign='top'><b>Term Condition</b></td><td valign='top'><b>:</b></td><td><?php echo preg_replace('#\R+#','<br/>',$model->internal_notes)?></td></tr><tr><td valign='top'><b>Note</b></td><td valign='top'><b>:</b></td><td><?= preg_replace('#\R+#','<br/>',$model->note)?></td></tr></table><br/><table width='30%'><tr> <td valign='top' style='text-align:center' height='80'>Thank you and best regards</td></tr><tr><td valign='top' style='text-align:center'>"+"<?=$model->user->name ?>"+"</td></tr></table>");
+				
+				contentfooter.append("<table width='100%'><tr><td width='18%'><b>Term Of Payment</b></td><td width='3%'><b>:</b></td><td><?php if($model->paymentTerm!==null){echo $model->paymentTerm->name;}?></td></tr><tr><td valign='top'><b>Term Condition</b></td><td valign='top'><b>:</b></td><td><div id='term_condition-"+cursor+"'></div></tr><tr id='note-"+cursor+"'><td valign='top' ><b>Note</b></td><td valign='top'><b>:</b></td><td id='isi_note-"+cursor+"'></td></tr></table><br/>");
+				
+				// di mulai dari sini pengkondisian untuk mengatur enter term of payment
+				jQuery.each(data[0]['TermCondition'],function(index,value){
+					var contentElement = jQuery('page#page-'+cursor+' .content');
+				
+					var contentfooter= jQuery('page#page-'+cursor+' .footer');
+					var tinggiContentFooter = contentfooter.height()+contentElement.height();
+					if (tinggiContentFooter<850){
+						jQuery("#term_condition-"+cursor).append(value+"<br/>")
+					}
+					else{
+						jQuery("#note-"+cursor).remove()
+						var cursorLama = cursor
+						cursor++
+						jQuery('page#page-'+cursorLama).after(template);
+						jQuery('page:last').attr('id','page-'+cursor);
+						jQuery("page#page-"+cursor+' .content p').remove()
+						jQuery("page#page-"+cursor+' .content table').remove()
+						number = jQuery('page#page-'+cursor+' .number .no');
+						number.append("Page "+cursor)
+						var tinggiContent = contentElement.height();
+						var contentfooter= jQuery('page#page-'+cursor+' .footer');
+						contentfooter.append("<table width='100%'><tr><td valign='top'><b>Term Condition</b></td><td valign='top'><b>:</b></td><td><div id='term_condition-"+cursor+"'></div></tr><tr id='note-"+cursor+"'><td valign='top' ><b>Note</b></td><td valign='top'><b>:</b></td><td id='isi_note-"+cursor+"'></td></tr></table><br/>");
+						jQuery("#term_condition-"+cursor).append(value+"<br/>")
+					}
+				});
+				// di akhiri dari sini pengkondisian untuk mengatur enter term of payment
 
+
+				// di mulai dari sini pengkondisian untuk mengatur enter note
+				jQuery.each(data[0]['Note'],function(index,value){
+					var contentElement = jQuery('page#page-'+cursor+' .content');
+				
+					var contentfooter= jQuery('page#page-'+cursor+' .footer');
+					var tinggiContentFooter = contentfooter.height()+contentElement.height();
+					if (tinggiContentFooter<850){
+						jQuery('#isi_note-'+cursor).append(value+"<br/>")
+					}
+					else{
+
+						
+
+						var cursorLama = cursor
+						cursor++
+
+						jQuery('page#page-'+cursorLama).after(template);
+						jQuery('page:last').attr('id','page-'+cursor);
+						jQuery("page#page-"+cursor+' .content p').remove()
+						jQuery("page#page-"+cursor+' .content table').remove()
+						number = jQuery('page#page-'+cursor+' .number .no');
+						number.append("Page "+cursor)
+						var tinggiContent = contentElement.height();
+						var contentfooter= jQuery('page#page-'+cursor+' .footer');
+						contentfooter.append("<table width='100%'><tr id='note-"+cursor+"'><td valign='top' ><b>Note</b></td><td valign='top'><b>:</b></td><td id='isi_note-"+cursor+"'></td></tr></table><br/>");
+						jQuery("#isi_note-"+cursor).append(value+"<br/>")
+					}
+				});
+				// di akhiri dari sini pengkondisian untuk mengatur enter Note
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			// 	jQuery.each(data[0]['TermCondition'][0],function(index,value){
+			// 	// console.log(value)
+			// 	// var contentElement = jQuery('page#page-'+cursor+' .content');
+			// 	// var tinggiContent = contentElement.height();
+			// 	// var contentfooter= jQuery('page#page-'+cursor+' .footer');
+			// 	// console.log(tinggiContent)
+			// 	jQuery("#term_condition").append(value+'<br/>');
+			// 	// jQuery.each(value.TermCondition,function(index_TermCondition,value_TermCondition){
+			// 	// 		console.log(value_TermCondition,index_TermCondition,index)
+			// 		// jQuery.each(value_TermCondition,function(idx_TermCondition,val_TermCondition){
+			// 		//  jQuery("#term_condition").append(val_TermCondition);
+			// 		//  console.log(val_TermCondition)
+			// 		// });
+				
+			// });
 			}
 			else{
 				var cursorLama = cursor
@@ -278,7 +366,7 @@
 				var contentfooter= jQuery('page#page-'+cursor+' .footer');
 				var isi_table = jQuery('page#page-'+cursor+' .content table');
 				isi_table.remove()
-				contentfooter.append("<table width='100%'><tr><td width='18%'><b>Term Of Payment</b></td><td width='3%'><b>:</b></td><td><?php if($model->paymentTerm!==null){echo $model->paymentTerm->name;}?></td></tr><tr><td valign='top'><b>Term Condition</b></td><td valign='top'><b>:</b></td><td><?php echo preg_replace('#\R+#','<br/>',$model->internal_notes)?></td></tr><tr><td valign='top'><b>Note</b></td><td valign='top'><b>:</b></td><td><?= preg_replace('#\R+#','<br/>',$model->note)?></td></tr></table><br/><table width='30%'><tr> <td valign='top' style='text-align:center' height='80'>Thank you and best regards</td></tr><tr><td valign='top' style='text-align:center'>"+"<?=$model->user->name ?>"+"</td></tr></table>");
+				contentfooter.append("<table width='100%'><tr><td width='18%'><b>Term Of Payment</b></td><td width='3%'><b>:</b></td><td><?php if($model->paymentTerm!==null){echo $model->paymentTerm->name;}?></td></tr><tr><td valign='top'><b>Term Condition</b></td><td valign='top'><b>:</b></td><td><?php echo preg_replace('#\R+#','<br/>',$model->internal_notes)?></td></tr><tr><td valign='top'><b>Note</b></td><td valign='top'><b>:</b></td><td><?= preg_replace('#\R+#','<br/>',$model->note)?></td></tr>");
 
 
 			}
@@ -303,7 +391,8 @@
 					})
 	
 			})
-		
+			var contentfooter= jQuery('page#page-'+cursor+' .footer');
+			contentfooter.append("<table width='30%'><tr> <td valign='top' style='text-align:center' height='80'>Thank you and best regards</td></tr><tr><td valign='top' style='text-align:center'>"+"<?=$model->user->name ?>"+"</td></tr></table>")
 		  jQuery(".number .noTotal").html(" of "+cursor);
 		});
 	</script>

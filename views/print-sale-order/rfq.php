@@ -19,6 +19,7 @@
 		width: 22cm;
 		height: 29.7cm;
 		display: block;
+		
 		margin: 0 auto;
 		margin-bottom: 0.5cm;
 		padding: 11px;

@@ -12,6 +12,8 @@
 	background: #cccccc;
 	}
 
+
+	
 	page[size="A4"] {
 		background: white;
 		width: 22cm;
@@ -61,6 +63,7 @@
 		<div id="dokument">
 			<page size="A4">
 				<div class="header">
+
 					<table width="100%">
 					<td width="50%">
 					<?php 
@@ -82,91 +85,13 @@
 				
 				<center><b>Quotation</b></center>
 			<center><b><?=$model->quotation_no?></b></center>
-			<table width="100%">
-				<td witdh="50%" valign="top">
-					<table width="100%">
-						<tr>
-							<td>To</td>
-							<td>:</td>
-							<td><?=$AttentionName?></td>
-						</tr>
-						<tr valign="top">
-							<td>Company</td>
-							<td>:</td>
-							<td height="54">
-								<?=$model->partner->name?><br/>
-								<?=$model->partner->street?>
-								<?=$model->partner->street2?>
-								<?=$model->partner->city?>
-								<?=$state?>
-								<?=$model->partner->zip?>
-								<?=$country?>
-
-							</td>
-						</tr>
-						<tr>
-							<td>Phone</td>
-							<td>:</td>
-							<td><?= $AttentionPhone?></td>
-						</tr>
-						<tr>
-							<td>Fax</td>
-							<td>:</td>
-							<td><?=$fax ?></td>
-						</tr>
-						<tr>
-							<td>Email</td>
-							<td>:</td>
-							<td><?= $email?></td>
-						</tr>
-					   
 			
-		   
-					</table>
-
-				</td>
-				<td width="50%" valign="top">
-					<table width="100%" >
-						<tr>
-							<td>Date</td>
-							<td>:</td>
-							<td><?=date("d/m/Y", strtotime($model->date_order));?></td>	
-						</tr>
-						<tr>
-							<td>Sales Contact</td>
-							<td>:</td>
-							<td><?=$model->user->name ?></td>
-						</tr>
-						<tr>
-							<td>Phone</td>
-							<td>:</td>
-							<td><?=$model->user->partner->phone?></td>
-						</tr>
-						<tr>
-							<td>Mobile</td>
-							<td>:</td>
-							<td><?=$model->user->partner->mobile?></td>
-						</tr>
-						<tr>
-							<td>Fax</td>
-							<td>:</td>
-							<td><?=$model->user->partner->fax?></td>
-						</tr>
-						<tr>
-							<td>Email</td>
-							<td>:</td>
-							<td><?=$model->user->partner->email?></td>
-						</tr>
-
-					</table>
-				</td>
-			</table>
-			
-			<p contenteditable='true'>We would like to offer our product as your requirement as following :</p>
 			
 	  
 				</div>
+				<div class="contentHeader"></div>
 				<div class="content">
+					<p contenteditable='true'>We would like to offer our product as your requirement as following :</p>	<div class="number" style="position: relative; right: -700px;"><span class="no"></span> <span class = "noTotal"></span></div>
 					<table id="TableSo" width="100%" border='1px' style='border-collapse:collapse;'>
 						<tr><td width='5%''><center><b>No</b></center></td><td width='10%''><center><b>Qty</b></center></td><td width='5%'><center><b>Unit</b></center></td><td width='45%'><center><b>Description</b></center></td><td width='15%'><center><b>Price Unit</b></center></td><td width='20%'><center><b>Price Sub</b></center></td></tr>
 					</table>
@@ -174,6 +99,7 @@
 				<div class="footer">
 					
 				</div>
+			
 			</page>
 		</div>
 		
@@ -192,7 +118,12 @@
 			// console.log(data[0].name_product);
 			noMaterial = 1
 			headerElement = jQuery('page#page-'+cursor+' .header');
+			contentheader = jQuery('page#page-'+cursor+' .contentHeader');
+			number = jQuery('page#page-'+cursor+' .number .no');
+			number.append("Page "+cursor)
+			var contentHeader ="<table width='100%'><td witdh='50%' valign='top'><table width='100%'><tr><td>To</td><td>:</td><td>"+'<?=$AttentionName?>'+"</td></tr><tr valign='top'><td>Company</td><td>:</td><td height='54'>"+'<?=$model->partner->name?>'+"<br/>"+'<?=$model->partner->street?><?=$model->partner->street2?><?=$model->partner->city?><?=$state?><?=$model->partner->zip?><?=$country?>'+"</td></tr><tr><td>Phone</td><td>:</td><td>"+'<?= $AttentionPhone?>'+"</td></tr><tr><td>Fax</td><td>:</td><td>"+'<?=$fax ?>'+"</td></tr><tr><td>Email</td><td>:</td><td>"+'<?= $email?>'+"</td></tr></table></td><td width='50%' valign='top'><table width='100%' ><tr><td>Date</td><td>:</td>	<td>"+"<?=date('d/m/Y', strtotime($model->date_order));?>"+"</td></tr><tr><td>Sales Contact</td><td>:</td><td>"+"<?=$model->user->name ?>"+"</td></tr><tr><td>Phone</td><td>:</td><td>"+"<?=$model->user->partner->phone?>"+"</td></tr><tr><td>Mobile</td><td>:</td><td>"+"<?=$model->user->partner->mobile?>"+"</td></tr><tr><td>Fax</td><td>:</td><td>"+"<?=$model->user->partner->fax?>"+"</td></tr><tr><td>Email</td><td>:</td><td>"+"<?=$model->user->partner->email?>"+"</td></tr></table></td></table>"
 
+			contentheader.append(contentHeader)
 			// headerElement.append(headerTable)
 			jQuery.each(data,function(index,value){
 
@@ -216,12 +147,14 @@
 										materialElement.append("Consist of:<ul style='margin-top:0px'><li>"+"["+valueMaterial.partNumber+"]"+valueMaterial.product_id+"("+valueMaterial.qty+" "+valueMaterial.uom+")"+"<br/>"+valueMaterial.descriptionMaterial+"</li></ul>")
 								}
 								else{
+									// jQuery(".number .no").html(cursor)
 									var cursorLama = cursor
 									cursor++
 									jQuery('page#page-'+cursorLama).after(template);
 									jQuery('page:last').attr('id','page-'+cursor);
 									// var headerTable="<table width='100%' border='1px' style='border-collapse:collapse; margin-top:0px;'><tr><td width='5%''><center><b>No</b></center></td><td width='10%''><center><b>Qty</b></center></td><td width='5%'><center><b>Unit</b></center></td><td width='45%'><center><b>Description</b></center></td><td width='15%'><center><b>Price Unit</b></center></td><td width='20%'><center><b>Price Sub</b></center></td></tr></table>"
-									
+									number = jQuery('page#page-'+cursor+' .number .no');
+									number.append("Page "+cursor)
 									var contentElement = jQuery('page#page-'+cursor+' .content');
 									var isi_table = jQuery('page#page-'+cursor+' .content table');
 									isi_table.append("<tr><td valign='top' width='5%'>"+"</td>"+"<td valign='top' width='10%' >"+"</td>"+"<td valign='top' width='5%'>"+"</td>"+"<td contenteditable='True' width=45%>"+"<div class='isi-"+noMaterial+"'></div>"+"</td>"+"<td width='15%' valign='top'>"+"</td>"+"<td width='20%' valign='top'>"+"</td>"+"</tr>")
@@ -247,7 +180,8 @@
 									
 									var contentElement = jQuery('page#page-'+cursor+' .content');
 									var isi_table = jQuery('page#page-'+cursor+' .content table');
-
+									number = jQuery('page#page-'+cursor+' .number .no');
+									number.append("Page "+cursor)
 									isi_table.append("<tr><td valign='top' width='5%'>"+"</td>"+"<td valign='top' width='10%' >"+"</td>"+"<td valign='top' width='5%'>"+"</td>"+"<td contenteditable='True' width=45%>"+"<div class='isi-"+noMaterial+"'></div>"+"</td>"+"<td width='15%' valign='top'>"+"</td>"+"<td width='20%' valign='top'>"+"</td>"+"</tr>")
 									var materialElement = jQuery('page#page-'+cursor+' .content'+' .isi-'+noMaterial);
 									// headerElement = jQuery('page#page-'+cursor+' .header');
@@ -295,6 +229,8 @@
 					// headerElement = jQuery('page#page-'+cursor+' .header');
 					// headerElement.append(headerTable)
 					isi_table.append(elTable);
+					number = jQuery('page#page-'+cursor+' .number .no');
+					number.append("Page "+cursor)
 				
 				}
 
@@ -318,6 +254,8 @@
 					headerElement = jQuery('page#page-'+cursor+' .header');
 					// headerElement.append(headerTable)
 					isi_table.append(footerTable);
+					number = jQuery('page#page-'+cursor+' .number .no');
+					number.append("Page "+cursor)
 
 			}
 			// console.log(tinggiContent)
@@ -334,6 +272,8 @@
 				cursor++
 				jQuery('page#page-'+cursorLama).after(template);
 				jQuery('page:last').attr('id','page-'+cursor);
+				number = jQuery('page#page-'+cursor+' .number .no');
+				number.append("Page "+	cursor)
 				var contentfooter= jQuery('page#page-'+cursor+' .footer');
 				var isi_table = jQuery('page#page-'+cursor+' .content table');
 				isi_table.remove()
@@ -345,7 +285,7 @@
 			jQuery('.buttonAddRowAfter').click(function(){
 				// console.log($(this)[0].parentElement)
 				console.log($(this).closest('tr'))
-				jQuery($(this).closest('tr')).after("<tr><td colspan='6'><div contenteditable='True' ></div><div class='hideOnPrint'><img class='buttonRemove' src='remove.png' alt='remove' height='20px'width='20px' style='cursor:pointer; position: absolute; right:248px'></div></td></tr>")
+				jQuery($(this).closest('tr')).after("<tr><td colspan='6'><div contenteditable='True' >Tambahkan Data di sini</div><div class='hideOnPrint'><img class='buttonRemove' src='remove.png' alt='remove' height='20px'width='20px' style='cursor:pointer; position: absolute; right:248px'></div></td></tr>")
 
 				jQuery('.buttonRemove').click(function(){
 				
@@ -355,13 +295,14 @@
 			jQuery('.buttonAddRowBefore').click(function(){
 				// console.log($(this)[0].parentElement)
 				console.log($(this).closest('tr'))
-				jQuery($(this).closest('tr')).before("<tr><td colspan='6' ><div contenteditable='True' ></div><div class='hideOnPrint'><img class='buttonRemove' src='remove.png' alt='remove' height='20px'width='20px' style='cursor:pointer;position: absolute; right:248px'></div> <div class='hideOnPrint'></td></tr>")
+				jQuery($(this).closest('tr')).before("<tr><td colspan='6' ><div contenteditable='True' >Tambahkan Data di sini</div><div class='hideOnPrint'><img class='buttonRemove' src='remove.png' alt='remove' height='20px'width='20px' style='cursor:pointer;position: absolute; right:248px'></div> <div class='hideOnPrint'></td></tr>")
 				jQuery('.buttonRemove').click(function(){
 					jQuery($(this).closest('tr')).remove()
 					})
 	
 			})
 		
+		  jQuery(".number .noTotal").html(" of "+cursor);
 		});
 	</script>
 

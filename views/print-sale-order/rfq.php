@@ -297,6 +297,7 @@
 				console.log($(this).closest('tr'))
 				jQuery($(this).closest('tr')).before("<tr><td colspan='6' ><div contenteditable='True' >Tambahkan Data di sini</div><div class='hideOnPrint'><img class='buttonRemove' src='remove.png' alt='remove' height='20px'width='20px' style='cursor:pointer;position: absolute; right:248px'></div> <div class='hideOnPrint'></td></tr>")
 				jQuery('.buttonRemove').click(function(){
+					
 					jQuery($(this).closest('tr')).remove()
 					})
 	

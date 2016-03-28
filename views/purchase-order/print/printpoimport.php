@@ -86,7 +86,7 @@ body {margin-top: 0px;margin-left: 0px;}
 .tr8{height: 29px;}
 .tr9{height: 5px;}
 .tr10{height: 22px;}
-.tr11{height: 26px;}
+.tr11{height: 26px; vertical-align: top;}
 .tr12{height: 25px;}
 
 .t0{width: 741px;font: 13px 'Arial';}
@@ -309,22 +309,22 @@ footer{
 			<!-- Footer -->
 			<TR>
 				<TD colspan=2 class="tr11 td7"><P class="p2 ft1">Your Ref</P></TD>
-				<TD colspan=5 class="tr11 td8"><P class="p9 ft1">: <NOBR><?php echo $model->origin; ?></NOBR> </P></TD>
+				<TD colspan=5 class="tr11 td8"><P class="p9 ft1">: <?php echo $model->origin; ?> </P></TD>
 			<TR>
 				<TD colspan=2 class="tr11 td7"><P class="p2 ft1">Note</P></TD>
-				<TD colspan=5 class="tr11 td8"><P class="p9 ft1">: <NOBR><?php echo $model->note; ?></NOBR></P></TD>
+				<TD colspan=5 class="tr11 td8"><P class="p9 ft1">: <?php echo $model->note; ?></P></TD>
 			</TR>
 			<TR>
 				<TD colspan=2 class="tr11 td7"><P class="p2 ft1">Delivery</P></TD>
-				<TD colspan=5 class="tr11 td8"><P class="p9 ft1">: <NOBR><?php echo $model->delivery; ?></NOBR></P></TD>
+				<TD colspan=5 class="tr11 td8"><P class="p9 ft1">: <?php echo $model->delivery; ?></P></TD>
 			</TR>
 			<TR>
 				<TD colspan=2 class="tr11 td7"><P class="p2 ft1">Payment</P></TD>
-				<TD colspan=5 class="tr11 td8"><P class="p9 ft1">: <NOBR><?php echo $model->term_of_payment; ?></NOBR></P></TD>
+				<TD colspan=5 class="tr11 td8"><P class="p9 ft1">: <?php echo $model->term_of_payment; ?></P></TD>
 			</TR>
 			<TR>
 				<TD colspan=2 class="tr11 td7"><P class="p2 ft1">Shipment to</P></TD>
-				<TD colspan=5 class="tr11 td8"><P class="p9 ft1">: <NOBR><?php echo $model->shipment_to; ?></NOBR></P></TD>
+				<TD colspan=5 class="tr11 td8"><P class="p9 ft1">: <?php echo $model->shipment_to; ?></P></TD>
 			</TR>
 
 			<TR>

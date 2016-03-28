@@ -25,17 +25,22 @@ use PhpXmlRpc\Value;
 use PhpXmlRpc\Request;
 use PhpXmlRpc\Client;
 
-class OpenERPLib {
+class OpenERPLib extends Component{
 
-    public $server = "http://10.36.15.13:8069/xmlrpc/";
+    public $server;
     public $database = "";
     public $uid = "";/**  @uid = once user succesful login then this will asign the user id */
     public $username = ""; /*     * * @userid = general name of user which require to login at openerp server */
     public $password = "";/** @password = password require to login at openerp server * */
 
     public function login($username, $password, $database=null, $server=null) {
-        $this->server = $server;
-        $this->database = $database;
+        if($server){
+            $this->server = $server;
+        }
+        if($database){
+            $this->database = $database;
+        }
+
         $this->username = $username;
         $this->password = $password;
 

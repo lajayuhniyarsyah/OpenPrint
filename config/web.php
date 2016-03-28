@@ -49,6 +49,8 @@ $config = [
         ],
         'openERPLib'=>[
             'class'=>'app\components\OpenERPLib',
+            'server'=>"http://10.36.15.13:8069/xmlrpc/",
+            'database'=>'LIVE_2016_01_17'
         ],
     ],
     'modules'=>[

@@ -18,16 +18,10 @@ class PrintOutController extends Controller
 	{
 		$oe = Yii::$app->openERPLib;
 
-		$login = $oe->login("admin","admin","LIVE_2016_01_17","http://10.36.15.13:8069/xmlrpc/");
+		$login = $oe->login("admin","admin");
 		$model = $oe->read([16687],[],"account.invoice");
+		var_dump($model);
 
-
-		
-
-
-
-
-
-		return $this->render('account-invoice/invoice',['model'=>$model]);
+		// return $this->render('account-invoice/invoice',['model'=>$model]);
 	}
 }

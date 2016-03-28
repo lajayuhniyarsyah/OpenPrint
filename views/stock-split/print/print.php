@@ -218,7 +218,7 @@ use yii\helpers\Url;
 
 	.contentLines{
 		border-collapse: collapse;
-		margin-left: 15px;
+		margin-left: 0px;
 		width: 186mm;
 		margin-top: -9px;
 		border-bottom:  1px solid black;
@@ -287,11 +287,15 @@ use yii\helpers\Url;
 
 	.rigthheadtablefooter{
 		float: right;
-		width: 38%;
+		width: 30%;
+	}
+	.centertablefooter{
+		float: left;
+		width: 30%;
 	}
 	.leftheadtablefooter{
 		float: left;
-		width: 32%;
+		width: 30%;
 		/*border-right: 1px solid black;*/
 	}
 	.cus{
@@ -303,6 +307,9 @@ use yii\helpers\Url;
 	}
     .space{
         line-height: 25px;
+    }
+    .contentLines th{
+    	text-transform: uppercase;
     }
 	.dtlcus{
 		font-size: 14px;
@@ -331,40 +338,13 @@ use yii\helpers\Url;
 </style>
 	<?php 
 		$no=1;
-		foreach ($model->sbmAdhocOrderRequestOutputs as $value){
+		foreach ($model->stockSplitItems as $value){
 
-			if ($value->desc==null){
-				$desc='';
-			}else{
-				$desc = $value->desc;
-			}
-
-			$noData = ' ';
-
-			$data2[]=array(
-				$no,
-                '['.$value->item->default_code.'] '. $value->item->name_template,
-				$desc,
-				$value->qty,
-				$value->uom->name);
-
-			if ($value->sbmAdhocOrderRequestOutputMaterials){
+			foreach ($value->stockSplitItems0 as $detail) {
 				$data2[]=array(
-					$noData,
-					$noData,
-					'<strong>Consist Of :</strong>',
-					$noData,
-					$noData,
-				);
-			}
-
-			foreach ($value->sbmAdhocOrderRequestOutputMaterials as $detail) {
-				$data2[]=array(
-					$noData,
-					$noData,
-					'<li>['.$detail->item->default_code.'] '. $detail->item->name_template.'<br/>'.$detail->desc.' <strong>('.$detail->qty.' '.$detail->uom->name.')</strong></li>',
-					$noData,
-					$noData,
+					$no,
+					'[ '.$value->productSplit->itemToSplit->default_code.' ] '.$value->productSplit->itemToSplit->name_template.'<br/><strong>('.$value->qty.' '.$value->uom->name.')</strong>',
+					'[ '.$detail->productSplit0->itemSplitedTo->default_code.' ] '.$detail->productSplit0->itemSplitedTo->name_template.'<br/><strong>('.$detail->qty.' '.$detail->uom->name.')</strong>',
 				);
 			}
 
@@ -380,51 +360,37 @@ use yii\helpers\Url;
 				<table style="width:100%;" cellpadding="3" cellspacing="2">
 					<tr>
 						<td>
-							<div class="judul"><strong><h5><center>ADHOC ORDER REQUEST</center></h5></strong></div>
-							<div class="judul"><strong><h6><center>#<?php echo $model->name; ?></center></h6></strong></div>
+							<div class="judul"><strong><h5><center><u>STOCK SPLIT ORDER</u></center></h5></strong></div>
+							<div class="judul"><strong><h6><center>#<?php echo $model->stock_split_no; ?></center></h6></strong></div>
 							<div class="logo">
 								<img style="width:115px; float:left" src="<?= Url::base() ?>/img/logo.png">
-								<div style="clear:both;"></div>
-								<div class="dataiso">SBM-F-PCH-02/01<br/>
-									12/01/30</div>
 							</div>
-							<div class="headtable" style="line-height:22px;">
-									<table class="tablecontent leftheadtable">
-										<tr>
-											<td>Customer</td>
-											<td>:</td>
-											<td><?php echo $model->customer->name; ?></td>
-										</tr>
-										<tr>
-											<td>Attention</td>
-											<td>:</td>
-											<td><?php echo $model->attention->name; ?></td>
-										</tr>
-										<tr>
-											<td>Site</td>
-											<td>:</td>
-											<td><?=(isset($model->customerSite->name) ? $model->customerSite->name:null)?></td>
-										</tr>
-									</table>
-									<table class="tablecontent rigthheadtable">
-										<tr>
-											<td>Due Date</td>
-											<td>:</td>
-											<td><?php echo Yii::$app->formatter->asDatetime($model->due_date, "php:d-M-Y")?></td>
-										</tr>
-										<tr>
-											<td>Sales Man / Group</td>
-											<td>:</td>
-											<td><?php echo $model->salesMan->name; ?> / <span style="text-transform: uppercase;"><?php echo $model->saleGroup->name; ?> </span></td>
-										</tr>
-										<tr>
-											<td>Term Of Payment</td>
-											<td>:</td>
-											<td><?php echo $model->termOfPayment->name; ?></td>
-										</tr>
-									</table>
-								<div style="clear:both;"></div>
-								</div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<table style="width:50%; float:left">
+								<tr>
+									<td>Warehouse</td><td>:</td><td><?php echo $model->location0->name ?></td>
+								</tr>
+							</table>
+							<table style="width:50%;float:left">
+								<tr>
+									<td>Date</td><td>:</td><td><?php echo Yii::$app->formatter->asDatetime($model->date_order	, "php:d-M-Y") ?></td>
+								</tr>
+							</table>
+							<br/>
+							<br/>
+							<br/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<table>
+								<tr>
+									<td>Order to Split stock Item with Detail :</td>
+								</tr>
+							</table>
 						</td>
 					</tr>
 					<tr>
@@ -448,13 +414,9 @@ use yii\helpers\Url;
 </div>
 
 <?php
-
-$scope_of_work = preg_replace('#\R+#', '<br/>', str_replace('"','', $model->scope_of_work));
-$term_condition = preg_replace('#\R+#', '<br/>', str_replace('"','', $model->term_condition));
-$notes = preg_replace('#\R+#', '<br/>', str_replace('"','`', $model->notes));
-$sales =$model->salesMan->name;
-
-$footer ='"<tr><td colspan=5><table class=\"contentFooter\"><tr><td><p class=\"judulfooter\">Scope Of Work</p></td></tr><tr><td><p class=\"isi\">'.$scope_of_work.'</p></td></tr><tr><td><p class=\"judulfooter\">Term Condition</p></td></tr><tr><td><p class=\"isi\">'.$term_condition.'</p></td></tr><tr><td><p class=\"judulfooter\">Notes</p></td></tr><tr><td><p class=\"isi\">'.$notes.'</p></td></tr><tr><td><div class=\"leftheadtablefooter\"><span class=\"isi\" style=\"margin-left:-10px;\"><center>Product / Regional Manager</center></span><br/><br/><span class=\"isi\"><center>'.$sales.'</center></span></div><div class=\"rigthheadtablefooter\"><span class=\"isi\"><center>General Manager</center></span><br/><br/><span class=\"isi\"><center>(........................)</center></span></div></td></tr></table></td></tr>"';
+$notes = preg_replace('#\R+#', '<br/>', str_replace('"','', $model->notes));
+$user=$model->createU->name;
+$footer ='"<tr><td colspan=5><table class=\"contentFooter\"><tr><td><p class=\"judulfooter\">Notes :</p></td></tr><tr><td><p class=\"isi\">'.$notes.'</p></td></tr><tr><td><div class=\"leftheadtablefooter\"><span class=\"isi\" style=\"margin-left:-10px;\"><center>Yang Membuat</center></span><br/><br/><span class=\"isi\"><center>'.$user.'</center></span></div><div class=\"centertablefooter\"><span class=\"isi\" style=\"margin-left:-10px;\"><center>Approval</center></span><br/><br/><span class=\"isi\"><center>(SPV/Admin Manager)</center></span></div><div class=\"rigthheadtablefooter\"><span class=\"isi\"><center>Mengetahui</center></span><br/><br/><span class=\"isi\"><center>(Warehouse Manager)</center></span></div></td></tr></table></td></tr>"';
 
 
 $this->registerJs('
@@ -482,7 +444,7 @@ $this->registerJs('
 	function prepareRow(rowNo,data)
 	{
 		console.log(data[0]);
-		return "<tr class=\'cRows rows"+rowNo+"\'><td width=\'30px\' style=\"text-align:center;\">"+data[0]+"</td><td style=\"text-align:left;\" width=\'255px\'>"+data[1]+"</td><td width=\'276px\'><div class=\"leftdata\">"+data[2]+"</div></td><td width=\'60px\' style=\"text-align:center;\"><div class=\"center\">"+data[3]+"</div></td><td style=\"text-align:center;\" width=\'50px\'>"+data[4]+"</td></tr>";
+		return "<tr class=\'cRows rows"+rowNo+"\'><td width=\'30px\' style=\"text-align:center;\">"+data[0]+"</td><td style=\"text-align:left;\" width=\'255px\'>"+data[1]+"</td><td width=\'276px\'><div class=\"leftdata\">"+data[2]+"</div></td></tr>";
 	}
 
 	var rowPage = 0;
@@ -507,11 +469,11 @@ $this->registerJs('
 			jQuery(\'table#lines\'+currPage+\' tr:last\').remove();
 			
 			var pageHeight=jQuery(\'#lines\'+currPage).height();
-			// alert(pageHeight);
+
 			var setLineHeight=439-pageHeight;
 			
-			var resLine1 = "<tr><th width=30px height=25px>No.</th><th width=255px>ITEM / PN</th><th width=276px>Description</th><th width=60px>Qty</th><th width=50px>UNIT</th></tr>";
-			var resLine = "<tr><td style=\"width:30px; height:"+setLineHeight+"px;  text-align:center;\"></td><td style=\"width:255px; text-align:center;\"></td><td style=\"width:276px; text-align:center;\"><div class=\"leftdata\"></div><div class=\"rightdata\"></div></td><td style=\"width:60px; text-align:right;\"><div class=\"leftdata\"></div><div class=\"rightdata\"></div></td><td style=\"width:50px; text-align:center;\"><div class=\"leftdata\"></div><div class=\"rightdata\"></div></td></tr>";
+			var resLine1 = "<tr><th width=30px height=25px>No.</th><th width=255px>Item To Split</th><th width=276px>Splited To</th></tr>";
+			var resLine = "<tr><td style=\"width:30px; height:"+setLineHeight+"px;  text-align:center;\"></td><td style=\"width:255px; text-align:center;\"></td><td style=\"width:276px; text-align:center;\"><div class=\"leftdata\"></div><div class=\"rightdata\"></div></tr>";
 			jQuery(\'#lines\'+currPage+\' tr:first\').before(resLine1);
 			jQuery(\'#lines\'+currPage+\' tr:last\').after(resLine);
 
@@ -543,16 +505,16 @@ $this->registerJs('
 		if(currPage){
 			if (cektable < HeightTable){
 				var footer ='.$footer.';
-				var res1 = "<tr><th width=30px height=25px>No.</th><th width=255px>ITEM / PN</th><th width=89px>DESCRIPTION</th><th width=60px>QTY</th><th width=50px>UNIT</th></tr>";
-				var res = "<tr><td style=\"width:30px; height:"+SetHeight+"px;  text-align:center;\"></td><td style=\"width:255px; text-align:center;\"></td><td style=\"width:89px; text-align:center;\"><div class=\"leftdata\"></div><div class=\"rightdata\"></div></td><td style=\"width:60px; text-align:right;\"><div class=\"leftdata\"></div><div class=\"rightdata\"></div></td><td style=\"width:50px; text-align:center;\"><div class=\"leftdata\"></div><div class=\"rightdata\"></div></td></tr>";
+				var res1 = "<tr><th width=30px height=25px>No.</th><th width=255px>Item To Split</th><th width=89px>Splited To</th></tr>";
+				var res = "<tr><td style=\"width:30px; height:"+SetHeight+"px;  text-align:center;\"></td><td style=\"width:255px; text-align:center;\"></td><td style=\"width:89px; text-align:center;\"><div class=\"leftdata\"></div><div class=\"rightdata\"></div></td></tr>";
 				jQuery(\'#lines\'+currPage+\' tr:first\').before(res1);
 				jQuery(\'#lines\'+currPage+\' tr:last\').after(res);
 				jQuery(\'#lines\'+currPage+\' tr:last\').after(footer);
 				jQuery(\'#page\'+currPage+\' .hideprint\').show();
 			}else{
 				var footer ='.$footer.';
-				var res1 = "<tr><th width=30px height=25px>No.</th><th width=255px>ITEM / PN</th><th width=89px>DESCRIPTION</th><th width=60px>QTY</th><th width=50px>UNIT</th></tr>";
-				var res = "<tr><td style=\"width:30px; height:"+SetHeight+"px;  text-align:center;\"></td><td style=\"width:255px; text-align:center;\"></td><td style=\"width:89px; text-align:center;\"><div class=\"leftdata\"></div><div class=\"rightdata\"></div></td><td style=\"width:60px; text-align:right;\"><div class=\"leftdata\"></div><div class=\"rightdata\"></div></td><td style=\"width:50px; text-align:center;\"><div class=\"leftdata\"></div><div class=\"rightdata\"></div></td></tr>";
+				var res1 = "<tr><th width=30px height=25px>No.</th><th width=255px>Item To Split</th><th width=89px>Splited To</th></tr>";
+				var res = "<tr><td style=\"width:30px; height:"+SetHeight+"px;  text-align:center;\"></td><td style=\"width:255px; text-align:center;\"></td><td style=\"width:89px; text-align:center;\"><div class=\"leftdata\"></div><div class=\"rightdata\"></div></td></tr>";
 				jQuery(\'#lines\'+currPage+\' tr:first\').before(res1);
 				jQuery(\'#lines\'+currPage+\' tr:last\').after(res);
 				jQuery(\'#lines\'+currPage+\' tr:last\').after(footer);

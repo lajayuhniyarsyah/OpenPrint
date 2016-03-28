@@ -91,7 +91,7 @@ class SalesActivityController extends Controller
 			// jika ada group id
 			// cari user nya
 			$userIds = \app\models\GroupSalesLine::find()->select('name')->where(['kelompok_id'=>$group])->column();
-			// var_dump($users);
+			// var_dump($userIds);
 		}
 
 		// untuk filter dropdown by year

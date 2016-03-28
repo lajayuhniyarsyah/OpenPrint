@@ -1053,7 +1053,7 @@ class SiteController extends Controller
         }
 
         $dataToRender['dataProvider'] = new \yii\data\SqlDataProvider ([
-            'sql'=>"with r_c(id,pn,rf,src,st,pr,uom,srl,slc,dlc,dd,scdd,sts,mst,qty) as
+            'sql'=>"with r_c(id,pn,rf,src,st,pr,uom,srl,slc,dlc,dd,scdd,sts,mst,qty,lbm_no,cust_doc_ref,po_name,dn_name,im_name,origin,rp_name) as
                     (select 
                          stv.id 
                         ,stv.name  
@@ -1061,7 +1061,7 @@ class SiteController extends Controller
                         ,stv.origin 
                         ,sp.type
                         ,pp.name_template 
-                        ,po.name 
+                        ,pu.name 
                         ,spl.company_id 
                         ,sls.complete_name 
                         ,sld.complete_name 
@@ -1070,26 +1070,35 @@ class SiteController extends Controller
                         ,stv.state
                         ,case when sls.complete_name = (select complete_name from stock_location as sl where sl.id = :warelct) then 'keluar' else 'masuk' end as move_status
                         ,case when sls.complete_name = (select complete_name from stock_location as sl where sl.id = :warelct) then -(stv.product_qty) else stv.product_qty end
+                        ,lbm_no
+                        ,cust_doc_ref
+                        ,po.name as po_name
+                        ,dn.name as dn_name
+                        ,im.name as im_name
+                        ,stv.origin
+                        ,rp.display_name as rp_name
 
+                        from 
+                            stock_move as stv
+                        
+                        JOIN product_product pp ON pp.id = stv.product_id
+                        JOIN product_uom pu ON pu.id = stv.product_uom
+                        JOIN stock_location sls on sls.id = stv.location_id
+                        JOIN stock_location sld on sld.id = stv.location_dest_id
+                        LEFT JOIN stock_picking sp ON sp.id = stv.picking_id
+                        LEFT JOIN stock_production_lot spl on spl.id = stv.prodlot_id
+                        LEFT JOIN purchase_order po on po.id = sp.purchase_id
+                        LEFT JOIN internal_move im on im.id = sp.internal_move_id
+                        LEFT JOIN res_partner rp on rp.id = sp.partner_id
+                        LEFT JOIN delivery_note dn on dn.id = sp.note_id
 
-
-                    from 
-                        stock_move as stv
-                    LEFT JOIN stock_picking sp ON sp.id = stv.picking_id
-                    JOIN product_product pp ON pp.id = stv.product_id
-                    JOIN product_uom po ON po.id = stv.product_uom
-
-                    JOIN stock_location sls on sls.id = stv.location_id
-                    JOIN stock_location sld on sld.id = stv.location_dest_id
-                    LEFT JOIN stock_production_lot spl on spl.id = stv.prodlot_id
-
-                    where stv.state in('done') 
-                        and stv.product_id = :product_id
-                        AND(
-                            stv.location_id=:warelct
-                            OR stv.location_dest_id=:warelct
-                        )
-                    order by date
+                        where stv.state in('done') 
+                            and stv.product_id = :product_id
+                            AND(
+                                stv.location_id=:warelct
+                                OR stv.location_dest_id=:warelct
+                            )
+                        --order by date
                     )
 
                     SELECT
@@ -1109,10 +1118,24 @@ class SiteController extends Controller
                     ,mst as move_status
                     ,qty as quantity
                     ,sum(qty) over (order by dd asc) as saldo
+                    ,lbm_no
+                    ,cust_doc_ref
+                    ,po_name as purchase_order
+                    ,dn_name as delivery_note
+                    ,im_name as internal_move
+                    ,origin
+                    ,rp_name as partner
+
                     from r_c",
-                    'params'=>[':product_id'=>$formModel->product_id,':warelct'=>$formModel->warelct],
-                    'pagination'=>false
-                    ]);
+
+                'params'=>[':product_id'=>$formModel->product_id,':warelct'=>$formModel->warelct],
+                'pagination'=>false,
+
+                'sort' => [
+                    'attributes' => ['date'],
+                    'defaultOrder' => ['date'=>SORT_DESC]
+                ],
+            ]);
 
              $dataToRender[':product_id'] = $formModel->product_id;
              $dataToRender[':warelct'] = $formModel->warelct;
@@ -1124,4 +1147,12 @@ class SiteController extends Controller
 
              return $this->render('reportsaldo', $dataToRender);
      }
+
+
+    public function actionOpenErpConnection(){
+        # write your code here
+        
+        return $this->render('open_erp_connection',[]);
+    }
+
 }

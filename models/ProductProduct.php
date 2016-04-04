@@ -74,6 +74,8 @@ use Yii;
  * @property ResUsers $writeU
  * @property ProductTemplate $productTmpl
  * @property ResUsers $createU
+ * @property ProductSplit[] $productSplits
+ * @property ProductSplit[] $productSplits0
  * @property RentRequisitionDetail[] $rentRequisitionDetails
  * @property SaleAdvancePaymentInv[] $saleAdvancePaymentInvs
  * @property SaleOrderLine[] $saleOrderLines
@@ -446,6 +448,22 @@ class ProductProduct extends \yii\db\ActiveRecord
     public function getWriteU()
     {
         return $this->hasOne(ResUsers::className(), ['id' => 'write_uid']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProductSplits()
+    {
+        return $this->hasMany(ProductSplit::className(), ['item_splited_to' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProductSplits0()
+    {
+        return $this->hasMany(ProductSplit::className(), ['item_to_split' => 'id']);
     }
 
     /**

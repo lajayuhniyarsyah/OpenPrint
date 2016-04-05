@@ -33,6 +33,13 @@ use yii\helpers\Url;
 			height: 283mm;
 		}';
 	}
+	elseif($uid==101){
+// 		if user sri perlu naik spacer footer nya agar tidak ke halaman 2 tanda tangannya
+		echo '.sign {
+		    margin-top: 30mm !important;
+		    text-decoration: underline;
+		}';
+	}
 	?>
 	.pager
 	{

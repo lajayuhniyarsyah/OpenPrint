@@ -335,7 +335,23 @@ $this->registerJs('
 	});
 
 	var noteRow = prepareNoteRow(currRow,{name:\'PO No : \'+poNo, comment:invData.comment});
-    jQuery(\'table#lines\'+currPage+\' tr:last\').after(noteRow);
+	jQuery(\'table#lines\'+currPage+\' tr:last\').after(noteRow);
+	if(jQuery(\'#tdLine\'+currPage).height()>maxLinesHeight){
+		jQuery(\'table#lines\'+currPage+\' tr:last\').remove();
+		// add new page container
+		jQuery(\'div#page\'+currPage).after(tmpl);
+		currPage = currPage+1;
+		console.log(currPage);
+		jQuery(\'div.pages:last\').attr(\'id\',\'page\'+currPage);
+		jQuery(\'table.contentLines:last\').attr(\'id\',\'lines\'+currPage);
+		jQuery(\'table tr td.tdLines:last\').attr(\'id\',\'tdLine\'+currPage);
+		jQuery(\'table#lines\'+currPage).html(noteRow);
+	}else{
+		jQuery(\'table#lines\'+currPage+\' tr:last\').after(noteRow);
+		conso
+	}
+
+    
 	// end loop
 
 

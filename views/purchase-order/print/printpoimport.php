@@ -103,6 +103,12 @@ footer{
     	page-break-before: always;
     	height: 150px;
     }
+    .breakfooter{
+    	page-break-before: always;
+    }
+    tfoot{
+    	height: 0px;
+    }
 }
 </STYLE>
 
@@ -198,7 +204,11 @@ footer{
 			     <TH colspan=7></TH>
 			  </TR>
 			 </thead>
-			 </TFOOT>
+			 <tfoot>
+			  <TR>
+			     <TH colspan=7></TH>
+			  </TR>
+			 </tfoot>
 			 <TBODY>
 			<!-- Start Header -->
 			<TR><TD colspan=7><P class="p0 ft0">PURCHASE ORDER</P></TD></TR>
@@ -336,28 +346,30 @@ footer{
 				<TD class="tr1 td6"><P class="p2 ft2">&nbsp;</P></TD>
 				<TD class="tr1 td7"><P class="p2 ft2">&nbsp;</P></TD>
 			</TR>
+			<TR>
+				<TD colspan="7">
+					<P class="p16 ft8">PT. SUPRABAKTI MANDIRI</P>
+					<P class="p16 ft9">Jl. Danau Sunter Utara Blok A No. 9</P>
+					<P class="p16 ft9">Jakarta Utara - 14350</P>
+					<P class="p16 ft1">Phone : <NOBR>021-658</NOBR> 33666</P><br/>
+					
+					<div class=" breakfooter">
+						<P class="p0 ft1"><?php echo $model->after_shipment; ?></P>
+						<P class="p17 ft1">Kindly acknowledge the receipt of this order and send us your Proforma Invoice and estimation of Delivery<br/><br/></P>	
+						<TABLE cellpadding=0 cellspacing=0 class="t1">
+							<TR>
+								<TD class="tr11 td17"><P class="p18 ft10">Yours faithfully,<br/>PT. SUPRABAKTI MANDIRI<br/><br/><br/><br/><br/><br/>JIMMY HADINATA</P></TD>
+								<TD class="tr11 td18"><P class="p19 ft10">Acknowledgment by :<br/><?php echo $model->partner->name; ?><br/><br/><br/><br/><br/><br/>----------------------------------</P></TD>
+							</TR>
+						</TABLE>
+					</div>
+				</TD>
+			</TR>
 			</TBODY>
 		</TABLE>
 
-				<P class="p16 ft8">PT. SUPRABAKTI MANDIRI</P>
-				<P class="p16 ft9">Jl. Danau Sunter Utara Blok A No. 9</P>
-				<P class="p16 ft9">Jakarta Utara - 14350</P>
-				<P class="p16 ft1">Phone : <NOBR>021-658</NOBR> 33666</P><br/>
-				<P class="p0 ft1"><?php echo $model->after_shipment; ?></P>
-				<P class="p17 ft1">Kindly acknowledge the receipt of this order and send us your Proforma Invoice and estimation of Delivery</P>	
-		
-		<TABLE cellpadding=0 cellspacing=0 class="t1">
-			<TR>
-				<TD class="tr11 td17"><P class="p18 ft10">Yours faithfully,</P></TD>
-				<TD class="tr11 td18"><P class="p19 ft10">Acknowledgment by :</P></TD>
-			</TR>
-			<TR>
-				<TD class="tr12 td17"><P class="p18 ft10">PT. SUPRABAKTI MANDIRI</P></TD>
-				<TD class="tr12 td18"><P class="p20 ft10"><?php echo $model->partner->name; ?></P></TD>
-			</TR>
-		</TABLE>
-		<P class="p21 ft10"><SPAN class="ft11">JIMMY HADINATA </SPAN><NOBR><SPAN style="margin-left:225px;">----------------------------------</SPAN></NOBR></P>
-		<P class="p22 ft10">General Manager</P>
+
+				
 	</DIV>
 </BODY>
 </HEAD>

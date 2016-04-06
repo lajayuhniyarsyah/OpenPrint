@@ -96,12 +96,12 @@ footer{
 	height: 150px;
 }
 .thead{
-    	height: 150px;
+    	height: 175px;
     }
 @media print {
     .thead{
     	page-break-before: always;
-    	height: 150px;
+    	height: 175px;
     }
     .breakfooter{
     	page-break-before: always;
@@ -268,8 +268,9 @@ footer{
 			</TR>
 
 			<!--Content -->
+
 			<?php foreach ($data2 as $value) { ?>
-			<TR class="content_table">
+			<TR class="content_table" id>
 				<TD class="tr4 td2"><P class="p9 ft4"><?php echo $value[0] ?></P></TD>
 				<TD class="tr4 td10"><P class="p10 ft4"><?php echo $value[3].' '.$value[4] ?></P></TD>
 				<TD class="tr4 td8" colspan="2"><P class="p9 ft1"><?php echo $value[1] ?></P></TD>
@@ -277,10 +278,9 @@ footer{
 				<TD class="tr4 td6"><P class="p2 ft2">&nbsp;</P></TD>
 				<TD class="tr4 td7"><P class="p12 ft4"><?php echo $value[6] ?></P></TD>
 			</TR>
-			<?php } ?>
-
+				<?php } ?>
 			<?php if($diskon){ ?>
-			<TR>
+			<TR class="set-break">
 				<TD class="tr7 td2"><P class="p2 ft5">&nbsp;</P></TD>
 				<TD class="tr7 td10"><P class="p2 ft5">&nbsp;</P></TD>
 				<TD rowspan=2 class="tr8 td8"><P class="p14 ft6">DISCOUNT  <?=app\components\NumericLib::indoStyle($perdis,0,',','.')?>%</P></TD>
@@ -297,8 +297,6 @@ footer{
 				<TD class="tr10"><P class="p2 ft2">&nbsp;</P></TD>
 				<TD class="tr10"><P class="p15 ft6"><?php echo app\components\NumericLib::indoStyle($diskon,2,',','.'); ?></P></TD>
 			</TR>
-			<?php } ?>
-
 			<TR>
 				<TD class="tr7 td2"><P class="p2 ft5">&nbsp;</P></TD>
 				<TD class="tr7 td10"><P class="p2 ft5">&nbsp;</P></TD>
@@ -316,10 +314,31 @@ footer{
 				<TD class="tr10 td15"><P class="p2 ft2">&nbsp;</P></TD>
 				<TD class="tr10 td16"><P class="p15 ft6"><?=app\components\NumericLib::indoStyle($model->amount_total,2,',','.')?></P></TD>
 			</TR>
-			<!-- Footer -->
+
+			<?php }else{ ?>
 			<TR>
+				<TD class="tr7 td2"><P class="p2 ft5">&nbsp;</P></TD>
+				<TD class="tr7 td10"><P class="p2 ft5">&nbsp;</P></TD>
+				<TD rowspan=2 class="tr8 td8"><P class="p14 ft6"><?php echo $model->total_price; ?></P></TD>
+				<TD class="tr7 td4"><P class="p2 ft5">&nbsp;</P></TD>
+				<TD rowspan=2 class="tr8 td5"><P class="p11 ft6"><?=$pricelist?></P></TD>
+				<TD class="tr9 td13"><P class="p2 ft7">&nbsp;</P></TD>
+				<TD class="tr9 td14"><P class="p15 ft6">&nbsp;</P></TD>
+			</TR>
+
+			<TR>
+				<TD class="tr5 td2"><P class="p2 ft2">&nbsp;</P></TD>
+				<TD class="tr5 td10"><P class="p2 ft2">&nbsp;</P></TD>
+				<TD class="tr5 td4"><P class="p2 ft2">&nbsp;</P></TD>
+				<TD class="tr10 td15"><P class="p2 ft2">&nbsp;</P></TD>
+				<TD class="tr10 td16"><P class="p15 ft6"><?=app\components\NumericLib::indoStyle($model->amount_total,2,',','.')?></P></TD>
+			</TR>
+			
+			<?php } ?>
+			<!-- Footer -->
+			<TR class="set-footer-break">
 				<TD colspan=2 class="tr11 td7"><P class="p2 ft1">Your Ref</P></TD>
-				<TD colspan=5 class="tr11 td8"><P class="p9 ft1">: <?php echo $model->origin; ?> </P></TD>
+				<TD colspan=5 class="tr11 td8"><P class="p9 ft1">: <?php echo $model->yourref; ?> </P></TD>
 			<TR>
 				<TD colspan=2 class="tr11 td7"><P class="p2 ft1">Note</P></TD>
 				<TD colspan=5 class="tr11 td8"><P class="p9 ft1">: <?php echo $model->note; ?></P></TD>
@@ -374,3 +393,25 @@ footer{
 </BODY>
 </HEAD>
 </HTML>
+
+<?php
+	$this->registerJs('
+		var tbody=jQuery(\'tbody\').height();
+		var discount=jQuery(\'.discount\').height();
+		var sum = 0;
+		$(\'.content_table\').each(function(){
+			    sum += jQuery(this).height();
+		});
+		if(sum > 680 && tbody > 850){
+			jQuery(".set-break").addClass( "breakfooter" );
+		}
+
+		// var x =sum+121;	
+		// if(x > 680){
+		// 	jQuery(".set-footer-break").addClass( "breakfooter" );	
+		// }
+		// 17 + 23 + 23
+
+	');
+?>
+

@@ -135,8 +135,11 @@ class ServiceController extends Controller{
 		if(is_array($ids)){
 			$invoices = AccountInvoice::find()->where(['id'=>$ids])->with(['currency','accountInvoiceLines','partner','partner.state','partner.parent','accountInvoiceLines.product','stockPickings','accountInvoiceLines.account','fakturAddress','fakturAddress.parent'])->asArray()->all();
 			$maped = $this->prepareCsvInvoiceData($invoices);
-			// \yii\helpers\VarDumper::dump($maped);
-			// die();
+			if(!$maped){
+				throw new NotFoundHttpException('Tidak ada data yang dapat di export. Tolong pastikan data yang dipilih untuk di export adalah data yang ber status sudah Proforma!');
+			}
+			/*\yii\helpers\VarDumper::dump($maped);
+			die();*/
 			$filename = 'INVOICES-'.(isset($maped['OUT']) ? 'OUT':'IN').'-'.implode('+', array_keys($maped[(isset($maped['OUT']) ? 'OUT':'IN')])).'.csv';
 			header( "Content-Type: text/csv;charset=UTF-8" );
 			header( "Content-Disposition: attachment;filename=\"$filename\"" );

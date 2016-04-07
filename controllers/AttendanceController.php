@@ -267,9 +267,7 @@ query;
         
         $dataToRender['dataProvider'] = new \yii\data\ArrayDataProvider([
             'allModels'=>$res,
-            'pagination'=>[
-                'pageSize'=>-1
-            ]
+            'pagination'=>false
 
         ]);
         $dataToRender['year'] = $year;

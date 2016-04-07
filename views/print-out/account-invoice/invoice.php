@@ -253,7 +253,7 @@ use yii\helpers\Url;
 	
 	$this->registerCss($css);
 	$formated = function($value) use ($model){
-		if($model['currency_id']==13){
+		if($model['currency_id'][0]==13){
 			return Yii::$app->numericLib->indoStyle(floatval($value));
 		}else{
 			return Yii::$app->numericLib->westStyle(floatval($value));
@@ -276,10 +276,21 @@ use yii\helpers\Url;
 	<div class="pages">
 		<div class="headers">
 			<div class="leftInfo">
-				<div class="partnerName"><?=$modelPartner['name']?></div>
+				<div class="partnerName">
+					<?php
+						$prtName = $modelPartner['name'];
+						$expPartnerName = explode(',',$prtName );
+						if(is_array($expPartnerName) && isset($expPartnerName[1])){
+							$partnerName = $expPartnerName[1].'. '.$expPartnerName[0];
+						}else{
+							$partnerName = $modelPartner['name'];
+						}
+						echo $partnerName;
+					?>
+				</div>
 				<div class="partnerAddr" contenteditable="true"><?=$modelPartner['street']?></div>
 				<div class="partnerAddr2" contenteditable="true"><?=$modelPartner['street2']?></div>
-				<div class="partnerAddr2" contenteditable="true"><?=$modelPartner['city']?></div>
+				<div class="partnerAddr2" contenteditable="true"><?=$modelPartner['city'].' '.(isset($modelPartner['state_id'][1]) ? $modelPartner['state_id'][1].' - ':'').$modelPartner['zip']?></div>
 			</div>
 			<div class="rightInfo">
 				<div class="kwNo"><?=$model['kwitansi']?></div>
@@ -294,24 +305,24 @@ use yii\helpers\Url;
 				</table>
 			</div>
 		</div>
-		<?php /* 
+		<?php /**/ ?>
 		<div class="footers">
 			<div class="amounts">
-				<div class="amLine1 am"><?='<div class="currSymbol">'.$modelCurrency['name'].'</div><div class="amountNumber">'.$formated(($model['currency_id']==13 ? $data['total']['subtotalMainCurr']:$data['total']['subtotal'])).'</div><div class="clear"></div>'?></div>
-				<div class="amLine2 am">
-					<div class="am2Words" contenteditable="true"><?=($data['total']['discountSubtotal'] ? 'DISCOUNT':'&nbsp;')?></div>
-					<div class="kursAm2" contenteditable="true"><?=($data['total']['discountSubtotal'] ? $data['currency']:'&nbsp;')?></div>
-					<div class="valAm2" contenteditable="true"><?=($data['total']['discountSubtotal'] ? ($model['currency_id']==13?$formated($data['total']['discountSubtotalMainCurr']):$formated($data['total']['discountSubtotal'])):'&nbsp;')?></div>
+				<div class="amLine1 am"><?='<div class="currSymbol">'.$model['currency_id'][1].'</div><div class="amountNumber">'.$formated(($model['currency_id']==13 ? $invoice['total']['subtotalMainCurr']:$invoice['total']['subtotal'])).'</div><div class="clear"></div>'?>
 				</div>
-				<div class="amLine3 am"><?='<div class="currSymbol">'.$modelCurrency['name'].'</div><div class="amountNumber">'.$formated(($model['currency_id']==13 ? $data['total']['amountUntaxedMainCurr']:$model['amount_untaxed'])).'</div><div class="clear"></div>'?></div>
-				<div class="amLine4 am"><?='<div class="currSymbol">'.$modelCurrency['name'].'</div><div class="amountNumber">'.$formated(($model['currency_id']==13 ? $data['total']['amountTaxMainCurr']:$model['amount_tax'])).'</div><div class="clear"></div>'?></div>
-				<div class="amLine5 am"><?='<div class="currSymbol">'.$modelCurrency['name'].'</div><div class="amountNumber">'.$formated(($model['currency_id']==13 ? $data['total']['amountTotalMainCurrCounted']:$model['amount_total'])).'</div><div class="clear"></div>'?></div>
+				<div class="amLine2 am">
+					<div class="am2Words" contenteditable="true"><?=($invoice['total']['discountSubtotal'] ? 'DISCOUNT':'&nbsp;')?></div>
+					<div class="kursAm2" contenteditable="true"><?=($invoice['total']['discountSubtotal'] ? $invoice['currency']:'&nbsp;')?></div>
+					<div class="valAm2" contenteditable="true"><?=($invoice['total']['discountSubtotal'] ? ($model['currency_id']==13?$formated($invoice['total']['discountSubtotalMainCurr']):$formated($invoice['total']['discountSubtotal'])):'&nbsp;')?></div>
+				</div>
+				<div class="amLine3 am"><?='<div class="currSymbol">'.$model['currency_id'][1].'</div><div class="amountNumber">'.$formated(($model['currency_id']==13 ? $invoice['total']['amountUntaxedMainCurr']:$model['amount_untaxed'])).'</div><div class="clear"></div>'?></div>
+				<div class="amLine4 am"><?='<div class="currSymbol">'.$model['currency_id'][1].'</div><div class="amountNumber">'.$formated(($model['currency_id']==13 ? $invoice['total']['amountTaxMainCurr']:$model['amount_tax'])).'</div><div class="clear"></div>'?></div>
+				<div class="amLine5 am"><?='<div class="currSymbol">'.$model['currency_id'][1].'</div><div class="amountNumber">'.$formated(($model['currency_id']==13 ? $invoice['total']['amountTotalMainCurrCounted']:$model['amount_total'])).'</div><div class="clear"></div>'?></div>
 			</div>
 			<div class="notes">
 				<div class="terb" contenteditable="true">
 					<?php
-					
-					switch (trim($modelCurrency['name'])) {
+					switch (trim($model['currency_id'][1])) {
 						case 'USD':
 							# code...
 							$preCur = '# United State Dollar ';
@@ -337,11 +348,11 @@ use yii\helpers\Url;
 					}
 					echo $preCur;
 					?>
-					<?=ucwords(Yii::$app->numericLib->convertToWords($model['amount_total'],$modelCurrency['name']))?>
+					<?=ucwords(Yii::$app->numericLib->convertToWords($model['amount_total'],$model['currency_id'][1]))?>
 					<?=$subCur?>
 
 				</div>
-				<div class="dueDate"><?=(isset($model->paymentTerm->name) ? $model->paymentTerm->name:"")?></div>
+				<div class="dueDate"><?=(isset($model['payment_term'][1]) ? $model['payment_term'][1]:"")?></div>
 				<div class="invFootNotes">
 					Bank Mandiri Cab. Ketapang Indah, Jakarta -> A/C : 115-000-122-6655 (IDR)
 					<br>
@@ -351,10 +362,10 @@ use yii\helpers\Url;
 					<br/>
 					Bank CIMB Niaga Cab. Wahid Hasyim, Jakarta -> A/C : 4230-3000-02-008 (AUD)
 				</div>
-				<div class="signName" contenteditable="true"><?=strtoupper($model->approver0->partner->name)?></div>
+				<div class="signName" contenteditable="true"><?=strtoupper($model['approver'][1])?></div>
 			</div>
 		</div>
-		*/ ?>
+		<?php /**/ ?>
 	</div>
 </div>
 

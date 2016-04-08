@@ -257,11 +257,11 @@ use yii\helpers\Url;
 
 				$barangsupplai = '';
 				
-				if ($value->sale_line_id){
+				/*if ($value->sale_line_id){
 					if($value->saleLine->product_id<>$value->product_id){
 						$barangsupplai = '<br/>u/ supply barang ['.$value->saleLine->product->default_code.'] '.$value->saleLine->product->name_template;
 					}	
-				}
+				}*/
 				
 
 				// echo $barangsupplai;
@@ -340,7 +340,7 @@ use yii\helpers\Url;
 								<div class="yth">
 									Kepada Yth.<br/>
 									Sdr. Kepala Gudang<br/>
-									Di <?php echo $model->location->name; ?><br/><br/>
+									Di <?php echo (isset($model->location) ? $model->location->name:'Tempat'); ?><br/><br/>
 									Harap disiapkan sejumlah barang dibawah ini :
 								</div>
 								<div class="customer">

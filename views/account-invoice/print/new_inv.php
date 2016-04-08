@@ -279,8 +279,22 @@ use yii\helpers\Url;
 					<?php
 						$prtName = (isset($model->partner->parent) ? $model->partner->parent->name:$model->partner->name);
 						$expPartnerName = explode(',',$prtName );
+
 						if(is_array($expPartnerName) && isset($expPartnerName[1])){
-							$partnerName = $expPartnerName[1].'.'.$expPartnerName[0];
+
+							$count = count($expPartnerName);
+							if($count>2){
+								$partnerName = $expPartnerName[$count-1];
+
+								unset($expPartnerName[$count-1]);
+
+								$sPartnerName = implode(",", $expPartnerName);
+
+								$partnerName .= ". ".$sPartnerName;
+							}else{
+								$partnerName = $expPartnerName[1].'.'.$expPartnerName[0];
+							}
+							
 						}else{
 							$partnerName = $model->partner->name;
 						}

@@ -321,12 +321,27 @@ class ServiceController extends Controller{
 
 
 				$expPartnerName = explode(',',$partner['name'] );
+
+
 				if(is_array($expPartnerName) && isset($expPartnerName[1])){
-					$partnerName = trim($expPartnerName[1]).'. '.trim($expPartnerName[0]);
+
+					$count = count($expPartnerName);
+					if($count>2){
+						$partnerName = trim($expPartnerName[$count-1]);
+
+						unset($expPartnerName[$count-1]);
+
+						$sPartnerName = implode(",", $expPartnerName);
+
+						$partnerName .= ". ".trim($sPartnerName);
+					}else{
+						$partnerName = trim($expPartnerName[1]).'.'.trim($expPartnerName[0]);
+					}
+					
 				}else{
-					// if not exploded
 					$partnerName = $inv['partner']['name'];
 				}
+
 				// echo $partnerName;
 				$res['OUT'][$indexArr]['fk'] = [
 					'FK', #FK #0

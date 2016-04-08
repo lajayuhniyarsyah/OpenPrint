@@ -25,6 +25,25 @@ class PrintSaleOrderController extends Controller
 		$dataContent=[];
 		$dataContentModel=$model->saleOrderLines;
 		$no=1;
+		$TermCondition_murni = preg_replace('#\R+#','<br/>',$model->internal_notes);
+		$TermCondition_enter = explode("<br/>", $TermCondition_murni);
+		$TermCondition =[];
+		foreach ($TermCondition_enter as $key => $value) {
+			$split_term=str_split($value, 90);
+			foreach ($split_term as $key_split_term => $value_split_term) {
+				 array_push($TermCondition,$value_split_term );
+			}
+		}
+
+		$NoteMurni = preg_replace('#\R+#','<br/>',$model->note);
+		$NoteEnter = explode("<br/>", $NoteMurni);
+		$Note =[];
+		foreach ($NoteEnter as $key => $value) {
+			$split_note=str_split($value, 90);
+			foreach ($split_note as $key_split_note => $value_split_note) {
+				 array_push($Note,$value_split_note );
+			}
+		}
 		foreach ($dataContentModel as $key => $value) {
 			$price_sub =number_format($value->product_uom_qty*$value->price_unit,2);
 			$unit =number_format($value->price_unit,2);
@@ -42,6 +61,8 @@ class PrintSaleOrderController extends Controller
 			$dataContent[$key]['unit_price']=$unit;
 			$dataContent[$key]['price_sub']=$price_sub;
 			$dataContent[$key]['deskription_orderline']=$deskription_orderline;
+			$dataContent[$key]['Note']=$Note;
+			$dataContent[$key]['TermCondition']=$TermCondition;
 			$dataContent[$key]['material_line']=[];
 
 			foreach ($value->materialLines as $keyM => $vM) {
@@ -230,6 +251,26 @@ class PrintSaleOrderController extends Controller
 		$dataContent=[];
 		$dataContentModel=$model->saleOrderLines;
 		$no=1;
+		$TermCondition_murni = preg_replace('#\R+#','<br/>',$model->internal_notes);
+		$TermCondition_enter = explode("<br/>", $TermCondition_murni);
+		$TermCondition =[];
+		foreach ($TermCondition_enter as $key => $value) {
+			$split_term=str_split($value, 90);
+			foreach ($split_term as $key_split_term => $value_split_term) {
+				 array_push($TermCondition,$value_split_term );
+			}
+		}
+
+		$NoteMurni = preg_replace('#\R+#','<br/>',$model->note);
+		$NoteEnter = explode("<br/>", $NoteMurni);
+		$Note =[];
+		foreach ($NoteEnter as $key => $value) {
+			$split_note=str_split($value, 90);
+			foreach ($split_note as $key_split_note => $value_split_note) {
+				 array_push($Note,$value_split_note );
+			}
+		}
+		// var_dump($Note);
 		foreach ($dataContentModel as $key => $value) {
 			$price_sub =number_format($value->product_uom_qty*$value->price_unit,2);
 			$unit =number_format($value->price_unit,2);
@@ -247,6 +288,8 @@ class PrintSaleOrderController extends Controller
 			$dataContent[$key]['unit_price']=$unit;
 			$dataContent[$key]['price_sub']=$price_sub;
 			$dataContent[$key]['deskription_orderline']=$deskription_orderline;
+			$dataContent[$key]['Note']=$Note;
+			$dataContent[$key]['TermCondition']=$TermCondition;
 			$dataContent[$key]['material_line']=[];
 
 			foreach ($value->materialLines as $keyM => $vM) {
@@ -319,9 +362,26 @@ class PrintSaleOrderController extends Controller
 			$AttentionName = "";
 			$AttentionPhone = "";
 		}
-		
+		$TermCondition_murni = preg_replace('#\R+#','<br/>',$model->internal_notes);
+		$TermCondition_enter = explode("<br/>", $TermCondition_murni);
+		$TermCondition =[];
+		foreach ($TermCondition_enter as $key => $value) {
+			// echo $value.'<br/>';
+			array_push($TermCondition, (str_split($value, 50)));
+		}
+		// var_dump($TermCondition);	
+
+		$NoteMurni = preg_replace('#\R+#','<br/>',$model->internal_notes);
+		$NoteEnter = explode("<br/>", $NoteMurni);
+		$Note =[];
+		foreach ($NoteEnter as $key => $value) {
+			// echo $value.'<br/>';
+			array_push($Note, (str_split($value, 50)));
+		}
 		return $this->render('rfq',
 			[
+			'Note'=>$Note,
+			'TermCondition'=>$TermCondition,
 			'model'=>$model,
 			'state'=>$state,
 			'country'=>$country,

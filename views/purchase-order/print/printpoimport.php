@@ -96,8 +96,9 @@ footer{
 	height: 150px;
 }
 .thead{
-    	height: 17	0px;
-    }
+
+    height: 170px;
+}
 @media print {
     .thead{
     	page-break-before: always;

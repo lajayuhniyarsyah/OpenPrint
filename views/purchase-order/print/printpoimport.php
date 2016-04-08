@@ -96,8 +96,8 @@ footer{
 	height: 150px;
 }
 .thead{
-    	height: 17	0px;
-    }
+    height: 170px;
+}
 @media print {
     .thead{
     	page-break-before: always;
@@ -270,7 +270,7 @@ footer{
 			<!--Content -->
 
 			<?php foreach ($data2 as $value) { ?>
-			<TR class="content_table">
+			<TR class="content_table" id>
 				<TD class="tr4 td2"><P class="p9 ft4"><?php echo $value[0] ?></P></TD>
 				<TD class="tr4 td10"><P class="p10 ft4"><?php echo $value[3].' '.$value[4] ?></P></TD>
 				<TD class="tr4 td8" colspan="2"><P class="p9 ft1"><?php echo $value[1] ?></P></TD>

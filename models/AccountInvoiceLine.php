@@ -248,9 +248,9 @@ class AccountInvoiceLine extends \yii\db\ActiveRecord
         endif;
         
         if(isset($this->product->default_code)){
-            if($this->product->productTmpl->type!='service'){
+            // if($this->product->productTmpl->type!='service'){
                 $nameLine .= '<br/>P/N : '.$this->product->default_code;
-            }
+            // }
         }
         if(!$this->invoice->payment_for && $printForFaktur){
             $nameLine .= '<br/><b>Rp'.Yii::$app->numericLib->indoStyle($this->price_unit_main_curr).' x '.floatval($this->quantity).'</b>';

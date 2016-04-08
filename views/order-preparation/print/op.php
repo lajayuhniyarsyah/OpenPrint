@@ -258,7 +258,7 @@ use yii\helpers\Url;
 				$barangsupplai = '';
 				
 				if ($value->sale_line_id){
-					if($value->saleLine->product_id<>$value->product_id){
+					if($value->saleLine->product_id<>$value->product_id && $value->saleLine->product->mrpBoms == false){
 						$barangsupplai = '<br/>u/ supply barang ['.$value->saleLine->product->default_code.'] '.$value->saleLine->product->name_template;
 					}	
 				}

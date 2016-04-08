@@ -96,12 +96,12 @@ footer{
 	height: 150px;
 }
 .thead{
-    	height: 175px;
+    	height: 17	0px;
     }
 @media print {
     .thead{
     	page-break-before: always;
-    	height: 175px;
+    	height: 170px;
     }
     .breakfooter{
     	page-break-before: always;
@@ -270,7 +270,7 @@ footer{
 			<!--Content -->
 
 			<?php foreach ($data2 as $value) { ?>
-			<TR class="content_table" id>
+			<TR class="content_table">
 				<TD class="tr4 td2"><P class="p9 ft4"><?php echo $value[0] ?></P></TD>
 				<TD class="tr4 td10"><P class="p10 ft4"><?php echo $value[3].' '.$value[4] ?></P></TD>
 				<TD class="tr4 td8" colspan="2"><P class="p9 ft1"><?php echo $value[1] ?></P></TD>
@@ -283,7 +283,7 @@ footer{
 			<TR class="set-break">
 				<TD class="tr7 td2"><P class="p2 ft5">&nbsp;</P></TD>
 				<TD class="tr7 td10"><P class="p2 ft5">&nbsp;</P></TD>
-				<TD rowspan=2 class="tr8 td8"><P class="p14 ft6">DISCOUNT  <?=app\components\NumericLib::indoStyle($perdis,0,',','.')?>%</P></TD>
+				<TD rowspan=2 class="tr8 td8"><P class="p14 ft6"><br/>DISCOUNT  <?=app\components\NumericLib::indoStyle($perdis,0,',','.')?>%</P></TD>
 				<TD class="tr7 td4"><P class="p2 ft5">&nbsp;</P></TD>
 				<TD rowspan=2 class="tr8 td5"><P class="p11 ft6"></P></TD>
 				<TD class="tr9"><P class="p2 ft7">&nbsp;</P></TD>

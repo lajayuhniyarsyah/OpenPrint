@@ -231,10 +231,15 @@ class OpenERPLib extends Component{
 
         $resp = $client->send($msg);
         ///print_r($resp);
-        if ($resp->faultCode())
-            return -1;  /* if the record is not writable or not existing the ids or not having permissions  */
-        else
+        // var_dump($resp);
+        
+        if ($resp->faultCode()){
+            // throw new \yii\web\NotFoundHttpException("Not Found");
+            // return -1;  /* if the record is not writable or not existing the ids or not having permissions  */
+        }
+        else{
             return $resp->value();
+        }
     }
 
     public function unlink($ids , $model_name) {

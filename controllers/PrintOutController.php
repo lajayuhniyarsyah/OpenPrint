@@ -320,4 +320,125 @@ class PrintOutController extends Controller
 			'invoice'=>$invoice
 		]);
 	}
+
+
+	// print out e-faktur
+	public function actionPrintEFaktur($id=null,$uid=null,$printer=null)
+	{
+		$this->layout = 'printout';
+
+		$id = (int) $id;
+
+		$oe = Yii::$app->openERPLib;
+		$login = $oe->login("admin","supra");
+
+		# account invoice
+		$invoice = $oe->read([$id],[],"account.invoice");
+		if(!$invoice){
+			throw new NotFoundHttpException('Data not found.');
+		}
+		$modelInvoice = $invoice[0];
+
+		# res partner
+		$idPartner = $modelInvoice['partner_id'][0];
+		$partner = $oe->read([$idPartner],[],"res.partner");
+		$modelPartner = $partner[0];
+
+		# account invoice line
+		$invoice_line = $oe->read($modelInvoice['invoice_line'],[],'account.invoice.line');
+		$invLine = $invoice_line[0];
+
+		$lines = [];
+		$priceTotal=0;
+		foreach ($invoice_line as $key => $modelInvoiceLine) {
+
+			# product product
+			$idProduct = $modelInvoiceLine['product_id'][0].',';
+			$product = $oe->read([$idProduct],['id','default_code','name_template','product_tmpl_id'],"product.product");
+			$modelProduct = NULL;
+			if($product != NULL){
+				$modelProduct = $product[0];
+			}
+
+			# product template
+			$idProductTemplate = $modelProduct['product_tmpl_id'][0].',';
+			$productTemplate = $oe->read([$idProductTemplate],['id','type'],"product.template");
+			$modelProductTemplate = NULL;
+			if($productTemplate != NULL){
+				$modelProductTemplate = $productTemplate[0];
+			}
+
+			$nameLine = (isset($modelProduct['name_template']) ? $modelProduct['name_template'] : null);
+			if(trim($modelInvoiceLine['name'])):
+				$nameLine .= (isset($modelProduct['name_template']) ? '<br/>':"").nl2br($modelInvoiceLine['name']);
+			endif;
+			if(isset($modelProduct['default_code'])){
+				if($modelProductTemplate['type']!='service'){
+					$nameLine .= '<br/>P/N : '.$modelProduct['default_code'];
+				}
+			}
+
+			$lines[] = [
+				'id'=>$modelInvoiceLine['id'],
+
+				'no'=>$modelInvoiceLine['sequence'],
+				'name'=>$nameLine.'<br/><b>Rp '.$this->formatValue($modelInvoiceLine['unit_price_main'],$modelInvoice['currency_id'][0]).' x '.$modelInvoiceLine['quantity'].'</b>',
+
+				'priceUnit'=>$this->formatValue($modelInvoiceLine['price_unit'],$modelInvoice['currency_id'][0]),
+				'priceUnitMainCurr'=>$modelInvoiceLine['unit_price_main'],
+
+				'currency'=>$modelInvoice['currency_id'][1],
+
+				'qty'=>$modelInvoiceLine['quantity'],
+				'unit'=>$modelInvoiceLine['uos_id'][1],
+
+				'priceSubtotal'=>$modelInvoiceLine['price_subtotal'],
+				'subTotalMain'=>$modelInvoiceLine['sub_total_main'],
+
+				'amountBruto'=>$this->formatValue($modelInvoiceLine['amount_bruto'],$modelInvoice['currency_id'][0]),
+				'amountBrutoMain'=>$this->formatValue($modelInvoiceLine['amount_bruto_main'],$modelInvoice['currency_id'][0]),
+
+				'discount'=>$modelInvoiceLine['discount'],
+				'amountDiscount'=>$modelInvoiceLine['amount_discount'],
+				'amountDiscountMain'=>$modelInvoiceLine['amount_discount_main'],
+
+				'amountUntaxed'=>$modelInvoice['amount_untaxed'],
+				'amountUntaxedMain'=>$modelInvoice['amount_untaxed_main'],
+
+				'taxAmountMain'=>$modelInvoiceLine['tax_amount_main'],
+				'amountTotalMain'=>$modelInvoice['amount_total_main'],
+			];
+
+			$priceTotal += $modelInvoiceLine['price_subtotal'];
+
+		}
+		// append
+		$modelInvoice['total'] = $priceTotal;
+
+
+		// render
+		// jika currency nya adalah IDR maka render ke faktur_rp
+		if($modelInvoice['currency_id'][1]=='IDR' and $modelInvoice['currency_id'][0]==13)
+		{
+			return $this->render('account-invoice/faktur_rp',[
+				'modelInvoice'=>$modelInvoice,
+				'modelPartner'=>$modelPartner,
+				'modelInvoiceLine'=>$invLine,
+				'lines'=>$lines,
+				'printer'=>$printer,
+			]);
+		}
+		else 
+		{
+			return $this->render('account-invoice/faktur_vls',[
+				'modelInvoice'=>$modelInvoice,
+				'modelPartner'=>$modelPartner,
+				'modelInvoiceLine'=>$invLine,
+				'lines'=>$lines,
+				'printer'=>$printer,
+			]);
+		}
+	}
+
+	
 }

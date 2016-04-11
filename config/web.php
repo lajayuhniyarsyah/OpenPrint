@@ -9,7 +9,7 @@ $config = [
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => 'lajayuhniyarsyah',
+            'cookieValidationKey' => 'hendri30',
         ],
         'formatter'=>[
             'dateFormat' => 'dd-MMM-yyyy',
@@ -49,8 +49,8 @@ $config = [
         ],
         'openERPLib'=>[
             'class'=>'app\components\OpenERPLib',
-            'server'=>"http://10.36.15.13:8069/xmlrpc/",
-            'database'=>'LIVE_2016_01_17'
+            'server'=>"http://10.36.15.63:8069/xmlrpc/",
+            'database'=>'belajarerp'
         ],
     ],
     'modules'=>[

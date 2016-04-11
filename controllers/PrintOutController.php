@@ -440,5 +440,41 @@ class PrintOutController extends Controller
 		}
 	}
 
-	
+
+	// print out kwitansi	
+	public function actionPrintKwitansi($id=null,$uid=null,$printer=null)
+	{
+		$this->layout = 'printout';
+
+		$id = (int) $id;
+
+		$oe = Yii::$app->openERPLib;
+		$login = $oe->login("admin","supra");
+
+		# account invoice
+		$invoice = $oe->read([$id],[],"account.invoice");
+		if(!$invoice){
+			throw new NotFoundHttpException('Data not found.');
+		}
+		$modelInvoice = $invoice[0];
+
+		# res partner
+		$idPartner = $modelInvoice['partner_id'][0];
+		$partner = $oe->read([$idPartner],[],"res.partner");
+		$modelPartner = $partner[0];
+
+		# acount invoice tax line
+		$idTax = $modelInvoice['tax_line'];
+		$tax = $oe->read($idTax,[],"account.invoice.tax");
+		$modelTax = $tax[0];
+
+		return $this->render('account-invoice/kwitansi',[
+			'modelInvoice'=>$modelInvoice,
+			'modelPartner'=>$modelPartner,
+			'modelTax'=>$modelTax,
+			'printer'=>$printer,
+		]);
+	}
+
+
 }

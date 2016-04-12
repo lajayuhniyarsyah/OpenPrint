@@ -392,7 +392,7 @@ class PrintOutController extends Controller
 				'qty'=>$modelInvoiceLine['quantity'],
 				'unit'=>$modelInvoiceLine['uos_id'][1],
 
-				'priceSubtotal'=>$modelInvoiceLine['price_subtotal'],
+				'priceSubtotal'=>$this->formatValue($modelInvoiceLine['price_subtotal'],$modelInvoice['currency_id'][0]),
 				'subTotalMain'=>$modelInvoiceLine['sub_total_main'],
 
 				'amountBruto'=>$this->formatValue($modelInvoiceLine['amount_bruto'],$modelInvoice['currency_id'][0]),

@@ -727,8 +727,9 @@ class AccountInvoice extends \yii\db\ActiveRecord
 			/*echo $invoice['total']['subtotalMainCurr'];
 			echo '<br/>';
 			echo $invoice['total']['discountSubtotal'];*/
-			// die($invTotalTmp['subtotalMainCurr']);
-			if($this->dp_percentage && $printForFaktur){
+			
+			
+			if($this->payment_for && $this->dp_percentage && $printForFaktur){
 				// $invoice['total']['subtotal'] = $lines[$idx]['priceSubtotal'];
 
 				if($isMainCurrency){
@@ -750,6 +751,7 @@ class AccountInvoice extends \yii\db\ActiveRecord
 					$invoice['dp']['dpp'] = floor($invTotalTmp['amountUntaxedMainCurr']);
 					$invoice['dp']['ppn'] = $invTotalTmp['amountTaxMainCurr'];
 					$invoice['dp']['discount'] = 0;
+
 				}
 				else
 				{

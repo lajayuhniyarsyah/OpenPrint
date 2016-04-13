@@ -127,6 +127,9 @@ class AccountInvoiceController extends Controller
 		$this->layout = 'printout';
 		$discount = ['desc'=>'','curr'=>'','amount'=>''];
 		$model = $this->findModel($id);
+		if($model->payment_for && !$model->dp_percentage){
+			throw new NotFoundHttpException('Invoice DP harus mengisi isian DP Percentage!');
+		}
 		// $model->printForFaktur = true;
 
 		$data = $model->getInvoiceMapData(true);

@@ -515,7 +515,7 @@ $this->registerJs('
 	function prepareRow(rowNo,data)
 	{
 		console.log(data[0]);
-		return "<tr class=\'cRows rows"+rowNo+"\'><td style=\"width:50px; text-align:center;\">"+data[0]+"</td><td style=\"width:130px; text-align:center;\">"+data[1]+"</td><td><div class=\"leftdata\">"+data[2]+"</div><div class=\"rightdata\">"+data[3]+"</div></td></tr>";
+		return "<tr class=\'cRows rows"+rowNo+"\'><td contenteditable=\'true\' style=\"width:50px; text-align:center;\">"+data[0]+"</td><td style=\"width:130px; text-align:center;\">"+data[1]+"</td><td><div class=\"leftdata\">"+data[2]+"</div><div class=\"rightdata\">"+data[3]+"</div></td></tr>";
 	}
 
 	var rowPage = 0;

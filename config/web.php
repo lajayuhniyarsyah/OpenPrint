@@ -49,8 +49,8 @@ $config = [
         ],
         'openERPLib'=>[
             'class'=>'app\components\OpenERPLib',
-            'server'=>"http://10.36.15.63:8069/xmlrpc/",
-            'database'=>'belajarerp'
+            'server'=>"http://192.168.9.26:10001/xmlrpc/",
+            'database'=>'LIVE_2014'
         ],
     ],
     'modules'=>[

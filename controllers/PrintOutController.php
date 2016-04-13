@@ -54,7 +54,7 @@ class PrintOutController extends Controller
 		$this->layout = 'printout';
 
 		$oe = Yii::$app->openERPLib;
-		$login = $oe->login("admin","supra");
+		$login = $oe->login("admin","supraindo");
 
 		# account invoice
 		$modelAccInvoice = $oe->read([$id],['id','kwitansi','date_invoice','amount_untaxed','amount_untaxed_main','amount_tax','amount_total','amount_total_main','approver','partner_id','currency_id','invoice_line','pajak','comment','name','payment_for','payment_term'],"account.invoice");
@@ -184,9 +184,10 @@ class PrintOutController extends Controller
 		// maka load data[lines] dari sale order
 		$invoiceLine = $modelAccInvoiceLines[0];
 		$sale_order_ids = $oe->search([['invoice_ids','=',$id]],'sale.order');
-		// var_dump($sale_order_ids);
+		//var_dump($sale_order_ids);
 		$saleOrder = $oe->read($sale_order_ids,['id','order_line','amount_untaxed'],'sale.order');
-		// var_dump($saleOrder);
+		//var_dump($saleOrder);
+                //die();
 		$modelSaleOrder = $saleOrder[0];
 		$id_order_line = $modelSaleOrder['order_line'];
 		$saleOrderLine = $oe->read($id_order_line,['id','price_unit','product_uom_qty','discount','discount_nominal','product_id','product_uom','sequence','product_ref','price_subtotal','name'],'sale.order.line');
@@ -330,7 +331,7 @@ class PrintOutController extends Controller
 		$id = (int) $id;
 
 		$oe = Yii::$app->openERPLib;
-		$login = $oe->login("admin","supra");
+		$login = $oe->login("admin","supraindo");
 
 		# account invoice
 		$invoice = $oe->read([$id],[],"account.invoice");
@@ -449,7 +450,7 @@ class PrintOutController extends Controller
 		$id = (int) $id;
 
 		$oe = Yii::$app->openERPLib;
-		$login = $oe->login("admin","supra");
+		$login = $oe->login("admin","supraindo");
 
 		# account invoice
 		$invoice = $oe->read([$id],[],"account.invoice");

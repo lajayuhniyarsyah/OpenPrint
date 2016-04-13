@@ -77,7 +77,6 @@ class OpenERPLib extends Component{
         $msg->addParam(new Value($this->password, "string"));/** password */
         $msg->addParam(new Value($model_name, "string"));/** model name where operation will held * */
         $msg->addParam(new Value("search", "string"));/** method which u like to execute */
-
         foreach($values as $x){
             if(!empty($x)){
                     array_push( $domains,  new Value( 

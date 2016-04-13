@@ -244,7 +244,7 @@ class DeliveryNoteController extends Controller
         $no = 0;
         foreach($preparedLines as $k=>$l):
             $res[$no]=[
-                'qty'=>'<div style="float:left;width:10mm;">'.($l['no'] ? $l['no']:'&nbsp;').'</div>
+                'qty'=>'<div style="float:left;width:12mm;" contenteditable="true">'.($l['no'] ? $l['no']:'&nbsp;').'</div>
                     <div>'.floatval($l['qty']).' '.$l['uom'].'</div><div style="clear:both;"></div>',
                 
                 'part_no'=>$l['part_no']

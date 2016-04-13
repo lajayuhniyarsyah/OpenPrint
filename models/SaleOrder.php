@@ -273,9 +273,10 @@ class SaleOrder extends \yii\db\ActiveRecord
         if($this->user){
             $this->sales_man=$this->user->partner->name;
         }
-        if($this->quotation_state != 'win' and 'lost'){
+        // uncomment when new module lived
+        /*if($this->quotation_state != 'win' and 'lost'){
             $this->quotation_state = 'on process';
-        }
+        }*/
     }
     /**
      * @return \yii\db\ActiveQuery

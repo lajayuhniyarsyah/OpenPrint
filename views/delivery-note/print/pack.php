@@ -24,7 +24,7 @@ use yii\helpers\Url;
 		/*border-bottom: 1px solid red;*/
 	}
 	<?php
-	if($uid==173){
+	/*if($uid==173){
 		echo '.pages
 		{
 			
@@ -36,10 +36,10 @@ use yii\helpers\Url;
 	elseif($uid==101){
 // 		if user sri perlu naik spacer footer nya agar tidak ke halaman 2 tanda tangannya
 		echo '.sign {
-		    margin-top: 30mm !important;
+		    margin-top: 20mm !30portant;
 		    text-decoration: underline;
 		}';
-	}
+	}*/
 	?>
 	.pager
 	{
@@ -158,7 +158,7 @@ use yii\helpers\Url;
 		width: 86mm;
 	}
 	.sign{
-		margin-top: 45mm;
+		margin-top: 102px;
 		text-decoration: underline;
 	}
 	.totalRow{

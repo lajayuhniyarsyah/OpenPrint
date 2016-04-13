@@ -2,6 +2,9 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 ?>
+<?php
+	// echo var_dump($data['total']);
+?>
 
 <style type="text/css">
 	table{
@@ -257,7 +260,13 @@ use yii\helpers\Url;
 						</td>
 					</tr>
 					<tr>
-						<td><div class="amount"><div class="amVal"><?= (isset($data['total']['amountTaxMainCurr']) ? Yii::$app->numericLib->indoStyle($data['total']['amountTaxMainCurr']):''); ?></div></div></td>
+						<td>
+							<div class="amount">
+								<div class="amVal">
+									<?= (isset($data['total']['amountTaxMainCurr']) ? Yii::$app->numericLib->indoStyle($data['total']['amountTaxMainCurr']):''); ?>
+								</div>
+							</div>
+						</td>
 					</tr>
 					<tr>
 						<td>

@@ -161,8 +161,8 @@ if($printer=='refa'){
 						<tr>
 							<td>
 								<div class="pkp" style="margin-top:8mm;margin-left:36mm;">
-									<div style="margin-bottom:1mm;" contenteditable='true'>PT. SUPRABAKTI MANDIRI</div>
-									<div style="height:10mm;"><span>Jl. Danau Sunter Utara Blok. A No. 9 Tanjung Priok - Jakarta Utara 14350</span></div>
+									<div class="ptSupra" style="margin-bottom:1mm;" contenteditable='true'>PT. SUPRABAKTI MANDIRI</div>
+									<div class="fontAddr" style="height:10mm;"><span>Jl. Danau Sunter Utara Blok. A No. 9 Tanjung Priok - Jakarta Utara 14350</span></div>
 									<div>01.327.742.1-038.000</div>
 								</div>
 							</td>
@@ -196,7 +196,7 @@ if($printer=='refa'){
 											echo $partnerName;
 										?>
 									</div>
-									<div style="height:10mm;" contenteditable="true">
+									<div class="fontAddr" style="height:10mm;" contenteditable="true">
 										<span>
 											<?php
 												$iAddr = $modelPartner['street'].'<br/>'.$modelPartner['street2'].' '.$modelPartner['city'].', '.(isset($modelPartner['state_id'][1]) ? $modelPartner['state_id'][1]:'').($modelPartner['zip'] ? ' - '.$modelPartner['zip']:"");

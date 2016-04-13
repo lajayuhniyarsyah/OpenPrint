@@ -187,77 +187,80 @@ class PrintOutController extends Controller
 		// var_dump($sale_order_ids);
 		$saleOrder = $oe->read($sale_order_ids,['id','order_line','amount_untaxed'],'sale.order');
 		// var_dump($saleOrder);
-		$modelSaleOrder = $saleOrder[0];
+		// $modelSaleOrder = $saleOrder[0];
+		foreach ($saleOrder as $key => $modelSaleOrder) {
 
-		$id_order_line = $modelSaleOrder['order_line'];
-		$saleOrderLine = $oe->read($id_order_line,['id','price_unit','product_uom_qty','discount','discount_nominal','product_id','product_uom','sequence','product_ref','price_subtotal','name'],'sale.order.line');
-		// var_dump($saleOrderLine);
+			$id_order_line = $modelSaleOrder['order_line'];
+			$saleOrderLine = $oe->read($id_order_line,['id','price_unit','product_uom_qty','discount','discount_nominal','product_id','product_uom','sequence','product_ref','price_subtotal','name'],'sale.order.line');
+			// var_dump($saleOrderLine);
 
-		if($model['payment_for'] =='dp' || $model['payment_for'] =='completion'){
-			
-			$no=0;
-			foreach ($saleOrderLine as $key => $soLine) {
-
-				$no++;
-				$idx++;
+			if($model['payment_for'] =='dp' || $model['payment_for'] =='completion'){
 				
-				# product product
-				$idProduct = $soLine['product_id'][0].',';
-				$product = $oe->read([$idProduct],['id','default_code','name_template'],"product.product");
-				// var_dump($product);
-				$modelProduct = NULL;
-				if($product != NULL){
-					$modelProduct = $product[0];
-				}
+				$no=0;
+				foreach ($saleOrderLine as $key => $soLine) {
 
-				// var_dump($soLine);
-
-				$data['lines'][] = [
-					'id'=>$soLine['id'],
-
-					'no'=>($model['payment_for'] =='dp' || $model['payment_for'] =='completion' ? $no:$soLine['sequence']),
-					'name'=>(isset($soLine['product_ref']) ? $soLine['product_ref'].'<br/>'.nl2br($soLine['name']).'<br/>P/N : '.$modelProduct['default_code'].($printForFaktur ? '<br/>Rp<b>'.$this->formatValue($invoiceLine['unit_price_main']).' x '.$soLine['product_uom_qty'].'</b>':'&nbsp;'):nl2br($soLine['name']).($printForFaktur ? '<br/>'.$this->formatValue($invoiceLine['unit_price_main']).' x '.$soLine['product_uom_qty']:'&nbsp;')),
-
-					'priceUnit'=>$soLine['price_unit'],
-					'priceUnitMainCurr'=>$invoiceLine['unit_price_main'],
-					'qty'=>$this->formatValue($soLine['product_uom_qty'],$model['currency_id'][0]),
-					'unit'=>$soLine['product_uom'][1],
-
-					'priceSubtotal'=>$soLine['price_subtotal'],
-					'priceSubtotalMainCurr'=>$invoiceLine['sub_total_main'],
+					$no++;
+					$idx++;
 					
-					'discountPercentage'=>$soLine['discount'],
-					'discountAmount'=>$soLine['discount_nominal'],
-					'discountMainCurr'=>$invoiceLine['amount_discount_main'],
+					# product product
+					$idProduct = $soLine['product_id'][0].',';
+					$product = $oe->read([$idProduct],['id','default_code','name_template'],"product.product");
+					// var_dump($product);
+					$modelProduct = NULL;
+					if($product != NULL){
+						$modelProduct = $product[0];
+					}
 
-					'priceTotal'=>$modelSaleOrder['amount_untaxed'],
-					'priceTotalMainCurr'=>$model['amount_untaxed_main'],
+					// var_dump($soLine);
 
-					'taxMainCurr'=>$invoiceLine['tax_amount_main'],
-					'totalAmountMainCurr'=>$model['amount_total_main'],
+					$data['lines'][] = [
+						'id'=>$soLine['id'],
 
-					'formated'=>[
-						'currency'=>($printForFaktur ? $model['currency_id'][1]:'&nbsp;'),
-						'priceUnit'=>($printForFaktur ? $this->formatValue($soLine['price_unit'],$model['currency_id'][0]):'&nbsp;'),
-						'priceUnitMainCurr'=>$this->formatValue($invoiceLine['unit_price_main'],$model['currency_id'][0]),
+						'no'=>($model['payment_for'] =='dp' || $model['payment_for'] =='completion' ? $no:$soLine['sequence']),
+						'name'=>(isset($soLine['product_ref']) ? $soLine['product_ref'].'<br/>'.nl2br($soLine['name']).'<br/>P/N : '.$modelProduct['default_code'].($printForFaktur ? '<br/>Rp<b>'.$this->formatValue($invoiceLine['unit_price_main']).' x '.$soLine['product_uom_qty'].'</b>':'&nbsp;'):nl2br($soLine['name']).($printForFaktur ? '<br/>'.$this->formatValue($invoiceLine['unit_price_main']).' x '.$soLine['product_uom_qty']:'&nbsp;')),
+
+						'priceUnit'=>$soLine['price_unit'],
+						'priceUnitMainCurr'=>$invoiceLine['unit_price_main'],
+						'qty'=>$this->formatValue($soLine['product_uom_qty'],$model['currency_id'][0]),
+						'unit'=>$soLine['product_uom'][1],
+
+						'priceSubtotal'=>$soLine['price_subtotal'],
+						'priceSubtotalMainCurr'=>$invoiceLine['sub_total_main'],
 						
-						'priceSubtotal'=>($printForFaktur ? $this->formatValue($soLine['price_subtotal'],$model['currency_id'][0]):'&nbsp;'),
-						'priceSubtotalMainCurr'=>$this->formatValue($invoiceLine['sub_total_main'],$model['currency_id'][0]),
-						
-						'discountPercentage'=>$this->formatValue($soLine['discount'],$model['currency_id'][0]),
-						'discountAmount'=>$this->formatValue($soLine['discount_nominal'],$model['currency_id'][0]),
-						'discountMainCurr'=>$this->formatValue($invoiceLine['amount_discount_main'],$model['currency_id'][0]),
+						'discountPercentage'=>$soLine['discount'],
+						'discountAmount'=>$soLine['discount_nominal'],
+						'discountMainCurr'=>$invoiceLine['amount_discount_main'],
 
-						'priceTotal'=>$this->formatValue($modelSaleOrder['amount_untaxed'],$model['currency_id'][0]),
-						'priceTotalMainCurr'=>$this->formatValue($model['amount_untaxed_main'],$model['currency_id'][0]),
+						'priceTotal'=>$modelSaleOrder['amount_untaxed'],
+						'priceTotalMainCurr'=>$model['amount_untaxed_main'],
 
-						'taxMainCurr'=>$this->formatValue($invoiceLine['tax_amount_main'],$model['currency_id'][0]),
-						'totalAmountMainCurr'=>$this->formatValue($model['amount_total_main'],$model['currency_id'][0]),
-					]
-				];
+						'taxMainCurr'=>$invoiceLine['tax_amount_main'],
+						'totalAmountMainCurr'=>$model['amount_total_main'],
 
+						'formated'=>[
+							'currency'=>($printForFaktur ? $model['currency_id'][1]:'&nbsp;'),
+							'priceUnit'=>($printForFaktur ? $this->formatValue($soLine['price_unit'],$model['currency_id'][0]):'&nbsp;'),
+							'priceUnitMainCurr'=>$this->formatValue($invoiceLine['unit_price_main'],$model['currency_id'][0]),
+							
+							'priceSubtotal'=>($printForFaktur ? $this->formatValue($soLine['price_subtotal'],$model['currency_id'][0]):'&nbsp;'),
+							'priceSubtotalMainCurr'=>$this->formatValue($invoiceLine['sub_total_main'],$model['currency_id'][0]),
+							
+							'discountPercentage'=>$this->formatValue($soLine['discount'],$model['currency_id'][0]),
+							'discountAmount'=>$this->formatValue($soLine['discount_nominal'],$model['currency_id'][0]),
+							'discountMainCurr'=>$this->formatValue($invoiceLine['amount_discount_main'],$model['currency_id'][0]),
+
+							'priceTotal'=>$this->formatValue($modelSaleOrder['amount_untaxed'],$model['currency_id'][0]),
+							'priceTotalMainCurr'=>$this->formatValue($model['amount_untaxed_main'],$model['currency_id'][0]),
+
+							'taxMainCurr'=>$this->formatValue($invoiceLine['tax_amount_main'],$model['currency_id'][0]),
+							'totalAmountMainCurr'=>$this->formatValue($model['amount_total_main'],$model['currency_id'][0]),
+						]
+					];
+
+				}
+				
 			}
-			
+
 		}
 
 		
@@ -377,7 +380,7 @@ class PrintOutController extends Controller
 				$nameLine .= '<br/>P/N : '.$modelProduct['default_code'];
 			}
 			if(!$modelInvoice['payment_for']){
-				$nameLine .= '<br/><b>Rp '. Yii::$app->numericLib->indoStyle($modelInvoiceLine['price_unit']).' x '.floatval($modelInvoiceLine['quantity']).'</b>';
+				$nameLine .= '<br/><b>Rp '. Yii::$app->numericLib->indoStyle($modelInvoiceLine['price_unit']*$modelInvoice['pajak']).' x '.floatval($modelInvoiceLine['quantity']).'</b>';
 			}
 
 			$lines[] = [
@@ -398,7 +401,7 @@ class PrintOutController extends Controller
 				'subTotalMain'=>$modelInvoiceLine['sub_total_main'],
 
 				'amountBruto'=>$this->formatValue($modelInvoiceLine['amount_bruto'],$modelInvoice['currency_id'][0]),
-				'amountBrutoMain'=>$this->formatValue($modelInvoiceLine['amount_bruto_main'],$modelInvoice['currency_id'][0]),
+				'amountBrutoMain'=>Yii::$app->numericLib->indoStyle($modelInvoiceLine['amount_bruto_main']),
 
 				'discount'=>$modelInvoiceLine['discount'],
 				'amountDiscount'=>$modelInvoiceLine['amount_discount'],

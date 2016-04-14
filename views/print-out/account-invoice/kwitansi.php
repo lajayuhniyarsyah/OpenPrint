@@ -143,7 +143,6 @@ $formated = function($value) use ($modelInvoice){
 		<select name="printer" onchange="jQuery('#formSelectPrinter').submit();">
 			<option <?=($printer=='refa' ? 'selected ':null)?> value="refa">Refa</option>
 			<option <?=($printer=='sri' ? 'selected ':null)?> value="sri">Sri</option>
-			<option <?=($printer=='refa-semen' ? 'selected ':null)?> value="refa-semen">Refa-Semen</option>
 		</select>
 	</form>
 </div>

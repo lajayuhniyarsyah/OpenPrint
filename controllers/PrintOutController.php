@@ -124,9 +124,6 @@ class PrintOutController extends Controller
 			if(isset($modelProduct['default_code'])){
 				$nameLine .= '<br/>P/N : '.$modelProduct['default_code'];
 			}
-			if(!$model['payment_for'] && $printForFaktur){
-				$nameLine .= '<br/><b>Rp '.Yii::$app->numericLib->indoStyle($invLine['price_unit']).' x '.floatval($invLine['quantity']).'</b>';
-			}
 
 			$data['lines'][] = [
 				'id'=>$invLine['id'],
@@ -380,7 +377,7 @@ class PrintOutController extends Controller
 				$nameLine .= '<br/>P/N : '.$modelProduct['default_code'];
 			}
 			if(!$modelInvoice['payment_for']){
-				$nameLine .= '<br/><b>Rp '. Yii::$app->numericLib->indoStyle($modelInvoiceLine['price_unit']*$modelInvoice['pajak']).' x '.floatval($modelInvoiceLine['quantity']).'</b>';
+				$nameLine .= '<br/><b>Rp '. Yii::$app->numericLib->indoStyle($modelInvoiceLine['unit_price_main']).' x '.floatval($modelInvoiceLine['quantity']).'</b>';
 			}
 
 			$lines[] = [
@@ -480,6 +477,8 @@ class PrintOutController extends Controller
 			'printer'=>$printer,
 		]);
 	}
+
+
 
 
 }

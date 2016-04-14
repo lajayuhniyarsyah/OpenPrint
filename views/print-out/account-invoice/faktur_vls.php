@@ -138,7 +138,6 @@ if($printer=='refa'){
 		<select name="printer" onchange="jQuery('#formSelectPrinter').submit();">
 			<option <?=($printer=='refa' ? 'selected ':null)?> value="refa">Refa</option>
 			<option <?=($printer=='sri' ? 'selected ':null)?> value="sri">Sri</option>
-			<option <?=($printer=='refa-semen' ? 'selected ':null)?> value="refa-semen">Refa-Semen</option>
 		</select>
 	</form>
 </div>
@@ -239,10 +238,10 @@ if($printer=='refa'){
 									<table style="width:100%;" cellpadding="0" cellspacing="0">
 										<tr>
 											<td style="width:61%;">
-												<?='<div style="width:auto;float:left;">'.  $modelInvoice['currency_id'][1].'</div><div class="wid1">'.Yii::$app->numericLib->westStyle($modelInvoiceLine['amount_bruto']).'</div>'?>
+												<?='<div style="width:auto;float:left;">'.  $modelInvoice['currency_id'][1].'</div><div class="wid1">'.Yii::$app->numericLib->westStyle(($modelInvoice['payment_for'] ? $modelInvoiceLine['price_subtotal']:$modelInvoice['amount_untaxed'])).'</div>'?>
 											</td>
 											<td style="text-align:right;">
-												<?php echo Yii::$app->numericLib->indoStyle($modelInvoiceLine['amount_bruto_main']); ?>
+												<?php echo Yii::$app->numericLib->indoStyle($modelInvoice['amount_untaxed_main']); ?>
 											</td>
 										</tr>
 									</table>

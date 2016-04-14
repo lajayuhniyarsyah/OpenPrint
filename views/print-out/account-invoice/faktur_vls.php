@@ -138,7 +138,6 @@ if($printer=='refa'){
 		<select name="printer" onchange="jQuery('#formSelectPrinter').submit();">
 			<option <?=($printer=='refa' ? 'selected ':null)?> value="refa">Refa</option>
 			<option <?=($printer=='sri' ? 'selected ':null)?> value="sri">Sri</option>
-			<option <?=($printer=='refa-semen' ? 'selected ':null)?> value="refa-semen">Refa-Semen</option>
 		</select>
 	</form>
 </div>
@@ -161,8 +160,8 @@ if($printer=='refa'){
 						<tr>
 							<td>
 								<div class="pkp" style="margin-top:8mm;margin-left:36mm;">
-									<div style="margin-bottom:1mm;" contenteditable='true'>PT. SUPRABAKTI MANDIRI</div>
-									<div style="height:10mm;"><span>Jl. Danau Sunter Utara Blok. A No. 9 Tanjung Priok - Jakarta Utara 14350</span></div>
+									<div class="ptSupra" style="margin-bottom:1mm;" contenteditable='true'>PT. SUPRABAKTI MANDIRI</div>
+									<div class="fontAddr" style="height:10mm;"><span>Jl. Danau Sunter Utara Blok. A No. 9 Tanjung Priok - Jakarta Utara 14350</span></div>
 									<div>01.327.742.1-038.000</div>
 								</div>
 							</td>
@@ -196,7 +195,7 @@ if($printer=='refa'){
 											echo $partnerName;
 										?>
 									</div>
-									<div style="height:10mm;" contenteditable="true">
+									<div class="fontAddr" style="height:10mm;" contenteditable="true">
 										<span>
 											<?php
 												$iAddr = $modelPartner['street'].'<br/>'.$modelPartner['street2'].' '.$modelPartner['city'].', '.(isset($modelPartner['state_id'][1]) ? $modelPartner['state_id'][1]:'').($modelPartner['zip'] ? ' - '.$modelPartner['zip']:"");
@@ -239,10 +238,10 @@ if($printer=='refa'){
 									<table style="width:100%;" cellpadding="0" cellspacing="0">
 										<tr>
 											<td style="width:61%;">
-												<?='<div style="width:auto;float:left;">'.  $modelInvoice['currency_id'][1].'</div><div class="wid1">'.Yii::$app->numericLib->westStyle($modelInvoiceLine['amount_bruto']).'</div>'?>
+												<?='<div style="width:auto;float:left;">'.  $modelInvoice['currency_id'][1].'</div><div class="wid1">'.Yii::$app->numericLib->westStyle(($modelInvoice['payment_for'] ? $modelInvoiceLine['price_subtotal']:$modelInvoice['amount_untaxed'])).'</div>'?>
 											</td>
 											<td style="text-align:right;">
-												<?php echo Yii::$app->numericLib->indoStyle($modelInvoiceLine['amount_bruto_main']); ?>
+												<?php echo Yii::$app->numericLib->indoStyle($modelInvoice['amount_untaxed_main']); ?>
 											</td>
 										</tr>
 									</table>

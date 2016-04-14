@@ -268,7 +268,7 @@ class PurchaseOrderController extends Controller
        if(isset($modelline['product_id']) && $modelline['product_id']){
                 if($modelline['product_id']!='0')
                     {
-                        var_dump($modelline['product_id']);
+                        //var_dump($modelline['product_id']);
                         // die();
                         $query->andWhere(['pol.product_id'=>$modelline['product_id']]);
                         // $query->andWhere(['pol.product_id'=>879]);

@@ -140,14 +140,6 @@ class PurchaseOrderController extends Controller
         $modelLine->load(Yii::$app->request->get());
         $submited = false;
 
-        // print_r($model);
-
-        // if ($model->load(Yii::$app->request->get()) AND $modelLine->load(Yii::$app->request->get())) {
-        //     $query = $this->getPOLineRelatedQuery($model,$modelLine,$groupBy);
-        // }else{
-        //     $query = $this->getPOLineRelatedQuery($model,$modelLine,$groupBy);
-        // }
-
         $query = $this->getPOLineRelatedQuery($model,$modelLine,$groupBy);
 
         $dataProvider = new ActiveDataProvider([
@@ -167,6 +159,8 @@ class PurchaseOrderController extends Controller
 
     public function getPOLineRelatedQuery($params = [], $modelline = [], $groupBy = null)
     {
+        // var_dump($params);
+        // die();
         $query = new Query;
         if($params['partner_id']){
             $partner_id=$params['partner_id'];    
@@ -257,7 +251,10 @@ class PurchaseOrderController extends Controller
         if(isset($params['partner_id']) && $params['partner_id']){
             if($params['partner_id']!='0')
                 {
-                    $query->andWhere(['pol.partner_id'=>explode(',',$params['partner_id'])]); 
+                    /*var_dump($params['partner_id']);
+                    die();*/
+                    $query->andWhere(['pol.partner_id'=>$params['partner_id']]);
+                    // $query->andWhere(['pol.partner_id'=>1996]);
                 }
         }
 
@@ -271,7 +268,10 @@ class PurchaseOrderController extends Controller
        if(isset($modelline['product_id']) && $modelline['product_id']){
                 if($modelline['product_id']!='0')
                     {
-                        $query->andWhere(['pol.product_id'=>explode(',',$modelline['product_id'])]); 
+                        var_dump($modelline['product_id']);
+                        // die();
+                        $query->andWhere(['pol.product_id'=>$modelline['product_id']]);
+                        // $query->andWhere(['pol.product_id'=>879]);
                     }
             }
 

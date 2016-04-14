@@ -99,20 +99,20 @@ SCRIPT;
 					<br/>
 					<div class="dropdown">
 					  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-					    Group Data
-					    <span class="caret"></span>
+						Group Data
+						<span class="caret"></span>
 					  </button>
 					  <?php
-					  		$currQParam = Yii::$app->request->getQueryParams();
-					  		$action = $currQParam['r'];
-					  		unset($currQParam['r']);
-					  		$base = [$action];
-					  		$baseQ = array_merge($base,$currQParam);
-					  		$toCustomer = array_merge($baseQ,['groupBy'=>'partner']);
+							$currQParam = Yii::$app->request->getQueryParams();
+							$action = $currQParam['r'];
+							unset($currQParam['r']);
+							$base = [$action];
+							$baseQ = array_merge($base,$currQParam);
+							$toCustomer = array_merge($baseQ,['groupBy'=>'partner']);
 
-					  	?>
+						?>
 					  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-					  		<li role="presentation"><a role="menuitem" tabindex="-1" href="<?php echo \yii\helpers\Url::to(array_merge($baseQ,['groupBy'=>'partner'])); ?>">Group By Partner</a></li>
+							<li role="presentation"><a role="menuitem" tabindex="-1" href="<?php echo \yii\helpers\Url::to(array_merge($baseQ,['groupBy'=>'partner'])); ?>">Group By Partner</a></li>
 					  </ul>
 					</div> 
 					<a href="#" class="btn btn-primary right" id="showform">Show Form</a>
@@ -139,6 +139,9 @@ SCRIPT;
 					?>
 					<div class="col-md-6">
 						<?php
+							if(!$model->partner_id){
+								$model->partner_id = [];
+							}
 							echo $form->field($model, 'partner_id')->widget(Select2::classname(), [
 								'name'=>'partner_id',
 								'pluginOptions'=>[
@@ -146,7 +149,7 @@ SCRIPT;
 									'ajax'=>[
 										'url'=>Url::to(['supplierlist']),
 										'dataType'=>'json',
-										'data'=>new JsExpression('function(term,page){return {search:term.term}; }'),
+										'data'=>new JsExpression('function(params,page){return {search:params.term}; }'),
 										'results'=>new JsExpression('function(data,page){ return {results:data.results}; }'),
 									],
 									'allowClear'=>true,
@@ -164,7 +167,10 @@ SCRIPT;
 									}'),
 								],
 								'value'=>Yii::$app->request->get('partner_id'),
-								'options' => ['placeholder' => 'All Supplier ...', 'multiple' => true],
+								'options' => [
+									'placeholder' => 'All Supplier ...', 
+									'multiple' => true
+								],
 							]);
 						?>
 
@@ -174,14 +180,17 @@ SCRIPT;
 					</div>
 					<div class="col-md-6">
 						<?php
-							echo $form->field($modelline, 'product_id')->widget(Select2::classname(), [
+							if(!$modelline['product_id']){
+								$modelline['product_id'] = [];
+							}
+							echo $form->field($modelline, 'product_id')->widget(Select2::className(), [
 								'name'=>'product_id',
 								'pluginOptions'=>[
 									'tags'=>true,
 									'ajax'=>[
 										'url'=>Url::to(['productlist']),
 										'dataType'=>'json',
-										'data'=>new JsExpression('function(term,page){return {search:term}; }'),
+										'data'=>new JsExpression('function(params,page){return {search:params.term}; }'),
 										'results'=>new JsExpression('function(data,page){ return {results:data.results}; }'),
 									],
 									'allowClear'=>true,
@@ -199,19 +208,22 @@ SCRIPT;
 									}'),
 								],
 								'value'=>Yii::$app->request->get('product_id'),
-								'options' => ['placeholder' => 'All Product ...', 'multiple' => true],
+								'options' => [
+									'placeholder' => 'All Product ...', 
+									'multiple' => true
+								],
 							]);
 						?>
 
 						<?php
 							echo $form->field($model, 'state')->widget(Select2::classname(), [
-							    'name' => 'state', 
-							    'options' => ['placeholder' => 'Select a State ...'],
-							    'pluginOptions' => [
-							        // 'tags' => ["draft", "confirmed", "approved", "done", "cancel"],
-							        'tags' => ["purchased","cancel","draft"],
-							        'maximumInputLength' => 10
-							    ],
+								'name' => 'state', 
+								'options' => ['placeholder' => 'Select a State ...'],
+								'pluginOptions' => [
+									// 'tags' => ["draft", "confirmed", "approved", "done", "cancel"],
+									'tags' => ["purchased","cancel","draft"],
+									'maximumInputLength' => 10
+								],
 							]);
 						?>
 					</div>
@@ -238,101 +250,101 @@ SCRIPT;
 
 					<div class="col-md-6">
 						<br/>
-				         <?= Html::submitButton('View Report', ['class' => 'btn btn-primary', 'name' => 'report-activity']) ?>
-				         <br/>
-				         <br/>
-				    </div>
+						 <?= Html::submitButton('View Report', ['class' => 'btn btn-primary', 'name' => 'report-activity']) ?>
+						 <br/>
+						 <br/>
+					</div>
 					<?php ActiveForm::end(); ?>
 					</div>
 				</div>
 
 			<div style="clear:both"></div>
 				<div class="panel panel-default">
-		            <div class="panel-heading">
-		                <h3 class="panel-title">Purchase Product</h3>
-		            </div>
-		        <div class="panel-body">
+					<div class="panel-heading">
+						<h3 class="panel-title">Purchase Product</h3>
+					</div>
+				<div class="panel-body">
 				<?php  
-		            if($groupBy=='nogroup'){
-			                echo GridView::widget([
-			                    'id'=>'prospectGrid',
-			                    'dataProvider'=>$dataProvider,
-			                    'showPageSummary'=>true,
-			                    'columns'=>[
-			                        [
-			                            'class'=>'kartik\grid\ExpandRowColumn',
-			                            'width'=>'50px',
-			                            'value'=>function ($model, $key, $index, $column) {
-			                                return GridView::ROW_COLLAPSED;
-			                            },
-			                            'detailUrl'=>\yii\helpers\Url::to(['#']),
-			                            'headerOptions'=>['class'=>'kartik-sheet-style'] 
-			                        ],
-			                        'partner',
-			                        'no_po',
-			                        [
-			                        	'attribute'=>'date_order',
-			                            'header'=>'Date',
-			                            'value'=>function($model,$key,$index,$grid){
-			                                return Yii::$app->formatter->asDatetime($model['date_order'], "php:d-m-Y");
-			                            }
-			                        ],
-			                        'product',
-			                        'pol_desc',
-			                        [
-			                        	'attribute'=>'product_qty',
-			                            'header'=>'Qty',
-			                            'value'=>function($model,$key,$index,$grid){
-			                                return app\components\NumericLib::indoStyle($model['product_qty'],2,',','.');
-			                            }
-			                        ],
-			                        'uom',
-			                        [
-			                        	'attribute'=>'price_unit',
-			                            'header'=>'Currency',
-			                            'value'=>function($model,$key,$index,$grid){
-			                                return app\components\NumericLib::indoStyle($model['price_unit'],2,',','.');
-			                            }
-			                        ],
-			                         [
-			                        	'attribute'=>'total',
-			                            'header'=>'Total',
-			                            'value'=>function($model,$key,$index,$grid){
-			                                return app\components\NumericLib::indoStyle($model['total'],2,',','.');
-			                            }
-			                        ],
-			                        
-			                        'pricelist',
-			                        'state',
-			                    ]
-			                ]);
+					if($groupBy=='nogroup'){
+							echo GridView::widget([
+								'id'=>'prospectGrid',
+								'dataProvider'=>$dataProvider,
+								'showPageSummary'=>true,
+								'columns'=>[
+									[
+										'class'=>'kartik\grid\ExpandRowColumn',
+										'width'=>'50px',
+										'value'=>function ($model, $key, $index, $column) {
+											return GridView::ROW_COLLAPSED;
+										},
+										'detailUrl'=>\yii\helpers\Url::to(['#']),
+										'headerOptions'=>['class'=>'kartik-sheet-style'] 
+									],
+									'partner',
+									'no_po',
+									[
+										'attribute'=>'date_order',
+										'header'=>'Date',
+										'value'=>function($model,$key,$index,$grid){
+											return Yii::$app->formatter->asDatetime($model['date_order'], "php:d-m-Y");
+										}
+									],
+									'product',
+									'pol_desc',
+									[
+										'attribute'=>'product_qty',
+										'header'=>'Qty',
+										'value'=>function($model,$key,$index,$grid){
+											return app\components\NumericLib::indoStyle($model['product_qty'],2,',','.');
+										}
+									],
+									'uom',
+									[
+										'attribute'=>'price_unit',
+										'header'=>'Currency',
+										'value'=>function($model,$key,$index,$grid){
+											return app\components\NumericLib::indoStyle($model['price_unit'],2,',','.');
+										}
+									],
+									 [
+										'attribute'=>'total',
+										'header'=>'Total',
+										'value'=>function($model,$key,$index,$grid){
+											return app\components\NumericLib::indoStyle($model['total'],2,',','.');
+										}
+									],
+									
+									'pricelist',
+									'state',
+								]
+							]);
 					}else{
 
 						echo GridView::widget([
-			                    'id'=>'prospectGrid',
-			                    'dataProvider'=>$dataProvider,
-			                    'showPageSummary'=>true,
-			                    'columns'=>[
-			                        [
-			                            'class'=>'kartik\grid\ExpandRowColumn',
-			                            'width'=>'50px',
-			                            'value'=>function ($model, $key, $index, $column) {
-			                                return GridView::ROW_COLLAPSED;
-			                            },
-			                            'detailUrl'=>\yii\helpers\Url::to(['purchase-order/detail-purchase']),
-			                            'headerOptions'=>['class'=>'kartik-sheet-style'] 
-			                        ],
-			                        'partner',
-			                        'pricelist',
-			                        [
-			                            'attribute'=>'cout',
-			                            'header'=>'Count',
-			                            'value'=>function($model,$key,$index,$grid){
-			                                return app\components\NumericLib::indoStyle($model['total'],2,',','.');
-			                            }
-			                        ]
-			                    ]
-			                ]);
+								'id'=>'prospectGrid',
+								'dataProvider'=>$dataProvider,
+								'showPageSummary'=>true,
+								'columns'=>[
+									[
+										'class'=>'kartik\grid\ExpandRowColumn',
+										'width'=>'50px',
+										'value'=>function ($model, $key, $index, $column) {
+											return GridView::ROW_COLLAPSED;
+										},
+										'detailUrl'=>\yii\helpers\Url::to(['purchase-order/detail-purchase']),
+										'headerOptions'=>['class'=>'kartik-sheet-style'] 
+									],
+									'partner',
+									'pricelist',
+									[
+										'attribute'=>'cout',
+										'header'=>'Count',
+										'value'=>function($model,$key,$index,$grid){
+											return app\components\NumericLib::indoStyle($model['total'],2,',','.');
+										}
+									]
+								]
+							]);
 					} 
 				?>
 				</div>

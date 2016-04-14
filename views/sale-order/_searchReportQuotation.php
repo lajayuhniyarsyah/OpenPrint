@@ -64,6 +64,10 @@ use kartik\widgets\DatePicker;
 		],
 	])->textInput()->label('Group')*/ ?>
 	<?php 
+	if($model['tag_group']){
+		$model['tag_group']=[];
+	}
+
 	// $data = ArrayHelper::getColumn(GroupSales::find()->select('name')->distinct()->all(),'name');
 	echo $form->field($model, 'tag_group')->widget(Select2::classname(),[
 	    'name' => 'tag_group',
@@ -92,6 +96,10 @@ use kartik\widgets\DatePicker;
 	])->textInput()->label('Group')*/ ?>
 	<?php 
 	// $data = ArrayHelper::getColumn(ResUsers::find()->select('login')->distinct()->all(),'login');
+	if(!$model->['tag_user']){
+		$model['tag_user']=[];
+	}
+
 	echo $form->field($model, 'tag_user')->widget(Select2::classname(),[
 	    'name' => 'tag_user',
 	    'data' => ArrayHelper::map(ResUsers::find()->select('login')->distinct()->all(), 'login', 'login'),
@@ -120,6 +128,10 @@ use kartik\widgets\DatePicker;
 	])->textInput()->label('Costumer') */
 	?>
 	<?php 
+	if(!$model['tag_partner']){
+		$model['tag_partner']=[];
+	}
+
 	// $data = ArrayHelper::getColumn(ResPartner::find()->select('display_name')->distinct()->all(),'display_name');
 	echo $form->field($model, 'tag_partner')->widget(Select2::classname(),[
 	    'name' => 'tag_partner',

@@ -174,7 +174,7 @@ SCRIPT;
 										'ajax' => [
 											'url' => $urlproduct,
 											'dataType' => 'json',
-											'data' => new JsExpression('function(term,page) { return {search:term}; }'),
+											'data' => new JsExpression('function(params,page) { return {search:params.term}; }'),
 											'results' => new JsExpression('function(data,page) { return {results:data.results}; }'),
 										],
 										'initSelection' => new JsExpression($initScriptProduct)
@@ -204,6 +204,9 @@ SCRIPT;
 								// ]);
 							?>
 							<?php
+							    if(!$model['productcategory']){
+							    	$model['productcategory']=[];
+							    }
 								echo $form->field($model, 'productcategory')->widget(Select2::classname(), [
 									'data' => $datacetegory,
 									'value'=>Yii::$app->request->get('productcategory'),
@@ -228,7 +231,7 @@ SCRIPT;
 										'ajax' => [
 											'url' => $url,
 											'dataType' => 'json',
-											'data' => new JsExpression('function(term,page) { return {search:term}; }'),
+											'data' => new JsExpression('function(params,page) { return {search:params.term}; }'),
 											'results' => new JsExpression('function(data,page) { return {results:data.results}; }'),
 										],
 										'initSelection' => new JsExpression($initScript)
@@ -257,6 +260,10 @@ SCRIPT;
 							?>
 
 							<?php
+							    if(!$model['pricelist']){
+							    	$model['pricelist']=[];
+							    }
+
 								echo $form->field($model, 'pricelist')->widget(Select2::classname(), [
 									'data' => $datapricelist,
 									'value'=>Yii::$app->request->get('pricelist'),

@@ -45,7 +45,7 @@ $form = ActiveForm::begin([
             'ajax' => [
                 'url' => $url,
                 'dataType' => 'json',
-                'data' => new JsExpression('function(term,page) { return {search:term.term}; }'),
+                'data' => new JsExpression('function(params,page) { return {search:params.term}; }'),
                 'results' => new JsExpression('function(data,page) { return {results:data.results}; }'),
             ],
             'initSelection' => new JsExpression($initScript)

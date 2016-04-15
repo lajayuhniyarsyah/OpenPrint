@@ -164,6 +164,9 @@ SCRIPT;
 						
 						<div class="col-md-6">
 							<?php
+							    if(!$model['product']){
+							    	$model['product']=[];
+							    }
 								echo $form->field($model, 'product')->widget(Select2::classname(), [
 									'name'=>'product',
 									'pluginOptions'=>[
@@ -194,6 +197,10 @@ SCRIPT;
 							?>
 
 							<?php
+							    if(!$model['partner']){
+							    	$model['partner']=[];
+							    }
+
 								echo $form->field($model, 'partner')->widget(Select2::classname(), [
 									'name'=>'partner',
 									'pluginOptions'=>[
@@ -242,6 +249,10 @@ SCRIPT;
 
 						<div class="col-md-6">
 							<?php
+								if(!$model['productcategory']){
+									$model['productcategory']=[];
+								}
+
 								echo $form->field($model, 'productcategory')->widget(Select2::classname(), [
 									'data' => $datacetegory,
 									'value'=>Yii::$app->request->get('productcategory'),
@@ -254,6 +265,12 @@ SCRIPT;
 							?>
 
 							<?php
+
+							    if(!$model['pricelist']){
+							    	$model['pricelist']=[];
+							    }
+
+
 								echo $form->field($model, 'pricelist')->widget(Select2::classname(), [
 									'data' => $datapricelist,
 									'value'=>Yii::$app->request->get('pricelist'),

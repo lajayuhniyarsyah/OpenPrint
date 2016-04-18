@@ -70,12 +70,16 @@ SCRIPT;
 								'ajax' => [
 									'url' => $url,
 									'dataType' => 'json',
-									'data' => new JsExpression('function(params,page) { return {search:params.term}; }'),
-									'results' => new JsExpression('function(data,page) { return {results:data.results}; }'),
+									'data' => new JsExpression('function(params) { return {search:params.term}; }'),
+									'results' => new JsExpression('function(data) { return {results:data.results}; }'),
 								],
-								'initSelection' => new JsExpression($initScript)
+								// 'initSelection' => new JsExpression($initScript),
+								'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
+							    'templateResult' => new JsExpression('function(account) { return account.text; }'),
+							    'templateSelection' => new JsExpression('function (account) { return account.text; }'),
 							],
 						]);
+
 					?>
 					<br/>
 					<?=DatePicker::widget([

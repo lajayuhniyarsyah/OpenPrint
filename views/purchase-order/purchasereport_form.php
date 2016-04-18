@@ -109,7 +109,6 @@ SCRIPT;
 							$base = [$action];
 							$baseQ = array_merge($base,$currQParam);
 							$toCustomer = array_merge($baseQ,['groupBy'=>'partner']);
-
 						?>
 					  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
 							<li role="presentation"><a role="menuitem" tabindex="-1" href="<?php echo \yii\helpers\Url::to(array_merge($baseQ,['groupBy'=>'partner'])); ?>">Group By Partner</a></li>
@@ -142,6 +141,21 @@ SCRIPT;
 							if(!$model->partner_id){
 								$model->partner_id = [];
 							}
+							else if($model->partner_id){
+								foreach ($model->partner_id as $value) {
+										if(is_int($value)==true){
+											
+										}else{
+
+										}
+
+										$data[]=ResPartner::find()->where(['id' => $value])->one()->name;
+								}
+								
+								$model->partner_id=$data;
+								var_dump($model->partner_id);
+							}
+
 							echo $form->field($model, 'partner_id')->widget(Select2::classname(), [
 								'name'=>'partner_id',
 								'pluginOptions'=>[
@@ -155,6 +169,7 @@ SCRIPT;
 									'allowClear'=>true,
 									'initSelection' => new JsExpression('function (element, callback) {
 										var id=$(element).val();
+
 										console.log("CONSOLLLLLLLE ID"+id);
 										if (id !== "") {
 											$.ajax("'.Url::to(['supplierlist']).'&id=" + id, {

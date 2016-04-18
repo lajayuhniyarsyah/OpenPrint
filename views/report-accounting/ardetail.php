@@ -72,7 +72,10 @@ SCRIPT;
 									'data' => new JsExpression('function(params,page) { return {search:params.term}; }'),
 									'results' => new JsExpression('function(data,page) { return {results:data.results}; }'),
 								],
-								'initSelection' => new JsExpression($initScript)
+								// 'initSelection' => new JsExpression($initScript)
+								'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
+							    'templateResult' => new JsExpression('function(partner) { return partner.text; }'),
+							    'templateSelection' => new JsExpression('function (partner) { return partner.text; }'),
 							],
 						]);
 					?>

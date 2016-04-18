@@ -22,11 +22,20 @@
 		$body=[];
 		foreach ($data as $value) {
 
-			if ($value['jenis']=="out" || $value['jenis']=="internal"){
+			if ($value['jenis']=="out"){
 				$qty='-'.$value['qty'];
-			}else{
+			}else if($value['jenis']=="internal"){
+				if($value['id_desc_location']==12){
+					$qty=$value['qty'];
+				}else{
+					$qty='-'.$value['qty'];
+				}
+			}else if($value['jenis']=="in"){
+				$qty=$value['qty'];
+			}else if($value['jenis']=="" && $value['id_desc_location']==12){
 				$qty=$value['qty'];
 			}
+
 
 			if ($value['jenis']=="internal"){
 				$no_surat=$value['no_int'];
@@ -35,10 +44,7 @@
 				$no_surat=$value['ref_cus'];
 				$no_pb='LBM No '.$value['lbm'];
 			}else{
-				// echo $value['dn'].'<br/>';
 				$no_surat=substr($value['dn'], 0,7);
-				// $no_surat=$value['id'];
-				// $value['dn']
 				$no_pb=substr($value['op'], 0,7);
 			}
 

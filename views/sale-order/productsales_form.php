@@ -174,7 +174,7 @@ SCRIPT;
 										'ajax'=>[
 											'url'=>Url::to(['productlist']),
 											'dataType'=>'json',
-											'data'=>new JsExpression('function(term,page){return {search:term}; }'),
+											'data'=>new JsExpression('function(params,page){return {search:params.term}; }'),
 											'results'=>new JsExpression('function(data,page){ return {results:data.results}; }'),
 									],
 										'allowClear'=>true,
@@ -208,7 +208,7 @@ SCRIPT;
 										'ajax'=>[
 											'url'=>Url::to(['customerlist']),
 											'dataType'=>'json',
-											'data'=>new JsExpression('function(term,page){return {search:term}; }'),
+											'data'=>new JsExpression('function(params,page){return {search:params.term}; }'),
 											'results'=>new JsExpression('function(data,page){ return {results:data.results}; }'),
 									],
 										'allowClear'=>true,

@@ -150,6 +150,7 @@ class PurchaseOrderController extends Controller
             ],
         ]);
 
+
         if($groupBy){
             return $this->render('purchasereport_form', ['type'=>'search','model'=>$model,'modelline'=>$modelLine,'dataProvider'=>$dataProvider,'groupBy'=>$groupBy]);
         }else{
@@ -159,8 +160,7 @@ class PurchaseOrderController extends Controller
 
     public function getPOLineRelatedQuery($params = [], $modelline = [], $groupBy = null)
     {
-        // var_dump($params);
-        // die();
+
         $query = new Query;
         if($params['partner_id']){
             $partner_id=$params['partner_id'];    

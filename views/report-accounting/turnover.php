@@ -22,11 +22,20 @@
 		$body=[];
 		foreach ($data as $value) {
 
-			if ($value['jenis']=="out" || $value['jenis']=="internal"){
+			if ($value['jenis']=="out"){
 				$qty='-'.$value['qty'];
-			}else{
+			}else if($value['jenis']=="internal"){
+				if($value['id_desc_location']==12){
+					$qty=$value['qty'];
+				}else{
+					$qty='-'.$value['qty'];
+				}
+			}else if($value['jenis']=="in"){
+				$qty=$value['qty'];
+			}else if($value['jenis']=="" && $value['id_desc_location']==12){
 				$qty=$value['qty'];
 			}
+
 
 			if ($value['jenis']=="internal"){
 				$no_surat=$value['no_int'];

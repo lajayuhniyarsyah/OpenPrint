@@ -404,7 +404,7 @@ class PrintOutController extends Controller
 				'unit'=>$modelInvoiceLine['uos_id'][1],
 
 				'priceSubtotal'=>($modelInvoice['payment_for']=='dp' || $modelInvoice['payment_for']=='completion' ? '':$this->formatValue($modelInvoiceLine['price_subtotal'],$modelInvoice['currency_id'][0])),
-				'subTotalMain'=>($modelInvoice['payment_for']=='dp' || $modelInvoice['payment_for']=='completion' ? '':$modelInvoiceLine['sub_total_main']),
+				'subTotalMain'=>($modelInvoice['payment_for']=='dp' || $modelInvoice['payment_for']=='completion' ? '':Yii::$app->numericLib->indoStyle($modelInvoiceLine['sub_total_main'])),
 
 				'amountBruto'=>$this->formatValue($modelInvoiceLine['amount_bruto'],$modelInvoice['currency_id'][0]),
 				'amountBrutoMain'=>Yii::$app->numericLib->indoStyle($modelInvoiceLine['amount_bruto_main']),
@@ -432,77 +432,81 @@ class PrintOutController extends Controller
 		# sale order
 		$idSaleOrder = $oe->search([['invoice_ids','=',$id]],'sale.order');
 		$saleOrder = $oe->read($idSaleOrder,['id','order_line','amount_untaxed'],'sale.order');
-		$modelSaleOrder = $saleOrder[0];
+		// $modelSaleOrder = $saleOrder[0];
 
-		# sale order line
-		$idSaleOrderLine = $modelSaleOrder['order_line'];
-		$saleOrderLine = $oe->read($idSaleOrderLine,['id','price_unit','product_uom_qty','discount','discount_nominal','product_id','product_uom','sequence','product_ref','price_subtotal','name'],'sale.order.line');
-
-		if($modelInvoice['payment_for'] =='dp' || $modelInvoice['payment_for'] =='completion'){
+		foreach ($saleOrder as $key => $modelSaleOrder) {
 			
-			foreach ($saleOrderLine as $key => $modelSaleOrderLine) {
+			# sale order line
+			$idSaleOrderLine = $modelSaleOrder['order_line'];
+			$saleOrderLine = $oe->read($idSaleOrderLine,['id','price_unit','product_uom_qty','discount','discount_nominal','product_id','product_uom','sequence','product_ref','price_subtotal','name'],'sale.order.line');
 
-				$pajak = $modelInvoice['pajak'];
-				if($modelInvoice['pajak'] > 0){
+			if($modelInvoice['payment_for'] =='dp' || $modelInvoice['payment_for'] =='completion'){
+				
+				foreach ($saleOrderLine as $key => $modelSaleOrderLine) {
+
 					$pajak = $modelInvoice['pajak'];
-				} else {
-					$pajak = 1;
+					if($modelInvoice['pajak'] > 0){
+						$pajak = $modelInvoice['pajak'];
+					} else {
+						$pajak = 1;
+					}
+
+					$subTotalMain = $modelSaleOrderLine['price_unit']*$pajak;
+
+
+					# product product
+					$idProduct = $modelSaleOrderLine['product_id'][0].',';
+					$product = $oe->read([$idProduct],['id','default_code','name_template','product_tmpl_id'],"product.product");
+					$modelProduct = NULL;
+					if($product != NULL){
+						$modelProduct = $product[0];
+					}
+
+					$nameLine = (isset($modelSaleOrderLine['product_ref']) ? $modelSaleOrderLine['product_ref'] : null);
+					if(trim($modelSaleOrderLine['name'])):
+						$nameLine .= (isset($modelProduct['name_template']) ? '<br/>':"").nl2br($modelSaleOrderLine['name']);
+					endif;
+					if(isset($modelProduct['default_code'])){
+						$nameLine .= '<br/>P/N : '.$modelProduct['default_code'];
+					}
+					if($modelInvoice['payment_for']){
+						$nameLine .= '<br/><b>Rp '. Yii::$app->numericLib->indoStyle($subTotalMain).' x '.floatval($invLine['quantity']).'</b>';
+					}
+
+
+					$lines[] = [
+						'id'=>$modelSaleOrderLine['id'],
+
+						'no'=>$modelSaleOrderLine['sequence'],
+						'name'=>$nameLine,
+
+						'priceUnit'=>$this->formatValue($modelSaleOrderLine['price_unit'],$modelInvoice['currency_id'][0]),
+						'priceUnitMainCurr'=>Yii::$app->numericLib->indoStyle($invLine['unit_price_main']),
+
+						'currency'=>$modelInvoice['currency_id'][1],
+
+						'qty'=>$invLine['quantity'],
+						'unit'=>$invLine['uos_id'][1],
+
+						'priceSubtotal'=>$this->formatValue($modelSaleOrderLine['price_subtotal'],$modelInvoice['currency_id'][0]),
+						// 'subTotalMain'=>Yii::$app->numericLib->indoStyle($invLine['sub_total_main']),
+						'subTotalMain'=>Yii::$app->numericLib->indoStyle($subTotalMain),
+
+						'amountBruto'=>$this->formatValue($invLine['amount_bruto'],$modelInvoice['currency_id'][0]),
+						'amountBrutoMain'=>Yii::$app->numericLib->indoStyle($invLine['amount_bruto_main']),
+
+						'discount'=>$modelSaleOrderLine['discount'],
+						'amountDiscount'=>$modelSaleOrderLine['discount_nominal'],
+						'amountDiscountMain'=>$invLine['amount_discount_main'],
+
+						'amountUntaxed'=>$modelInvoice['amount_untaxed'],
+						'amountUntaxedMain'=>$modelInvoice['amount_untaxed_main'],
+
+						'taxAmountMain'=>$invLine['tax_amount_main'],
+						'amountTotalMain'=>$modelInvoice['amount_total_main'],
+					];
+
 				}
-
-				$subTotalMain = $modelSaleOrderLine['price_unit']*$pajak;
-
-
-				# product product
-				$idProduct = $modelSaleOrderLine['product_id'][0].',';
-				$product = $oe->read([$idProduct],['id','default_code','name_template','product_tmpl_id'],"product.product");
-				$modelProduct = NULL;
-				if($product != NULL){
-					$modelProduct = $product[0];
-				}
-
-				$nameLine = (isset($modelSaleOrderLine['product_ref']) ? $modelSaleOrderLine['product_ref'] : null);
-				if(trim($modelSaleOrderLine['name'])):
-					$nameLine .= (isset($modelProduct['name_template']) ? '<br/>':"").nl2br($modelSaleOrderLine['name']);
-				endif;
-				if(isset($modelProduct['default_code'])){
-					$nameLine .= '<br/>P/N : '.$modelProduct['default_code'];
-				}
-				if($modelInvoice['payment_for']){
-					$nameLine .= '<br/><b>Rp '. Yii::$app->numericLib->indoStyle($subTotalMain).' x '.floatval($invLine['quantity']).'</b>';
-				}
-
-
-				$lines[] = [
-					'id'=>$modelSaleOrderLine['id'],
-
-					'no'=>$modelSaleOrderLine['sequence'],
-					'name'=>$nameLine,
-
-					'priceUnit'=>$this->formatValue($modelSaleOrderLine['price_unit'],$modelInvoice['currency_id'][0]),
-					'priceUnitMainCurr'=>Yii::$app->numericLib->indoStyle($invLine['unit_price_main']),
-
-					'currency'=>$modelInvoice['currency_id'][1],
-
-					'qty'=>$invLine['quantity'],
-					'unit'=>$invLine['uos_id'][1],
-
-					'priceSubtotal'=>$this->formatValue($modelSaleOrderLine['price_subtotal'],$modelInvoice['currency_id'][0]),
-					// 'subTotalMain'=>Yii::$app->numericLib->indoStyle($invLine['sub_total_main']),
-					'subTotalMain'=>Yii::$app->numericLib->indoStyle($subTotalMain),
-
-					'amountBruto'=>$this->formatValue($invLine['amount_bruto'],$modelInvoice['currency_id'][0]),
-					'amountBrutoMain'=>Yii::$app->numericLib->indoStyle($invLine['amount_bruto_main']),
-
-					'discount'=>$modelSaleOrderLine['discount'],
-					'amountDiscount'=>$modelSaleOrderLine['discount_nominal'],
-					'amountDiscountMain'=>$invLine['amount_discount_main'],
-
-					'amountUntaxed'=>$modelInvoice['amount_untaxed'],
-					'amountUntaxedMain'=>$modelInvoice['amount_untaxed_main'],
-
-					'taxAmountMain'=>$invLine['tax_amount_main'],
-					'amountTotalMain'=>$modelInvoice['amount_total_main'],
-				];
 
 			}
 

@@ -124,7 +124,8 @@ class ReportAccountingController extends Controller
 
     public function actionAccountlist($search = null, $id = null) 
     {
-        $out = ['more' => false];
+        // $out = ['more' => false];
+        $out = ['results' => ['id' => '', 'text' => '']];
         if (!is_null($search)) {
             $query = new Query;
             $lowerchr=strtolower($search);
@@ -141,6 +142,24 @@ class ReportAccountingController extends Controller
         echo Json::encode($out);
     }
 
+	// public function actionAccountlist($search = null, $id = null) {
+	//     \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+	//     $out = ['results' => ['id' => '', 'text' => '']];
+	//     if (!is_null($search)) {
+ //            $query = new Query;
+ //            $lowerchr=strtolower($search);
+ //            $command = Yii::$app->db->createCommand("SELECT DISTINCT id, code, name as text FROM account_account WHERE lower(name) LIKE '%".$lowerchr."%' OR code LIKE '%".$lowerchr."%' LIMIT 20");
+ //            $data = $command->queryAll();
+ //            $out['results'] = array_values($data);
+	//     }
+ //        elseif ($id > 0) {
+ //            $out['results'] = ['id' => $id, 'text' => AccountAccount::find($id)->code.' '.AccountAccount::find($id)->name];
+ //        }
+ //        else {
+ //            $out['results'] = ['id' => 0, 'text' => 'No matching records found'];
+ //        }
+	//     return $out;
+	// }
 
     public function actionCustomerlist($search = null, $id = null) 
     {
@@ -996,8 +1015,8 @@ class ReportAccountingController extends Controller
 	 					')
 		 		->from('account_move as am')
 		 		->where(['>=','am.date',$model->date_from])
-		 		->andWhere(['<=','am.date',$model->date_to])
-		 		->andWhere(['not',['am.journal_id' =>[1,2]]])
+		 		->andWhere(['<=','am.date',$model->date_to]
+)		 		->andWhere(['not',['am.journal_id' =>[1,2]]])
 				->addOrderBy(['am.date' => SORT_DESC]);
 
 			$queryline = new Query;
@@ -1057,7 +1076,8 @@ class ReportAccountingController extends Controller
 	    				 m.product_qty as qty,
 	    				 u.name as uom,
 	    				 l.name as location,
-	    				 sl.name as desc_location,       
+	    				 sl.name as desc_location, 
+	    				 sl.id as id_desc_location,      
 	    				 r.name as partner,
 	    				 s.name as type,
 	    				 s.lbm_no as lbm,

@@ -479,10 +479,5 @@ class PrintOutController extends Controller
 	}
 
 
-<<<<<<< HEAD
-}
-=======
-
 
 }
->>>>>>> bce6dce3723c761a4fd8966c8e1751debe379cb8

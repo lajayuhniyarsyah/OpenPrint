@@ -908,7 +908,7 @@ EOQ;
 		if(isset($params['partner']) && $params['partner']){
 			if($params['partner']!='0')
 			{
-				$query->andWhere(['so.partner_id'=>explode(',',$params['partner'])]); 
+				$query->andWhere(['so.partner_id'=>$params['partner']]); 
 			}
 		}
 		if(isset($params['productcategory']) && $params['productcategory']){
@@ -917,7 +917,7 @@ EOQ;
 				if(is_array($params['productcategory'])){
 					$query->andWhere(['pp.categ_id'=>explode(',',implode(",", $params['productcategory']))]); 	
 				}else{
-					$query->andWhere(['pp.categ_id'=>explode(',',$params['productcategory'])]); 
+					$query->andWhere(['pp.categ_id'=>$params['productcategory']]); 
 				}
 				
 			}
@@ -925,7 +925,7 @@ EOQ;
 		if(isset($params['product']) && $params['product']){
 			 if($params['product']!='0')
 			{
-				$query->andWhere(['sol.product_id'=>explode(',',$params['product'])]); 
+				$query->andWhere(['sol.product_id'=>$params['product']]); 
 			}
 		}
 		if(isset($params['pricelist']) && $params['pricelist']){
@@ -934,18 +934,11 @@ EOQ;
 				if(is_array($params['pricelist'])){
 					$query->andWhere(['so.pricelist_id'=>explode(',',implode(",", $params['pricelist']))]); 	
 				}else{
-					$query->andWhere(['so.pricelist_id'=>explode(',',$params['pricelist'])]); 
+					$query->andWhere(['so.pricelist_id'=>$params['pricelist']]);
 				}
 				
 			}
 		}
-		// if(isset($params['state']) && $params['state']){
-		// 	if($params['state']!='0')
-		// 		{
-		// 			$query->andWhere(['sol.state'=>explode(',',$params['state'])]); 
-		// 		}
-		// }
-
 
 		if(isset($params['state']) && $params['state']){
 			
@@ -959,7 +952,7 @@ EOQ;
 			}else{
 				if($params['state']!='0')
 				{
-					$query->andWhere(['sol.state'=>explode(',',$params['state'])]); 
+					$query->andWhere(['sol.state'=>$params['state']]); 
 				}
 			}
 			

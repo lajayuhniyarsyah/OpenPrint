@@ -48,13 +48,17 @@ class PrintOutController extends Controller
 		}
 	}
 
-	public function actionPrintInvoice($id,$uid=null,$printer="refa",$printForFaktur=false)
+	public function actionPrintInvoice($id,$uid=false,$printer="refa",$printForFaktur=false)
 	{
+		$uid = (int) $uid;
 		$id = (int) $id;
+
 		$this->layout = 'printout';
 
 		$oe = Yii::$app->openERPLib;
 		$login = $oe->login("admin","supra");
+		// $login = $oe->login(Yii::$app->user->identity->username,Yii::$app->user->identity->password);
+
 
 		# account invoice
 		$modelAccInvoice = $oe->read([$id],['id','kwitansi','date_invoice','amount_untaxed','amount_untaxed_main','amount_tax','amount_total','amount_total_main','approver','partner_id','currency_id','invoice_line','pajak','comment','name','payment_for','payment_term'],"account.invoice");
@@ -75,7 +79,7 @@ class PrintOutController extends Controller
 		// var_dump($partner);
 
 		# account invoice line
-		$modelAccInvoiceLines = $oe->read($model['invoice_line'],['id','unit_price_main','sub_total_main','price_unit','quantity','amount_discount','discount','product_id','name','sequence','uos_id','amount_discount_main','price_subtotal','tax_amount_main'],'account.invoice.line');
+		$modelAccInvoiceLines = $oe->read($model['invoice_line'],['id','unit_price_main','sub_total_main','price_unit','quantity','amount_discount','discount','product_id','name','sequence','uos_id','amount_discount_main','price_subtotal','tax_amount_main','amount_bruto'],'account.invoice.line');
 		$isMainCurrency = false;
 		if($model['currency_id'][0]==13){
 			$isMainCurrency=true;
@@ -138,7 +142,7 @@ class PrintOutController extends Controller
 
 				'unit'=>($model['payment_for'] ? '&nbsp;':$invLine['uos_id'][1]),
 
-				'priceSubtotal'=>$invLine['price_subtotal'],
+				'priceSubtotal'=>$invLine['amount_bruto'],
 				'priceSubtotalMainCurr'=>$invLine['sub_total_main'],
 				
 				'discountPercentage'=>$invLine['discount'],
@@ -156,7 +160,7 @@ class PrintOutController extends Controller
 					'priceUnit'=>($model['payment_for'] ? '':$this->formatValue($invLine['price_unit'],$model['currency_id'][0])),
 					'priceUnitMainCurr'=>($model['payment_for'] ? '':$this->formatValue($invLine['unit_price_main'],$model['currency_id'][0])),
 					
-					'priceSubtotal'=>($printForFaktur ? ($model['payment_for'] ? '&nbsp;':$this->formatValue($invLine['price_subtotal'],$model['currency_id'][0])):$this->formatValue($invLine['price_subtotal'],$model['currency_id'][0])),
+					'priceSubtotal'=>($printForFaktur ? ($model['payment_for'] ? '&nbsp;':$this->formatValue($invLine['amount_bruto'],$model['currency_id'][0])):$this->formatValue($invLine['amount_bruto'],$model['currency_id'][0])),
 					'priceSubtotalMainCurr'=>($printForFaktur ? ($model['payment_for'] ? '&nbsp;':$this->formatValue($invLine['sub_total_main'],$model['currency_id'][0])):$this->formatValue($invLine['sub_total_main'],$model['currency_id'][0])),
 					
 					'discountPercentage'=>$this->formatValue($invLine['discount'],$model['currency_id'][0]),
@@ -182,6 +186,8 @@ class PrintOutController extends Controller
 		$invoiceLine = $modelAccInvoiceLines[0];
 		$sale_order_ids = $oe->search([['invoice_ids','=',$id]],'sale.order');
 		// var_dump($sale_order_ids);
+
+
 		$saleOrder = $oe->read($sale_order_ids,['id','order_line','amount_untaxed'],'sale.order');
 		// var_dump($saleOrder);
 		// $modelSaleOrder = $saleOrder[0];
@@ -221,7 +227,7 @@ class PrintOutController extends Controller
 						'qty'=>$this->formatValue($soLine['product_uom_qty'],$model['currency_id'][0]),
 						'unit'=>$soLine['product_uom'][1],
 
-						'priceSubtotal'=>$soLine['price_subtotal'],
+						'priceSubtotal'=>$invoiceLine['amount_bruto'],
 						'priceSubtotalMainCurr'=>$invoiceLine['sub_total_main'],
 						
 						'discountPercentage'=>$soLine['discount'],
@@ -239,7 +245,7 @@ class PrintOutController extends Controller
 							'priceUnit'=>($printForFaktur ? $this->formatValue($soLine['price_unit'],$model['currency_id'][0]):'&nbsp;'),
 							'priceUnitMainCurr'=>$this->formatValue($invoiceLine['unit_price_main'],$model['currency_id'][0]),
 							
-							'priceSubtotal'=>($printForFaktur ? $this->formatValue($soLine['price_subtotal'],$model['currency_id'][0]):'&nbsp;'),
+							'priceSubtotal'=>($printForFaktur ? $this->formatValue($soLine['amount_bruto'],$model['currency_id'][0]):'&nbsp;'),
 							'priceSubtotalMainCurr'=>$this->formatValue($invoiceLine['sub_total_main'],$model['currency_id'][0]),
 							
 							'discountPercentage'=>$this->formatValue($soLine['discount'],$model['currency_id'][0]),
@@ -324,7 +330,7 @@ class PrintOutController extends Controller
 
 
 	// print out e-faktur
-	public function actionPrintEFaktur($id=null,$uid=null,$printer=null)
+	public function actionPrintEFaktur($id=null,$uid=null,$printer=null,$printForFaktur=false)
 	{
 		$this->layout = 'printout';
 
@@ -369,6 +375,7 @@ class PrintOutController extends Controller
 				$modelProductTemplate = $productTemplate[0];
 			}
 
+
 			$nameLine = (isset($modelProduct['name_template']) ? $modelProduct['name_template'] : null);
 			if(trim($modelInvoiceLine['name'])):
 				$nameLine .= (isset($modelProduct['name_template']) ? '<br/>':"").nl2br($modelInvoiceLine['name']);
@@ -379,23 +386,25 @@ class PrintOutController extends Controller
 			if(!$modelInvoice['payment_for']){
 				$nameLine .= '<br/><b>Rp '. Yii::$app->numericLib->indoStyle($modelInvoiceLine['unit_price_main']).' x '.floatval($modelInvoiceLine['quantity']).'</b>';
 			}
-
+			
+			
 			$lines[] = [
 				'id'=>$modelInvoiceLine['id'],
 
-				'no'=>$modelInvoiceLine['sequence'],
+				'no'=>($modelInvoice['payment_for']=='dp' || $modelInvoice['payment_for']=='completion' ? '':$modelInvoiceLine['sequence']),
+
 				'name'=>$nameLine,
 
 				'priceUnit'=>$this->formatValue($modelInvoiceLine['price_unit'],$modelInvoice['currency_id'][0]),
 				'priceUnitMainCurr'=>$modelInvoiceLine['unit_price_main'],
 
-				'currency'=>$modelInvoice['currency_id'][1],
+				'currency'=>($modelInvoice['payment_for']=='dp' || $modelInvoice['payment_for']=='completion' ? '':$modelInvoice['currency_id'][1]),
 
 				'qty'=>$modelInvoiceLine['quantity'],
 				'unit'=>$modelInvoiceLine['uos_id'][1],
 
-				'priceSubtotal'=>$this->formatValue($modelInvoiceLine['price_subtotal'],$modelInvoice['currency_id'][0]),
-				'subTotalMain'=>$modelInvoiceLine['sub_total_main'],
+				'priceSubtotal'=>($modelInvoice['payment_for']=='dp' || $modelInvoice['payment_for']=='completion' ? '':$this->formatValue($modelInvoiceLine['price_subtotal'],$modelInvoice['currency_id'][0])),
+				'subTotalMain'=>($modelInvoice['payment_for']=='dp' || $modelInvoice['payment_for']=='completion' ? '':$modelInvoiceLine['sub_total_main']),
 
 				'amountBruto'=>$this->formatValue($modelInvoiceLine['amount_bruto'],$modelInvoice['currency_id'][0]),
 				'amountBrutoMain'=>Yii::$app->numericLib->indoStyle($modelInvoiceLine['amount_bruto_main']),
@@ -414,8 +423,91 @@ class PrintOutController extends Controller
 			$priceTotal += $modelInvoiceLine['price_subtotal'];
 
 		}
+
 		// append
 		$modelInvoice['total'] = $priceTotal;
+		
+
+		// jika dp / complete
+		# sale order
+		$idSaleOrder = $oe->search([['invoice_ids','=',$id]],'sale.order');
+		$saleOrder = $oe->read($idSaleOrder,['id','order_line','amount_untaxed'],'sale.order');
+		$modelSaleOrder = $saleOrder[0];
+
+		# sale order line
+		$idSaleOrderLine = $modelSaleOrder['order_line'];
+		$saleOrderLine = $oe->read($idSaleOrderLine,['id','price_unit','product_uom_qty','discount','discount_nominal','product_id','product_uom','sequence','product_ref','price_subtotal','name'],'sale.order.line');
+
+		if($modelInvoice['payment_for'] =='dp' || $modelInvoice['payment_for'] =='completion'){
+			
+			foreach ($saleOrderLine as $key => $modelSaleOrderLine) {
+
+				$pajak = $modelInvoice['pajak'];
+				if($modelInvoice['pajak'] > 0){
+					$pajak = $modelInvoice['pajak'];
+				} else {
+					$pajak = 1;
+				}
+
+				$subTotalMain = $modelSaleOrderLine['price_unit']*$pajak;
+
+
+				# product product
+				$idProduct = $modelSaleOrderLine['product_id'][0].',';
+				$product = $oe->read([$idProduct],['id','default_code','name_template','product_tmpl_id'],"product.product");
+				$modelProduct = NULL;
+				if($product != NULL){
+					$modelProduct = $product[0];
+				}
+
+				$nameLine = (isset($modelSaleOrderLine['product_ref']) ? $modelSaleOrderLine['product_ref'] : null);
+				if(trim($modelSaleOrderLine['name'])):
+					$nameLine .= (isset($modelProduct['name_template']) ? '<br/>':"").nl2br($modelSaleOrderLine['name']);
+				endif;
+				if(isset($modelProduct['default_code'])){
+					$nameLine .= '<br/>P/N : '.$modelProduct['default_code'];
+				}
+				if($modelInvoice['payment_for']){
+					$nameLine .= '<br/><b>Rp '. Yii::$app->numericLib->indoStyle($subTotalMain).' x '.floatval($invLine['quantity']).'</b>';
+				}
+
+
+				$lines[] = [
+					'id'=>$modelSaleOrderLine['id'],
+
+					'no'=>$modelSaleOrderLine['sequence'],
+					'name'=>$nameLine,
+
+					'priceUnit'=>$this->formatValue($modelSaleOrderLine['price_unit'],$modelInvoice['currency_id'][0]),
+					'priceUnitMainCurr'=>Yii::$app->numericLib->indoStyle($invLine['unit_price_main']),
+
+					'currency'=>$modelInvoice['currency_id'][1],
+
+					'qty'=>$invLine['quantity'],
+					'unit'=>$invLine['uos_id'][1],
+
+					'priceSubtotal'=>$this->formatValue($modelSaleOrderLine['price_subtotal'],$modelInvoice['currency_id'][0]),
+					// 'subTotalMain'=>Yii::$app->numericLib->indoStyle($invLine['sub_total_main']),
+					'subTotalMain'=>Yii::$app->numericLib->indoStyle($subTotalMain),
+
+					'amountBruto'=>$this->formatValue($invLine['amount_bruto'],$modelInvoice['currency_id'][0]),
+					'amountBrutoMain'=>Yii::$app->numericLib->indoStyle($invLine['amount_bruto_main']),
+
+					'discount'=>$modelSaleOrderLine['discount'],
+					'amountDiscount'=>$modelSaleOrderLine['discount_nominal'],
+					'amountDiscountMain'=>$invLine['amount_discount_main'],
+
+					'amountUntaxed'=>$modelInvoice['amount_untaxed'],
+					'amountUntaxedMain'=>$modelInvoice['amount_untaxed_main'],
+
+					'taxAmountMain'=>$invLine['tax_amount_main'],
+					'amountTotalMain'=>$modelInvoice['amount_total_main'],
+				];
+
+			}
+
+		}
+
 
 
 		// render

@@ -48,7 +48,7 @@ class PrintOutController extends Controller
 		}
 	}
 
-	public function actionPrintInvoice($id,$uid=false,$printer="refa",$printForFaktur=false)
+	public function actionPrintInvoice($id,$uid=null,$printer="refa",$printForFaktur=false)
 	{
 		$uid = (int) $uid;
 		$id = (int) $id;
@@ -142,7 +142,7 @@ class PrintOutController extends Controller
 
 				'unit'=>($model['payment_for'] ? '&nbsp;':$invLine['uos_id'][1]),
 
-				'priceSubtotal'=>$invLine['amount_bruto'],
+				'priceSubtotal'=>$invLine['price_subtotal'],
 				'priceSubtotalMainCurr'=>$invLine['sub_total_main'],
 				
 				'discountPercentage'=>$invLine['discount'],
@@ -160,7 +160,7 @@ class PrintOutController extends Controller
 					'priceUnit'=>($model['payment_for'] ? '':$this->formatValue($invLine['price_unit'],$model['currency_id'][0])),
 					'priceUnitMainCurr'=>($model['payment_for'] ? '':$this->formatValue($invLine['unit_price_main'],$model['currency_id'][0])),
 					
-					'priceSubtotal'=>($printForFaktur ? ($model['payment_for'] ? '&nbsp;':$this->formatValue($invLine['amount_bruto'],$model['currency_id'][0])):$this->formatValue($invLine['amount_bruto'],$model['currency_id'][0])),
+					'priceSubtotal'=>($printForFaktur ? ($model['payment_for'] ? '&nbsp;':$this->formatValue($invLine['price_subtotal'],$model['currency_id'][0])):$this->formatValue($invLine['price_subtotal'],$model['currency_id'][0])),
 					'priceSubtotalMainCurr'=>($printForFaktur ? ($model['payment_for'] ? '&nbsp;':$this->formatValue($invLine['sub_total_main'],$model['currency_id'][0])):$this->formatValue($invLine['sub_total_main'],$model['currency_id'][0])),
 					
 					'discountPercentage'=>$this->formatValue($invLine['discount'],$model['currency_id'][0]),
@@ -227,7 +227,7 @@ class PrintOutController extends Controller
 						'qty'=>$this->formatValue($soLine['product_uom_qty'],$model['currency_id'][0]),
 						'unit'=>$soLine['product_uom'][1],
 
-						'priceSubtotal'=>$invoiceLine['amount_bruto'],
+						'priceSubtotal'=>$invoiceLine['price_subtotal'],
 						'priceSubtotalMainCurr'=>$invoiceLine['sub_total_main'],
 						
 						'discountPercentage'=>$soLine['discount'],
@@ -245,7 +245,7 @@ class PrintOutController extends Controller
 							'priceUnit'=>($printForFaktur ? $this->formatValue($soLine['price_unit'],$model['currency_id'][0]):'&nbsp;'),
 							'priceUnitMainCurr'=>$this->formatValue($invoiceLine['unit_price_main'],$model['currency_id'][0]),
 							
-							'priceSubtotal'=>($printForFaktur ? $this->formatValue($soLine['amount_bruto'],$model['currency_id'][0]):'&nbsp;'),
+							'priceSubtotal'=>($printForFaktur ? $this->formatValue($soLine['price_subtotal'],$model['currency_id'][0]):'&nbsp;'),
 							'priceSubtotalMainCurr'=>$this->formatValue($invoiceLine['sub_total_main'],$model['currency_id'][0]),
 							
 							'discountPercentage'=>$this->formatValue($soLine['discount'],$model['currency_id'][0]),
@@ -330,7 +330,7 @@ class PrintOutController extends Controller
 
 
 	// print out e-faktur
-	public function actionPrintEFaktur($id=null,$uid=null,$printer=null,$printForFaktur=false)
+	public function actionPrintEFaktur($id=null,$uid=null,$printer=null)
 	{
 		$this->layout = 'printout';
 

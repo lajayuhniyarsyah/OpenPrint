@@ -351,6 +351,9 @@ class PrintOutController extends Controller
 		$partner = $oe->read([$idPartner],[],"res.partner");
 		$modelPartner = $partner[0];
 
+		// var_dump($modelInvoice);
+		// die();
+
 		# account invoice line
 		$invoice_line = $oe->read($modelInvoice['invoice_line'],[],'account.invoice.line');
 		$invLine = $invoice_line[0];
@@ -420,7 +423,7 @@ class PrintOutController extends Controller
 				'amountTotalMain'=>$modelInvoice['amount_total_main'],
 			];
 
-			$priceTotal += $modelInvoiceLine['price_subtotal'];
+			$priceTotal += $modelInvoiceLine['amount_bruto_main'];
 
 		}
 

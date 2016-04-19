@@ -171,7 +171,14 @@ if($printer=='refa'){
 								<div class="pbkp">
 									<div style="margin-bottom:2mm;" contenteditable="true">
 										<?php
-											$prtName = $modelPartner['name'];
+											if($modelInvoice['faktur_address']){
+	                                            $prtName = $modelPartner['name'];
+	                                        }
+	                                        else
+	                                        {
+	                                            $prtName = $modelInvoice['commercial_partner_id'][1];
+	                                        }
+	                                        
 											$expPartnerName = explode(',',$prtName );
 											if(is_array($expPartnerName) && isset($expPartnerName[1])){
 

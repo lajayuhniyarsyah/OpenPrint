@@ -399,7 +399,7 @@ $this->registerJs('
 	function prepareRow(rowNo,data)
 	{
 		console.log(data.currency);
-		return "<tr class=\'cRows rows"+rowNo+"\'><td style=\"width:6%;\">"+data.no+"</td><td style=\"width:368px;padding-right:10px;\">"+data.name+"</td><td><div style=\"float:left;width:13mm;\">"+data.currency+"</div><div class=\"spaceSymVal\">"+data.amountBruto+"</div><div class=\"idrCols\">"+data.amountBrutoMain+"</div><div style=\"clear:both;\"></div></td><td>&nbsp;</td></tr>";
+		return "<tr class=\'cRows rows"+rowNo+"\'><td style=\"width:6%;\">"+data.no+"</td><td style=\"width:368px;padding-right:10px;\">"+data.name+"</td><td><div style=\"float:left;width:13mm;\">"+data.currency+"</div><div class=\"spaceSymVal\">"+data.priceSubtotal+"</div><div class=\"idrCols\">"+data.subTotalMain+"</div><div style=\"clear:both;\"></div></td><td>&nbsp;</td></tr>";
 	}
 
 	function prepareNoteRow(rowNo,data)

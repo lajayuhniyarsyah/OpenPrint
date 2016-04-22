@@ -366,7 +366,7 @@ if($printer=='refa'){
 				<td>
 					<div class="rateInfo" style="margin-top:8px;">
 						<div>
-							<div style="width:37mm;float:left;margin-left:29mm;"><?=Yii::$app->numericLib->westStyle(floatval($modelInvoice['pajak']))?></div><div><?='1 '.$modelInvoice['currency_id'][1]?></div>
+							<div style="width:37mm;float:left;margin-left:29mm;"><?=Yii::$app->numericLib->indoStyle(floatval($modelInvoice['pajak']))?></div><div><?='1 '.$modelInvoice['currency_id'][1]?></div>
 							<div style="clear:both;"></div>
 						</div>
 						<div>

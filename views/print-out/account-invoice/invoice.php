@@ -278,13 +278,34 @@ use yii\helpers\Url;
 			<div class="leftInfo">
 				<div class="partnerName">
 					<?php
-						$prtName = $modelPartner['name'];
+						if($model['faktur_address']){
+                            $prtName = $modelPartner['name'];
+                        }
+                        else
+                        {
+                            $prtName = $model['commercial_partner_id'][1];
+                        }
+                        
 						$expPartnerName = explode(',',$prtName );
 						if(is_array($expPartnerName) && isset($expPartnerName[1])){
-							$partnerName = $expPartnerName[1].'. '.$expPartnerName[0];
+
+							$count = count($expPartnerName);
+							if($count>2){
+								$partnerName = $expPartnerName[$count-1];
+
+								unset($expPartnerName[$count-1]);
+
+								$sPartnerName = implode(",", $expPartnerName);
+
+								$partnerName .= ". ".$sPartnerName;
+							}else{
+								$partnerName = $expPartnerName[1].'. '.$expPartnerName[0];
+							}
+							
 						}else{
-							$partnerName = $modelPartner['name'];
+							$partnerName = $partnerName;
 						}
+						
 						echo $partnerName;
 					?>
 				</div>

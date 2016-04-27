@@ -34,6 +34,8 @@
 				$qty=$value['qty'];
 			}else if($value['jenis']=="" && $value['id_desc_location']==12){
 				$qty=$value['qty'];
+			}else if($value['jenis']=="" && $value['id_desc_location']==4){
+				$qty='-'.$value['qty'];
 			}
 
 

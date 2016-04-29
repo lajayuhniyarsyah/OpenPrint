@@ -68,10 +68,14 @@ body {margin-top: 0px;margin-left: 0px;}
 .td10{padding: 0px;margin: 0px;width: 71px;vertical-align: bottom;}
 .td11{padding: 0px;margin: 0px;width: 116px;vertical-align: bottom;}
 .td12{padding: 0px;margin: 0px;width: 409px;vertical-align: bottom;}
-.td13{border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 14px;vertical-align: bottom;}
+/*.td13{border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 14px;vertical-align: bottom;}
 .td14{border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 108px;vertical-align: bottom;}
 .td15{border-left: #000000 1px solid;border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 13px;vertical-align: bottom;}
-.td16{border-right: #000000 1px solid;border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 107px;vertical-align: bottom;}
+.td16{border-right: #000000 1px solid;border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 107px;vertical-align: bottom;}*/
+.td13{border-bottom:none;padding: 0px;margin: 0px;width: 14px;vertical-align: bottom;}
+.td14{border-bottom: none;padding: 0px;margin: 0px;width: 108px;vertical-align: bottom;}
+.td15{border-left: none;border-bottom: none;padding: 0px;margin: 0px;width: 13px;vertical-align: bottom;}
+.td16{border-right: none;border-bottom: none;padding: 0px;margin: 0px;width: 107px;vertical-align: bottom;}
 .td17{padding: 0px;margin: 0px;width: 319px;vertical-align: bottom;}
 .td18{padding: 0px;margin: 0px;width: 282px;vertical-align: bottom;}
 
@@ -97,12 +101,17 @@ footer{
 }
 .thead{
 
-    height: 170px;
+    height: 180px;
+}
+.kotak{
+	border:1px solid #000;
+	padding-left: 20px;
+    padding-right: 20px;
 }
 @media print {
     .thead{
     	page-break-before: always;
-    	height: 170px;
+    	height: 180px;
     }
     .breakfooter{
     	page-break-before: always;
@@ -196,6 +205,12 @@ footer{
     		$perdis=$disc[0];
     	}
     }
+
+    $amount_total=app\components\NumericLib::indoStyle($model->amount_total,2,',','.');
+
+    if(!strpos($amount_total, ".")){
+    	$amount_total = $amount_total.'.00';
+    }
 ?>
 <BODY>
 	<DIV id="page_1">
@@ -225,7 +240,11 @@ footer{
 						if($model->attention0==""){
 							echo $model->partner->fax; 
 						}else{
-							echo $model->attention0->fax; 	
+							if($model->attention0->fax==""){
+								echo $model->partner->fax; 	
+							}else{
+								echo $model->attention0->fax;
+							}
 						} ?>
 					</P>
 				</TD>
@@ -313,7 +332,7 @@ footer{
 				<TD class="tr5 td10"><P class="p2 ft2">&nbsp;</P></TD>
 				<TD class="tr5 td4"><P class="p2 ft2">&nbsp;</P></TD>
 				<TD class="tr10 td15"><P class="p2 ft2">&nbsp;</P></TD>
-				<TD class="tr10 td16"><P class="p15 ft6"><?=app\components\NumericLib::indoStyle($model->amount_total,2,',','.')?></P></TD>
+				<TD class="tr10 td16"><P class="p15 ft6"><span class="kotak"><?=$amount_total?></span></P></TD>
 			</TR>
 
 			<?php }else{ ?>
@@ -332,7 +351,7 @@ footer{
 				<TD class="tr5 td10"><P class="p2 ft2">&nbsp;</P></TD>
 				<TD class="tr5 td4"><P class="p2 ft2">&nbsp;</P></TD>
 				<TD class="tr10 td15"><P class="p2 ft2">&nbsp;</P></TD>
-				<TD class="tr10 td16"><P class="p15 ft6"><?=app\components\NumericLib::indoStyle($model->amount_total,2,',','.')?></P></TD>
+				<TD class="tr10 td16"><P class="p15 ft6"><span class="kotak"><?=$amount_total?></span></P></TD>
 			</TR>
 			
 			<?php } ?>

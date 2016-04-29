@@ -61,7 +61,7 @@ class PrintOutController extends Controller
 
 
 		# account invoice
-		$modelAccInvoice = $oe->read([$id],['id','kwitansi','date_invoice','amount_untaxed','amount_untaxed_main','amount_tax','amount_total','amount_total_main','approver','partner_id','currency_id','invoice_line','pajak','comment','name','payment_for','payment_term'],"account.invoice");
+		$modelAccInvoice = $oe->read([$id],[],"account.invoice");
 		// var_dump($modelAccInvoice);
 
 		if(!$modelAccInvoice){
@@ -348,6 +348,9 @@ class PrintOutController extends Controller
 		$partner = $oe->read([$idPartner],[],"res.partner");
 		$modelPartner = $partner[0];
 
+		// var_dump($modelInvoice);
+		// die();
+
 		# account invoice line
 		$invoice_line = $oe->read($modelInvoice['invoice_line'],[],'account.invoice.line');
 		$invLine = $invoice_line[0];
@@ -355,6 +358,29 @@ class PrintOutController extends Controller
 		$lines = [];
 		$priceTotal=0;
 		foreach ($invoice_line as $key => $modelInvoiceLine) {
+
+			$pajak = $modelInvoice['pajak'];
+			if($modelInvoice['pajak'] > 0){
+				$pajak = $modelInvoice['pajak'];
+			} else {
+				$pajak = 1;
+			}
+
+			$subTotalMain = $modelInvoiceLine['price_unit']*$pajak;
+
+			$priceUnit = $modelInvoiceLine['price_unit'];
+			if($modelInvoice['currency_id'][0]!=13){
+				$priceUnit = $subTotalMain;
+			} else {
+				$priceUnit = $priceUnit;
+			}
+
+			if($subTotalMain == $modelInvoiceLine['price_unit']){
+				$subTotalMain = $modelInvoiceLine['price_unit']*$modelInvoiceLine['quantity'];
+			} else {
+				$subTotalMain = $subTotalMain*$modelInvoiceLine['quantity'];
+			}
+
 
 			# product product
 			$idProduct = $modelInvoiceLine['product_id'][0].',';
@@ -381,7 +407,7 @@ class PrintOutController extends Controller
 				$nameLine .= '<br/>P/N : '.$modelProduct['default_code'];
 			}
 			if(!$modelInvoice['payment_for']){
-				$nameLine .= '<br/><b>Rp '. Yii::$app->numericLib->indoStyle($modelInvoiceLine['unit_price_main']).' x '.floatval($modelInvoiceLine['quantity']).'</b>';
+				$nameLine .= '<br/><b>Rp '. Yii::$app->numericLib->indoStyle($priceUnit).' x '.floatval($modelInvoiceLine['quantity']).'</b>';
 			}
 			
 			
@@ -401,7 +427,7 @@ class PrintOutController extends Controller
 				'unit'=>$modelInvoiceLine['uos_id'][1],
 
 				'priceSubtotal'=>($modelInvoice['payment_for']=='dp' || $modelInvoice['payment_for']=='completion' ? '':$this->formatValue($modelInvoiceLine['price_subtotal'],$modelInvoice['currency_id'][0])),
-				'subTotalMain'=>($modelInvoice['payment_for']=='dp' || $modelInvoice['payment_for']=='completion' ? '':Yii::$app->numericLib->indoStyle($modelInvoiceLine['sub_total_main'])),
+				'subTotalMain'=>($modelInvoice['payment_for']=='dp' || $modelInvoice['payment_for']=='completion' ? '':Yii::$app->numericLib->indoStyle($subTotalMain)),
 
 				'amountBruto'=>$this->formatValue($modelInvoiceLine['amount_bruto'],$modelInvoice['currency_id'][0]),
 				'amountBrutoMain'=>Yii::$app->numericLib->indoStyle($modelInvoiceLine['amount_bruto_main']),
@@ -417,7 +443,7 @@ class PrintOutController extends Controller
 				'amountTotalMain'=>$modelInvoice['amount_total_main'],
 			];
 
-			$priceTotal += $modelInvoiceLine['price_subtotal'];
+			$priceTotal += $modelInvoiceLine['amount_bruto_main'];
 
 		}
 
@@ -450,6 +476,21 @@ class PrintOutController extends Controller
 
 					$subTotalMain = $modelSaleOrderLine['price_unit']*$pajak;
 
+					$priceUnit = $modelSaleOrderLine['price_unit'];
+					if($modelInvoice['currency_id'][0]!=13){
+						$priceUnit = $subTotalMain;
+					} else {
+						$priceUnit = $priceUnit;
+					}
+
+					if($subTotalMain == $modelSaleOrderLine['price_unit']){
+						$subTotalMain = $modelSaleOrderLine['price_unit']*$modelSaleOrderLine['product_uom_qty'];
+					} else {
+						$subTotalMain = $subTotalMain*$modelSaleOrderLine['product_uom_qty'];
+					}
+
+					$amountDiscountMain = $modelSaleOrderLine['discount_nominal']*$pajak;
+
 
 					# product product
 					$idProduct = $modelSaleOrderLine['product_id'][0].',';
@@ -467,7 +508,10 @@ class PrintOutController extends Controller
 						$nameLine .= '<br/>P/N : '.$modelProduct['default_code'];
 					}
 					if($modelInvoice['payment_for']){
-						$nameLine .= '<br/><b>Rp '. Yii::$app->numericLib->indoStyle($subTotalMain).' x '.floatval($invLine['quantity']).'</b>';
+						$nameLine .= '<br/>Rp <b>'.Yii::$app->numericLib->indoStyle($priceUnit).' x '.floatval($modelSaleOrderLine['product_uom_qty']).'</b>';
+					}
+					if ($amountDiscountMain > 0) {
+						$nameLine .= '<br/><b>Discount</b> Rp'.$this->formatValue($amountDiscountMain,13);
 					}
 
 

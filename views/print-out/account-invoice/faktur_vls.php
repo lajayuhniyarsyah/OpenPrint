@@ -171,7 +171,14 @@ if($printer=='refa'){
 								<div class="pbkp">
 									<div style="margin-bottom:2mm;" contenteditable="true">
 										<?php
-											$prtName = $modelPartner['name'];
+											if($modelInvoice['faktur_address']){
+	                                            $prtName = $modelPartner['name'];
+	                                        }
+	                                        else
+	                                        {
+	                                            $prtName = $modelInvoice['commercial_partner_id'][1];
+	                                        }
+	                                        
 											$expPartnerName = explode(',',$prtName );
 											if(is_array($expPartnerName) && isset($expPartnerName[1])){
 
@@ -359,7 +366,7 @@ if($printer=='refa'){
 				<td>
 					<div class="rateInfo" style="margin-top:8px;">
 						<div>
-							<div style="width:37mm;float:left;margin-left:29mm;"><?=Yii::$app->numericLib->westStyle(floatval($modelInvoice['pajak']))?></div><div><?='1 '.$modelInvoice['currency_id'][1]?></div>
+							<div style="width:37mm;float:left;margin-left:29mm;"><?=Yii::$app->numericLib->indoStyle(floatval($modelInvoice['pajak']))?></div><div><?='1 '.$modelInvoice['currency_id'][1]?></div>
 							<div style="clear:both;"></div>
 						</div>
 						<div>

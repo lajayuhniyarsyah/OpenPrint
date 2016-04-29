@@ -140,7 +140,14 @@ elseif($printer=='refa-semen'):
 								<div class="pbkp">
 									<div style="margin-bottom:2mm;" contenteditable="true">
 										<?php
-											$prtName = $modelPartner['name'];
+											if($modelInvoice['faktur_address']){
+	                                            $prtName = $modelPartner['name'];
+	                                        }
+	                                        else
+	                                        {
+	                                            $prtName = $modelInvoice['commercial_partner_id'][1];
+	                                        }
+
 											$expPartnerName = explode(',',$prtName );
 											if(is_array($expPartnerName) && isset($expPartnerName[1])){
 
@@ -220,7 +227,7 @@ elseif($printer=='refa-semen'):
 											if($modelInvoice['total_discount']){
 												// jika ada discount maka echo "Discount";
 												echo 'DISCOUNT';
-												echo '</div><div class="amVal">'.Yii::$app->numericLib->indoStyle($modelInvoice['total_discount']);
+												echo '</div><div class="amVal">-'.Yii::$app->numericLib->indoStyle($modelInvoice['total_discount']);
 											}
 										?>
 									</div>

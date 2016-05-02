@@ -358,22 +358,22 @@ footer{
 			<!-- Footer -->
 			<TR class="set-footer-break">
 				<TD colspan=2 class="tr11 td7"><P class="p2 ft1">Your Ref</P></TD>
-				<TD colspan=5 class="tr11 td8"><P class="p9 ft1">: <?php echo $model->yourref; ?> </P></TD>
+				<TD colspan=5 class="tr11 td8"><P class="p9 ft1">: <?php echo nl2br($model->yourref); ?> </P></TD>
 			<TR>
 				<TD colspan=2 class="tr11 td7"><P class="p2 ft1">Note</P></TD>
-				<TD colspan=5 class="tr11 td8"><P class="p9 ft1">: <?php echo $model->note; ?></P></TD>
+				<TD colspan=5 class="tr11 td8"><P class="p9 ft1">: <?php echo nl2br($model->note); ?></P></TD>
 			</TR>
 			<TR>
 				<TD colspan=2 class="tr11 td7"><P class="p2 ft1">Delivery</P></TD>
-				<TD colspan=5 class="tr11 td8"><P class="p9 ft1">: <?php echo $model->delivery; ?></P></TD>
+				<TD colspan=5 class="tr11 td8"><P class="p9 ft1">: <?php echo nl2br($model->delivery); ?></P></TD>
 			</TR>
 			<TR>
 				<TD colspan=2 class="tr11 td7"><P class="p2 ft1">Payment</P></TD>
-				<TD colspan=5 class="tr11 td8"><P class="p9 ft1">: <?php echo $model->term_of_payment; ?></P></TD>
+				<TD colspan=5 class="tr11 td8"><P class="p9 ft1">: <?php echo nl2br($model->term_of_payment); ?></P></TD>
 			</TR>
 			<TR>
 				<TD colspan=2 class="tr11 td7"><P class="p2 ft1">Shipment to</P></TD>
-				<TD colspan=5 class="tr11 td8"><P class="p9 ft1">: <?php echo $model->shipment_to; ?></P></TD>
+				<TD colspan=5 class="tr11 td8"><P class="p9 ft1">: <?php echo nl2br($model->shipment_to); ?></P></TD>
 			</TR>
 
 			<TR>

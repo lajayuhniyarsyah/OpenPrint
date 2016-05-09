@@ -100,8 +100,7 @@ footer{
 	height: 150px;
 }
 .thead{
-
-    height: 180px;
+    height: 190px;
 }
 .kotak{
 	border:1px solid #000;
@@ -111,7 +110,7 @@ footer{
 @media print {
     .thead{
     	page-break-before: always;
-    	height: 180px;
+    	height: 190px;
     }
     .breakfooter{
     	page-break-before: always;
@@ -351,7 +350,7 @@ footer{
 				<TD class="tr5 td10"><P class="p2 ft2">&nbsp;</P></TD>
 				<TD class="tr5 td4"><P class="p2 ft2">&nbsp;</P></TD>
 				<TD class="tr10 td15"><P class="p2 ft2">&nbsp;</P></TD>
-				<TD class="tr10 td16"><P class="p15 ft6"><span class="kotak"><?=$amount_total?></span></P></TD>
+				<TD class="tr10 td16"><P class="p15 ft6"><span class="kotak"><?=$amount_total?></span></P><P></P></TD>
 			</TR>
 			
 			<?php } ?>

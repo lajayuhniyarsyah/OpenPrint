@@ -93,8 +93,10 @@ use yii\helpers\Url;
         float: left;
     }
     .idrCols{
-        position: absolute;
-        margin-left: 185px;
+        /*position: absolute;*/
+        /*margin-left: 185px;*/
+        margin-right: -20px;
+        float: left;
     }
     <?php
     if($printer=='sri'):

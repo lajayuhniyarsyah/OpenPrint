@@ -322,8 +322,8 @@ footer{
 				<TD rowspan=2 class="tr8 td8"><P class="p14 ft6"><?php echo $model->total_price; ?></P></TD>
 				<TD class="tr7 td4"><P class="p2 ft5">&nbsp;</P></TD>
 				<TD rowspan=2 class="tr8 td5"><P class="p11 ft6"><?=$pricelist?></P></TD>
-				<TD class="tr9 td13"><P class="p2 ft7">&nbsp;</P></TD>
-				<TD class="tr9 td14"><P class="p15 ft6">&nbsp;</P></TD>
+				<TD class="tr7 td13"><P class="p2 ft5">&nbsp;</P></TD>
+				<TD rowspan=2 class="tr8 td5"><P class="p11 ft6"><span class="kotak"><?=$amount_total?></span></P></TD>
 			</TR>
 
 			<TR>
@@ -331,7 +331,6 @@ footer{
 				<TD class="tr5 td10"><P class="p2 ft2">&nbsp;</P></TD>
 				<TD class="tr5 td4"><P class="p2 ft2">&nbsp;</P></TD>
 				<TD class="tr10 td15"><P class="p2 ft2">&nbsp;</P></TD>
-				<TD class="tr10 td16"><P class="p15 ft6"><span class="kotak"><?=$amount_total?></span></P></TD>
 			</TR>
 
 			<?php }else{ ?>
@@ -341,8 +340,8 @@ footer{
 				<TD rowspan=2 class="tr8 td8"><P class="p14 ft6"><?php echo $model->total_price; ?></P></TD>
 				<TD class="tr7 td4"><P class="p2 ft5">&nbsp;</P></TD>
 				<TD rowspan=2 class="tr8 td5"><P class="p11 ft6"><?=$pricelist?></P></TD>
-				<TD class="tr9 td13"><P class="p2 ft7">&nbsp;</P></TD>
-				<TD class="tr9 td14"><P class="p15 ft6">&nbsp;</P></TD>
+				<TD class="tr7 td13"><P class="p2 ft5">&nbsp;</P></TD>
+				<TD rowspan=2 class="tr8 td5"><P class="p11 ft6"><span class="kotak"><?=$amount_total?></span></P></TD>
 			</TR>
 
 			<TR>
@@ -350,10 +349,12 @@ footer{
 				<TD class="tr5 td10"><P class="p2 ft2">&nbsp;</P></TD>
 				<TD class="tr5 td4"><P class="p2 ft2">&nbsp;</P></TD>
 				<TD class="tr10 td15"><P class="p2 ft2">&nbsp;</P></TD>
-				<TD class="tr10 td16"><P class="p15 ft6"><span class="kotak"><?=$amount_total?></span></P><P></P></TD>
 			</TR>
 			
 			<?php } ?>
+			<TR class="set-footer-break">
+				<TD colspan=7 class="tr11 td7"><P class="p2 ft1">&nbsp;</P></TD>
+			<TR>
 			<!-- Footer -->
 			<TR class="set-footer-break">
 				<TD colspan=2 class="tr11 td7"><P class="p2 ft1">Your Ref</P></TD>

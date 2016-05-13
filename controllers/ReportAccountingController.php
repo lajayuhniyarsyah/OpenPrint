@@ -1067,6 +1067,7 @@ class ReportAccountingController extends Controller
      			$query
 				->select(
 	    				'
+	    				 m.id,
 	    				 s.type as jenis,
 	    				 m.date as date,
 	    				 s.lbm_no as lbm,

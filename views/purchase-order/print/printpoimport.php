@@ -257,7 +257,7 @@ footer{
 						} 
 						?>
 					</P></TD>
-				<TD colspan=4 class="tr0 td1"><P class="p2 ft1">Date : <?php echo Yii::$app->formatter->asDatetime($model->date_order, "php:M d,Y")?></P></TD>
+				<TD colspan=4 class="tr0 td1"><P class="p2 ft1">Date : <?php echo Yii::$app->formatter->asDatetime($model->date_order, "php:F d,Y")?></P></TD>
 			</TR>
 			<TR>
 				<TD colspan=7 class="tr1 td0"><P class="p1 ft1">Gentlemen, we are pleased to confirm the following order :</P></TD>

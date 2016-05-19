@@ -397,7 +397,7 @@ footer{
 						<P class="p17 ft1">Kindly acknowledge the receipt of this order and send us your Proforma Invoice and estimation of Delivery<br/><br/></P>	
 						<TABLE cellpadding=0 cellspacing=0 class="t1">
 							<TR>
-								<TD class="tr11 td17"><P class="p18 ft10">Yours faithfully,<br/>PT. SUPRABAKTI MANDIRI<br/><br/><br/><br/><br/><br/>JIMMY HADINATA</P></TD>
+								<TD class="tr11 td17"><P class="p18 ft10">Yours faithfully,<br/>PT. SUPRABAKTI MANDIRI<br/><br/><br/><br/><br/><br/><u>JIMMY HADINATA</u><br/>General Manager</P></TD>
 								<TD class="tr11 td18"><P class="p19 ft10">Acknowledgment by :<br/><?php echo $model->partner->name; ?><br/><br/><br/><br/><br/><br/>----------------------------------</P></TD>
 							</TR>
 						</TABLE>

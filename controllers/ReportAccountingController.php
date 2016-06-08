@@ -1108,6 +1108,7 @@ class ReportAccountingController extends Controller
 			    ->join('LEFT JOIN','product_pricelist as ppl','ppl.id = po.pricelist_id')
 			    ->where(['m.product_id'=>$id])
 			    ->andWhere(['m.state'=>'done'])
+			    ->andWhere(['or',['m.location_id'=>12], ['m.location_dest_id'=>12]])
 			    ->addOrderBy(['m.date' => SORT_DESC]);
 
 			$data = $query->all();

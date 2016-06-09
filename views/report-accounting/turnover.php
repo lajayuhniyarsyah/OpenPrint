@@ -36,7 +36,7 @@
 			}else if($value['jenis']=="in"){
 				$qty=$value['qty'];
 			}else{
-				if(!$value['id_desc_location']==12){
+				if($value['id_desc_location']!=12){
 					$qty="-".$value['qty'];
 				}
 			}

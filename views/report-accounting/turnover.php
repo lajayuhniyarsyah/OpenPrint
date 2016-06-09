@@ -21,7 +21,7 @@
 		$no=1;
 		$body=[];
 		foreach ($data as $value) {
-
+			$qty = $value['qty']; #set default is plus
 			if ($value['jenis']=="out"){
 				$qty='-'.$value['qty'];
 			}else if($value['jenis']=="internal"){

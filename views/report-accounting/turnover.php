@@ -20,6 +20,8 @@
 					";
 		$no=1;
 		$body=[];
+
+
 		foreach ($data as $value) {
 			$qty = $value['qty']; #set default is plus
 			if ($value['jenis']=="out"){
@@ -33,9 +35,13 @@
 
 			}else if($value['jenis']=="in"){
 				$qty=$value['qty'];
+			}else{
+				if(!$value['id_desc_location']==12){
+					$qty="-".$value['qty'];
+				}
 			}
 			// Jika Product Des Location di Head Office
-			else if($value['jenis']=="" && $value['id_desc_location']==12){
+			/*else if($value['jenis']=="" && $value['id_desc_location']==12){
 				$qty=$value['qty'];
 			}
 			// Jika Product Potongan, Head Office ke Scrapped
@@ -49,7 +55,7 @@
 			// Jika Ada Ajustment, dimana barang dari HO ke Inventory Lost
 			else if($value['jenis']=="" && $value['id_desc_location']==5){
 				$qty='-'.$value['qty'];
-			}
+			}*/
 
 
 			if ($value['jenis']=="internal"){

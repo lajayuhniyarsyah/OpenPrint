@@ -40,22 +40,6 @@
 					$qty="-".$value['qty'];
 				}
 			}
-			// Jika Product Des Location di Head Office
-			/*else if($value['jenis']=="" && $value['id_desc_location']==12){
-				$qty=$value['qty'];
-			}
-			// Jika Product Potongan, Head Office ke Scrapped
-			else if($value['jenis']=="" && $value['id_desc_location']==4){
-				$qty='-'.$value['qty'];
-			}
-			// Jika Product Potongan, Head Office ke Potongan OUT
-			else if($value['jenis']=="" && $value['id_desc_location']==47){
-				$qty='-'.$value['qty'];
-			}
-			// Jika Ada Ajustment, dimana barang dari HO ke Inventory Lost
-			else if($value['jenis']=="" && $value['id_desc_location']==5){
-				$qty='-'.$value['qty'];
-			}*/
 
 
 			if ($value['jenis']=="internal"){

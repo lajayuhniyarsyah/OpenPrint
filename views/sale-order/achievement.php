@@ -24,7 +24,7 @@ $form = ActiveForm::begin([
 
 <?=Select2::widget([
 	'name' => 'sales',
-	/*'data' => \yii\helpers\ArrayHelper::merge(
+	'data' => \yii\helpers\ArrayHelper::merge(
 		$saleUsers,
 		[
 			'all'=>"All Sales",
@@ -39,13 +39,13 @@ $form = ActiveForm::begin([
 			"group:jtt"=>"Group: Jawa Tengah / Timur",
 			"group:sls"=>"Group: Sulawesi",
 		]
-	),*/
+	),
 	'pluginOptions'=>[
 		'tags'=>true,
 		'ajax'=>[
 			'url'=>Url::to(['service/search-user']),
 			'dataType'=>'json',
-			'data'=>new JsExpression('function(term,page){return {search:term}; }'),
+			'data'=>new JsExpression('function(term,page){return {search:term.term}; }'),
 			'results'=>new JsExpression('function(data,page){ return {results:data.results}; }'),
 		],
 		'allowClear'=>true,

@@ -125,7 +125,17 @@ footer{
 	$no=1;
 	$diskon=0;
 	$subtotal=0;
+
+	function containsDecimal($value) {
+		if (strpos( $value, "." ) !== false ) {
+	        return true;
+	    }
+	    return false;
+	}
+	
+
 	foreach ($model->purchaseOrderLines as $value){
+			
 
 			if($value->part_number==""){
 				$pn="";
@@ -157,20 +167,26 @@ footer{
 			}else{
 				$desc=$value->variants0->name;
 			}
-
-			
 			$subtotal=$subtotal+($value->price_unit*$value->product_qty);
-    		
 
     		if ($model->pricelist_id==2){
-    			$product_qty=app\components\NumericLib::westStyle($value->product_qty,1,',','.');
+    			if(fmod($value->product_qty, 1) !== 0.00){
+    				$product_qty=app\components\NumericLib::westStyle($value->product_qty,2,',','.');	
+    			}else{
+    				$product_qty=app\components\NumericLib::westStyle($value->product_qty,0,',','.');	
+    			}
     			$price_unit=app\components\NumericLib::westStyle($value->price_unit,2,',','.');
     			$subtotal1=app\components\NumericLib::westStyle($value->price_unit*$value->product_qty,2,',','.');
     		}else{
-				$product_qty=app\components\NumericLib::westStyle($value->product_qty,1,',','.');
+				if(fmod($value->product_qty, 1) !== 0.00){
+    				$product_qty=app\components\NumericLib::westStyle($value->product_qty,2,',','.');	
+    			}else{
+    				$product_qty=app\components\NumericLib::westStyle($value->product_qty,0,',','.');	
+    			}
     			$price_unit=app\components\NumericLib::westStyle($value->price_unit,2,',','.');
     			$subtotal1=app\components\NumericLib::westStyle($value->price_unit*$value->product_qty,2,',','.');
     		}
+
 
 			$data2[]=array(
 							$no,

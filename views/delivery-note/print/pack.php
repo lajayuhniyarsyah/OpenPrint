@@ -64,7 +64,7 @@ use yii\helpers\Url;
 	{
 		float: left;
 		width: 46%;
-		padding-top: 11mm;
+		padding-top: 16mm;
 		font-size: 11pt;
 	}
 	.UrgentCode{
@@ -162,7 +162,7 @@ use yii\helpers\Url;
 		text-decoration: underline;
 	}
 	.totalRow{
-		margin-top: 2mm;
+		margin-top: 7mm;
 	}
 	.font11{
 		font-size: 11pt;

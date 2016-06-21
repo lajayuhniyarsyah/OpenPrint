@@ -55,7 +55,7 @@ use yii\helpers\Url;
 		padding-left: 25mm;
 	}
 	.hLine{
-		height: 7mm;
+		height: 6mm;
 	}
 	.datePrint{
 		margin-left: 10mm;
@@ -64,7 +64,7 @@ use yii\helpers\Url;
 	{
 		float: left;
 		width: 46%;
-		padding-top: 16mm;
+		padding-top: 13mm;
 		font-size: 11pt;
 	}
 	.UrgentCode{
@@ -162,7 +162,7 @@ use yii\helpers\Url;
 		text-decoration: underline;
 	}
 	.totalRow{
-		margin-top: 7mm;
+		margin-top: 5mm;
 	}
 	.font11{
 		font-size: 11pt;

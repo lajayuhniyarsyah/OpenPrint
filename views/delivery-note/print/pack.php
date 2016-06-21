@@ -207,7 +207,7 @@ use yii\helpers\Url;
 				height: 66mm;
 			}
 			.hLine{
-				height: 5mm;
+				height: 6mm;
 			}
 			.tdLines{
 				min-height: 98mm;

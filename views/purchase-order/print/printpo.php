@@ -10,7 +10,8 @@ $this->registerJs('jQuery(".fittext").fitText(0.8);');
 		width: 198mm;
 		margin-left: auto; margin-right: auto;
 		page-break-after: always;
-		font-family: Arial, Helvetica, sans-serif;
+		/*font-family: Arial, Helvetica, sans-serif;*/
+		font-family: 'Lato', sans-serif;
 	}
 	table{
 		/* border-top: 1px solid black;

@@ -455,13 +455,13 @@ $this->registerJs('jQuery(".fittext").fitText();');
 															<strong>
 																<?php
 																	echo $model->name;
-																	if(isset($model->revision)){
+																	/*if(isset($model->revision)){
 																		if(isset($model->Revision->rev_counter)){
 																			if(!$model->Revision->new_po_no){
 																				echo '/Rev'.$model->Revision->rev_counter;
 																			}
 																		}
-																	}
+																	}*/
 																?>
 															</strong>
 														</td>

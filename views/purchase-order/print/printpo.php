@@ -1,17 +1,22 @@
 <?php
 use yii\helpers\Url;
+$this->registerJsFile(Url::base().'/js/jquery.fittext.js',['depends' => [\yii\web\JqueryAsset::className()]]);
+$this->registerJs('jQuery(".fittext").fitText(0.8);');
 ?>
+
+<link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
 <style type="text/css">
 	#pageContainer{
 		width: 198mm;
 		margin-left: auto; margin-right: auto;
 		page-break-after: always;
-		font-family: Arial, Helvetica, sans-serif;
+		/*font-family: Arial, Helvetica, sans-serif;*/
+		font-family: 'Lato', sans-serif;
 	}
 	table{
 		/* border-top: 1px solid black;
 		border-bottom: 1px solid black; */
-	}
+	}/*
 	table tr td{
 		white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
 		white-space: -webkit-pre-wrap; /*Chrome & Safari */ 
@@ -21,7 +26,7 @@ use yii\helpers\Url;
 		word-wrap: break-word;       /* Internet Explorer 5.5+ */
 		word-break: break-all;
 		white-space: normal;
-	}
+	}*/
 	.contener{
 		border: 1px solid black;
 		margin-left: auto; margin-right: auto;
@@ -456,7 +461,7 @@ use yii\helpers\Url;
 												<table class="dtlcus space">
 													<tr>
 														<td width="100px">Nomor PO</td>
-														<td style="font-family:Verdana,Helvetica,sans-serif; font-size:16px;"><strong><?php echo $model->name; ?></strong></td>
+														<td class="fittext"><strong><?php echo $model->name; ?></strong></td>
 													</tr>
 													<tr>
 														<td>Tanggal</td>
@@ -468,7 +473,13 @@ use yii\helpers\Url;
 													</tr>
 													<tr>
 														<td>Nomor F-PB</td>
-														<td style="font-family:Verdana,Helvetica,sans-serif; font-size:16px;"><strong><?php echo $model->origin; ?></strong></td>
+														<td style="font-family:Verdana,Helvetica,sans-serif; font-size:16px;">
+															<strong><?php 
+																echo $model->origin;
+
+																if(isset($model->rev_counter))
+															?></strong>
+														</td>
 													</tr>
 													<tr>
 														<td>Due Date</td>

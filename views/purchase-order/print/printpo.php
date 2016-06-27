@@ -1,7 +1,7 @@
 <?php
 use yii\helpers\Url;
 $this->registerJsFile(Url::base().'/js/jquery.fittext.js',['depends' => [\yii\web\JqueryAsset::className()]]);
-$this->registerJs('jQuery(".fittext").fitText(0.8);');
+$this->registerJs('jQuery(".fittext").fitText();');
 ?>
 
 <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
@@ -451,7 +451,20 @@ $this->registerJs('jQuery(".fittext").fitText(0.8);');
 												<table class="dtlcus space">
 													<tr>
 														<td width="100px">Nomor PO</td>
-														<td class="fittext"><strong><?php echo $model->name; ?></strong></td>
+														<td class="fittext">
+															<strong>
+																<?php
+																	echo $model->name;
+																	if(isset($model->revision)){
+																		if(isset($model->Revision->rev_counter)){
+																			if(!$model->Revision->new_po_no){
+																				echo '/Rev'.$model->Revision->rev_counter;
+																			}
+																		}
+																	}
+																?>
+															</strong>
+														</td>
 													</tr>
 													<tr>
 														<td>Tanggal</td>
@@ -466,8 +479,6 @@ $this->registerJs('jQuery(".fittext").fitText(0.8);');
 														<td style="font-family:Verdana,Helvetica,sans-serif; font-size:16px;">
 															<strong><?php 
 																echo $model->origin;
-
-																if(isset($model->rev_counter))
 															?></strong>
 														</td>
 													</tr>

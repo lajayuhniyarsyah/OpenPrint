@@ -21,7 +21,7 @@ $this->registerJs('jQuery(".fittext").fitText();');
 		border: 1px solid black;
 		margin-left: auto; margin-right: auto;
 		page-break-after: always;
-		font-family: Arial, Helvetica, sans-serif;
+		/*font-family: Arial, Helvetica, sans-serif;*/
 	}
 	.header{
 		height: 10%;
@@ -476,7 +476,7 @@ $this->registerJs('jQuery(".fittext").fitText();');
 													</tr>
 													<tr>
 														<td>Nomor F-PB</td>
-														<td style="font-family:Verdana,Helvetica,sans-serif; font-size:16px;">
+														<td style="font-size:16px;">
 															<strong><?php 
 																echo $model->origin;
 															?></strong>

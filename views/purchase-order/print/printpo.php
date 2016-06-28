@@ -1,7 +1,7 @@
 <?php
 use yii\helpers\Url;
 $this->registerJsFile(Url::base().'/js/jquery.fittext.js',['depends' => [\yii\web\JqueryAsset::className()]]);
-$this->registerJs('jQuery(".fittext").fitText();');
+$this->registerJs('jQuery(".fittext").fitText(0.9);');
 ?>
 
 <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>

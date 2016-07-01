@@ -41,7 +41,7 @@ AppAsset::register($this);
 
             if (!Yii::$app->user->isGuest){
                 array_push($items,['label'=>'Sale Order','url'=>['/sale-order/index']]);
-                array_push($items,['label' => 'Logout (' . Yii::$app->user->identity->username . ')',
+                array_push($items,['label' => 'Logout (' . Yii::$app->user->identity->login . ')',
                         'url' => ['/site/logout'],
                         'linkOptions' => ['data-method' => 'post']
                     ]

@@ -116,7 +116,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			[
 				'attribute'=>'create_uid',
 				'value'=>function($model,$key,$index,$grid){
-					return $model->createU->name;
+					return $model->createU->login;
 				},
 				'filterType'=>GridView::FILTER_SELECT2,
 				'filterWidgetOptions'=>[

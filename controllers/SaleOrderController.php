@@ -49,17 +49,13 @@ class SaleOrderController extends Controller
 
 					[
 						'allow'=>true,
-						'roles'=>['?'],
-						'actions'=>[]
-					],
-					[
-						'allow'=>true,
 						'roles'=>['@'],
 						'actions'=>['index']
 					],
 					[
 						'allow'=>false,
-						'roles'=>['?']
+						'roles'=>['?'],
+						
 					],
 				]
 			]
@@ -78,16 +74,38 @@ class SaleOrderController extends Controller
 	 */
 	public function actionIndex($uid=null)
 	{
+		if(!$uid){
+			$uid = Yii::$app->user->getId();
+		}
 		$manageUsers = $this->getTrackOrderManagementUsers();
 		$onlyShowByCreateUid = true;
 		if(isset($manageUsers[$uid])){
 			$onlyShowByCreateUid = false;
 		}
+
+
+		$admin_support_group_ids = \app\models\ResGroups::find()->select('id')->where(['name'=>['Admin Support','Admin Support Regional']])->asArray()->column();
+
+        $resGroupRelsAdminSupport = \app\models\ResGroupsUsersRel::find()->where(['gid'=>$admin_support_group_ids, 'uid'=>$uid])->asArray()->all();
+        // var_dump($resGroupRelsAdminSupport);
+        $show_uids=false;
+        if($resGroupRelsAdminSupport){
+        	$onlyShowByCreateUid=false;
+        	$res_user = \app\models\ResUsers::findOne(Yii::$app->user->getId());
+        	// \yii\helpers\VarDumper::dump($res_user->kelompok->groupSalesLines);
+        	$show_uids = [];
+        	foreach($res_user->kelompok->groupSalesLines as $group):
+        		array_push($show_uids, $group->name);
+        	endforeach;
+        	// die('axx');
+
+        }
 		
 		$searchModel = new SaleOrderSearch();
-		
-		$dataProvider = $searchModel->searchTrack(Yii::$app->request->queryParams,$uid,$onlyShowByCreateUid);
 
+		
+		$dataProvider = $searchModel->searchTrack(Yii::$app->request->queryParams, $uid, $onlyShowByCreateUid, $show_uids);
+		// die();
 		return $this->render('index', [
 			'searchModel' => $searchModel,
 			'dataProvider' => $dataProvider,

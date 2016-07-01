@@ -45,7 +45,7 @@ $form = ActiveForm::begin([
 		'ajax'=>[
 			'url'=>Url::to(['service/search-user']),
 			'dataType'=>'json',
-			'data'=>new JsExpression('function(term,page){return {search:term}; }'),
+			'data'=>new JsExpression('function(term,page){return {search:term.term}; }'),
 			'results'=>new JsExpression('function(data,page){ return {results:data.results}; }'),
 		],
 		'allowClear'=>true,

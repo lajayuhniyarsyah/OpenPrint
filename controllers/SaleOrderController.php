@@ -77,6 +77,7 @@ class SaleOrderController extends Controller
 		if(!$uid){
 			$uid = Yii::$app->user->getId();
 		}
+		$res_user = \app\models\ResUsers::findOne(Yii::$app->user->getId());
 		$manageUsers = $this->getTrackOrderManagementUsers();
 		$onlyShowByCreateUid = true;
 		if(isset($manageUsers[$uid])){
@@ -89,9 +90,9 @@ class SaleOrderController extends Controller
         $resGroupRelsAdminSupport = \app\models\ResGroupsUsersRel::find()->where(['gid'=>$admin_support_group_ids, 'uid'=>$uid])->asArray()->all();
         // var_dump($resGroupRelsAdminSupport);
         $show_uids=false;
-        if($resGroupRelsAdminSupport){
+        if($resGroupRelsAdminSupport && $res_user->id!=1){
         	$onlyShowByCreateUid=false;
-        	$res_user = \app\models\ResUsers::findOne(Yii::$app->user->getId());
+        	
         	// \yii\helpers\VarDumper::dump($res_user->kelompok->groupSalesLines);
         	$show_uids = [];
         	foreach($res_user->kelompok->groupSalesLines as $group):
@@ -103,7 +104,7 @@ class SaleOrderController extends Controller
 		
 		$searchModel = new SaleOrderSearch();
 
-		
+		// var_dump($show_uids);
 		$dataProvider = $searchModel->searchTrack(Yii::$app->request->queryParams, $uid, $onlyShowByCreateUid, $show_uids);
 		// die();
 		return $this->render('index', [

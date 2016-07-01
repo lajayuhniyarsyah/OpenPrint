@@ -262,11 +262,11 @@ $this->registerJs('jQuery(".fittext").fitText(0.9);');
 	}
 	.rigthheadtable{
 		float: right;
-		width: 48%;
+		width: 338px;
 	}
 	.leftheadtable{
 		float: left;
-		width: 52%;
+		width: 359px;
 		border-right: 1px solid black;
 	}
 	.cus{
@@ -451,7 +451,7 @@ $this->registerJs('jQuery(".fittext").fitText(0.9);');
 												<table class="dtlcus space">
 													<tr>
 														<td width="100px">Nomor PO</td>
-														<td class="fittext">
+														<td style="font-size:18px;">
 															<strong>
 																<?php
 																	echo $model->name;
@@ -516,7 +516,7 @@ $this->registerJs('jQuery(".fittext").fitText(0.9);');
 </div>
 
 <?php
-$footer ='"<tr><td colspan=5 style=\'border-right:none !important;\'><div style=\'margin-top:15px; margin-bottom:15px; font-size:18px; border-left:none !important;\'>PENAGIHAN HARUS MELAMPIRKAN</div><div class=ket>1). Copy PO dan Faktur Pajak ASLI Rangkap 2 <br/>2). Kwitansi ASLI dan Surat Jalan (DO) ASLI<br/>3). NPWP/NPPKP Suprabakti Mandiri : 01.327.742.1-038.000<br/>4). Alamat NPWP : JL.Danau Sunter Utara Blok A No.9 Tanjung Priuk<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jakarta Utara 14350<br/>5). Pengiriman Barang harus melampirkan Surat Jalan Rangkap<br/>6). Email E-Faktur dapat diemail ke efaktur@beltcare.com<br/></div></td><td colspan=2  class=noborder>Disetujui Oleh<br/><br/><br/><br/><br/>(....................................)<br/>Date:</td></tr>"';
+$footer ='"<tr><td colspan=5 style=\'border-right:none !important;\'><div style=\'margin-top:15px; margin-bottom:15px; font-size:18px; border-left:none !important;\'>PENAGIHAN HARUS MELAMPIRKAN</div><div class=ket>1). Copy PO dan Faktur Pajak ASLI Rangkap 2 <br/>2). Kwitansi ASLI dan Surat Jalan (DO) ASLI<br/>3). NPWP/NPPKP Suprabakti Mandiri : 01.327.742.1-038.000<br/>4). Alamat NPWP : JL.Danau Sunter Utara Blok A No.9 Tanjung Priuk<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jakarta Utara 14350<br/>5). Pengiriman Barang harus melampirkan Surat Jalan Rangkap<br/>6). E-Faktur dapat dikirim melalui email ke efaktur@beltcare.com<br/></div></td><td colspan=2  class=noborder>Disetujui Oleh<br/><br/><br/><br/><br/>(....................................)<br/>Date:</td></tr>"';
 
 $this->registerJs('
 	var currPage = 1;

@@ -50,7 +50,7 @@ class SaleOrderController extends Controller
 					[
 						'allow'=>true,
 						'roles'=>['@'],
-						'actions'=>['index']
+						// 'actions'=>['index']
 					],
 					[
 						'allow'=>false,

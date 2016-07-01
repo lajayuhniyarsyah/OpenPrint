@@ -24,7 +24,7 @@ $form = ActiveForm::begin([
 
 <?=Select2::widget([
 	'name' => 'sales',
-	/*'data' => \yii\helpers\ArrayHelper::merge(
+	'data' => \yii\helpers\ArrayHelper::merge(
 		$saleUsers,
 		[
 			'all'=>"All Sales",
@@ -39,7 +39,7 @@ $form = ActiveForm::begin([
 			"group:jtt"=>"Group: Jawa Tengah / Timur",
 			"group:sls"=>"Group: Sulawesi",
 		]
-	),*/
+	),
 	'pluginOptions'=>[
 		'tags'=>true,
 		'ajax'=>[

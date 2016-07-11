@@ -146,6 +146,7 @@ class SaleOrderSearch extends SaleOrder
         if (!($this->load($params) && $this->validate())) {
             return $dataProvider;
         }
+        // var_dump($onlyShowByCreateUid);var_dump($show_uids);var_dump($uid);var_dump($params);
 
         $query->andFilterWhere([
             'id' => $this->id,

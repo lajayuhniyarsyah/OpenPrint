@@ -77,9 +77,11 @@ class SaleOrderController extends Controller
 		if(!$uid){
 			$uid = Yii::$app->user->getId();
 		}
+		// var_dump(Yii::$app->user->getId());
 		$res_user = \app\models\ResUsers::findOne(Yii::$app->user->getId());
 		$manageUsers = $this->getTrackOrderManagementUsers();
 		$onlyShowByCreateUid = true;
+		// var_dump($manageUsers);
 		if(isset($manageUsers[$uid])){
 			$onlyShowByCreateUid = false;
 		}
@@ -105,6 +107,9 @@ class SaleOrderController extends Controller
 		$searchModel = new SaleOrderSearch();
 
 		// var_dump($show_uids);
+		if($onlyShowByCreateUid){
+			$show_uids = false;
+		}
 		$dataProvider = $searchModel->searchTrack(Yii::$app->request->queryParams, $uid, $onlyShowByCreateUid, $show_uids);
 		// die();
 		return $this->render('index', [

@@ -291,6 +291,10 @@ $this->registerJs('jQuery(".fittext").fitText(0.9);');
 		border:1px solid black;
 		font-size: 16px;
 	}
+	.po_revisi{
+		float: right;
+		font-weight: bold;
+	}
 </style>
 	<?php 
 		$no=1;
@@ -371,6 +375,11 @@ $this->registerJs('jQuery(".fittext").fitText(0.9);');
             $pricelist="SGD";
         }
         $pricelist = $model->pricelist->name;
+
+        $po_ref = '';
+        if ($model->po_revision_id){
+        	$po_ref = 'PO Ref : ' . $model->poRevision->poSource->name;
+        }
 	?>
 <div id="pageContainer">
 <div class="pages">
@@ -394,6 +403,8 @@ $this->registerJs('jQuery(".fittext").fitText(0.9);');
 								Workshop : JL.Raya Pasar Kemis Km 3,5 Desa Kutajaya Tangerang 15560 Banten,Telp (021) 5903436-38, Fax.(021) 5903747<br/>
 								Head Office : GRAHA SUPRA JL.Danau Sunter Utara Blok A No.9 Jakarta Utara 14350 Indonesia<br/>
 								Telp : (021) 658 33666 Hunting, Fax (021) 658 31666, Website : www.beltcare.com
+
+								<div class="po_revisi"><?php echo $po_ref ?></div>
 								</div>
 								<div style="clear:both;"></div>
 								<div class="headtable">

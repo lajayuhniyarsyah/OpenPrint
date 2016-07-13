@@ -2,6 +2,15 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 ?>
+<script>
+    var openPopup = function(a) {
+        var popupWindow = window.open("test.php","pagename","width=720, height=700,scrollbars=yes");
+        window.onbeforeunload = function() {
+            popupWindow.close();
+        };
+    }
+</script>
+<!-- <a href='javascript:void();' onclick='openPopup(1)'>Click to open a window...</a> -->
 <?php
 	$css = '
 	body{

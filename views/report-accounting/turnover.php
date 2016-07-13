@@ -34,6 +34,7 @@
 			}else if($value['jenis']=="in"){
 				$qty=$value['qty'];
 			}
+
 			// Jika Product Des Location di Head Office
 			else if($value['jenis']=="" && $value['id_desc_location']==12){
 				$qty=$value['qty'];
@@ -47,6 +48,10 @@
 				$qty='-'.$value['qty'];
 			}
 			// Jika Ada Ajustment, dimana barang dari HO ke Inventory Lost
+			else if($value['jenis']=="" && $value['id_desc_location']==5){
+				$qty='-'.$value['qty'];
+			}
+			// Jika Potongan IN ke Warehouse 
 			else if($value['jenis']=="" && $value['id_desc_location']==5){
 				$qty='-'.$value['qty'];
 			}

@@ -370,6 +370,7 @@ $this->registerJs('jQuery(".fittext").fitText(0.9);');
         }else if($model->pricelist_id==9){
             $pricelist="SGD";
         }
+        $pricelist = $model->pricelist->name;
 	?>
 <div id="pageContainer">
 <div class="pages">

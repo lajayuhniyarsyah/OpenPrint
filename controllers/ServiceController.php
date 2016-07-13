@@ -543,7 +543,6 @@ class ServiceController extends Controller{
 						$res['OUT'][$indexArr]['of'][] = $render;
 						// echo $item['price_subtotal'].'\\';
 					endforeach;
-					// die();
 					// var_dump($dppTotal);
 					$dppTotal = floor($dppTotal);
 					$ppnTOtal = floor($ppnTotal);
@@ -657,25 +656,14 @@ class ServiceController extends Controller{
 		$discount=0;
 		// check if amount discount is not null first
 		// if checked first cause amount_discount in future is repretentation of discount on perccentage
-		/*var_dump($rate);
-		var_dump($item['price_unit']);
-		var_dump($item['amount_discount']);
-		var_dump($item['discount']);
-		echo '----------';*/
-		if($item['amount_discount'] && ($rate>=10 && !$item['discount'])){
+		if($item['amount_discount']){
 			$discount = $this->convertIdr($item['amount_discount'],$rate);
-			// echo 'a';
+
 		}elseif($item['discount'] && floatval($item['discount'])>0){
-			// echo 'b';
-			$discount = ($item['discount']/100.00) * ($price_subtotal);
-			// var_dump($discount);
-		}elseif($item['amount_discount']){
-			$discount = $this->convertIdr($item['amount_discount'],$rate);
-			// echo 'c';
+			$discount = ($item['discount']/100) * ($price_subtotal);
 		}
 		$dpp=round($price_subtotal-$discount,2);
-		// var_dump($dpp);
-		
+
 		$ppn=round((10/100) * $dpp,5);
 		/*var_dump($ppn);
 		die();*/

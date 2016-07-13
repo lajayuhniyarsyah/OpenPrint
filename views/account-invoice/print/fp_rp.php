@@ -179,7 +179,7 @@ use yii\helpers\Url;
 											}
 											
 										}else{
-											$partnerName = $prtName;
+											$partnerName = $partnerName;
 										}
                                         
                                         echo $partnerName;

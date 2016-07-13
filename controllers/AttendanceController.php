@@ -252,8 +252,7 @@ FULL JOIN
             JOIN resource_resource rs_rs ON hre.resource_id = rs_rs.id
             WHERE hrd.name like '$department_query'
                 AND hre.address_id = {$site}
-                --AND rs_rs.active is True
-                AND hrl.log_time BETWEEN '{$first}' AND '{$last}'
+                AND rs_rs.active is True
         ) AS eids ON eids.eid > 0
         -- WHERE h_emp.eid ilike '%{$where['employee']}%'
         -- order by eids.eid asc, date_series.i asc

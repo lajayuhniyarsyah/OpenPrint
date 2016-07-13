@@ -9,7 +9,7 @@ $config = [
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => 'gaocnoincde0eiq389e89qn3f9euen7e89@3242431@MNJKON(J899998^&^&76YUIBiB',
+            'cookieValidationKey' => 'hendri30',
         ],
         'formatter'=>[
             'dateFormat' => 'dd-MMM-yyyy',
@@ -21,8 +21,8 @@ $config = [
             'class' => 'yii\caching\FileCache',
         ],
         'user' => [
-            'identityClass' => 'app\models\ResUsers',
-            'enableAutoLogin' => false,
+            'identityClass' => 'app\models\User',
+            'enableAutoLogin' => true,
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
@@ -66,7 +66,7 @@ if (YII_ENV_DEV) {
     // configuration adjustments for 'dev' environment
     $config['bootstrap'][] = 'debug';
     $config['modules']['debug']['class'] = 'yii\debug\Module';
-    $config['modules']['debug']['allowedIPs'] = ['127.0.0.1','::1','10.36.15.65'];
+    $config['modules']['debug']['allowedIPs'] = ['127.0.0.1','::1','10.36.15.17'];
 
     $config['bootstrap'][] = 'gii';
     $config['modules']['gii'] = 'yii\gii\Module';

@@ -49,13 +49,16 @@ class SaleOrderController extends Controller
 
 					[
 						'allow'=>true,
-						'roles'=>['@'],
-						// 'actions'=>['index']
+						'roles'=>['?'],
+						'actions'=>['index']
+					],
+					[
+						'allow'=>true,
+						'roles'=>['@']
 					],
 					[
 						'allow'=>false,
-						'roles'=>['?'],
-						
+						'roles'=>['?']
 					],
 				]
 			]
@@ -74,44 +77,16 @@ class SaleOrderController extends Controller
 	 */
 	public function actionIndex($uid=null)
 	{
-		if(!$uid){
-			$uid = Yii::$app->user->getId();
-		}
-		// var_dump(Yii::$app->user->getId());
-		$res_user = \app\models\ResUsers::findOne(Yii::$app->user->getId());
 		$manageUsers = $this->getTrackOrderManagementUsers();
 		$onlyShowByCreateUid = true;
-		// var_dump($manageUsers);
 		if(isset($manageUsers[$uid])){
 			$onlyShowByCreateUid = false;
 		}
-
-
-		$admin_support_group_ids = \app\models\ResGroups::find()->select('id')->where(['name'=>['Admin Support','Admin Support Regional']])->asArray()->column();
-
-        $resGroupRelsAdminSupport = \app\models\ResGroupsUsersRel::find()->where(['gid'=>$admin_support_group_ids, 'uid'=>$uid])->asArray()->all();
-        // var_dump($resGroupRelsAdminSupport);
-        $show_uids=false;
-        if($resGroupRelsAdminSupport && $res_user->id!=1){
-        	$onlyShowByCreateUid=false;
-        	
-        	// \yii\helpers\VarDumper::dump($res_user->kelompok->groupSalesLines);
-        	$show_uids = [];
-        	foreach($res_user->kelompok->groupSalesLines as $group):
-        		array_push($show_uids, $group->name);
-        	endforeach;
-        	// die('axx');
-
-        }
 		
 		$searchModel = new SaleOrderSearch();
+		
+		$dataProvider = $searchModel->searchTrack(Yii::$app->request->queryParams,$uid,$onlyShowByCreateUid);
 
-		// var_dump($show_uids);
-		if($onlyShowByCreateUid){
-			$show_uids = false;
-		}
-		$dataProvider = $searchModel->searchTrack(Yii::$app->request->queryParams, $uid, $onlyShowByCreateUid, $show_uids);
-		// die();
 		return $this->render('index', [
 			'searchModel' => $searchModel,
 			'dataProvider' => $dataProvider,

@@ -171,14 +171,7 @@ if($printer=='refa'){
 								<div class="pbkp">
 									<div style="margin-bottom:2mm;" contenteditable="true">
 										<?php
-											if($modelInvoice['faktur_address']){
-	                                            $prtName = $modelPartner['name'];
-	                                        }
-	                                        else
-	                                        {
-	                                            $prtName = $modelInvoice['commercial_partner_id'][1];
-	                                        }
-	                                        
+											$prtName = $modelPartner['name'];
 											$expPartnerName = explode(',',$prtName );
 											if(is_array($expPartnerName) && isset($expPartnerName[1])){
 
@@ -366,7 +359,7 @@ if($printer=='refa'){
 				<td>
 					<div class="rateInfo" style="margin-top:8px;">
 						<div>
-							<div style="width:37mm;float:left;margin-left:29mm;"><?=Yii::$app->numericLib->indoStyle(floatval($modelInvoice['pajak']))?></div><div><?='1 '.$modelInvoice['currency_id'][1]?></div>
+							<div style="width:37mm;float:left;margin-left:29mm;"><?=Yii::$app->numericLib->westStyle(floatval($modelInvoice['pajak']))?></div><div><?='1 '.$modelInvoice['currency_id'][1]?></div>
 							<div style="clear:both;"></div>
 						</div>
 						<div>
@@ -406,7 +399,7 @@ $this->registerJs('
 	function prepareRow(rowNo,data)
 	{
 		console.log(data.currency);
-		return "<tr class=\'cRows rows"+rowNo+"\'><td style=\"width:6%;\">"+data.no+"</td><td style=\"width:368px;padding-right:10px;\">"+data.name+"</td><td><div style=\"float:left;width:13mm;\">"+data.currency+"</div><div class=\"spaceSymVal\">"+data.priceSubtotal+"</div><div class=\"idrCols\">"+data.subTotalMain+"</div><div style=\"clear:both;\"></div></td><td>&nbsp;</td></tr>";
+		return "<tr class=\'cRows rows"+rowNo+"\'><td style=\"width:6%;\">"+data.no+"</td><td style=\"width:368px;padding-right:10px;\">"+data.name+"</td><td><div style=\"float:left;width:13mm;\">"+data.currency+"</div><div class=\"spaceSymVal\">"+data.amountBruto+"</div><div class=\"idrCols\">"+data.amountBrutoMain+"</div><div style=\"clear:both;\"></div></td><td>&nbsp;</td></tr>";
 	}
 
 	function prepareNoteRow(rowNo,data)

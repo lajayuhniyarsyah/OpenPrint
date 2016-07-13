@@ -50,18 +50,14 @@ class PrintOutController extends Controller
 
 	public function actionPrintInvoice($id,$uid=null,$printer="refa",$printForFaktur=false)
 	{
-		$uid = (int) $uid;
 		$id = (int) $id;
-
 		$this->layout = 'printout';
 
 		$oe = Yii::$app->openERPLib;
-
-		$login = $oe->login("admin","supra");
-
+		$login = $oe->login("admin","supraindo");
 
 		# account invoice
-		$modelAccInvoice = $oe->read([$id],[],"account.invoice");
+		$modelAccInvoice = $oe->read([$id],['id','kwitansi','date_invoice','amount_untaxed','amount_untaxed_main','amount_tax','amount_total','amount_total_main','approver','partner_id','currency_id','invoice_line','pajak','comment','name','payment_for','payment_term'],"account.invoice");
 		// var_dump($modelAccInvoice);
 
 		if(!$modelAccInvoice){
@@ -79,7 +75,7 @@ class PrintOutController extends Controller
 		// var_dump($partner);
 
 		# account invoice line
-		$modelAccInvoiceLines = $oe->read($model['invoice_line'],['id','unit_price_main','sub_total_main','price_unit','quantity','amount_discount','discount','product_id','name','sequence','uos_id','amount_discount_main','price_subtotal','tax_amount_main','amount_bruto'],'account.invoice.line');
+		$modelAccInvoiceLines = $oe->read($model['invoice_line'],['id','unit_price_main','sub_total_main','price_unit','quantity','amount_discount','discount','product_id','name','sequence','uos_id','amount_discount_main','price_subtotal','tax_amount_main'],'account.invoice.line');
 		$isMainCurrency = false;
 		if($model['currency_id'][0]==13){
 			$isMainCurrency=true;
@@ -185,6 +181,7 @@ class PrintOutController extends Controller
 		// maka load data[lines] dari sale order
 		$invoiceLine = $modelAccInvoiceLines[0];
 		$sale_order_ids = $oe->search([['invoice_ids','=',$id]],'sale.order');
+		//var_dump($sale_order_ids);
 		$saleOrder = $oe->read($sale_order_ids,['id','order_line','amount_untaxed'],'sale.order');
 		// var_dump($saleOrder);
 		// $modelSaleOrder = $saleOrder[0];
@@ -224,7 +221,7 @@ class PrintOutController extends Controller
 						'qty'=>$this->formatValue($soLine['product_uom_qty'],$model['currency_id'][0]),
 						'unit'=>$soLine['product_uom'][1],
 
-						'priceSubtotal'=>$invoiceLine['price_subtotal'],
+						'priceSubtotal'=>$soLine['price_subtotal'],
 						'priceSubtotalMainCurr'=>$invoiceLine['sub_total_main'],
 						
 						'discountPercentage'=>$soLine['discount'],
@@ -348,9 +345,6 @@ class PrintOutController extends Controller
 		$partner = $oe->read([$idPartner],[],"res.partner");
 		$modelPartner = $partner[0];
 
-		// var_dump($modelInvoice);
-		// die();
-
 		# account invoice line
 		$invoice_line = $oe->read($modelInvoice['invoice_line'],[],'account.invoice.line');
 		$invLine = $invoice_line[0];
@@ -358,29 +352,6 @@ class PrintOutController extends Controller
 		$lines = [];
 		$priceTotal=0;
 		foreach ($invoice_line as $key => $modelInvoiceLine) {
-
-			$pajak = $modelInvoice['pajak'];
-			if($modelInvoice['pajak'] > 0){
-				$pajak = $modelInvoice['pajak'];
-			} else {
-				$pajak = 1;
-			}
-
-			$subTotalMain = $modelInvoiceLine['price_unit']*$pajak;
-
-			$priceUnit = $modelInvoiceLine['price_unit'];
-			if($modelInvoice['currency_id'][0]!=13){
-				$priceUnit = $subTotalMain;
-			} else {
-				$priceUnit = $priceUnit;
-			}
-
-			if($subTotalMain == $modelInvoiceLine['price_unit']){
-				$subTotalMain = $modelInvoiceLine['price_unit']*$modelInvoiceLine['quantity'];
-			} else {
-				$subTotalMain = $subTotalMain*$modelInvoiceLine['quantity'];
-			}
-
 
 			# product product
 			$idProduct = $modelInvoiceLine['product_id'][0].',';
@@ -398,7 +369,6 @@ class PrintOutController extends Controller
 				$modelProductTemplate = $productTemplate[0];
 			}
 
-
 			$nameLine = (isset($modelProduct['name_template']) ? $modelProduct['name_template'] : null);
 			if(trim($modelInvoiceLine['name'])):
 				$nameLine .= (isset($modelProduct['name_template']) ? '<br/>':"").nl2br($modelInvoiceLine['name']);
@@ -407,27 +377,25 @@ class PrintOutController extends Controller
 				$nameLine .= '<br/>P/N : '.$modelProduct['default_code'];
 			}
 			if(!$modelInvoice['payment_for']){
-				$nameLine .= '<br/><b>Rp '. Yii::$app->numericLib->indoStyle($priceUnit).' x '.floatval($modelInvoiceLine['quantity']).'</b>';
+				$nameLine .= '<br/><b>Rp '. Yii::$app->numericLib->indoStyle($modelInvoiceLine['unit_price_main']).' x '.floatval($modelInvoiceLine['quantity']).'</b>';
 			}
-			
-			
+
 			$lines[] = [
 				'id'=>$modelInvoiceLine['id'],
 
-				'no'=>($modelInvoice['payment_for']=='dp' || $modelInvoice['payment_for']=='completion' ? '':$modelInvoiceLine['sequence']),
-
+				'no'=>$modelInvoiceLine['sequence'],
 				'name'=>$nameLine,
 
 				'priceUnit'=>$this->formatValue($modelInvoiceLine['price_unit'],$modelInvoice['currency_id'][0]),
 				'priceUnitMainCurr'=>$modelInvoiceLine['unit_price_main'],
 
-				'currency'=>($modelInvoice['payment_for']=='dp' || $modelInvoice['payment_for']=='completion' ? '':$modelInvoice['currency_id'][1]),
+				'currency'=>$modelInvoice['currency_id'][1],
 
 				'qty'=>$modelInvoiceLine['quantity'],
 				'unit'=>$modelInvoiceLine['uos_id'][1],
 
-				'priceSubtotal'=>($modelInvoice['payment_for']=='dp' || $modelInvoice['payment_for']=='completion' ? '':$this->formatValue($modelInvoiceLine['price_subtotal'],$modelInvoice['currency_id'][0])),
-				'subTotalMain'=>($modelInvoice['payment_for']=='dp' || $modelInvoice['payment_for']=='completion' ? '':Yii::$app->numericLib->indoStyle($subTotalMain)),
+				'priceSubtotal'=>$this->formatValue($modelInvoiceLine['price_subtotal'],$modelInvoice['currency_id'][0]),
+				'subTotalMain'=>$modelInvoiceLine['sub_total_main'],
 
 				'amountBruto'=>$this->formatValue($modelInvoiceLine['amount_bruto'],$modelInvoice['currency_id'][0]),
 				'amountBrutoMain'=>Yii::$app->numericLib->indoStyle($modelInvoiceLine['amount_bruto_main']),
@@ -443,116 +411,11 @@ class PrintOutController extends Controller
 				'amountTotalMain'=>$modelInvoice['amount_total_main'],
 			];
 
-			$priceTotal += $modelInvoiceLine['amount_bruto_main'];
+			$priceTotal += $modelInvoiceLine['price_subtotal'];
 
 		}
-
 		// append
 		$modelInvoice['total'] = $priceTotal;
-		
-
-		// jika dp / complete
-		# sale order
-		$idSaleOrder = $oe->search([['invoice_ids','=',$id]],'sale.order');
-		$saleOrder = $oe->read($idSaleOrder,['id','order_line','amount_untaxed'],'sale.order');
-		// $modelSaleOrder = $saleOrder[0];
-
-		foreach ($saleOrder as $key => $modelSaleOrder) {
-			
-			# sale order line
-			$idSaleOrderLine = $modelSaleOrder['order_line'];
-			$saleOrderLine = $oe->read($idSaleOrderLine,['id','price_unit','product_uom_qty','discount','discount_nominal','product_id','product_uom','sequence','product_ref','price_subtotal','name'],'sale.order.line');
-
-			if($modelInvoice['payment_for'] =='dp' || $modelInvoice['payment_for'] =='completion'){
-				
-				foreach ($saleOrderLine as $key => $modelSaleOrderLine) {
-
-					$pajak = $modelInvoice['pajak'];
-					if($modelInvoice['pajak'] > 0){
-						$pajak = $modelInvoice['pajak'];
-					} else {
-						$pajak = 1;
-					}
-
-					$subTotalMain = $modelSaleOrderLine['price_unit']*$pajak;
-
-					$priceUnit = $modelSaleOrderLine['price_unit'];
-					if($modelInvoice['currency_id'][0]!=13){
-						$priceUnit = $subTotalMain;
-					} else {
-						$priceUnit = $priceUnit;
-					}
-
-					if($subTotalMain == $modelSaleOrderLine['price_unit']){
-						$subTotalMain = $modelSaleOrderLine['price_unit']*$modelSaleOrderLine['product_uom_qty'];
-					} else {
-						$subTotalMain = $subTotalMain*$modelSaleOrderLine['product_uom_qty'];
-					}
-
-					$amountDiscountMain = $modelSaleOrderLine['discount_nominal']*$pajak;
-
-
-					# product product
-					$idProduct = $modelSaleOrderLine['product_id'][0].',';
-					$product = $oe->read([$idProduct],['id','default_code','name_template','product_tmpl_id'],"product.product");
-					$modelProduct = NULL;
-					if($product != NULL){
-						$modelProduct = $product[0];
-					}
-
-					$nameLine = (isset($modelSaleOrderLine['product_ref']) ? $modelSaleOrderLine['product_ref'] : null);
-					if(trim($modelSaleOrderLine['name'])):
-						$nameLine .= (isset($modelProduct['name_template']) ? '<br/>':"").nl2br($modelSaleOrderLine['name']);
-					endif;
-					if(isset($modelProduct['default_code'])){
-						$nameLine .= '<br/>P/N : '.$modelProduct['default_code'];
-					}
-					if($modelInvoice['payment_for']){
-						$nameLine .= '<br/>Rp <b>'.Yii::$app->numericLib->indoStyle($priceUnit).' x '.floatval($modelSaleOrderLine['product_uom_qty']).'</b>';
-					}
-					if ($amountDiscountMain > 0) {
-						$nameLine .= '<br/><b>Discount</b> Rp'.$this->formatValue($amountDiscountMain,13);
-					}
-
-
-					$lines[] = [
-						'id'=>$modelSaleOrderLine['id'],
-
-						'no'=>$modelSaleOrderLine['sequence'],
-						'name'=>$nameLine,
-
-						'priceUnit'=>$this->formatValue($modelSaleOrderLine['price_unit'],$modelInvoice['currency_id'][0]),
-						'priceUnitMainCurr'=>Yii::$app->numericLib->indoStyle($invLine['unit_price_main']),
-
-						'currency'=>$modelInvoice['currency_id'][1],
-
-						'qty'=>$invLine['quantity'],
-						'unit'=>$invLine['uos_id'][1],
-
-						'priceSubtotal'=>$this->formatValue($modelSaleOrderLine['price_subtotal'],$modelInvoice['currency_id'][0]),
-						// 'subTotalMain'=>Yii::$app->numericLib->indoStyle($invLine['sub_total_main']),
-						'subTotalMain'=>Yii::$app->numericLib->indoStyle($subTotalMain),
-
-						'amountBruto'=>$this->formatValue($invLine['amount_bruto'],$modelInvoice['currency_id'][0]),
-						'amountBrutoMain'=>Yii::$app->numericLib->indoStyle($invLine['amount_bruto_main']),
-
-						'discount'=>$modelSaleOrderLine['discount'],
-						'amountDiscount'=>$modelSaleOrderLine['discount_nominal'],
-						'amountDiscountMain'=>$invLine['amount_discount_main'],
-
-						'amountUntaxed'=>$modelInvoice['amount_untaxed'],
-						'amountUntaxedMain'=>$modelInvoice['amount_untaxed_main'],
-
-						'taxAmountMain'=>$invLine['tax_amount_main'],
-						'amountTotalMain'=>$modelInvoice['amount_total_main'],
-					];
-
-				}
-
-			}
-
-		}
-
 
 
 		// render
@@ -616,5 +479,10 @@ class PrintOutController extends Controller
 	}
 
 
+<<<<<<< HEAD
+}
+=======
+
 
 }
+>>>>>>> bce6dce3723c761a4fd8966c8e1751debe379cb8

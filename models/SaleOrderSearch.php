@@ -119,7 +119,7 @@ class SaleOrderSearch extends SaleOrder
      *
      * @return ActiveDataProvider
      */
-    public function searchTrack($params, $uid, $onlyShowByCreateUid=true, $show_uids=null)
+    public function searchTrack($params,$uid,$onlyShowByCreateUid=true)
     {
         $query = SaleOrder::find();
         if($onlyShowByCreateUid){
@@ -127,18 +127,11 @@ class SaleOrderSearch extends SaleOrder
         }
 
 
-        if($show_uids){
-            // find by user_id and create_ui
-            $query = SaleOrder::find();
-            $query->orWhere(['user_id'=>$show_uids]);
-        }
-
-
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort'  => [
                 'defaultOrder'=>[
-                    'name'=>SORT_DESC,
+                    'name'=>SORT_ASC,
                 ]
             ]
         ]);
@@ -146,7 +139,6 @@ class SaleOrderSearch extends SaleOrder
         if (!($this->load($params) && $this->validate())) {
             return $dataProvider;
         }
-        // var_dump($onlyShowByCreateUid);var_dump($show_uids);var_dump($uid);var_dump($params);
 
         $query->andFilterWhere([
             'id' => $this->id,

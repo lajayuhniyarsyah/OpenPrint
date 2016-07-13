@@ -1,12 +1,17 @@
 <?php
 use yii\helpers\Url;
+$this->registerJsFile(Url::base().'/js/jquery.fittext.js',['depends' => [\yii\web\JqueryAsset::className()]]);
+$this->registerJs('jQuery(".fittext").fitText(0.9);');
 ?>
+
+<link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
 <style type="text/css">
 	#pageContainer{
 		width: 198mm;
 		margin-left: auto; margin-right: auto;
 		page-break-after: always;
-		font-family: Arial, Helvetica, sans-serif;
+		/*font-family: Arial, Helvetica, sans-serif;*/
+		font-family: 'Lato', sans-serif;
 	}
 	table{
 		/* border-top: 1px solid black;
@@ -16,7 +21,7 @@ use yii\helpers\Url;
 		border: 1px solid black;
 		margin-left: auto; margin-right: auto;
 		page-break-after: always;
-		font-family: Arial, Helvetica, sans-serif;
+		/*font-family: Arial, Helvetica, sans-serif;*/
 	}
 	.header{
 		height: 10%;
@@ -257,11 +262,11 @@ use yii\helpers\Url;
 	}
 	.rigthheadtable{
 		float: right;
-		width: 48%;
+		width: 338px;
 	}
 	.leftheadtable{
 		float: left;
-		width: 52%;
+		width: 359px;
 		border-right: 1px solid black;
 	}
 	.cus{
@@ -285,6 +290,10 @@ use yii\helpers\Url;
 	.total td{
 		border:1px solid black;
 		font-size: 16px;
+	}
+	.po_revisi{
+		float: right;
+		font-weight: bold;
 	}
 </style>
 	<?php 
@@ -365,6 +374,12 @@ use yii\helpers\Url;
         }else if($model->pricelist_id==9){
             $pricelist="SGD";
         }
+        $pricelist = $model->pricelist->name;
+
+        $po_ref = '';
+        if ($model->po_revision_id){
+        	$po_ref = 'PO Ref : ' . $model->poRevision->poSource->name;
+        }
 	?>
 <div id="pageContainer">
 <div class="pages">
@@ -388,6 +403,8 @@ use yii\helpers\Url;
 								Workshop : JL.Raya Pasar Kemis Km 3,5 Desa Kutajaya Tangerang 15560 Banten,Telp (021) 5903436-38, Fax.(021) 5903747<br/>
 								Head Office : GRAHA SUPRA JL.Danau Sunter Utara Blok A No.9 Jakarta Utara 14350 Indonesia<br/>
 								Telp : (021) 658 33666 Hunting, Fax (021) 658 31666, Website : www.beltcare.com
+
+								<div class="po_revisi"><?php echo $po_ref ?></div>
 								</div>
 								<div style="clear:both;"></div>
 								<div class="headtable">
@@ -446,7 +463,20 @@ use yii\helpers\Url;
 												<table class="dtlcus space">
 													<tr>
 														<td width="100px">Nomor PO</td>
-														<td style="font-family:Verdana,Helvetica,sans-serif; font-size:16px;"><strong><?php echo $model->name; ?></strong></td>
+														<td style="font-size:18px;">
+															<strong>
+																<?php
+																	echo $model->name;
+																	/*if(isset($model->revision)){
+																		if(isset($model->Revision->rev_counter)){
+																			if(!$model->Revision->new_po_no){
+																				echo '/Rev'.$model->Revision->rev_counter;
+																			}
+																		}
+																	}*/
+																?>
+															</strong>
+														</td>
 													</tr>
 													<tr>
 														<td>Tanggal</td>
@@ -458,7 +488,11 @@ use yii\helpers\Url;
 													</tr>
 													<tr>
 														<td>Nomor F-PB</td>
-														<td style="font-family:Verdana,Helvetica,sans-serif; font-size:16px;"><strong><?php echo $model->origin; ?></strong></td>
+														<td style="font-size:16px;">
+															<strong><?php 
+																echo $model->origin;
+															?></strong>
+														</td>
 													</tr>
 													<tr>
 														<td>Due Date</td>
@@ -494,7 +528,7 @@ use yii\helpers\Url;
 </div>
 
 <?php
-$footer ='"<tr><td colspan=5 style=\'border-right:none !important;\'><div style=\'margin-top:15px; margin-bottom:15px; font-size:18px; border-left:none !important;\'>PENAGIHAN HARUS MELAMPIRKAN</div><div class=ket>1). Copy PO dan Faktur Pajak ASLI Rangkap 2 <br/>2). Kwitansi ASLI dan Surat Jalan (DO) ASLI<br/>3). NPWP/NPPKP Suprabakti Mandiri : 01.327.742.1-038.000<br/>4). Alamat NPWP : JL.Danau Sunter Utara Blok A No.9 Tanjung Priuk<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jakarta Utara 14350<br/>5). Pengiriman Barang harus melampirkan Surat Jalan Rangkap<br/>6). Email E-Faktur dapat diemail ke efaktur@beltcare.com<br/></div></td><td colspan=2  class=noborder>Disetujui Oleh<br/><br/><br/><br/><br/>(.......................)<br/>Date:</td></tr>"';
+$footer ='"<tr><td colspan=5 style=\'border-right:none !important;\'><div style=\'margin-top:15px; margin-bottom:15px; font-size:18px; border-left:none !important;\'>PENAGIHAN HARUS MELAMPIRKAN</div><div class=ket>1). Copy PO dan Faktur Pajak ASLI Rangkap 2 <br/>2). Kwitansi ASLI dan Surat Jalan (DO) ASLI<br/>3). NPWP/NPPKP Suprabakti Mandiri : 01.327.742.1-038.000<br/>4). Alamat NPWP : JL.Danau Sunter Utara Blok A No.9 Tanjung Priuk<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jakarta Utara 14350<br/>5). Pengiriman Barang harus melampirkan Surat Jalan Rangkap<br/>6). E-Faktur dapat dikirim melalui email ke efaktur@beltcare.com<br/></div></td><td colspan=2  class=noborder>Disetujui Oleh<br/><br/><br/><br/><br/>(....................................)<br/>Date:</td></tr>"';
 
 $this->registerJs('
 	var currPage = 1;
@@ -582,7 +616,7 @@ $this->registerJs('
 		if(currPage){
 			if (cektable < HeightTable){
 				var footer ='.$footer.';
-				var footertotal = "<tr class=lineTable><td colspan=3></td><td colspan=3>TOTAL AMOUNT</td><td align=right>'.app\components\NumericLib::indoStyle($subtotal,2,',','.').'</td></tr><tr class=lineTable><td colspan=3></td><td colspan=3>Discount</td><td align=right>'.app\components\NumericLib::indoStyle($diskon,2,',','.').'</td></tr class=lineTable><tr><td colspan=3></td><td colspan=3>PPN 10%</td><td align=right>'.app\components\NumericLib::indoStyle($model->amount_tax,2,',','.').'</td></tr><tr class=lineTable><td colspan=3></td><td colspan=3>GRAND TOTAL</td><td align=right>'.app\components\NumericLib::indoStyle($model->amount_total,2,',','.').'</td></tr>";
+				var footertotal = "<tr class=lineTable><td colspan=3></td><td colspan=3>TOTAL AMOUNT</td><td align=right>'.app\components\NumericLib::indoStyle($subtotal,2,',','.').'</td></tr><tr class=lineTable><td colspan=3></td><td colspan=3>Discount</td><td align=right>'.app\components\NumericLib::indoStyle($diskon,2,',','.').'</td></tr class=lineTable><tr><td colspan=3></td><td colspan=3>PPN 10%</td><td align=right>'.app\components\NumericLib::indoStyle($model->amount_tax,2,',','.').'</td></tr><tr class=lineTable><td colspan=3></td><td colspan=3>GRAND TOTAL</td><td align=right>'.app\components\NumericLib::indoStyle(round($subtotal+$model->amount_tax-$diskon),2,',','.').'</td></tr>";
 				var res1 = "<tr><th width=30px height=25px>No.</th><th width=265px>DESCRIPTION</th><th width=89px>PART NO</th><th width=60px>QTY</th><th width=50px>UNIT</th><th width=80px>HARGA<br/>'.$pricelist.'</th><th width=107px>TOTAL<br/>'.$pricelist.'</th></tr>";
 				var res = "<tr><td style=\"width:30px; height:"+SetHeight+"px;  text-align:center;\"></td><td style=\"width:265px; text-align:center;\"></td><td style=\"width:89px; text-align:center;\"><div class=\"leftdata\"></div><div class=\"rightdata\"></div></td><td style=\"width:60px; text-align:right;\"><div class=\"leftdata\"></div><div class=\"rightdata\"></div></td><td style=\"width:50px; text-align:center;\"><div class=\"leftdata\"></div><div class=\"rightdata\"></div></td><td style=\"width:80px; text-align:center;\"><div class=\"leftdata\"></div><div class=\"rightdata\"></div></td><td style=\"width:107px; text-align:center;\"><div class=\"leftdata\"></div><div class=\"rightdata\"></div></td></tr>";
 				jQuery(\'#lines\'+currPage+\' tr:first\').before(res1);
@@ -592,7 +626,7 @@ $this->registerJs('
 				jQuery(\'#page\'+currPage+\' .hideprint\').show();
 			}else{
 				var footer ='.$footer.';
-				var footertotal = "<tr class=lineTable><td colspan=3></td><td colspan=3>TOTAL AMOUNT</td><td align=right>'.app\components\NumericLib::indoStyle($subtotal,2,',','.').'</td></tr><tr class=lineTable><td colspan=3></td><td colspan=3>Discount</td><td align=right>'.app\components\NumericLib::indoStyle($diskon,2,',','.').'</td></tr class=lineTable><tr><td colspan=3></td><td colspan=3>PPN 10%</td><td align=right>'.app\components\NumericLib::indoStyle($model->amount_tax,2,',','.').'</td></tr><tr class=lineTable><td colspan=3></td><td colspan=3>GRAND TOTAL</td><td align=right>'.app\components\NumericLib::indoStyle($model->amount_total,2,',','.').'</td></tr>";
+				var footertotal = "<tr class=lineTable><td colspan=3></td><td colspan=3>TOTAL AMOUNT</td><td align=right>'.app\components\NumericLib::indoStyle(round($subtotal),2,',','.').'</td></tr><tr class=lineTable><td colspan=3></td><td colspan=3>Discount</td><td align=right>'.app\components\NumericLib::indoStyle($diskon,2,',','.').'</td></tr class=lineTable><tr><td colspan=3></td><td colspan=3>PPN 10%</td><td align=right>'.app\components\NumericLib::indoStyle($model->amount_tax,2,',','.').'</td></tr><tr class=lineTable><td colspan=3></td><td colspan=3>GRAND TOTAL</td><td align=right>'.app\components\NumericLib::indoStyle(round($subtotal+$model->amount_tax-$diskon),2,',','.').'</td></tr>";
 				var res1 = "<tr><th width=30px height=25px>No.</th><th width=265px>DESCRIPTION</th><th width=89px>PART NO</th><th width=60px>QTY</th><th width=50px>UNIT</th><th width=80px>HARGA<br/>'.$pricelist.'</th><th width=107px>TOTAL<br/>'.$pricelist.'</th></tr>";
 				var res = "<tr><td style=\"width:30px; height:"+SetHeight+"px;  text-align:center;\"></td><td style=\"width:265px; text-align:center;\"></td><td style=\"width:89px; text-align:center;\"><div class=\"leftdata\"></div><div class=\"rightdata\"></div></td><td style=\"width:60px; text-align:right;\"><div class=\"leftdata\"></div><div class=\"rightdata\"></div></td><td style=\"width:50px; text-align:center;\"><div class=\"leftdata\"></div><div class=\"rightdata\"></div></td><td style=\"width:80px; text-align:center;\"><div class=\"leftdata\"></div><div class=\"rightdata\"></div></td><td style=\"width:107px; text-align:center;\"><div class=\"leftdata\"></div><div class=\"rightdata\"></div></td></tr>";
 				jQuery(\'#lines\'+currPage+\' tr:first\').before(res1);

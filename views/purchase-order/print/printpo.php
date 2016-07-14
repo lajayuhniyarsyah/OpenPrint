@@ -12,6 +12,27 @@ $this->registerJs('jQuery(".fittext").fitText(0.9);');
 		page-break-after: always;
 		/*font-family: Arial, Helvetica, sans-serif;*/
 		font-family: 'Lato', sans-serif;
+		position:absolute;
+    	z-index:9999;
+	}
+	#background{
+	    background: none !important;
+	    display: block;
+	    margin-left: 235px;
+	    margin-top: 332px;
+	    position: absolute;
+	    z-index: 0;
+	}
+	#bg-text
+	{
+	    color:lightgrey;
+	    background: none !important;
+	    font-size:60px;
+	    opacity: 0.2;
+	    color: BLACK;
+	    letter-spacing: 30px;
+	    transform:rotate(316deg);
+	    -webkit-transform:rotate(316deg);
 	}
 	table{
 		/* border-top: 1px solid black;
@@ -190,6 +211,10 @@ $this->registerJs('jQuery(".fittext").fitText(0.9);');
 		.tglkirim{
 			width: 203px !important;
 		}
+		#background{
+			background-color: none !important;
+			background:transparent !important;
+		}
 /*		.tablettd{
 			margin-top: -48px !important;
 		}	*/
@@ -295,6 +320,9 @@ $this->registerJs('jQuery(".fittext").fitText(0.9);');
 		float: right;
 		font-weight: bold;
 	}
+
+
+
 </style>
 	<?php 
 		$no=1;
@@ -343,6 +371,11 @@ $this->registerJs('jQuery(".fittext").fitText(0.9);');
         			$price_unit=app\components\NumericLib::indoStyle($value->price_unit,2,',','.');
         			$subtotal1=app\components\NumericLib::indoStyle($value->price_unit*$value->product_qty,2,',','.');
         		}
+        		if ($value->no){
+        			$no_line=$value->no;
+        		}else{
+        			$no_line=$no;
+        		}
 				$data2[]=array(
 								$no,
                                 $desc,
@@ -381,6 +414,13 @@ $this->registerJs('jQuery(".fittext").fitText(0.9);');
         	$po_ref = 'PO Ref : ' . $model->poRevision->poSource->name;
         }
 	?>
+<div id="background">
+	<?php
+		if($model->state=='draft'){
+			echo '<p id=bg-text>DRAFT</p>';		
+		}
+	?>
+</div>
 <div id="pageContainer">
 <div class="pages">
 	<table>

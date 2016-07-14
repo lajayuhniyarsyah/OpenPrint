@@ -1091,7 +1091,8 @@ class ReportAccountingController extends Controller
 	    				 m.state as state,
 	    				 po.name as no_po,
 	    				 m.name as product_name,
-	    				 m.partner_id as partner_id
+	    				 m.partner_id as partner_id,
+	    				 im.name as no_im
 	    				')
 			    ->from('stock_move as m')
 			    ->join('LEFT JOIN','stock_picking as s','s.id=m.picking_id')
@@ -1100,6 +1101,7 @@ class ReportAccountingController extends Controller
 			    ->join('LEFT JOIN','product_template as pt','pt.id=m.product_id')
 			    ->join('LEFT JOIN','delivery_note as dn','dn.id=s.note_id')
 			    ->join('LEFT JOIN','order_preparation as op','op.id=dn.prepare_id')
+			    ->join('LEFT JOIN','internal_move as im','im.id=s.internal_move_id')
 			    ->join('JOIN','product_uom as u','u.id=m.product_uom')
 			    ->join('JOIN','res_partner as r','r.id=m.partner_id')
 			    ->join('JOIN','stock_location as l','m.location_id=l.id')

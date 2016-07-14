@@ -43,7 +43,7 @@
 
 
 			if ($value['jenis']=="internal"){
-				$no_surat=$value['no_int'];
+				$no_surat=$value['no_im'];
 				$no_pb=$value['ori'];
 			}else if($value['jenis']=="in"){
 				$no_surat=$value['ref_cus'];

@@ -414,15 +414,18 @@ $this->registerJs('jQuery(".fittext").fitText(0.9);');
         	$po_ref = 'PO Ref : ' . $model->poRevision->poSource->name;
         }
 	?>
-<div id="background">
+
 	<?php
 		if($model->state=='draft'){
-			echo '<p id=bg-text>DRAFT</p>';		
+			$watermark= '<div id=\'background\'><p id=bg-text>DRAFT</p></div>';
+		}else{
+			$watermark="";
 		}
+		echo $watermark;
 	?>
-</div>
 <div id="pageContainer">
 <div class="pages">
+
 	<table>
 		<tr style="vertical-align:top;">
 			<td>
@@ -568,13 +571,24 @@ $this->registerJs('jQuery(".fittext").fitText(0.9);');
 </div>
 
 <?php
+if($model->state=='draft'){
+		$watermark= '<div id="background"><p id=bg-text>DRAFT</p></div>';
+		$check =1;
+	}else{
+		$check=0;
+	}
 $footer ='"<tr><td colspan=5 style=\'border-right:none !important;\'><div style=\'margin-top:15px; margin-bottom:15px; font-size:18px; border-left:none !important;\'>PENAGIHAN HARUS MELAMPIRKAN</div><div class=ket>1). Copy PO dan Faktur Pajak ASLI Rangkap 2 <br/>2). Kwitansi ASLI dan Surat Jalan (DO) ASLI<br/>3). NPWP/NPPKP Suprabakti Mandiri : 01.327.742.1-038.000<br/>4). Alamat NPWP : JL.Danau Sunter Utara Blok A No.9 Tanjung Priuk<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jakarta Utara 14350<br/>5). Pengiriman Barang harus melampirkan Surat Jalan Rangkap<br/>6). E-Faktur dapat dikirim melalui email ke efaktur@beltcare.com<br/></div></td><td colspan=2  class=noborder>Disetujui Oleh<br/><br/><br/><br/><br/>(....................................)<br/>Date:</td></tr>"';
 
 $this->registerJs('
 	var currPage = 1;
 
 	// save page template to var
-	var tmpl = \'<div class="break">&nbsp;</div>\'+jQuery(\'div#pageContainer\').html();
+	if('.$check.' == 1){
+		var tmpl = 	\'<div class="break">&nbsp;</div><div id="background"><p id=bg-text>DRAFT</p></div>\'+jQuery(\'div#pageContainer\').html();
+	}else{
+		var tmpl = 	\'<div class="break">&nbsp;</div>\'+jQuery(\'div#pageContainer\').html();
+	}
+	
 	
 	// add id to container
 	jQuery(\'div.pages\').attr(\'id\',\'page\'+currPage);

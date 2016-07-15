@@ -1067,11 +1067,14 @@ class ReportAccountingController extends Controller
      			$query
 				->select(
 	    				'
-	    				 m.id,
+	    				 m.id as move_id,
 	    				 s.type as jenis,
 	    				 m.date as date,
 	    				 s.lbm_no as lbm,
 	    				 s.name as no_int,
+	    				 s.note_id as note_id,
+	    				 s.purchase_id as purchase_id,
+	    				 s.internal_move_id as internal_move_id,
 	    				 p.default_code as part_number,
 	    				 p.name_template as name_template,
 	    				 m.product_qty as qty,
@@ -1085,14 +1088,17 @@ class ReportAccountingController extends Controller
 	    				 m.location_id as location_id,
 	    				 s.cust_doc_ref as ref_cus,
 	    				 dn.name as dn,
+	    				 dn.poc as dn_poc,
 	    				 op.name as op,
 	    				 s.origin as ori,
 	    				 m.origin as origin,
 	    				 m.state as state,
 	    				 po.name as no_po,
+	    				 po.origin as no_pb_po,
 	    				 m.name as product_name,
 	    				 m.partner_id as partner_id,
-	    				 im.name as no_im
+	    				 im.name as no_im,
+	    				 im.manual_pb_no as manual_pb_no
 	    				')
 			    ->from('stock_move as m')
 			    ->join('LEFT JOIN','stock_picking as s','s.id=m.picking_id')

@@ -41,16 +41,18 @@
 				}
 			}
 
-
-			if ($value['jenis']=="internal"){
+			if(isset($value['note_id'])){
+				$no_surat=substr($value['dn'], 0,7);
+				$no_pb=$value['dn_poc'];
+			}else if(isset($value['purchase_id'])){
+				$no_surat=$value['no_po'];
+				$no_pb=$value['no_pb_po'];
+			}else if(isset($value['internal_move_id'])){
+				$no_surat=$value['no_im'];
+				$no_pb=$value['manual_pb_no'];
+			}else{
 				$no_surat=$value['no_int'];
 				$no_pb=$value['ori'];
-			}else if($value['jenis']=="in"){
-				$no_surat=$value['ref_cus'];
-				$no_pb='LBM No '.$value['lbm'];
-			}else{
-				$no_surat=substr($value['dn'], 0,7);
-				$no_pb=substr($value['op'], 0,7);
 			}
 
 			if($value['jenis']==""){

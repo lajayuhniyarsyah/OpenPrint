@@ -12,6 +12,27 @@ $this->registerJs('jQuery(".fittext").fitText(0.9);');
 		page-break-after: always;
 		/*font-family: Arial, Helvetica, sans-serif;*/
 		font-family: 'Lato', sans-serif;
+		position:absolute;
+    	z-index:9999;
+	}
+	#background{
+	    background: none !important;
+	    display: block;
+	    margin-left: 235px;
+	    margin-top: 332px;
+	    position: absolute;
+	    z-index: 0;
+	}
+	#bg-text
+	{
+	    color:lightgrey;
+	    background: none !important;
+	    font-size:60px;
+	    opacity: 0.2;
+	    color: BLACK;
+	    letter-spacing: 30px;
+	    transform:rotate(316deg);
+	    -webkit-transform:rotate(316deg);
 	}
 	table{
 		/* border-top: 1px solid black;
@@ -190,6 +211,10 @@ $this->registerJs('jQuery(".fittext").fitText(0.9);');
 		.tglkirim{
 			width: 203px !important;
 		}
+		#background{
+			background-color: none !important;
+			background:transparent !important;
+		}
 /*		.tablettd{
 			margin-top: -48px !important;
 		}	*/
@@ -262,11 +287,11 @@ $this->registerJs('jQuery(".fittext").fitText(0.9);');
 	}
 	.rigthheadtable{
 		float: right;
-		width: 48%;
+		width: 338px;
 	}
 	.leftheadtable{
 		float: left;
-		width: 52%;
+		width: 359px;
 		border-right: 1px solid black;
 	}
 	.cus{
@@ -291,6 +316,13 @@ $this->registerJs('jQuery(".fittext").fitText(0.9);');
 		border:1px solid black;
 		font-size: 16px;
 	}
+	.po_revisi{
+		float: right;
+		font-weight: bold;
+	}
+
+
+
 </style>
 	<?php 
 		$no=1;
@@ -339,6 +371,11 @@ $this->registerJs('jQuery(".fittext").fitText(0.9);');
         			$price_unit=app\components\NumericLib::indoStyle($value->price_unit,2,',','.');
         			$subtotal1=app\components\NumericLib::indoStyle($value->price_unit*$value->product_qty,2,',','.');
         		}
+        		if ($value->no){
+        			$no_line=$value->no;
+        		}else{
+        			$no_line=$no;
+        		}
 				$data2[]=array(
 								$no,
                                 $desc,
@@ -370,9 +407,25 @@ $this->registerJs('jQuery(".fittext").fitText(0.9);');
         }else if($model->pricelist_id==9){
             $pricelist="SGD";
         }
+        $pricelist = $model->pricelist->name;
+
+        $po_ref = '';
+        if ($model->po_revision_id){
+        	$po_ref = 'PO Ref : ' . $model->poRevision->poSource->name;
+        }
+	?>
+
+	<?php
+		if($model->state=='draft'){
+			$watermark= '<div id=\'background\'><p id=bg-text>DRAFT</p></div>';
+		}else{
+			$watermark="";
+		}
+		echo $watermark;
 	?>
 <div id="pageContainer">
 <div class="pages">
+
 	<table>
 		<tr style="vertical-align:top;">
 			<td>
@@ -393,6 +446,8 @@ $this->registerJs('jQuery(".fittext").fitText(0.9);');
 								Workshop : JL.Raya Pasar Kemis Km 3,5 Desa Kutajaya Tangerang 15560 Banten,Telp (021) 5903436-38, Fax.(021) 5903747<br/>
 								Head Office : GRAHA SUPRA JL.Danau Sunter Utara Blok A No.9 Jakarta Utara 14350 Indonesia<br/>
 								Telp : (021) 658 33666 Hunting, Fax (021) 658 31666, Website : www.beltcare.com
+
+								<div class="po_revisi"><?php echo $po_ref ?></div>
 								</div>
 								<div style="clear:both;"></div>
 								<div class="headtable">
@@ -451,7 +506,7 @@ $this->registerJs('jQuery(".fittext").fitText(0.9);');
 												<table class="dtlcus space">
 													<tr>
 														<td width="100px">Nomor PO</td>
-														<td class="fittext">
+														<td style="font-size:18px;">
 															<strong>
 																<?php
 																	echo $model->name;
@@ -516,13 +571,24 @@ $this->registerJs('jQuery(".fittext").fitText(0.9);');
 </div>
 
 <?php
-$footer ='"<tr><td colspan=5 style=\'border-right:none !important;\'><div style=\'margin-top:15px; margin-bottom:15px; font-size:18px; border-left:none !important;\'>PENAGIHAN HARUS MELAMPIRKAN</div><div class=ket>1). Copy PO dan Faktur Pajak ASLI Rangkap 2 <br/>2). Kwitansi ASLI dan Surat Jalan (DO) ASLI<br/>3). NPWP/NPPKP Suprabakti Mandiri : 01.327.742.1-038.000<br/>4). Alamat NPWP : JL.Danau Sunter Utara Blok A No.9 Tanjung Priuk<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jakarta Utara 14350<br/>5). Pengiriman Barang harus melampirkan Surat Jalan Rangkap<br/>6). Email E-Faktur dapat diemail ke efaktur@beltcare.com<br/></div></td><td colspan=2  class=noborder>Disetujui Oleh<br/><br/><br/><br/><br/>(....................................)<br/>Date:</td></tr>"';
+if($model->state=='draft'){
+		$watermark= '<div id="background"><p id=bg-text>DRAFT</p></div>';
+		$check =1;
+	}else{
+		$check=0;
+	}
+$footer ='"<tr><td colspan=5 style=\'border-right:none !important;\'><div style=\'margin-top:15px; margin-bottom:15px; font-size:18px; border-left:none !important;\'>PENAGIHAN HARUS MELAMPIRKAN</div><div class=ket>1). Copy PO dan Faktur Pajak ASLI Rangkap 2 <br/>2). Kwitansi ASLI dan Surat Jalan (DO) ASLI<br/>3). NPWP/NPPKP Suprabakti Mandiri : 01.327.742.1-038.000<br/>4). Alamat NPWP : JL.Danau Sunter Utara Blok A No.9 Tanjung Priuk<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jakarta Utara 14350<br/>5). Pengiriman Barang harus melampirkan Surat Jalan Rangkap<br/>6). E-Faktur dapat dikirim melalui email ke efaktur@beltcare.com<br/></div></td><td colspan=2  class=noborder>Disetujui Oleh<br/><br/><br/><br/><br/>(....................................)<br/>Date:</td></tr>"';
 
 $this->registerJs('
 	var currPage = 1;
 
 	// save page template to var
-	var tmpl = \'<div class="break">&nbsp;</div>\'+jQuery(\'div#pageContainer\').html();
+	if('.$check.' == 1){
+		var tmpl = 	\'<div class="break">&nbsp;</div><div id="background"><p id=bg-text>DRAFT</p></div>\'+jQuery(\'div#pageContainer\').html();
+	}else{
+		var tmpl = 	\'<div class="break">&nbsp;</div>\'+jQuery(\'div#pageContainer\').html();
+	}
+	
 	
 	// add id to container
 	jQuery(\'div.pages\').attr(\'id\',\'page\'+currPage);

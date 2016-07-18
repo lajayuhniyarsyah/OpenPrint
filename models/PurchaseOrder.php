@@ -350,7 +350,7 @@ class PurchaseOrder extends \yii\db\ActiveRecord
      */
     public function getPurchaseOrderLines()
     {
-        return $this->hasMany(PurchaseOrderLine::className(), ['order_id' => 'id']);
+        return $this->hasMany(PurchaseOrderLine::className(), ['order_id' => 'id'])->orderBy('no, id ASC');;
     }
 
     /**

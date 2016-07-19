@@ -121,6 +121,7 @@ if( $uid == 23 || $uid == 101 || $uid == 173 || $uid==25):
 		    font-size: 10pt;
 		    margin-left: 5mm;
 		}
+
 	<?php else:; ?>
 		.dnNo{
 			padding-top: 3%;

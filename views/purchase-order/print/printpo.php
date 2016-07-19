@@ -60,12 +60,11 @@ $this->registerJs('jQuery(".fittext").fitText(0.9);');
 		page-break-after: always;
 	}
 	.logo{
-		width: 140mm;
-		margin-top: -85px;
+		margin-top: 0px;
 		float: left;
 	}
 	.logo img{
-		margin-top:10px;
+		margin-top:0px;
 		margin-left: 10px;
 		display: block;
 	}
@@ -77,6 +76,8 @@ $this->registerJs('jQuery(".fittext").fitText(0.9);');
 		font-weight: bold;
 		float: center;
 		letter-spacing: 1px;
+		margin-right: 3em;
+		text-align: center;
 	}
 	.iso{
 		margin-top:10px;
@@ -316,10 +317,6 @@ $this->registerJs('jQuery(".fittext").fitText(0.9);');
 		border:1px solid black;
 		font-size: 16px;
 	}
-	.po_revisi{
-		float: right;
-		font-weight: bold;
-	}
 
 
 
@@ -408,11 +405,6 @@ $this->registerJs('jQuery(".fittext").fitText(0.9);');
             $pricelist="SGD";
         }
         $pricelist = $model->pricelist->name;
-
-        $po_ref = '';
-        if ($model->po_revision_id){
-        	$po_ref = 'PO Ref : ' . $model->poRevision->poSource->name;
-        }
 	?>
 
 	<?php
@@ -432,12 +424,27 @@ $this->registerJs('jQuery(".fittext").fitText(0.9);');
 				<table style="width:100%;" cellpadding="3" cellspacing="2">
 					<tr>
 						<td>
-							<div class="judul"><strong><h3><center>PURCHASE ORDER</center></h3></strong></div>
 							<div class="logo">
 								<img style="width:115px; float:left" src="<?= Url::base() ?>/img/logo.png">
 								<div style="clear:both;"></div>
 								<div class="dataiso">SBM-F-PCH-02/01<br/>
 									12/01/30</div>
+							</div>
+
+							<div class="judul">
+								<strong>
+									<h3>
+										
+										PURCHASE ORDER
+										<?php
+										if(isset($model->po_revision_id) and (isset($model->poRevision->is_invoiced) and $model->poRevision->is_invoiced)):
+										?>
+										<br/>REVISION
+										<?php endif; ?>
+										
+									</h3>
+								</strong>
+								
 							</div>
 							<div style="clear:both;"></div>
 							<div class="do">PT.SUPRABAKTI MANDIRI</div>
@@ -446,8 +453,6 @@ $this->registerJs('jQuery(".fittext").fitText(0.9);');
 								Workshop : JL.Raya Pasar Kemis Km 3,5 Desa Kutajaya Tangerang 15560 Banten,Telp (021) 5903436-38, Fax.(021) 5903747<br/>
 								Head Office : GRAHA SUPRA JL.Danau Sunter Utara Blok A No.9 Jakarta Utara 14350 Indonesia<br/>
 								Telp : (021) 658 33666 Hunting, Fax (021) 658 31666, Website : www.beltcare.com
-
-								<div class="po_revisi"><?php echo $po_ref ?></div>
 								</div>
 								<div style="clear:both;"></div>
 								<div class="headtable">

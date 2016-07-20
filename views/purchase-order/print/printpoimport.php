@@ -96,6 +96,7 @@ body {margin-top: 0px;margin-left: 0px;}
 .t0{width: 741px;font: 13px 'Arial';}
 .t1{width: 601px;margin-left: 85px;margin-top: 13px;font: 15px 'Arial';}
 .square{border:1px solid black;}
+
 footer{
 	height: 150px;
 }
@@ -107,7 +108,30 @@ footer{
 	padding-left: 20px;
     padding-right: 20px;
 }
+.background{
+    background: none !important;
+    display: block;
+    margin-left: 235px;
+    margin-top: 332px;
+    position: absolute;
+    z-index: -10;
+}
+.bg-text
+{
+    color:lightgrey;
+    background: none !important;
+    font-size:60px;
+    opacity: 0.2;
+    color: BLACK;
+    letter-spacing: 30px;
+    position: absolute;
+    margin-left: 231px;
+    margin-top: 225px;
+    transform:rotate(316deg);
+    -webkit-transform:rotate(316deg);
+}
 @media print {
+    
     .thead{
     	page-break-before: always;
     	height: 190px;
@@ -115,9 +139,18 @@ footer{
     .breakfooter{
     	page-break-before: always;
     }
+    .background{
+			background-color: none !important;
+			background:transparent !important;
+		}
     tfoot{
     	height: 0px;
     }
+    .bg-text
+	{
+		position: fixed;
+	}
+
 }
 </STYLE>
 
@@ -226,13 +259,20 @@ footer{
     if(!strpos($amount_total, ".")){
     	$amount_total = $amount_total.'.00';
     }
+
+	if($model->state=='draft'){
+		$watermark= '<p class=bg-text>DRAFT</p>';
+	}else{
+		$watermark="";
+	}
 ?>
 <BODY>
 	<DIV id="page_1">
+		<?php echo $watermark; ?>
 		<TABLE cellpadding=0 cellspacing=0 class="t0">
 			<THEAD class="thead">
 			  <TR>
-			     <TH colspan=7></TH>
+			     <TH colspan=7><div class="watermark"></div></TH>
 			  </TR>
 			 </thead>
 			 <tfoot>
@@ -422,9 +462,6 @@ footer{
 			</TR>
 			</TBODY>
 		</TABLE>
-
-
-				
 	</DIV>
 </BODY>
 </HEAD>
@@ -444,7 +481,7 @@ footer{
 
 		// var x =sum+121;	
 		// if(x > 680){
-		// 	jQuery(".set-footer-break").addClass( "breakfooter" );	
+		// 	jQuery(".set-footer-break td").addClass( "breakfooter" );	
 		// }
 		// 17 + 23 + 23
 

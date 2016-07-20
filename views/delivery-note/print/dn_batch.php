@@ -86,14 +86,38 @@
 		text-decoration: underline;
 	}
 
+	#footer{
+        color: #000;
+    	width: 100%;
+    	/*position: absolute;*/
+    	bottom: 20px;
+    }
+    .btn_delete{
+    	float: left;
+    }
+    .nama_atasan{
+    	float: left;
+    }
 	pre{
 		white-space: pre-wrap;
 	}
 	@media print
 	{
+		#footer{
+			position: absolute;
+			bottom: 70px;
+		}
+		.btn_delete{
+			display: none;
+		}
 		#container{
 			border: none;
 		}
+		.nama_atasan{
+
+	    	float: right;
+	    	margin-right: 50px;
+	    }
 	}
 	pre{
 		font-family: Arial, Helvetica, sans-serif;
@@ -200,8 +224,23 @@ endif;
 				</tr>
 			</table>
 		</div>
+
 	</div>
+	<!-- <div id="footer">
+		<div class="nama_atasan"> Susanti Pheng</div>  <a class="btn_delete" href="#"> x </a>
+	</div>	 -->
+
+	<table>
+	  
+	  <tfoot>
+	    <tr>
+	      <td>Sum</td>
+	      <td>$180</td>
+	    </tr>
+	  </tfoot>
+	</table>
 </div>
+
 
 
 <?php

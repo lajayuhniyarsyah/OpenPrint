@@ -19,7 +19,7 @@ class PrintSaleOrderController extends Controller
 		$this->layout=False;
 		$model = SaleOrder::findOne($id);
 		if ($model===null){
-			throw new NotFoundHttpException;
+			throw new NotFoundHttpException('Data that youve searched not exists');
 		}
 
 		$dataContent=[];

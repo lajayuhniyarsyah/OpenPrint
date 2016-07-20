@@ -134,16 +134,32 @@ if( $uid == 23 || $uid == 101 || $uid == 173 || $uid==25):
 		padding-top: 2mm;
 		font-size: 10pt;
 	}
-	.dnNo{
-		padding-top: 3%;
-		font-size: 10pt;
-	}
+	<?php if($uid==101): ?>
+		.dnNo {
+		    padding-top: 4%;
+		    font-size: 10pt;
+		    margin-left: 3mm;
+		}
+		.poc {
+		    margin-top: 6% !important;
+		    font-size: 10pt;
+		    margin-left: 5mm;
+		}
+
+	<?php else:; ?>
+		.dnNo{
+			padding-top: 3%;
+			font-size: 10pt;
+		}
+
+		.poc{
+			margin-top: 6% !important;
+			font-size: 10pt;
+		}
+	<?php endif; ?>
+
 	.opNo{
 		padding-left: 64% !important;
-		margin-top: 6% !important;
-		font-size: 10pt;
-	}
-	.poc{
 		margin-top: 6% !important;
 		font-size: 10pt;
 	}

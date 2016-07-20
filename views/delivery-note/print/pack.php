@@ -225,6 +225,23 @@ use yii\helpers\Url;
 					margin-top: 28mm;
 					text-decoration: underline;
 				}';
+			}
+			elseif($uid==101){
+				echo '.pages
+					{
+						
+						padding-top: 47mm;
+						page-break-after: always;
+						height: 283mm;
+					}
+					.td4,.td5{text-align:center;}
+
+					.tdLines{
+						min-height: 99mm;
+					}
+					.footers .totalBox {
+    					width: 87mm;
+    				}';
 			}else{
 				echo '.sign{
 					text-decoration: underline;

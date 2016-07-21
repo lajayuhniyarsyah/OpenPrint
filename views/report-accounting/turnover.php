@@ -56,7 +56,7 @@
 			}
 
 			if($value['jenis']==""){
-				$jenis=$value['product_name'];
+				$jenis='';
 			}else{
 				$jenis=$value['jenis'];
 			}
@@ -71,22 +71,19 @@
 				if($res['parent_id']==""){
 					$partner=$value['partner'];
 				}else{
-					
 					$parent = new Query;
 					$parent
 						->select('name')
 						->from('res_partner')
 						->where(['id' => $res['parent_id']]);
 					$r=$parent->one();
-					$partner=$r['name'];	
-					
-					
+					$partner=$r['name'];
 				}
 			}
 
 			$body[]='<tr>
 					<td>'.$no.'</td>
-					<td>'.$jenis.'</td>
+					<td>'.$jenis.'-----------'.$value['move_id'].'</td>
 					<td>'.Yii::$app->formatter->asDatetime($value['date'], "php:d-m-Y").'</td>
 					<td>'.$no_surat.'</td>
 					<td>'.$no_pb.'</td>

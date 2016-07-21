@@ -12,16 +12,16 @@
 	background: #cccccc;
 	}
 
-	page[size="A4"] {
-		background: white;
-		width: 22cm;
-		height: 29.7cm;
-		display: block;
-		margin: 0 auto;
-		margin-bottom: 0.5cm;
-		padding: 11px;
-		
-	}
+		page[size="A4"] {
+			background: white;
+			width: 22cm;
+			height: 29.7cm;
+			display: block;
+			margin: 0 auto;
+			margin-bottom: 0.5cm;
+			padding: 11px;
+			
+		}
 		page .header{
 			margin: auto;
 			
@@ -45,6 +45,9 @@
 			padding: 10px;
 
 
+		}
+		.number{
+			float: right;
 		}
 		 @media print{
             .hideOnPrint{
@@ -96,7 +99,7 @@
 
 				<div class="contentHeader"></div>
 				<div class="content">
-					<p contenteditable='true'>We would like to offer our product as your requirement as following :</p>	<div class="number" style="position: relative; right: -700px;"><span class="no"></span> <span class = "noTotal"></span></div>
+					<p contenteditable='true'>We would like to offer our product as your requirement as following :</p>	<div class="number"><span class="no"></span> <span class = "noTotal"></span></div>
 					<table id="TableSo" width="100%" border='1px' style='border-collapse:collapse;'>
 						<tr><td width='5%''><center><b>No</b></center></td><td width='10%''><center><b>Qty</b></center></td><td width='5%'><center><b>Unit</b></center></td><td width='45%'><center><b>Description</b></center></td><td width='15%'><center><b>Price Unit</b></center></td><td width='20%'><center><b>Price Sub</b></center></td></tr>
 					</table>
@@ -125,7 +128,7 @@
 			contentheader = jQuery('page#page-'+cursor+' .contentHeader');
 			number = jQuery('page#page-'+cursor+' .number .no');
 			number.append("Page "+cursor)
-			var contentHeader ="<table width='100%'><td witdh='50%' valign='top'><table width='100%'><tr><td>Company</td><td>:</td><td><?=$model->partner->name?></td></tr><tr><td>Attn</td><td>:</td><td><?=$AttentionName?></td></tr><tr valign='top'> <td width='30%'>Delivery Address</td> <td>:</td> <td height='54'><?=$street_shipping.' '?><?=$street_shipping_2.' '?><?=$city_shipping.' '?><?=$state_shipping.' '?><?=$country_shipping.' '?></td> </tr> <tr valign='top'> <td width='30%'>Invoice Address</td> <td>:</td> <td height='54'><?=$street_invoice.' '?><?=$street_invoice_2.' '?><?=$city_invoice.' '?><?=$state_invoice.' '?><?=$country_invoice.' '?></td> </tr> <tr> <td>Phone</td> <td>:</td> <td><?= $AttentionPhone?></td> </tr> <tr> <td>Fax</td> <td>:</td> <td><?=$fax ?></td> </tr> <tr> <td>Email</td> <td>:</td> <td><?= $email?></td> </tr> </table> </td> <td width='50%' valign='top'> <table width='100%' > <tr> <td>Quotation#</td> <td>:</td> <td><?=$model->quotation_no?></td> </tr> <tr> <td>Customer Reference#</td> <td>:</td> <td><?=$model->client_order_ref?></td> </tr> <tr> <td>Date</td> <td>:</td> <td><?=date('d/m/Y', strtotime($model->date_order));?></td> </tr> <tr> <td>Sales Contact</td> <td>:</td> <td><?=$model->user->name ?></td> </tr> <tr> <td>Sales Group</td> <td>:</td> <td><?=strtoupper($model->group->name);?></td> </tr> <tr> <td>Fax</td> <td>:</td> <td><?=$model->user->partner->fax?></td> </tr> <tr> <td>Email</td> <td>:</td> <td><?=$model->user->partner->email?></td> </tr> </table> </td> </table>"
+			var contentHeader ="<table width='100%'><td witdh='50%' valign='top'><table width='100%'><tr><td>Company</td><td>:</td><td><?=$model->partner->name?></td></tr><tr><td>Attn</td><td>:</td><td><?=$AttentionName?></td></tr><tr valign='top'> <td width='30%'>Delivery Address</td> <td>:</td> <td height='54'><?=$street_shipping.' '?><?=$street_shipping_2.' '?><?=$city_shipping.' '?><?=$state_shipping.' '?><?=$country_shipping.' '?></td> </tr> <tr valign='top'> <td width='30%'>Invoice Address</td> <td>:</td> <td height='54'><?=$street_invoice.' '?><?=$street_invoice_2.' '?><?=$city_invoice.' '?><?=$state_invoice.' '?><?=$country_invoice.' '?></td> </tr> <tr> <td>Phone</td> <td>:</td> <td><?= $AttentionPhone?></td> </tr> <tr> <td>Fax</td> <td>:</td> <td><?=$fax ?></td> </tr> <tr> <td>Email</td> <td>:</td> <td><?= $email?></td> </tr> </table> </td> <td width='50%' valign='top'> <table width='100%' > <tr> <td>Quotation#</td> <td>:</td> <td><?=$model->quotation_no?></td> </tr> <tr> <td>Customer Reference#</td> <td>:</td> <td><?=$model->client_order_ref?></td> </tr> <tr> <td>Date</td> <td>:</td> <td><?=date('d/m/Y', strtotime($model->date_order));?></td> </tr> <tr> <td>Sales Contact</td> <td>:</td> <td><?=$model->user->login ?></td> </tr> <tr> <td>Sales Group</td> <td>:</td> <td><?=strtoupper($model->group->name);?></td> </tr> <tr> <td>Fax</td> <td>:</td> <td><?=$model->user->partner->fax?></td> </tr> <tr> <td>Email</td> <td>:</td> <td><?=$model->user->partner->email?></td> </tr> </table> </td> </table>"
 			contentheader.append(contentHeader)
 			// headerElement.append(headerTable)
 			jQuery.each(data,function(index,value){
@@ -394,7 +397,7 @@
 	
 			})
 			var contentfooter= jQuery('page#page-'+cursor+' .footer');
-			contentfooter.append("<table width='30%'><tr> <td valign='top' style='text-align:center' height='80'>Thank you and best regards</td></tr><tr><td valign='top' style='text-align:center'>"+"<?=$model->user->name ?>"+"</td></tr></table>")
+			contentfooter.append("<table width='30%'><tr> <td valign='top' style='text-align:center' height='80'>Thank you and best regards</td></tr><tr><td valign='top' style='text-align:center'>"+"<?=$model->user->login ?>"+"</td></tr></table>")
 		  jQuery(".number .noTotal").html(" of "+cursor);
 		});
 	</script>

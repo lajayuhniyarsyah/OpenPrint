@@ -122,7 +122,7 @@
 			contentheader = jQuery('page#page-'+cursor+' .contentHeader');
 			number = jQuery('page#page-'+cursor+' .number .no');
 			number.append("Page "+cursor)
-			var contentHeader ="<table width='100%'><td witdh='50%' valign='top'><table width='100%'><tr><td>To</td><td>:</td><td>"+'<?=$AttentionName?>'+"</td></tr><tr valign='top'><td>Company</td><td>:</td><td height='54'>"+'<?=$model->partner->name?>'+"<br/>"+'<?=$model->partner->street?><?=$model->partner->street2?><?=$model->partner->city?><?=$state?><?=$model->partner->zip?><?=$country?>'+"</td></tr><tr><td>Phone</td><td>:</td><td>"+'<?= $AttentionPhone?>'+"</td></tr><tr><td>Fax</td><td>:</td><td>"+'<?=$fax ?>'+"</td></tr><tr><td>Email</td><td>:</td><td>"+'<?= $email?>'+"</td></tr></table></td><td width='50%' valign='top'><table width='100%' ><tr><td>Date</td><td>:</td>	<td>"+"<?=date('d/m/Y', strtotime($model->date_order));?>"+"</td></tr><tr><td>Sales Contact</td><td>:</td><td>"+"<?=$model->user->name ?>"+"</td></tr><tr><td>Phone</td><td>:</td><td>"+"<?=$model->user->partner->phone?>"+"</td></tr><tr><td>Mobile</td><td>:</td><td>"+"<?=$model->user->partner->mobile?>"+"</td></tr><tr><td>Fax</td><td>:</td><td>"+"<?=$model->user->partner->fax?>"+"</td></tr><tr><td>Email</td><td>:</td><td>"+"<?=$model->user->partner->email?>"+"</td></tr></table></td></table>"
+			var contentHeader ="<table width='100%'><td witdh='50%' valign='top'><table width='100%'><tr><td>To</td><td>:</td><td>"+'<?=$AttentionName?>'+"</td></tr><tr valign='top'><td>Company</td><td>:</td><td height='54'>"+'<?=$model->partner->name?>'+"<br/>"+'<?=$model->partner->street?><?=$model->partner->street2?><?=$model->partner->city?><?=$state?><?=$model->partner->zip?><?=$country?>'+"</td></tr><tr><td>Phone</td><td>:</td><td>"+'<?= $AttentionPhone?>'+"</td></tr><tr><td>Fax</td><td>:</td><td>"+'<?=$fax ?>'+"</td></tr><tr><td>Email</td><td>:</td><td>"+'<?= $email?>'+"</td></tr></table></td><td width='50%' valign='top'><table width='100%' ><tr><td>Date</td><td>:</td>	<td>"+"<?=date('d/m/Y', strtotime($model->date_order));?>"+"</td></tr><tr><td>Sales Contact</td><td>:</td><td>"+"<?=$model->user->login ?>"+"</td></tr><tr><td>Phone</td><td>:</td><td>"+"<?=$model->user->partner->phone?>"+"</td></tr><tr><td>Mobile</td><td>:</td><td>"+"<?=$model->user->partner->mobile?>"+"</td></tr><tr><td>Fax</td><td>:</td><td>"+"<?=$model->user->partner->fax?>"+"</td></tr><tr><td>Email</td><td>:</td><td>"+"<?=$model->user->partner->email?>"+"</td></tr></table></td></table>"
 
 			contentheader.append(contentHeader)
 			// headerElement.append(headerTable)
@@ -392,7 +392,7 @@
 	
 			})
 			var contentfooter= jQuery('page#page-'+cursor+' .footer');
-			contentfooter.append("<table width='30%'><tr> <td valign='top' style='text-align:center' height='80'>Thank you and best regards</td></tr><tr><td valign='top' style='text-align:center'>"+"<?=$model->user->name ?>"+"</td></tr></table>")
+			contentfooter.append("<table width='30%'><tr> <td valign='top' style='text-align:center' height='80'>Thank you and best regards</td></tr><tr><td valign='top' style='text-align:center'>"+"<?=$model->user->login ?>"+"</td></tr></table>")
 		  jQuery(".number .noTotal").html(" of "+cursor);
 		});
 	</script>

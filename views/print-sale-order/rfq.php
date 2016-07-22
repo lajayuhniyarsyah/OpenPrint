@@ -47,6 +47,12 @@
 
 
 		}
+		.number{
+			float: right;
+		}
+		.tableHeader tr td{
+			vertical-align: top;
+		}
 		 @media print{
             .hideOnPrint{
                 display: none;
@@ -65,7 +71,7 @@
 			<page size="A4">
 				<div class="header">
 
-					<table width="100%">
+					<table width="100%" class="tableHeader">
 					<td width="50%">
 					<?php 
 						// var_dump($model);
@@ -85,14 +91,14 @@
 				</table>
 				
 				<center><b>Quotation</b></center>
-			<center><b><?=$model->quotation_no?></b></center>
-			
+				<center><b><?=$model->quotation_no?></b></center>
+				<br/>
 			
 	  
 				</div>
 				<div class="contentHeader"></div>
 				<div class="content">
-					<p contenteditable='true'>We would like to offer our product as your requirement as following :</p>	<div class="number" style="position: relative; right: -700px;"><span class="no"></span> <span class = "noTotal"></span></div>
+					<p contenteditable='true'>We would like to offer our product as your requirement as following :</p>	<div class="number"><span class="no"></span> <span class = "noTotal"></span></div>
 					<table id="TableSo" width="100%" border='1px' style='border-collapse:collapse;'>
 						<tr><td width='5%''><center><b>No</b></center></td><td width='10%''><center><b>Qty</b></center></td><td width='5%'><center><b>Unit</b></center></td><td width='45%'><center><b>Description</b></center></td><td width='15%'><center><b>Price Unit</b></center></td><td width='20%'><center><b>Price Sub</b></center></td></tr>
 					</table>
@@ -122,7 +128,7 @@
 			contentheader = jQuery('page#page-'+cursor+' .contentHeader');
 			number = jQuery('page#page-'+cursor+' .number .no');
 			number.append("Page "+cursor)
-			var contentHeader ="<table width='100%'><td witdh='50%' valign='top'><table width='100%'><tr><td>To</td><td>:</td><td>"+'<?=$AttentionName?>'+"</td></tr><tr valign='top'><td>Company</td><td>:</td><td height='54'>"+'<?=$model->partner->name?>'+"<br/>"+'<?=$model->partner->street?><?=$model->partner->street2?><?=$model->partner->city?><?=$state?><?=$model->partner->zip?><?=$country?>'+"</td></tr><tr><td>Phone</td><td>:</td><td>"+'<?= $AttentionPhone?>'+"</td></tr><tr><td>Fax</td><td>:</td><td>"+'<?=$fax ?>'+"</td></tr><tr><td>Email</td><td>:</td><td>"+'<?= $email?>'+"</td></tr></table></td><td width='50%' valign='top'><table width='100%' ><tr><td>Date</td><td>:</td>	<td>"+"<?=date('d/m/Y', strtotime($model->date_order));?>"+"</td></tr><tr><td>Sales Contact</td><td>:</td><td>"+"<?=$model->user->login ?>"+"</td></tr><tr><td>Phone</td><td>:</td><td>"+"<?=$model->user->partner->phone?>"+"</td></tr><tr><td>Mobile</td><td>:</td><td>"+"<?=$model->user->partner->mobile?>"+"</td></tr><tr><td>Fax</td><td>:</td><td>"+"<?=$model->user->partner->fax?>"+"</td></tr><tr><td>Email</td><td>:</td><td>"+"<?=$model->user->partner->email?>"+"</td></tr></table></td></table>"
+			var contentHeader ="<table width='100%' class='tableHeader'><td witdh='50%' valign='top'><table width='100%'><tr><td width='119'>To</td><td width='5'>:</td><td width='275'>"+'<?=$AttentionName?>'+"</td></tr><tr valign='top'><td width='119'>Company</td><td>:</td><td height='54'>"+'<?=$model->partner->name?>'+"<br/>"+'<?=$model->partner->street?><?=$model->partner->street2?><?=$model->partner->city?><?=$state?><?=$model->partner->zip?><?=$country?>'+"</td></tr><tr><td>Phone</td><td>:</td><td>"+'<?= $AttentionPhone?>'+"</td></tr><tr><td>Fax</td><td>:</td><td>"+'<?=$fax ?>'+"</td></tr><tr><td>Email</td><td>:</td><td>"+'<?= $email?>'+"</td></tr></table></td><td width='50%' valign='top'><table width='100%' ><tr><td width='150'>Date</td><td width='5'>:</td>	<td>"+"<?=date('d/m/Y', strtotime($model->date_order));?>"+"</td></tr><tr><td>Sales Contact</td><td>:</td><td>"+"<?=$model->user->login ?>"+"</td></tr><tr><td>Phone</td><td>:</td><td>"+"<?=$model->user->partner->phone?>"+"</td></tr><tr><td>Mobile</td><td>:</td><td>"+"<?=$model->user->partner->mobile?>"+"</td></tr><tr><td>Fax</td><td>:</td><td>"+"<?=$model->user->partner->fax?>"+"</td></tr><tr><td>Email</td><td>:</td><td>"+"<?=$model->user->partner->email?>"+"</td></tr></table></td></table>"
 
 			contentheader.append(contentHeader)
 			// headerElement.append(headerTable)

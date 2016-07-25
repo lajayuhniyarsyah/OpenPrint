@@ -185,7 +185,7 @@ class SaleOrderController extends Controller
 		$connection = \Yii::$app->db;
 		$model = new SaleAnnualReportForm();
 		$saleGroup = ResGroups::findOne(['name'=>'All Sales User']);
-		$saleUsers = ArrayHelper::map($saleGroup->users,'id','name');
+		$saleUsers = ArrayHelper::map($saleGroup->users,'id','login');
 
 
 		$allOrderTitle = "Globally Orders Received";
@@ -903,14 +903,14 @@ EOQ;
 					pid.name as pricelist']);
 		}else{
 			$query
-				->select ('
+				->select ("
 					sol.id as id,
 					so.partner_id as partner_id,
 					so.date_order as date_order,
 					so.name as no_po,
 					rp.name as partner,
 					sol.product_id as product_id,
-					pp.name as product,
+					('[' || pt.default_code || '] ' || pp.name) as product,
 					sol.price_unit as price_unit,
 					sol.state as state,
 					pc.name as category,
@@ -919,11 +919,12 @@ EOQ;
 					sol.name as product_desc,
 					(sol.product_uom_qty*sol.price_unit) as total,
 					so.name as so_no
-				');
+				");
 		}
 		$query->from('sale_order_line as sol')
 			->join('LEFT JOIN','sale_order as so','so.id=sol.order_id')
 			->join('LEFT JOIN','product_template as pp','pp.id=sol.product_id')
+			->join('LEFT JOIN','product_product as pt', 'pt.product_tmpl_id=pp.id')
 			->join('LEFT JOIN','res_partner as rp','rp.id=so.partner_id')
 			->join('LEFT JOIN','product_category as pc','pc.id=pp.categ_id')
 			->join('LEFT JOIN','product_pricelist as pid','pid.id=so.pricelist_id');

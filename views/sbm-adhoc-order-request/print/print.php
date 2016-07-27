@@ -328,6 +328,10 @@ use yii\helpers\Url;
 		padding-left: 5px;	
 		line-height: 0px;
 	}
+	tr.tdHead td{
+		text-align: left;
+		vertical-align: top;
+	}
 </style>
 	<?php 
 		$no=1;
@@ -390,34 +394,62 @@ use yii\helpers\Url;
 							</div>
 							<div class="headtable" style="line-height:22px;">
 									<table class="tablecontent leftheadtable">
-										<tr>
+										<tr class="tdHead">
 											<td>Customer</td>
 											<td>:</td>
 											<td><?php echo $model->customer->name; ?></td>
 										</tr>
-										<tr>
+										<tr class="tdHead">
 											<td>Attention</td>
 											<td>:</td>
 											<td><?php echo $model->attention->name; ?></td>
 										</tr>
-										<tr>
-											<td>Site</td>
+										<tr class="tdHead">
+											<td>Site Address</td>
 											<td>:</td>
-											<td><?=(isset($model->customerSite->name) ? $model->customerSite->name:null)?></td>
+											<td>
+												<?php
+													if(isset($model->customerSite)){
+														// print site Contact Name
+														echo $model->customerSite->name;
+														// print address
+														echo '<br/>'.nl2br($model->customerSite->street);
+														echo ($model->customerSite->street2 ? '<br/>'.$model->customerSite->street2:null);
+														echo ($model->customerSite->city ? '<br/>'.$model->customerSite->city:null);
+														if($model->customerSite->city and isset($model->customerSite->state)):
+															echo ' - ';
+														endif;
+
+														echo (isset($model->customerSite->state) ? $model->customerSite->state->name:null);
+
+														echo (isset($model->customerSite->country) ? '<br/>'.$model->customerSite->country->name:null);
+
+													}else{
+														echo '-';
+													}
+													
+												?>
+												
+											</td>
 										</tr>
 									</table>
 									<table class="tablecontent rigthheadtable">
-										<tr>
+										<tr class="tdHead">
+											<td><b>Ref No (<?=strtoupper($model->cust_ref_type)?>)</b></td>
+											<td>:</td>
+											<td><b><?=$model->cust_ref_no?></b></td>
+										</tr>
+										<tr class="tdHead">
 											<td>Due Date</td>
 											<td>:</td>
 											<td><?php echo Yii::$app->formatter->asDatetime($model->due_date, "php:d-M-Y")?></td>
 										</tr>
-										<tr>
+										<tr class="tdHead">
 											<td>Sales Man / Group</td>
 											<td>:</td>
-											<td><?php echo $model->salesMan->name; ?> / <span style="text-transform: uppercase;"><?php echo $model->saleGroup->name; ?> </span></td>
+											<td><?php echo $model->salesMan->login; ?> / <span style="text-transform: uppercase;"><?php echo $model->saleGroup->name; ?> </span></td>
 										</tr>
-										<tr>
+										<tr class="tdHead">
 											<td>Term Of Payment</td>
 											<td>:</td>
 											<td><?php echo $model->termOfPayment->name; ?></td>
@@ -452,9 +484,9 @@ use yii\helpers\Url;
 $scope_of_work = preg_replace('#\R+#', '<br/>', str_replace('"','', $model->scope_of_work));
 $term_condition = preg_replace('#\R+#', '<br/>', str_replace('"','', $model->term_condition));
 $notes = preg_replace('#\R+#', '<br/>', str_replace('"','`', $model->notes));
-$sales =$model->salesMan->name;
+$sales =$model->salesMan->login;
 
-$footer ='"<tr><td colspan=5><table class=\"contentFooter\"><tr><td><p class=\"judulfooter\">Scope Of Work</p></td></tr><tr><td><p class=\"isi\">'.$scope_of_work.'</p></td></tr><tr><td><p class=\"judulfooter\">Term Condition</p></td></tr><tr><td><p class=\"isi\">'.$term_condition.'</p></td></tr><tr><td><p class=\"judulfooter\">Notes</p></td></tr><tr><td><p class=\"isi\">'.$notes.'</p></td></tr><tr><td><div class=\"leftheadtablefooter\"><span class=\"isi\" style=\"margin-left:-10px;\"><center>Product / Regional Manager</center></span><br/><br/><span class=\"isi\"><center>'.$sales.'</center></span></div><div class=\"rigthheadtablefooter\"><span class=\"isi\"><center>General Manager</center></span><br/><br/><span class=\"isi\"><center>(........................)</center></span></div></td></tr></table></td></tr>"';
+$footer ='"<tr><td colspan=5><table class=\"contentFooter\"><tr><td><p class=\"judulfooter\">Scope Of Work</p></td></tr><tr><td><p class=\"isi\">'.$scope_of_work.'</p></td></tr><tr><td><p class=\"judulfooter\">Term Condition</p></td></tr><tr><td><p class=\"isi\">'.$term_condition.'</p></td></tr><tr><td><p class=\"judulfooter\">Notes</p></td></tr><tr><td><p class=\"isi\">'.$notes.'</p></td></tr><tr><td><div class=\"leftheadtablefooter\"><span class=\"isi\" style=\"margin-left:-10px;\"><center>Product / Regional Manager</center></span><br/><br/><span class=\"isi\"><center>'.$sales.'</center></span></div><div class=\"rigthheadtablefooter\"><span class=\"isi\"><center>General Manager/Director</center></span><br/><br/><span class=\"isi\"><center>(........................)</center></span></div></td></tr></table></td></tr>"';
 
 
 $this->registerJs('

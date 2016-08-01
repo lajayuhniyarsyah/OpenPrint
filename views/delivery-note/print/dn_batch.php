@@ -86,11 +86,11 @@
 		text-decoration: underline;
 	}
 
-	#footer{
+	.footer{
         color: #000;
     	width: 100%;
     	/*position: absolute;*/
-    	bottom: 20px;
+    	/*bottom: 20px;*/
     }
     .btn_delete{
     	float: left;
@@ -103,9 +103,9 @@
 	}
 	@media print
 	{
-		#footer{
-			position: absolute;
-			bottom: 70px;
+		.footer{
+			/*position: fixed;*/
+			/*bottom: 70px;*/
 		}
 		.btn_delete{
 			display: none;
@@ -241,26 +241,21 @@ endif;
 			</table>
 		</div>
 
+		<div class="footer">
+			<div class="nama_atasan"> Susanti Pheng</div>  <a class="btn_delete" href="#"> x </a>
+		</div>	
 	</div>
-	<!-- <div id="footer">
-		<div class="nama_atasan"> Susanti Pheng</div>  <a class="btn_delete" href="#"> x </a>
-	</div>	 -->
+	
 
-	<table>
-	  
-	  <tfoot>
-	    <tr>
-	      <td>Sum</td>
-	      <td>$180</td>
-	    </tr>
-	  </tfoot>
-	</table>
 </div>
-
 
 
 <?php
 $scr = '
+	jQuery(".btn_delete").click(function() {
+		  jQuery(".footer").hide();
+	});
+
 	var currPage = 1;
 
 	// save page template to var

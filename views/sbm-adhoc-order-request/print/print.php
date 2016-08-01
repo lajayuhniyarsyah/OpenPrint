@@ -348,7 +348,7 @@ use yii\helpers\Url;
 			$data2[]=array(
 				$no,
                 '['.$value->item->default_code.'] '. $value->item->name_template,
-				$desc,
+				nl2br($desc),
 				$value->qty,
 				$value->uom->name);
 
@@ -486,7 +486,7 @@ $term_condition = preg_replace('#\R+#', '<br/>', str_replace('"','', $model->ter
 $notes = preg_replace('#\R+#', '<br/>', str_replace('"','`', $model->notes));
 $sales =$model->salesMan->login;
 
-$footer ='"<tr><td colspan=5><table class=\"contentFooter\"><tr><td><p class=\"judulfooter\">Scope Of Work</p></td></tr><tr><td><p class=\"isi\">'.$scope_of_work.'</p></td></tr><tr><td><p class=\"judulfooter\">Term Condition</p></td></tr><tr><td><p class=\"isi\">'.$term_condition.'</p></td></tr><tr><td><p class=\"judulfooter\">Notes</p></td></tr><tr><td><p class=\"isi\">'.$notes.'</p></td></tr><tr><td><div class=\"leftheadtablefooter\"><span class=\"isi\" style=\"margin-left:-10px;\"><center>Product / Regional Manager</center></span><br/><br/><span class=\"isi\"><center>'.$sales.'</center></span></div><div class=\"rigthheadtablefooter\"><span class=\"isi\"><center>General Manager/Director</center></span><br/><br/><span class=\"isi\"><center>(........................)</center></span></div></td></tr></table></td></tr>"';
+$footer ='"<tr><td colspan=5><table class=\"contentFooter\"><tr><td><p class=\"judulfooter\">Scope Of Work</p></td></tr><tr><td><p class=\"isi\">'.$scope_of_work.'</p></td></tr><tr><td><p class=\"judulfooter\">Term Condition</p></td></tr><tr><td><p class=\"isi\">'.$term_condition.'</p></td></tr><tr><td><p class=\"judulfooter\">Notes</p></td></tr><tr><td><p class=\"isi\">'.$notes.'</p></td></tr><tr><td><div class=\"leftheadtablefooter\"><span class=\"isi\" style=\"margin-left:-10px;\"><center>Product / Regional Manager</center></span><br/><br/><span class=\"isi\"><center>'.strtoupper($sales).'</center></span></div><div class=\"rigthheadtablefooter\"><span class=\"isi\"><center>General Manager/Director</center></span><br/><br/><span class=\"isi\"><center>(........................)</center></span></div></td></tr></table></td></tr>"';
 
 
 $this->registerJs('

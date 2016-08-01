@@ -23,6 +23,14 @@ $this->registerJs('jQuery(".fittext").fitText(0.9);');
 	    position: absolute;
 	    z-index: 0;
 	}
+	#background_approved{
+	    background: none !important;
+	    display: block;
+	    margin-left: 142px;
+   		margin-top: 399px;
+	    position: absolute;
+	    z-index: 0;
+	}
 	#bg-text
 	{
 	    color:lightgrey;
@@ -410,6 +418,9 @@ $this->registerJs('jQuery(".fittext").fitText(0.9);');
 	<?php
 		if($model->state=='draft'){
 			$watermark= '<div id=\'background\'><p id=bg-text>DRAFT</p></div>';
+		}
+		else if($model->state=='approved'){
+			$watermark= '<div id=\'background_approved\'><p id=bg-text>APPROVED</p></div>';
 		}else{
 			$watermark="";
 		}
@@ -579,6 +590,8 @@ $this->registerJs('jQuery(".fittext").fitText(0.9);');
 if($model->state=='draft'){
 		$watermark= '<div id="background"><p id=bg-text>DRAFT</p></div>';
 		$check =1;
+	}else if($model->state=='approved'){
+		$check=2;
 	}else{
 		$check=0;
 	}
@@ -590,6 +603,9 @@ $this->registerJs('
 	// save page template to var
 	if('.$check.' == 1){
 		var tmpl = 	\'<div class="break">&nbsp;</div><div id="background"><p id=bg-text>DRAFT</p></div>\'+jQuery(\'div#pageContainer\').html();
+	}
+	else if ('.$check.' == 2) {
+		var tmpl = 	\'<div class="break">&nbsp;</div><div id="background_approved"><p id=bg-text>APPROVED</p></div>\'+jQuery(\'div#pageContainer\').html();
 	}else{
 		var tmpl = 	\'<div class="break">&nbsp;</div>\'+jQuery(\'div#pageContainer\').html();
 	}

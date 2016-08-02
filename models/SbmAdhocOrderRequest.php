@@ -55,7 +55,7 @@ class SbmAdhocOrderRequest extends \yii\db\ActiveRecord
     {
         return [
             [['create_uid', 'write_uid', 'term_of_payment', 'attention_id', 'sales_man_id', 'customer_site_id', 'sale_group_id', 'customer_id'], 'integer'],
-            [['create_date', 'write_date', 'due_date'], 'safe'],
+            [['create_date', 'write_date', 'due_date','customer_site_id'], 'safe'],
             [['cust_ref_no', 'term_of_payment', 'sales_man_id', 'name', 'cust_ref_type', 'sale_group_id', 'customer_id'], 'required'],
             [['cust_ref_no', 'scope_of_work', 'term_condition', 'name', 'cust_ref_type', 'state', 'notes'], 'string'],
             [['name'], 'unique']

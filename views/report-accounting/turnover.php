@@ -83,7 +83,7 @@
 
 			$body[]='<tr>
 					<td>'.$no.'</td>
-					<td>'.$jenis.'-----------'.$value['move_id'].'</td>
+					<td>'.$jenis.'</td>
 					<td>'.Yii::$app->formatter->asDatetime($value['date'], "php:d-m-Y").'</td>
 					<td>'.$no_surat.'</td>
 					<td>'.$no_pb.'</td>

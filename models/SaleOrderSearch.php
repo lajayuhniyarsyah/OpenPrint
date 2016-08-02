@@ -121,6 +121,7 @@ class SaleOrderSearch extends SaleOrder
      */
     public function searchTrack($params, $uid, $onlyShowByCreateUid=true, $show_uids=null)
     {
+        
         $query = SaleOrder::find();
         if($onlyShowByCreateUid){
             $query->andWhere('create_uid=:cuid')->addParams([':cuid'=>$uid]);
@@ -131,6 +132,8 @@ class SaleOrderSearch extends SaleOrder
             // find by user_id and create_ui
             $query = SaleOrder::find();
             $query->orWhere(['user_id'=>$show_uids]);
+        }else{
+
         }
 
 
@@ -150,7 +153,7 @@ class SaleOrderSearch extends SaleOrder
 
         $query->andFilterWhere([
             'id' => $this->id,
-            // 'create_uid' => $uid,
+            'create_uid' => $this->create_uid,
             'create_date' => $this->create_date,
             // 'write_date' => $this->write_date,
             // 'write_uid' => $uid,

@@ -89,7 +89,7 @@
 	.footer{
         color: #000;
     	width: 100%;
-    	margin-top: 200px;
+    	margin-top: 250px;
     	/*position: absolute;*/
     }
     .btn_delete{
@@ -97,7 +97,7 @@
     }
     .nama_atasan{
     	float: right;
-    	font-size: 12px;
+    	font-size: 14px;
     }
 	pre{
 		white-space: pre-wrap;

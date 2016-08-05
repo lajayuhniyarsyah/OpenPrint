@@ -112,6 +112,10 @@ use yii\bootstrap\Dropdown;
 			'minute_1',
 			'hour_2',
 			'minute_2',
+			'Ext_Hour_1',
+			'Ext_Min_1',
+			'Ext_Hour_2',
+			'Ext_Min_2',
 		]
 	])?>
 </div>

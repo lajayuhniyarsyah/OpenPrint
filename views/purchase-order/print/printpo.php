@@ -475,7 +475,17 @@ $this->registerJs('jQuery(".fittext").fitText(0.9);');
 													<?php  echo $model->partner->name; ?>
 												</div>
 												<div class="almt">
-													<?php echo $model->partner->street; ?>
+													<?php
+														$address = "";
+														if(!$model->attention0->use_parent_address){
+															$address = $model->attention0->fullAddress;
+														}else{
+															$address = $model->partner->fullAddress;
+														}
+														
+
+													?>
+													<?php echo $address; ?>
 												</div>
 												<br/>
 												<table class="dtlcus">
@@ -501,12 +511,13 @@ $this->registerJs('jQuery(".fittext").fitText(0.9);');
 														} ?></td>
 													</tr>
 													<tr>
-														<td>Attn</td>
+														<td style="vertical-align:top;">Attn</td>
 														<td><?php 
-															if($model->attention0==""){
+															if(!$model->attention0){
 																$att='-';
 															}else{
 																$att=$model->attention0->name;
+																
 															}
 															echo $att;
 															?></td>

@@ -89,14 +89,15 @@
 	.footer{
         color: #000;
     	width: 100%;
+    	margin-top: 250px;
     	/*position: absolute;*/
-    	/*bottom: 20px;*/
     }
     .btn_delete{
-    	float: left;
+    	float: right;
     }
     .nama_atasan{
-    	float: left;
+    	float: right;
+    	font-size: 14px;
     }
 	pre{
 		white-space: pre-wrap;
@@ -105,7 +106,6 @@
 	{
 		.footer{
 			/*position: fixed;*/
-			/*bottom: 70px;*/
 		}
 		.btn_delete{
 			display: none;
@@ -116,7 +116,7 @@
 		.nama_atasan{
 
 	    	float: right;
-	    	margin-right: 50px;
+	    	margin-right: 30px;
 	    }
 	}
 	pre{
@@ -242,10 +242,10 @@ endif;
 		</div>
 
 		<div class="footer">
-			<div class="nama_atasan"> Susanti Pheng</div>  <a class="btn_delete" href="#"> x </a>
+			 <a class="btn_delete" href="#"> x </a> <div class="nama_atasan"> Susanti Pheng </div> 
 		</div>	
 	</div>
-	
+
 
 </div>
 

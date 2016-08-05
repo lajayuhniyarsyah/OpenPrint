@@ -117,8 +117,6 @@ class AttendanceController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
-
-
     public function actionFirstAndLastScan($site=1792,$year=null,$month=null,$department=null){
         if(!$year){
             $year = date('Y');
@@ -126,10 +124,8 @@ class AttendanceController extends Controller
         if(!$month){
             $month = date('n');
         }
-
         $first = date('Y-m-d', mktime(0, 0, 0, $month, 1, $year));
         $last = date('Y-m-t', mktime(0, 0, 0, $month, 1, $year));
-
         $dataToRender = [];
         $where = [
             'employee'=>'%%',
@@ -146,7 +142,6 @@ class AttendanceController extends Controller
             $where['year'] = $dataToRender['attendanceLogForm']['year'];
             $where['month'] = $dataToRender['attendanceLogForm']['month'];
             $where['day'] = $dataToRender['attendanceLogForm']['day'];
-
         }
         if($department == 'All Department' || $department == ''){
             $department = 'All Department';
@@ -161,90 +156,93 @@ SELECT
     , date_series.emp_id
     , r_p.name work_site
     , h_emp.name_related employee
-    , (CASE WHEN att_log_min_max_pure.y IS NULL THEN date_series.year_series ELSE att_log_min_max_pure.y END) "year"
-    , (CASE WHEN att_log_min_max_pure.m IS NULL THEN date_series.month_series ELSE att_log_min_max_pure.m END) "month"
-    , (CASE WHEN att_log_min_max_pure.d IS NULL THEN date_series.day_series ELSE att_log_min_max_pure.d END) "day"
-    , (CASE WHEN att_log_min_max_pure.min_hour <= 12 THEN att_log_min_max_pure.min_hour ELSE NULL END) AS "hour_1"
-    , (CASE WHEN att_log_min_max_pure.min_hour <= 12 THEN att_log_min_max_pure.min_minutes ELSE NULL END) AS "minute_1"
-    , (
-    SELECT 
-        COUNT(hr_attendance_log.att_pin)
-      FROM 
-        hr_attendance_log 
-      WHERE
-        (CASE WHEN att_log_min_max_pure.y IS NULL THEN date_series.year_series ELSE att_log_min_max_pure.y END)
-         = 
-         EXTRACT(YEAR FROM TO_TIMESTAMP(datetime_log)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0')
-         AND
-         (CASE WHEN att_log_min_max_pure.m IS NULL THEN date_series.month_series ELSE att_log_min_max_pure.m END)
-         = 
-         EXTRACT(MONTH FROM TO_TIMESTAMP(datetime_log)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0')
-        AND
-         (CASE WHEN att_log_min_max_pure.d IS NULL THEN date_series.day_series ELSE att_log_min_max_pure.d END)
-         =
-         EXTRACT(DAY FROM TO_TIMESTAMP(datetime_log)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0')
-        AND
-        date_series.emp_id
-        =
-        hr_attendance_log.employee_id
-    ) AS "jml"
     , (
         CASE 
             WHEN 
-                (
-                  SELECT 
-                    COUNT(hr_attendance_log.att_pin)
-                  FROM 
-                    hr_attendance_log 
-                  WHERE
-                    (CASE WHEN att_log_min_max_pure.y IS NULL THEN date_series.year_series ELSE att_log_min_max_pure.y END)
-                    = 
-                    EXTRACT(YEAR FROM TO_TIMESTAMP(datetime_log)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0')
-                    AND
-                    (CASE WHEN att_log_min_max_pure.m IS NULL THEN date_series.month_series ELSE att_log_min_max_pure.m END)
-                    = 
-                    EXTRACT(MONTH FROM TO_TIMESTAMP(datetime_log)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0')
-                    AND
-                    (CASE WHEN att_log_min_max_pure.d IS NULL THEN date_series.day_series ELSE att_log_min_max_pure.d END)
-                    =
-                    EXTRACT(DAY FROM TO_TIMESTAMP(datetime_log)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0')
-                    AND
-                    date_series.emp_id = hr_attendance_log.employee_id
-                ) > 2 AND att_log_min_max_pure.max_hour > 18
+                att_log_min_max_pure.y IS NULL 
+            THEN 
+                date_series.year_series 
+            ELSE 
+                att_log_min_max_pure.y 
+        END
+    ) AS "year"
+    , (
+        CASE 
+            WHEN 
+                att_log_min_max_pure.m IS NULL 
+            THEN 
+                date_series.month_series 
+            ELSE 
+                att_log_min_max_pure.m 
+        END
+    ) AS "month"
+    , (
+        CASE 
+            WHEN 
+                att_log_min_max_pure.d IS NULL 
+            THEN 
+                date_series.day_series 
+            ELSE 
+                att_log_min_max_pure.d 
+        END
+    ) "day"
+    , (
+        CASE 
+            WHEN 
+                att_log_min_max_pure.min_hour >= 6 
+                AND 
+                att_log_min_max_pure.min_hour <=  12 
+            THEN 
+                att_log_min_max_pure.min_hour 
+            ELSE 
+                NULL 
+        END
+    ) AS "hour_1"
+    , (
+        CASE 
+            WHEN 
+                att_log_min_max_pure.min_hour >= 6 
+                AND 
+                att_log_min_max_pure.min_hour <=  12 
+            THEN 
+                att_log_min_max_pure.min_minutes 
+            ELSE 
+                NULL 
+        END
+    ) AS "minute_1"
+    , (
+        CASE 
+            WHEN 
+                att_log_min_max_pure.max_hour_over_time IS NULL
             THEN
-               att_log_min_max_pure.min_date_hour2_select
+               CASE
+                    WHEN
+                        att_log_min_max_pure.max_hour >= 12 
+                    THEN
+                        att_log_min_max_pure.max_hour
+                    ELSE
+                        NULL
+               END
             ELSE
-               att_log_min_max_pure.max_hour
+                att_log_min_max_pure.min_date_hour2_select
         END
         
     ) AS "hour_2"
     , (
        CASE 
             WHEN 
-                (
-                  SELECT 
-                    COUNT(hr_attendance_log.att_pin)
-                  FROM 
-                    hr_attendance_log 
-                  WHERE
-                    (CASE WHEN att_log_min_max_pure.y IS NULL THEN date_series.year_series ELSE att_log_min_max_pure.y END)
-                    = 
-                    EXTRACT(YEAR FROM TO_TIMESTAMP(datetime_log)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0')
-                    AND
-                    (CASE WHEN att_log_min_max_pure.m IS NULL THEN date_series.month_series ELSE att_log_min_max_pure.m END)
-                    = 
-                    EXTRACT(MONTH FROM TO_TIMESTAMP(datetime_log)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0')
-                    AND
-                    (CASE WHEN att_log_min_max_pure.d IS NULL THEN date_series.day_series ELSE att_log_min_max_pure.d END)
-                    =
-                    EXTRACT(DAY FROM TO_TIMESTAMP(datetime_log)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0')
-                    AND
-                    date_series.emp_id = hr_attendance_log.employee_id
-                ) > 2 AND att_log_min_max_pure.max_hour > 18
+                att_log_min_max_pure.max_hour_over_time IS NULL
             THEN
-               att_log_min_max_pure.max_minutes_normal
+                CASE
+                    WHEN
+                        att_log_min_max_pure.max_hour >= 12 
+                    THEN
+                        att_log_min_max_pure.max_minutes
+                    ELSE
+                        NULL
+               END
             ELSE
-               att_log_min_max_pure.max_minutes
+                att_log_min_max_pure.max_minutes_normal
         END
         
     ) AS "minute_2"
@@ -267,7 +265,6 @@ SELECT
             ELSE
                 att_log_min_max_pure.max_minutes_normal2
         END
-        
     ) AS "Ext_Min_1"
     , (
     CASE 
@@ -276,7 +273,14 @@ SELECT
         THEN
             NULL
         ELSE
-            att_log_min_max_pure.max_hour_over_time
+            CASE
+                WHEN
+                    att_log_min_max_pure.min_date_hour_over_time_day2 < 6
+                THEN
+                    att_log_min_max_pure.min_date_hour_over_time_day2
+                ELSE
+                    att_log_min_max_pure.max_hour_over_time
+            END
     END
     ) AS "Ext_Hour_2"
     , (
@@ -286,11 +290,18 @@ SELECT
             THEN
                 NULL
             ELSE
-                att_log_min_max_pure.max_minutes_normal3
+                CASE
+                    WHEN
+                        att_log_min_max_pure.min_date_hour_over_time_day2 >=1 
+                        AND
+                        att_log_min_max_pure.min_date_hour_over_time_day2 < 6
+                    THEN
+                        att_log_min_max_pure.max_minutes_normal4
+                    ELSE
+                        att_log_min_max_pure.max_minutes_normal3
+                END                
         END
-        
     ) AS "Ext_Min_2"
-    
 FROM
 (
     SELECT
@@ -300,7 +311,8 @@ FROM
         att_log_grouped2.d,
         att_log_grouped2.min_date_time_log,
         att_log_grouped2.max_date_time_log,
-        att_log_grouped2.min_date_hour2 as min_date_hour2_select
+        att_log_grouped2.min_date_hour2 as min_date_hour2_select,
+        att_log_grouped2.min_date_hour_over_time_day as min_date_hour_over_time_day2
         , EXTRACT(HOUR FROM TO_TIMESTAMP(min_date_time_log)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0') as min_hour
         , EXTRACT(MINUTE FROM TO_TIMESTAMP(min_date_time_log)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0') as min_minutes
         , EXTRACT(HOUR FROM TO_TIMESTAMP(max_date_time_log)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0') as max_hour
@@ -308,10 +320,11 @@ FROM
         , EXTRACT(MINUTE FROM TO_TIMESTAMP(min_date_minute2)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0') as max_minutes_normal
         , EXTRACT(MINUTE FROM TO_TIMESTAMP(min_date_minute3)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0') as max_minutes_normal2
         , EXTRACT(MINUTE FROM TO_TIMESTAMP(min_date_minute4)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0') as max_minutes_normal3
+        , EXTRACT(MINUTE FROM TO_TIMESTAMP(min_date_minute5)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0') as max_minutes_normal4
         , (
             CASE
                WHEN 
-                    att_log_grouped2.max_date_hour2 > att_log_grouped2.min_date_hour2 
+                    att_log_grouped2.max_date_hour2 > att_log_grouped2.min_date_hour2
                THEN
                     att_log_grouped2.max_date_hour2
                ELSE
@@ -340,23 +353,58 @@ FROM
             , MIN(
                     CASE 
                         WHEN
+                            EXTRACT(HOUR FROM TO_TIMESTAMP(att_log_grouped.datetime_log)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0') >= 1 
+                            AND
+                            EXTRACT(HOUR FROM TO_TIMESTAMP(att_log_grouped.datetime_log)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0') < 6 
+                        THEN
+                            EXTRACT(HOUR FROM TO_TIMESTAMP(att_log_grouped.datetime_log)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0')
+                        ELSE
+                            CASE 
+                                WHEN
+                                    EXTRACT(HOUR FROM TO_TIMESTAMP(att_log_grouped.datetime_log)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0') >= 17
+                                    AND
+                                    EXTRACT(HOUR FROM TO_TIMESTAMP(att_log_grouped.datetime_log)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0') <= 24
+                                THEN
+                                    EXTRACT(HOUR FROM TO_TIMESTAMP(att_log_grouped.datetime_log)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0')
+                                ELSE
+                                    NULL
+                            END
+                    END
+                ) as min_date_hour_over_time_day
+            , MIN(
+                    CASE 
+                        WHEN
                             EXTRACT(HOUR FROM TO_TIMESTAMP(att_log_grouped.datetime_log)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0') >= 17 
                         THEN
                             EXTRACT(HOUR FROM TO_TIMESTAMP(att_log_grouped.datetime_log)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0')
                         ELSE
-                           NULL
+                            NULL
                     END
                 ) as min_date_hour2
             , MAX(
                     CASE 
                         WHEN
                             EXTRACT(HOUR FROM TO_TIMESTAMP(att_log_grouped.datetime_log)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0') >= 17
+                            AND
+                            EXTRACT(HOUR FROM TO_TIMESTAMP(att_log_grouped.datetime_log)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0') <= 24
                         THEN
                             EXTRACT(HOUR FROM TO_TIMESTAMP(att_log_grouped.datetime_log)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0')
                         ELSE
-                           NULL
+                            NULL
                     END
                 ) as max_date_hour2
+            , MAX(
+                    CASE 
+                        WHEN
+                            EXTRACT(HOUR FROM TO_TIMESTAMP(att_log_grouped.datetime_log)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0') >= 1
+                            AND
+                            EXTRACT(HOUR FROM TO_TIMESTAMP(att_log_grouped.datetime_log)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0') <= 6
+                        THEN
+                            EXTRACT(HOUR FROM TO_TIMESTAMP(att_log_grouped.datetime_log)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0')
+                        ELSE
+                            NULL
+                    END
+                ) as over_time_day
             , MIN(
                     CASE 
                         WHEN
@@ -366,7 +414,7 @@ FROM
                         THEN
                             EXTRACT(HOUR FROM TO_TIMESTAMP(att_log_grouped.datetime_log)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0')
                         ELSE
-                           NULL
+                            NULL
                     END
                 ) as set_ext_hour
             , MIN(
@@ -376,7 +424,7 @@ FROM
                         THEN
                             att_log_grouped.datetime_log
                         ELSE
-                           NULL
+                            NULL
                     END
                 ) as min_date_minute2
             , MIN(
@@ -388,7 +436,7 @@ FROM
                         THEN
                             att_log_grouped.datetime_log
                         ELSE
-                           NULL
+                            NULL
                     END
                 ) as min_date_minute3
             , MAX(
@@ -401,15 +449,37 @@ FROM
                            NULL
                     END
                 ) as min_date_minute4
+            , MAX(
+                    CASE 
+                        WHEN
+                            EXTRACT(HOUR FROM TO_TIMESTAMP(att_log_grouped.datetime_log)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0') >= 1 
+                            AND
+                            EXTRACT(HOUR FROM TO_TIMESTAMP(att_log_grouped.datetime_log)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0') < 6 
+                        THEN
+                            att_log_grouped.datetime_log
+                        ELSE
+                            NULL
+                    END
+                ) as min_date_minute5
         FROM
         (
             SELECT
-                att_log.employee_id, att_log.att_pin
+                att_log.employee_id, 
+                att_log.att_pin
                 , datetime_log
                 , TO_TIMESTAMP(datetime_log)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0' AS timestamp_log
                 , EXTRACT(YEAR FROM TO_TIMESTAMP(datetime_log)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0') as y
                 , EXTRACT(MONTH FROM TO_TIMESTAMP(datetime_log)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0') as m
-                , EXTRACT(DAY FROM TO_TIMESTAMP(datetime_log)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0') as d
+                , (
+                    CASE
+                      WHEN
+                        EXTRACT(HOUR FROM TO_TIMESTAMP(datetime_log)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0') < 6
+                      THEN
+                        EXTRACT(DAY FROM (TO_TIMESTAMP(datetime_log) - interval '1 day')::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0')
+                      ELSE
+                        EXTRACT(DAY FROM TO_TIMESTAMP(datetime_log)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0')
+                    END
+                    ) as d
                 , EXTRACT(HOUR FROM TO_TIMESTAMP(datetime_log)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0') as hours
                 , EXTRACT(MINUTE FROM TO_TIMESTAMP(datetime_log)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0') as minutes
                 , (
@@ -421,7 +491,18 @@ FROM
                       ELSE
                         0
                     END
-                        ) as min_hour1
+                    ) as min_hour1
+                , (
+                    CASE
+                      WHEN
+                        EXTRACT(HOUR FROM TO_TIMESTAMP(datetime_log)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0') < 6
+                      THEN
+                        EXTRACT(DAY FROM (TO_TIMESTAMP(datetime_log) - interval '1 day')::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0')
+                      ELSE
+                        0
+                    END
+                    ) as hour_over_time
+
                 , (
                     CASE
                         WHEN
@@ -430,14 +511,23 @@ FROM
                             EXTRACT(HOUR FROM TO_TIMESTAMP(datetime_log)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0') <= 18
                         THEN
                             0
+                        WHEN
+                            EXTRACT(HOUR FROM TO_TIMESTAMP(datetime_log)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0') >= 1
+                            AND
+                            EXTRACT(HOUR FROM TO_TIMESTAMP(datetime_log)::TIMESTAMP WITH TIME ZONE AT TIME ZONE 'gmt+0') < 6
+                        THEN
+                            2
                         ELSE
                             1
                     END
-                ) as status
+                    ) as status
             FROM hr_attendance_log att_log
-            ) AS att_log_grouped
-            GROUP BY
-            att_log_grouped.employee_id, att_log_grouped.y, att_log_grouped.m, att_log_grouped.d
+        ) AS att_log_grouped
+        GROUP BY
+            att_log_grouped.employee_id, 
+            att_log_grouped.y, 
+            att_log_grouped.m, 
+            att_log_grouped.d
         ) AS att_log_grouped2
     ) AS att_log_min_max_pure
 
@@ -457,19 +547,25 @@ FULL JOIN
             JOIN hr_employee hre ON hre.id = hrl.employee_id
             JOIN hr_department hrd ON hrd.id = hre.department_id
             JOIN resource_resource rs_rs ON hre.resource_id = rs_rs.id
-            WHERE hrd.name like '$department_query'
-            AND hre.address_id = {$site}
-            AND hrl.log_time BETWEEN '{$first}' AND '{$last}'
+            WHERE 
+                hrd.name like '$department_query'
+                AND 
+                hre.address_id = {$site}
+                AND 
+                hrl.log_time BETWEEN '{$first}' AND '{$last}'
         ) AS eids ON eids.eid > 0
-    ) AS date_series ON date_series.emp_id = att_log_min_max_pure.employee_id and date_series.year_series = att_log_min_max_pure.y and date_series.month_series = att_log_min_max_pure.m and date_series.day_series = att_log_min_max_pure.d
+    ) AS date_series ON date_series.emp_id = att_log_min_max_pure.employee_id AND date_series.year_series = att_log_min_max_pure.y AND date_series.month_series = att_log_min_max_pure.m and date_series.day_series = att_log_min_max_pure.d
 JOIN hr_employee AS h_emp ON h_emp.id = date_series.emp_id
 LEFT JOIN res_partner r_p ON r_p.id = h_emp.address_id
-ORDER BY h_emp.name_related ASC, date_series.i ASC, att_log_min_max_pure.y ASC, att_log_min_max_pure.m ASC, att_log_min_max_pure.d ASC
+ORDER BY 
+    h_emp.name_related ASC, 
+    date_series.i ASC, 
+    att_log_min_max_pure.y ASC, 
+    att_log_min_max_pure.m ASC, 
+    att_log_min_max_pure.d ASC
 query;
-        
         $connection = Yii::$app->db;
-        $res = $connection->createCommand($query)->queryAll();
-        
+        $res = $connection->createCommand($query)->queryAll();  
         $dataToRender['dataProvider'] = new \yii\data\ArrayDataProvider([
             'allModels'=>$res,
             'pagination'=>false
@@ -478,17 +574,10 @@ query;
         $dataToRender['year'] = $year;
         $dataToRender['month'] = $month;
         $dataToRender['department_active'] = $department;
-
-
-
-
-
         $site_active = \app\models\ResPartner::findOne($site);
         $dataToRender['site_active'] = $site_active;
         $dataToRender['sites'] = \app\models\ResPartner::find()->where(['id'=>[1792,2788,1417,5732]])->orderBy('name ASC')->asArray()->all();
-
         $depts = \app\models\HrDepartment::find()->select('name')->orderBy('name ASC');
-
         if($department){
             // $depts->where('name = :name',[':name'=>$department]);
         }

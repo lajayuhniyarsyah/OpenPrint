@@ -215,7 +215,9 @@ use yii\helpers\Url;
 			.footers .totalBox{
 				height: 5mm;
 			}
-
+			.POInfo{
+				margin-top: 9mm;
+			}
 			.td1{
 				width: 21mm;
 			}

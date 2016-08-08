@@ -78,7 +78,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
 			// 'id',
 			[
-				'attribute'=>'name',         
+				'attribute'=>'name',
+				'label'=>'SO NO',
+				'format'=>'raw',
+				'value'=>function($model,$Key,$index,$column){
+					return Html::a($model->name, 'http://192.168.9.26:10001/?db=LIVE_2014#id='.$model->id.'&view_type=form&model=sale.order&menu_id=254&action=302', ['target'=>'_blank']);
+				}
 			],
 			/*[
 				'attribute'=>'create_uid',
@@ -124,16 +129,18 @@ $this->params['breadcrumbs'][] = $this->title;
 						'allowClear' => true,
 						'minimumInputLength'=>2,
 						'ajax'=>[
-							'url'=>Url::to(['service/search-currency']),
+							'url'=>Url::to(['service/search-user']),
 							'dataType'=>'json',
-							'data'=>new JsExpression('function(term,page){return {search:term}; }'),
+							'data'=>new JsExpression('function(term,page){
+								return {search:term.term}; 
+							}'),
 							'results'=>new JsExpression('function(data,page){ return {results:data.results}; }'),
 						],
 						'initSelection' => new JsExpression(
 								'function (element, callback) {
 								var id=$(element).val();
 								if (id !== "") {
-									$.ajax("'.Url::to(['service/search-currency']).'&id=" + id, {
+									$.ajax("'.Url::to(['service/search-user']).'&id=" + id, {
 										dataType: "json"
 										}).done(function(data) {
 											callback(data.results);
@@ -161,7 +168,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						'ajax'=>[
 							'url'=>$url,
 							'dataType'=>'json',
-							'data'=>new JsExpression('function(term,page){return {search:term}; }'),
+							'data'=>new JsExpression('function(term,page){return {search:term.term}; }'),
 							'results'=>new JsExpression('function(data,page){ return {results:data.results}; }'),
 						],
 						'initSelection' => new JsExpression($script($url))
@@ -226,16 +233,29 @@ $this->params['breadcrumbs'][] = $this->title;
 				'filter'=>\yii\helpers\ArrayHelper::map(app\models\ProductPricelist::find()->all(),'id','name')
 			],
 			[
+				'label'=>'SPK',
+				'format'=>'raw',
+				'value'=>function($model,$key,$index,$column){
+					$res = '';
+					foreach ($model->perintahKerjas as  $spk) {
+						# code...
+						if($res) $res.='<br/>';
+						$res .= Html::a(Html::encode($spk->name),'http://192.168.9.26:10001/?db=LIVE_2014#id='.$spk->id.'&view_type=form&model=order.preparation&menu_id=529&action=498',['target'=>'_blank']).' ('.$spk->state.')';
+					}
+					return $res;
+				}
+			],
+			[
 				'label'=>'OP',
 				'value'=>function($model,$key,$index,$column){
 					$res = '';
 					foreach($model->orderPreparations as $op){
 						if($res) $res.='<br/>';
-						$res .= Html::a(Html::encode($op->name),'http://192.168.9.26:10001/?db=LIVE_2014#id='.$op->id.'&view_type=form&model=order.preparation&menu_id=529&action=498',['class'=>'_blank']).' ('.$op->state.')';
+						$res .= Html::a(Html::encode($op->name),'http://192.168.9.26:10001/?db=LIVE_2014#id='.$op->id.'&view_type=form&model=order.preparation&menu_id=529&action=498',['target'=>'_blank']).' ('.$op->state.')';
 					}
 					return $res;
 				},
-				'format'=>'html',
+				'format'=>'raw',
 				'options'=>['width'=>'300']
 			],
 			[
@@ -244,11 +264,11 @@ $this->params['breadcrumbs'][] = $this->title;
 					$res = '';
 					foreach($model->deliveryNotes as $dn){
 						if($res) $res.='<br/>';
-						$res .= Html::a(Html::encode($dn->name),'http://192.168.9.26:10001/?db=LIVE_2014#id='.$dn->id.'&view_type=form&model=delivery.note&menu_id=527&action=502').' ('.$dn->state.')';
+						$res .= Html::a(Html::encode($dn->name),'http://192.168.9.26:10001/?db=LIVE_2014#id='.$dn->id.'&view_type=form&model=delivery.note&menu_id=527&action=502',['target'=>'_blank']).' ('.$dn->state.')';
 					}
 					return $res;
 				},
-				'format'=>'html',
+				'format'=>'raw',
 				'options'=>['width'=>'300']
 			],
 			[

@@ -659,18 +659,18 @@ if(isset($_GET['layout'])){
 									</tr>
 									<tr>
 										<td>
-											<center><span class="hadi_dibuat"><?php echo $model->createU->name; ?></span></center>
+											<center><span class="hadi_dibuat"><?php echo $model->createU->login; ?></span></center>
 										</td>
 										<td>
 											<center><?php 
 											if($model->approver2){
-												echo $model->approver20->name;
+												echo $model->approver20->login;
 											} ?></center>
 										</td>
 										<td>
 											<center><?php 
 											if($model->approver3){
-												echo $model->approver30->name;
+												echo $model->approver30->login;
 											} ?></center>
 										</td>
 									</tr>

@@ -213,7 +213,7 @@ use yii\helpers\Url;
 				min-height: 98mm;
 			}
 			.footers .totalBox{
-				height: 11mm;
+				height: 5mm;
 			}
 
 			.td1{
@@ -232,7 +232,10 @@ use yii\helpers\Url;
 						
 						padding-top: 47mm;
 						page-break-after: always;
-						height: 283mm;
+						height: 250mm;
+					}
+					.pages:not(:first-child){
+						padding-top: 49mm;
 					}
 					.td4,.td5{text-align:center;}
 

@@ -134,7 +134,7 @@ footer{
     
     .thead{
     	page-break-before: always;
-    	height: 190px;
+    	height: 200px;
     }
     .breakfooter{
     	page-break-before: always;

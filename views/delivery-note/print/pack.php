@@ -205,6 +205,7 @@ use yii\helpers\Url;
 			}
 			.headers{
 				height: 66mm;
+				padding-left: 24mm !important;
 			}
 			.hLine{
 				height: 6mm;
@@ -215,12 +216,17 @@ use yii\helpers\Url;
 			.footers .totalBox{
 				height: 5mm;
 			}
-			.POInfo{
-				margin-top: 9mm;
-			}
+			
 			.td1{
 				width: 21mm;
 			}
+			.td2{
+				padding-left: 7px !important;
+			}
+			.td4{
+				 width: 18mm !important;
+			}
+
 			<?php
 			if($uid==173){
 				echo '.sign{
@@ -236,6 +242,9 @@ use yii\helpers\Url;
 						page-break-after: always;
 						height: 250mm;
 					}
+					.POInfo{
+						margin-top: 7mm;
+					}
 					.pages:not(:first-child){
 						padding-top: 49mm;
 					}
@@ -247,7 +256,15 @@ use yii\helpers\Url;
 					.footers .totalBox {
     					width: 87mm;
     				}';
-			}else{
+			}
+			elseif($uid==23){
+				echo '
+					.POInfo{
+						margin-top: 5mm;
+					}
+					';
+			}
+			else{
 				echo '.sign{
 					text-decoration: underline;
 				}';

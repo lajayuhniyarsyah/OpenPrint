@@ -46,18 +46,25 @@
 				$no_pb=$value['dn_poc'];
 			}else if(isset($value['purchase_id'])){
 				$no_surat=$value['no_po'];
-				if($value['lbm']){
-					$no_pb=$value['no_pb_po'] . ', <strong>LBM No :</strong> '.$value['lbm'] ;	
-				}else{
-					$no_pb=$value['no_pb_po'];
-				}
-				
+				$no_pb=$value['no_pb_po'];
 			}else if(isset($value['internal_move_id'])){
 				$no_surat=$value['no_im'];
 				$no_pb=$value['manual_pb_no'];
 			}else{
 				$no_surat=$value['no_int'];
 				$no_pb=$value['ori'];
+			}
+
+
+			if($value['lbm']){
+				if($no_pb==""){
+					$no_pb='<strong>LBM No :</strong> '.$value['lbm'];		
+				}else{
+					$no_pb=$no_pb.', <strong>LBM No :</strong> '.$value['lbm'] ;
+				}
+				
+			}else{
+				$no_pb=$no_pb;
 			}
 
 			if($value['jenis']==""){

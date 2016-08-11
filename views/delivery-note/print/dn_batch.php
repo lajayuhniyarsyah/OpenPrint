@@ -97,7 +97,7 @@
     }
     .nama_atasan{
     	float: right;
-    	font-size: 14px;
+    	font-size: 11px;
     }
 	pre{
 		white-space: pre-wrap;
@@ -251,7 +251,7 @@ if($uid==25){ ?>
 		</div>
 
 		<div class="footer">
-			 <a class="btn_delete" href="#"> x </a> <div class="nama_atasan" contenteditable="true"> Susanti Pheng </div> 
+			 <a class="btn_delete" href="#"> x </a> <div class="nama_atasan" contenteditable="true"> <?php echo $model->signature0->name_related; ?> </div> 
 		</div>	
 	</div>
 

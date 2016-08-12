@@ -576,7 +576,6 @@ query;
         $dataToRender['department_active'] = $department;
         $site_active = \app\models\ResPartner::findOne($site);
         $dataToRender['site_active'] = $site_active;
-        
         $dataToRender['sites'] = \app\models\ResPartner::find()->where(['id'=>[1792,2788,1417,5732,6332]])->orderBy('name ASC')->asArray()->all();
         $depts = \app\models\HrDepartment::find()->select('name')->orderBy('name ASC');
         if($department){

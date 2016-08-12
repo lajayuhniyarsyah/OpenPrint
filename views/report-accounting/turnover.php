@@ -55,6 +55,18 @@
 				$no_pb=$value['ori'];
 			}
 
+
+			if($value['lbm']){
+				if($no_pb==""){
+					$no_pb='<strong>LBM No :</strong> '.$value['lbm'];		
+				}else{
+					$no_pb=$no_pb.', <strong>LBM No :</strong> '.$value['lbm'] ;
+				}
+				
+			}else{
+				$no_pb=$no_pb;
+			}
+
 			if($value['jenis']==""){
 				$jenis='';
 			}else{

@@ -31,6 +31,7 @@ use app\models\SaleOrder;
  * @property integer $work_order_id
  * @property integer $work_order_in
  * @property integer $attn
+ * @property integer $signature
  *
  * @property PackingListLine[] $packingListLines
  * @property StockPicking[] $stockPickings
@@ -42,6 +43,7 @@ use app\models\SaleOrder;
  * @property ResPartner $partner
  * @property ResUsers $writeU
  * @property ResUsers $createU
+ * @property HrEmployee $signature0
  * @property DeliveryNoteLine[] $deliveryNoteLines
  */
 class DeliveryNote extends \yii\db\ActiveRecord
@@ -62,7 +64,7 @@ class DeliveryNote extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['create_uid', 'write_uid', 'partner_id', 'partner_shipping_id', 'prepare_id', 'work_order_id', 'work_order_in', 'attn'], 'integer'],
+            [['create_uid', 'write_uid', 'partner_id', 'partner_shipping_id', 'prepare_id', 'work_order_id', 'work_order_in', 'attn','signature'], 'integer'],
             [['create_date', 'write_date', 'tanggal', 'state', 'selisih_hari', 'status'], 'safe'],
             [['name'], 'required'],
             [['note', 'state', 'terms'], 'string'],
@@ -103,7 +105,13 @@ class DeliveryNote extends \yii\db\ActiveRecord
             'stockPicking0.date_done' => 'DN/SJ Date',
             'partner.display_name' => 'Address Name',
             'saleOrder.date_order' => 'Tgl PO/Barang Masuk',
+            'signature' => 'Signature',
         ];
+    }
+
+    public function getSignature0()
+    {
+        return $this->hasOne(HrEmployee::className(), ['id' => 'signature']);
     }
 
     /**
@@ -184,6 +192,14 @@ class DeliveryNote extends \yii\db\ActiveRecord
     public function getCreateU()
     {
         return $this->hasOne(ResUsers::className(), ['id' => 'create_uid']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSignature()
+    {
+        return $this->hasOne(HrEmployee::className(), ['id' => 'signature']);
     }
 
     /**

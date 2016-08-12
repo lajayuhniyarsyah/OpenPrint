@@ -97,7 +97,7 @@
     }
     .nama_atasan{
     	float: right;
-    	font-size: 14px;
+    	font-size: 11px;
     }
 	pre{
 		white-space: pre-wrap;
@@ -123,6 +123,7 @@
 		font-family: Arial, Helvetica, sans-serif;
 	}
 </style>
+
 
 <?php
 $uid = Yii::$app->request->getQueryParam('uid');
@@ -176,7 +177,15 @@ if( $uid == 23 || $uid == 101 || $uid == 173 || $uid==25):
 	
 	<?php
 endif;
-?>
+
+if($uid==25){ ?>
+
+	<style type="text/css">
+	.footer{
+    	margin-top: 200px;
+    }
+	</style>
+<?php } ?>
 <div id="container">
 	<div class="pages">
 		<div class="headers">
@@ -245,7 +254,7 @@ endif;
 		</div>
 
 		<div class="footer">
-			 <a class="btn_delete" href="#"> x </a> <div class="nama_atasan"> Susanti Pheng </div> 
+			 <a class="btn_delete" href="#"> x </a> <div class="nama_atasan" contenteditable="true"> <?php echo $model->signature0->name_related; ?> </div> 
 		</div>	
 	</div>
 

@@ -32,6 +32,7 @@ use app\models\GroupSales;
 use app\models\GroupSalesLine;
 use app\models\ProductCategory;
 use app\models\ProductPricelist;
+use kartik\mpdf\Pdf;
 /**
  * PurchaseOrderController implements the CRUD actions for PurchaseOrder model.
  */
@@ -74,6 +75,313 @@ class PurchaseOrderController extends Controller
         $this->layout = 'printout';
         $model = $this->findModel($id);
         return $this->render('print/printpoimport',['model'=>$model]);
+    }
+
+    public function actionPrintpdf($id) {
+    	$model = $this->findModel($id);
+$css='
+	#pageContainer{
+		width: 198mm;
+		margin-left: auto; margin-right: auto;
+		position:absolute;
+    	z-index:9999;
+	}
+	#background{
+	    background: none !important;
+	    display: block;
+	    margin-left: 235px;
+	    margin-top: 332px;
+	    position: absolute;
+	    z-index: 0;
+	}
+	#background_approved{
+	    background: none !important;
+	    display: block;
+	    margin-left: 142px;
+   		margin-top: 399px;
+	    position: absolute;
+	    z-index: 0;
+	}
+	#bg-text
+	{
+	    color:lightgrey;
+	    background: none !important;
+	    font-size:60px;
+	    opacity: 0.2;
+	    color: BLACK;
+	    letter-spacing: 30px;
+	    transform:rotate(316deg);
+	    -webkit-transform:rotate(316deg);
+	}
+	.contener{
+		border: 1px solid black;
+		margin-left: auto; margin-right: auto;
+	}
+	.header{
+		height: 10%;
+	}
+	.content{
+		height: 80%;
+	}
+
+	.hideprint{
+		display: none;
+	}
+	.pages{
+		padding-top:5mm;
+		padding-left:4mm;
+	}
+	.logo{
+		margin-top: 0px;
+		float: left;
+	}
+	.logo img{
+		margin-top:0px;
+		margin-left: 10px;
+		display: block;
+	}
+	.judul{
+		font-size: 27px;
+		margin-top: -35px;
+		margin-left: 15px;
+		font-weight: bold;
+		float: center;
+		letter-spacing: 1px;
+		margin-right: 3em;
+		text-align: center;
+	}
+	.iso{
+		margin-top:10px;
+		float: right;
+		width: 50mm;
+	}
+	.noborder{
+		border-left: none !important;
+	}
+	.do{
+		font-size: 22px;
+		font-weight: bold;
+		margin-left: 15px;
+		margin-top: 10px;
+		float: left;
+	}
+	.yth{
+		display: block;
+		float: left;
+		font-size: 12px;
+		margin-left: 15px;
+		width: 98%;
+		line-height: 17px;
+	}
+	.customer{
+		float: right;
+		width: 40%;
+		display: block;
+		margin-right: 10px;
+		margin-top: -23px;
+	}
+	fieldset{
+		width: 271px;
+		height: 95px;
+		display: block;
+	    margin-left: 2px;
+	    margin-right: 2px;
+	    margin-top:5px;
+	    border: none;
+	    background-size: 350px;
+	}
+	.headtable{
+		border: 1px black solid;
+		margin-left: 15px;
+		margin-top: 5px;
+		margin-bottom: 10px;
+		margin-right: 1px;
+	}		
+	.isicus{
+		display: block;
+		font-size: 12px;
+		margin-left: 10px;
+		margin-top: 22px;
+	}
+	.content{
+		margin-left: 15px;
+		margin-top: 15px;
+		 margin-right:20px;
+	}
+	.content table .headtable{
+		border-collapse: collapse
+	}
+	.headtablepages tr th{
+		border: 1px solid black;
+		font-size: 15px;
+		line-height: 15px;
+		text-align: center;
+	}
+	.content tr td{
+		border: 1px solid black;
+	}
+	.tablefooter{
+		float:left; width:100%; border-left:1px solid black; border-right:1px solid black; height:185px;
+		border-bottom:1px solid black;
+		clear: both;
+	}
+	.tablefooter td{
+		border: medium none !important;
+		font-size: 16px;
+		padding-left: 10px;
+		line-height: 19px;
+	}
+	.isigudang{
+		margin-top:35px;
+		margin-left: 40px;
+		text-align: left;
+		font-weight: bold;
+	}
+	.gudang{
+		margin-left: 40px;
+		border: none;
+	}
+	.gudang td{
+		line-height: 30px;
+		border: none !important;
+		font-size: 12px;
+
+	}
+	.data{
+		position: absolute;
+		border-collapse: collapse;
+		border: none !important; 
+		max-height: 300px;
+	}
+	.data td{
+		border: none !important; 
+		font-size: 18px;
+
+	}
+	.tablecontent{
+		font-size: 18px;
+	}
+	@media all {
+		.page-break	{ display: none; }
+	}
+	@media print {
+		.break{
+			height:1mm !important;
+		}
+		.tglkirim{
+			width: 203px !important;
+		}
+		#background{
+			background-color: none !important;
+			background:transparent !important;
+		}
+
+	}
+	.pages{
+		height: 245mm;
+		padding-left:4mm;
+	}
+	.contentLines{
+		border-collapse: collapse;
+		margin-left: 15px;
+		width: 186mm;
+		margin-top: -9px;
+		border-bottom:  1px solid black;
+	}
+	.contentLines tbody tr td {
+		border-left:  1px solid black;
+		border-right:  1px solid black;
+		border-collapse: collapse;
+		line-height: 20px;
+		font-size: 16px;
+		vertical-align: top;
+	}
+	.lineTable{
+		border: 1px solid black;
+	}
+	.leftdata{
+		float: left;
+		width: 75%;
+		margin-left: 10px;
+	}
+	.rightdata{
+		width: 18%;
+		float: right;
+		margin-right: 10px;
+		text-align: right;
+	}
+	.tglkirim{
+		width: 203px;
+	}
+	.break{
+		height:100mm;
+	}
+	.tablettd{
+		width:98%; float:left;  margin-left: 15px;margin-top: -9px;
+	}
+	.tblkirim{
+		border-collapse: collapse;
+		float: left;
+		font-size: 12px;
+		line-height: 30px;
+		margin-left: 15px;
+		margin-top: -1px;
+	}
+	.dataiso{
+		text-align: center;
+		width: 100px;
+		float: left;
+		font-size: 9px;
+		margin-left: 17px;
+	}
+	.rigthheadtable{
+		float: right;
+		width: 338px;
+	}
+	.leftheadtable{
+		float: left;
+		width: 359px;
+		border-right: 1px solid black;
+	}
+	.cus{
+		font-size: 22px;
+		font-weight: bold;
+	}
+	.almt{
+		font-size: 15px;
+	}
+    .space{
+        line-height: 25px;
+    }
+	.dtlcus{
+		font-size: 14px;
+        margin-top: -15px;
+		margin-left: 5px;
+	}
+	.total{
+		 width:186mm; border:1px solid black; border-collapse: collapse; margin-left:15px;margin-top:-9px;
+	}
+	.total td{
+		border:1px solid black;
+		font-size: 16px;
+	}
+
+';
+        $pdf = new Pdf([
+            'mode' => Pdf::MODE_CORE,
+            'content' => $this->renderPartial('print/printpopdf',['model'=>$model]),
+            // 'cssFile' => '@web/css/printpopdf.css',
+            'cssInline' => $css,
+            'options' => [
+                'title' => 'Privacy Policy - Krajee.com',
+                'subject' => 'Generating PDF files via yii2-mpdf extension has never been easy'
+            ],
+            'methods' => [
+                'SetHeader' => ['Generated By: Krajee Pdf Component||Generated On: ' . date("r")],
+                'SetFooter' => ['|Page {PAGENO}|'],
+            ]
+        ]);
+        return $pdf->render();
     }
 
     public function actionSupplierlist($search = null, $id = null) 

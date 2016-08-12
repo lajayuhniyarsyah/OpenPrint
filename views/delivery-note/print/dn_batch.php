@@ -217,9 +217,12 @@ endif;
 				<div class="opNo">
 
 					<?php
-						$fullOp=$model->prepare->name;
-						$explOp = explode('/', $fullOp);
-						echo $explOp[0];
+						if(isset($model->prepare)){
+							$fullOp=$model->prepare->name;
+							$explOp = explode('/', $fullOp);
+							echo $explOp[0];
+						}
+						
 					?>
 					
 				</div>

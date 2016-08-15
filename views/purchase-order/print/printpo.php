@@ -1,6 +1,10 @@
 <?php
 use yii\helpers\Url;
+use yii\helpers\Html;
 $this->registerJsFile(Url::base().'/js/jquery.fittext.js',['depends' => [\yii\web\JqueryAsset::className()]]);
+$this->registerJsFile(Url::base().'/js/jspdf.min.js',['depends' => [\yii\web\JqueryAsset::className()]]);
+$this->registerJsFile(Url::base().'/js/html2canvas.js',['depends' => [\yii\web\JqueryAsset::className()]]);
+$this->registerJsFile(Url::base().'/js/jspdf.debug.js',['depends' => [\yii\web\JqueryAsset::className()]]);
 $this->registerJs('jQuery(".fittext").fitText(0.9);');
 ?>
 
@@ -10,7 +14,6 @@ $this->registerJs('jQuery(".fittext").fitText(0.9);');
 		width: 198mm;
 		margin-left: auto; margin-right: auto;
 		page-break-after: always;
-		/*font-family: Arial, Helvetica, sans-serif;*/
 		font-family: 'Lato', sans-serif;
 		position:absolute;
     	z-index:9999;
@@ -42,15 +45,10 @@ $this->registerJs('jQuery(".fittext").fitText(0.9);');
 	    transform:rotate(316deg);
 	    -webkit-transform:rotate(316deg);
 	}
-	table{
-		/* border-top: 1px solid black;
-		border-bottom: 1px solid black; */
-	}
 	.contener{
 		border: 1px solid black;
 		margin-left: auto; margin-right: auto;
 		page-break-after: always;
-		/*font-family: Arial, Helvetica, sans-serif;*/
 	}
 	.header{
 		height: 10%;
@@ -100,14 +98,11 @@ $this->registerJs('jQuery(".fittext").fitText(0.9);');
 		font-weight: bold;
 		margin-left: 15px;
 		margin-top: 10px;
-		/*position: absolute;*/
-		/*font-family: Times New Roman;*/
 		float: left;
 	}
 	.yth{
 		display: block;
 		float: left;
-		/*font-family: Times New Roman;*/
 		font-size: 12px;
 		margin-left: 15px;
 		width: 98%;
@@ -154,7 +149,6 @@ $this->registerJs('jQuery(".fittext").fitText(0.9);');
 	}
 	.headtablepages tr th{
 		border: 1px solid black;
-		/*font-family: Times New Roman;*/
 		font-size: 15px;
 		line-height: 15px;
 		text-align: center;
@@ -165,12 +159,10 @@ $this->registerJs('jQuery(".fittext").fitText(0.9);');
 	.tablefooter{
 		float:left; width:100%; border-left:1px solid black; border-right:1px solid black; height:185px;
 		border-bottom:1px solid black;
-		/*margin-top: 90px;*/
 		clear: both;
 	}
 	.tablefooter td{
 		border: medium none !important;
-		/*font-family: Times New Roman;*/
 		font-size: 16px;
 		padding-left: 10px;
 		line-height: 19px;
@@ -180,12 +172,10 @@ $this->registerJs('jQuery(".fittext").fitText(0.9);');
 		margin-left: 40px;
 		text-align: left;
 		font-weight: bold;
-		/*font-family: Times New Roman;*/
 	}
 	.gudang{
 		margin-left: 40px;
 		border: none;
-		/*font-family: Times New Roman;*/
 	}
 	.gudang td{
 		line-height: 30px;
@@ -205,9 +195,7 @@ $this->registerJs('jQuery(".fittext").fitText(0.9);');
 
 	}
 	.tablecontent{
-		/*line-height: 30px;*/
 		font-size: 18px;
-		/*font-family: Times New Roman;*/
 	}
 	@media all {
 		.page-break	{ display: none; }
@@ -224,15 +212,9 @@ $this->registerJs('jQuery(".fittext").fitText(0.9);');
 			background-color: none !important;
 			background:transparent !important;
 		}
-/*		.tablettd{
-			margin-top: -48px !important;
-		}	*/
-		/*.tblkirim{
-		margin-top: -13px !important;
-		}*/
-	/*	.isigudang{
-			margin-top: -10px;
-		}*/
+		#printpdf{
+			display: none;
+		}
 
 	}
 	.pages{
@@ -273,7 +255,7 @@ $this->registerJs('jQuery(".fittext").fitText(0.9);');
 		width: 203px;
 	}
 	.break{
-		height:100mm;
+		/*height:50mm;*/
 	}
 	.tablettd{
 		width:98%; float:left;  margin-left: 15px;margin-top: -9px;
@@ -281,7 +263,6 @@ $this->registerJs('jQuery(".fittext").fitText(0.9);');
 	.tblkirim{
 		border-collapse: collapse;
 		float: left;
-		/*font-family: Times New Roman;*/
 		font-size: 12px;
 		line-height: 30px;
 		margin-left: 15px;
@@ -325,7 +306,9 @@ $this->registerJs('jQuery(".fittext").fitText(0.9);');
 		border:1px solid black;
 		font-size: 16px;
 	}
-
+	#printpdf{
+		margin-left: 30px;
+	}
 
 
 </style>
@@ -415,6 +398,10 @@ $this->registerJs('jQuery(".fittext").fitText(0.9);');
         $pricelist = $model->pricelist->name;
 	?>
 
+<button id="printpdf">EXPORT PDF</button>
+<div id="pageContainer">
+<div class="pages">
+
 	<?php
 		if($model->state=='draft'){
 			$watermark= '<div id=\'background\'><p id=bg-text>DRAFT</p></div>';
@@ -426,9 +413,6 @@ $this->registerJs('jQuery(".fittext").fitText(0.9);');
 		}
 		echo $watermark;
 	?>
-<div id="pageContainer">
-<div class="pages">
-
 	<table>
 		<tr style="vertical-align:top;">
 			<td>
@@ -613,10 +597,10 @@ $this->registerJs('
 
 	// save page template to var
 	if('.$check.' == 1){
-		var tmpl = 	\'<div class="break">&nbsp;</div><div id="background"><p id=bg-text>DRAFT</p></div>\'+jQuery(\'div#pageContainer\').html();
+		var tmpl = 	\'<div class="break">&nbsp;</div>\'+jQuery(\'div#pageContainer\').html();
 	}
 	else if ('.$check.' == 2) {
-		var tmpl = 	\'<div class="break">&nbsp;</div><div id="background_approved"><p id=bg-text>APPROVED</p></div>\'+jQuery(\'div#pageContainer\').html();
+		var tmpl = 	\'<div class="break">&nbsp;</div>\'+jQuery(\'div#pageContainer\').html();
 	}else{
 		var tmpl = 	\'<div class="break">&nbsp;</div>\'+jQuery(\'div#pageContainer\').html();
 	}
@@ -724,5 +708,75 @@ $this->registerJs('
 		}
 
 	// end loop
+
+  jQuery(\'#printpdf\').click(function(){
+	
+	jQuery(\'#printpdf\').hide();
+
+	var doc = new jsPDF("p", "mm", "a4");
+	var width = doc.internal.pageSize.width;    
+	var height = doc.internal.pageSize.height;
+
+	var pageContainerHeight = jQuery(\'#pageContainer\').height();
+
+	html2canvas($(\'#pageContainer\'), {
+	   width:780,
+	   height:pageContainerHeight + 200,
+	   onrendered: function(canvas) {
+	     	var img = canvas.toDataURL()
+			// doc.addImage(img, \'JPEG\', 0, 0, width, height);
+
+	     	download(img, \''.$model->name.'.jpg\', \'image/jpg\');
+
+			window.open(img);
+	        // doc.save(\'sample-file.pdf\');
+	  }
+	});
+
+  });
 ');
 ?>
+<script type="text/javascript">
+	function download(strData, strFileName, strMimeType) {
+
+		console.log(strData);
+		console.log(strFileName);
+		console.log(strMimeType);
+		
+		var D = document,
+	        A = arguments,
+	        a = D.createElement("a"),
+	        d = A[0],
+	        n = A[1],
+	        t = A[2] || "text/plain";
+
+	    a.href = "data:" + strMimeType + "," + escape(strData);
+
+	    if (window.MSBlobBuilder) {
+	        var bb = new MSBlobBuilder();
+	        bb.append(strData);
+	        return navigator.msSaveBlob(bb, strFileName);
+	    }
+
+	    if ('download' in a) {
+	        a.setAttribute("download", n);
+	        a.innerHTML = "downloading...";
+	        D.body.appendChild(a);
+	        setTimeout(function() {
+	            var e = D.createEvent("MouseEvents");
+	            e.initMouseEvent("click", true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+	            a.dispatchEvent(e);
+	            D.body.removeChild(a);
+	        }, 66);
+	        return true;
+	    };
+
+	    var f = D.createElement("iframe");
+	    D.body.appendChild(f);
+	    f.src = "data:" + (A[2] ? A[2] : "application/octet-stream") + (window.btoa ? ";base64" : "") + "," + (window.btoa ? window.btoa : escape)(strData);
+	    setTimeout(function() {
+	        D.body.removeChild(f);
+	    }, 333);
+	    return true;
+	} 
+</script>

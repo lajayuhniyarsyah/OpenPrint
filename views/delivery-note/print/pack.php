@@ -326,7 +326,7 @@ use yii\helpers\Url;
 				</div>
 				<div class="colorCode"></div>
 			</div>
-			<div class="sign" contenteditable="true"><?php $model->signature0->name_related; ?></div>
+			<div class="sign" contenteditable="true"><?php echo $model->signature0->name_related; ?></div>
 		</div>
 	</div>
 </div>

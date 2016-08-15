@@ -336,7 +336,6 @@ use yii\helpers\Url;
 			<div class="notes">
 				<div class="terb" contenteditable="true">
 					<?php
-					
 					switch (trim($model->currency->name)) {
 						case 'USD':
 							# code...
@@ -362,6 +361,7 @@ use yii\helpers\Url;
 							break;
 					}
 					echo $preCur;
+
 					?>
 					<?=ucwords(Yii::$app->numericLib->convertToWords($model->amount_total,$model->currency->name))?>
 					<?=$subCur?>

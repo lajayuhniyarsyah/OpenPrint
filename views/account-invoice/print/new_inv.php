@@ -2,6 +2,7 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 ?>
+<link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
 <?php
 	$css = '
 	body{
@@ -174,8 +175,9 @@ use yii\helpers\Url;
 		margin-left: -2mm;
 		padding-top: 16mm;
 		font-size:10pt;
-		font-weight: bold;
 		letter-spacing: 0px;
+		font-family: \'Lato\';
+
 	}
 	.choosePrinter{
 		position: absolute;

@@ -2,6 +2,7 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 ?>
+<link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
 <?php
 	$css = '
 	body{
@@ -174,8 +175,9 @@ use yii\helpers\Url;
 		margin-left: -2mm;
 		padding-top: 16mm;
 		font-size:10pt;
-		font-weight: bold;
 		letter-spacing: 0px;
+		font-family: \'Lato\';
+
 	}
 	.choosePrinter{
 		position: absolute;
@@ -334,7 +336,6 @@ use yii\helpers\Url;
 			<div class="notes">
 				<div class="terb" contenteditable="true">
 					<?php
-					
 					switch (trim($model->currency->name)) {
 						case 'USD':
 							# code...
@@ -360,6 +361,7 @@ use yii\helpers\Url;
 							break;
 					}
 					echo $preCur;
+
 					?>
 					<?=ucwords(Yii::$app->numericLib->convertToWords($model->amount_total,$model->currency->name))?>
 					<?=$subCur?>

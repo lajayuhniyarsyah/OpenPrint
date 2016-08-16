@@ -1,3 +1,3 @@
 # OpenPrint
 New OpenERP Print Apps
-MASTER REPO
+Attendance Log Chandra untuk recover script attendance log

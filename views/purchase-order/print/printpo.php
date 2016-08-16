@@ -721,12 +721,15 @@ $this->registerJs('
 
 	html2canvas($(\'#pageContainer\'), {
 	   width:780,
+	   logging: true,
+       useCORS: true,
 	   height:pageContainerHeight + 200,
 	   onrendered: function(canvas) {
-	     	var img = canvas.toDataURL()
+	     	var img = canvas.toDataURL(\'image/png\')
+	     	var imgdata = img.replace(/^img:image\/(png|jpg);base64,/, "");
 			// doc.addImage(img, \'JPEG\', 0, 0, width, height);
-
-	     	download(img, \''.$model->name.'.jpg\', \'image/jpg\');
+	     	// console.log(imgdata);
+	     	// download(imgdata, \''.$model->name.'.png\', \'image/png\');
 
 			window.open(img);
 	        // doc.save(\'sample-file.pdf\');
@@ -737,46 +740,46 @@ $this->registerJs('
 ');
 ?>
 <script type="text/javascript">
-	function download(strData, strFileName, strMimeType) {
 
-		console.log(strData);
-		console.log(strFileName);
-		console.log(strMimeType);
-		
-		var D = document,
-	        A = arguments,
-	        a = D.createElement("a"),
-	        d = A[0],
-	        n = A[1],
-	        t = A[2] || "text/plain";
+function download(strData, strFileName, strMimeType) {
+    var D = document,
+        A = arguments,
+        a = D.createElement("a"),
+        d = A[0],
+        n = A[1],
+        t = A[2] || "text/plain";
 
-	    a.href = "data:" + strMimeType + "," + escape(strData);
+    //build download link:
+    a.href = "data:" + strMimeType + "," + escape(strData);
+    if (window.MSBlobBuilder) {
+        var bb = new MSBlobBuilder();
+        bb.append(strData);
+        return navigator.msSaveBlob(bb, strFileName);
+    } /* end if(window.MSBlobBuilder) */
 
-	    if (window.MSBlobBuilder) {
-	        var bb = new MSBlobBuilder();
-	        bb.append(strData);
-	        return navigator.msSaveBlob(bb, strFileName);
-	    }
 
-	    if ('download' in a) {
-	        a.setAttribute("download", n);
-	        a.innerHTML = "downloading...";
-	        D.body.appendChild(a);
-	        setTimeout(function() {
-	            var e = D.createEvent("MouseEvents");
-	            e.initMouseEvent("click", true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-	            a.dispatchEvent(e);
-	            D.body.removeChild(a);
-	        }, 66);
-	        return true;
-	    };
+    if ('download' in a) {
+        a.setAttribute("download", n);
+        a.innerHTML = "downloading...";
+        D.body.appendChild(a);
+        setTimeout(function() {
+            var e = D.createEvent("MouseEvents");
+            e.initMouseEvent("click", true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+            a.dispatchEvent(e);
+            D.body.removeChild(a);
+        }, 66);
+        return true;
+    } /* end if('download' in a) */
+    ; //end if a[download]?
 
-	    var f = D.createElement("iframe");
-	    D.body.appendChild(f);
-	    f.src = "data:" + (A[2] ? A[2] : "application/octet-stream") + (window.btoa ? ";base64" : "") + "," + (window.btoa ? window.btoa : escape)(strData);
-	    setTimeout(function() {
-	        D.body.removeChild(f);
-	    }, 333);
-	    return true;
-	} 
+    //do iframe dataURL download:
+    var f = D.createElement("iframe");
+    D.body.appendChild(f);
+    // f.src = "data:" + (A[2] ? A[2] : "application/octet-stream") + (window.btoa ? ";base64" : "") + "," + (window.btoa ? window.btoa : escape)(strData);
+    f.src = "data:" + (A[2] ? A[2] : "application/octet-stream") + (window.btoa ? ";base64" : "") + "," + (window.btoa ? window.btoa : escape)(strData);
+    setTimeout(function() {
+        D.body.removeChild(f);
+    }, 333);
+    return true;
+} /* end download() */
 </script>

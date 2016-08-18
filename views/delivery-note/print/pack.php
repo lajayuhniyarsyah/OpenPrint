@@ -160,6 +160,7 @@ use yii\helpers\Url;
 	.sign{
 		margin-top: 102px;
 		text-decoration: underline;
+		font-size: 9px;
 	}
 	.totalRow{
 		margin-top: 5mm;

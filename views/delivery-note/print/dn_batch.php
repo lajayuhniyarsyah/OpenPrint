@@ -97,7 +97,7 @@
     }
     .nama_atasan{
     	float: right;
-    	font-size: 11px;
+    	font-size: 10px;
     }
 	pre{
 		white-space: pre-wrap;
@@ -114,9 +114,9 @@
 			border: none;
 		}
 		.nama_atasan{
-
 	    	float: right;
-	    	margin-right: 30px;
+	    	margin-right: 20px;
+	    	margin-top: -30px;
 	    }
 	}
 	pre{

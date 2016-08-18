@@ -137,7 +137,7 @@ if( $uid == 23 || $uid == 101 || $uid == 173 || $uid==25):
 	}
 	<?php if($uid==101): ?>
 		.dnNo {
-		    padding-top: 4%;
+		    padding-top: 5%;
 		    font-size: 10pt;
 		    margin-left: 3mm;
 		}

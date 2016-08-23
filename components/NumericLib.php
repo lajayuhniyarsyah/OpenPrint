@@ -168,13 +168,23 @@ class NumericLib extends Component{
 		    // foreach (str_split((string) $fraction) as $number) {
 		    //     $words[] = $dictionary[$number];
 		    // }
+
 		    $string_decimal = '';
 		    if($fraction != '00'){
 		    	$string .= $decimal;
 		    	$number = $fraction;
+
 				switch (true) {
 				    case $number < 21:
-				        $string_decimal = $dictionary[$number];
+
+					    if ($number[0] == 0){
+			    			for ($i=0; $i < 2; $i++) { 
+					    		$string_decimal .= ' '. $dictionary[$number[$i]];
+					    	}
+				    	}else{
+				    		$string_decimal = $dictionary[$number];
+				    	}
+				    	
 				        break;
 				    case $number < 100:
 				        $tens   = ((int) ($number / 10)) * 10;

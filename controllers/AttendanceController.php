@@ -620,8 +620,8 @@ query;
             $department_query = $department;
         }
         $dbTarget = "LIVE_2014";
-        $ipTarget = Yii::app()->request->serverName.':'.Yii::app()->request->serverPort;
-        
+        $ipTarget = Yii::$app->request->serverName.':'.Yii::$app->request->serverPort;
+
         $query = <<<query
     SELECT 
         date_series.i

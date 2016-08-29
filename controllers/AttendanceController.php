@@ -619,10 +619,9 @@ query;
         }else{
             $department_query = $department;
         }
-        $ipTarget = '192.168.9.26:10001';
         $dbTarget = "LIVE_2014";
-        // $ipTarget = yii\web\Request::hostInfo();
-
+        $ipTarget = Yii::app()->request->serverName.':'.Yii::app()->request->serverPort;
+        
         $query = <<<query
     SELECT 
         date_series.i

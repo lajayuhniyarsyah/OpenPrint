@@ -117,8 +117,9 @@ use yii\bootstrap\Dropdown;
 			'Ext_Hour_2',
 			'Ext_Min_2',
 			[
-			'format'=>'html',  
-			'value'=>'List_Time'
+				'header':'Summary Log Time',
+				'format'=>'html',  
+				'value'=>'List_Time'
 			],
 		]
 	])?>

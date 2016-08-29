@@ -257,7 +257,7 @@ LEFT JOIN res_partner r_p ON r_p.id = h_emp.address_id
 ORDER BY h_emp.name_related ASC, date_series.i ASC, att_log_min_max_pure.y ASC, att_log_min_max_pure.m ASC, att_log_min_max_pure.d ASC
 query;
         $connection = Yii::$app->db;
-        $res = $connection->createCommand($query)->queryAll();  
+        $res = $connection->createCommand($query)->cache(30)->queryAll();  
         $dataToRender['dataProvider'] = new \yii\data\ArrayDataProvider([
             'allModels'=>$res,
             'pagination'=>false

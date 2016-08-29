@@ -619,7 +619,10 @@ query;
         }else{
             $department_query = $department;
         }
-        
+        $ipTarget = '192.168.9.26:10001';
+        $dbTarget = "LIVE_2014";
+        // $ipTarget = yii\web\Request::hostInfo();
+
         $query = <<<query
     SELECT 
         date_series.i
@@ -963,7 +966,7 @@ query;
             SELECT 
                 array_to_string(
                     array_agg(
-                        '<a href=http://10.36.15.52:8069/?db=2016_08_25#id='
+                        '<a href=http://{$ipTarget}/?db={$dbTarget}#id='
                         || 
                         id
                         ||

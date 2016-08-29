@@ -1021,7 +1021,7 @@ query;
             att_log_min_max_pure.d ASC
 query;
         $connection = Yii::$app->db;
-        $res = $connection->createCommand($query)->queryAll();  
+        $res = $connection->createCommand($query)->cache(40)->queryAll();
         $dataToRender['dataProvider'] = new \yii\data\ArrayDataProvider([
             'allModels'=>$res,
             'pagination'=>false

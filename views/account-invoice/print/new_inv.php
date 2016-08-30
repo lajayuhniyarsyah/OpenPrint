@@ -244,7 +244,9 @@ use yii\helpers\Url;
 			line-height: 32px;
 		}
 		
-		
+		.signName{
+			margin-top: 2mm;
+		}
 		.terb {
 		    padding-top: 11mm;
 		    line-height: 35px;

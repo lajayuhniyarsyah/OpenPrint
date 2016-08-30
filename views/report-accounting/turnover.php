@@ -43,7 +43,12 @@
 
 			if(isset($value['note_id'])){
 				$no_surat=substr($value['dn'], 0,7);
-				$no_pb=$value['dn_poc'];
+				if ($value['op']){
+					$no_pb=$value['dn_poc'] . ', <b>No OP :</b> '. substr($value['op'], 0,7);	
+				}else{
+					$no_pb=$value['dn_poc'];	
+				}
+				
 			}else if(isset($value['purchase_id'])){
 				$no_surat=$value['no_po'];
 				$no_pb=$value['no_pb_po'];
@@ -62,7 +67,6 @@
 				}else{
 					$no_pb=$no_pb.', <strong>LBM No :</strong> '.$value['lbm'] ;
 				}
-				
 			}else{
 				$no_pb=$no_pb;
 			}

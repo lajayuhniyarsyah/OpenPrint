@@ -1082,7 +1082,7 @@ class ReportAccountingController extends Controller
 	    				 l.name as location,
 	    				 sl.name as desc_location, 
 	    				 sl.id as id_desc_location,      
-	    				 r.name as partner,
+	    				 
 	    				 s.name as type,
 	    				 s.lbm_no as lbm,
 	    				 m.location_id as location_id,
@@ -1096,6 +1096,21 @@ class ReportAccountingController extends Controller
 	    				 po.name as no_po,
 	    				 po.origin as no_pb_po,
 	    				 m.name as product_name,
+	    				 (
+	    				 	CASE
+	    				 		WHEN
+	    				 			s.note_id IS NOT NULL
+	    				 		THEN
+	    				 			r1.name
+	    				 		WHEN
+	    				 			s.partner_id IS NOT NULL
+	    				 		THEN
+	    				 			r2.name
+	    				 		ELSE 
+	    				 			r.name
+	    				 	END
+	    				 ) as partner,
+	    				 r.name as partner1,
 	    				 m.partner_id as partner_id,
 	    				 im.name as no_im,
 	    				 im.manual_pb_no as manual_pb_no
@@ -1110,6 +1125,8 @@ class ReportAccountingController extends Controller
 			    ->join('LEFT JOIN','internal_move as im','im.id=s.internal_move_id')
 			    ->join('JOIN','product_uom as u','u.id=m.product_uom')
 			    ->join('JOIN','res_partner as r','r.id=m.partner_id')
+			    ->join('JOIN','res_partner as r1','r1.id=dn.partner_id')
+			    ->join('JOIN','res_partner as r2','r2.id=s.partner_id')
 			    ->join('JOIN','stock_location as l','m.location_id=l.id')
 			    ->join('JOIN','stock_location as sl','m.location_dest_id=sl.id')
 			    ->join('LEFT JOIN','stock_production_lot as batch','batch.id=m.prodlot_id')

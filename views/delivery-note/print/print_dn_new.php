@@ -86,19 +86,44 @@
 		text-decoration: underline;
 	}
 
+	.footer{
+        color: #000;
+    	width: 100%;
+    	margin-top: 250px;
+    	/*position: absolute;*/
+    }
+    .btn_delete{
+    	float: right;
+    }
+    .nama_atasan{
+    	float: right;
+    	font-size: 10px;
+    }
 	pre{
 		white-space: pre-wrap;
 	}
 	@media print
 	{
+		.footer{
+			/*position: fixed;*/
+		}
+		.btn_delete{
+			display: none;
+		}
 		#container{
 			border: none;
 		}
+		.nama_atasan{
+	    	float: right;
+	    	margin-right: 20px;
+	    	margin-top: -30px;
+	    }
 	}
 	pre{
 		font-family: Arial, Helvetica, sans-serif;
 	}
 </style>
+
 
 <?php
 $uid = Yii::$app->request->getQueryParam('uid');
@@ -110,16 +135,32 @@ if( $uid == 23 || $uid == 101 || $uid == 173 || $uid==25):
 		padding-top: 2mm;
 		font-size: 10pt;
 	}
-	.dnNo{
-		padding-top: 3%;
-		font-size: 10pt;
-	}
+	<?php if($uid==101): ?>
+		.dnNo {
+		    padding-top: 3%;
+		    font-size: 10pt;
+		    margin-left: 3mm;
+		}
+		.poc {
+		    margin-top: 6% !important;
+		    font-size: 10pt;
+		    margin-left: 5mm;
+		}
+
+	<?php else:; ?>
+		.dnNo{
+			padding-top: 3%;
+			font-size: 10pt;
+		}
+
+		.poc{
+			margin-top: 6% !important;
+			font-size: 10pt;
+		}
+	<?php endif; ?>
+
 	.opNo{
 		padding-left: 64% !important;
-		margin-top: 6% !important;
-		font-size: 10pt;
-	}
-	.poc{
 		margin-top: 6% !important;
 		font-size: 10pt;
 	}
@@ -136,7 +177,15 @@ if( $uid == 23 || $uid == 101 || $uid == 173 || $uid==25):
 	
 	<?php
 endif;
-?>
+
+if($uid==25){ ?>
+
+	<style type="text/css">
+	.footer{
+    	margin-top: 200px;
+    }
+	</style>
+<?php } ?>
 <div id="container">
 	<div class="pages">
 		<div class="headers">
@@ -200,6 +249,13 @@ endif;
 				</tr>
 			</table>
 		</div>
+
+		
+
+
+		<div class="footer">
+			 <a class="btn_delete" href="#"> x </a> <div class="nama_atasan" contenteditable="true"> <?php echo (isset($model->signature0->name_related) ? $model->signature0->name_related:'&nbsp;'); ?> </div> 
+		</div>	
 	</div>
 </div>
 
@@ -270,8 +326,7 @@ $scr = '
 			// jQuery(\'.pager:last\').html(currPage);
 			// console.log(tmpl);
 			
-		}
-		
+		}		
 		console.log(\'Rendering Page \'+currPage+\' Row \'+currRow+\' Height => \'+currLineHeight);
 		currRow=currRow+1;
 	});

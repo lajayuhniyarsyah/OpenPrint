@@ -965,12 +965,8 @@ query;
                         ,att_log.date_extra_out
                     FROM hr_attendance_log att_log 
                     WHERE
-                        att_log.log_time BETWEEN '{$first}' AND '{$last}'
-                    AND
                         att_log.employee_id IN (SELECT id FROM hr_employee WHERE address_id={$site})
                     ) AS att_log_grouped
-                WHERE
-                    att_log_grouped.log_time BETWEEN '{$first}' AND '{$last}'
                 GROUP BY
                     att_log_grouped.employee_id, 
                     att_log_grouped.y, 

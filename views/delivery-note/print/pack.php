@@ -256,6 +256,9 @@ use yii\helpers\Url;
 					}
 					.footers .totalBox {
     					width: 87mm;
+    				}
+    				.totalRow{
+    					 margin-top: 3mm;
     				}';
 			}
 			elseif($uid==23){

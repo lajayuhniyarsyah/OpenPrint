@@ -53,6 +53,46 @@ class ReportAccountingController extends Controller
 	    				 batch.name as batch,
 	    				 sol.price_unit as price,
 	    				 ppl.name as pricelist,          
+	    				 sl.name as s_location,
+	    				 r.name as partner,
+	    				 dn.poc as poc,
+	    				 so.name as so_no,
+	    				 sp.state as state
+	    				')
+			    ->from('stock_move as sm')
+			    ->join('JOIN','stock_picking as sp','sm.picking_id=sp.id')
+			    ->join('JOIN', 'order_preparation as op', 'op.picking_id=sp.id')
+			    ->join('LEFT JOIN', 'delivery_note as dn', 'dn.id=sp.note_id')
+			    ->join('LEFT JOIN', 'product_product as p', 'p.id=sm.product_id')
+			    ->join('LEFT JOIN','sale_order_line as sol','sol.id=sm.sale_line_id')
+			    ->join('LEFT JOIN', 'sale_order as so', 'so.id=op.sale_id')
+			    ->join('JOIN', 'product_uom as u', 'u.id=sm.product_uom')
+			    ->join('JOIN', 'stock_location as sl', 'sl.id=sm.location_id')
+			    ->join('JOIN', 'res_partner as r', 'r.id=dn.partner_id')
+			    ->join('LEFT JOIN', 'stock_production_lot as batch', 'batch.id=sm.prodlot_id')
+			    ->join('JOIN', 'product_pricelist as ppl', 'ppl.id = so.pricelist_id')
+			    ->where(['sm.state'=>'done' ])
+			    ->andWhere(['not', ['p.default_code' => 'DUMMY01']])
+			    ->orderBy('sp.date_done ASC');
+			    
+
+    	}
+		else if ($jenisreport=="int"){
+	    		$query
+	    		->select(
+	    				'
+	    				 dn.create_date as cretae_date, 
+	    				 sp.date_done as tanggal,
+	    				 dn.name as dn_no,
+	    				 op.name as no_op,
+	    				 p.default_code as part_number,
+	    				 p.name_template as name_template,
+	    				 sm.name as name_input,
+	    				 sm.product_qty as qty,
+	    				 u.name as uom,
+	    				 batch.name as batch,
+	    				 sol.price_unit as price,
+	    				 ppl.name as pricelist,          
 	    				 r.name as partner,
 	    				 dn.poc as poc,
 	    				 so.name as so_no,
@@ -73,8 +113,6 @@ class ReportAccountingController extends Controller
 			    ->andWhere(['<=','sp.date_done',$to])
 			    ->andWhere(['not', ['p.default_code' => 'DUMMY01']])
 			    ->orderBy('sp.date_done ASC');
-			    
-
     	}
     	else{
 	    		$query
@@ -110,9 +148,7 @@ class ReportAccountingController extends Controller
 			    ->join('JOIN','stock_location as sl','m.location_dest_id=sl.id')
 			    ->join('LEFT JOIN','stock_production_lot as batch','batch.id=m.prodlot_id')
 			    ->join('LEFT JOIN','product_pricelist as ppl','ppl.id = po.pricelist_id')
-			    ->where(['>=','s.date_done',$from])
-			    ->andWhere(['<=','s.date_done',$to])
-			    ->andWhere(['like','s.name','IN' ])
+			    ->where(['like','s.name','IN' ])
 			    ->andWhere(['s.state'=>'done' ])
 			    ->andWhere(['pt.sale_ok'=>TRUE ])
 			    ->andWhere(['not', ['p.default_code' => null]])

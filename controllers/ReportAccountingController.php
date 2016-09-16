@@ -1059,7 +1059,7 @@ class ReportAccountingController extends Controller
      	return $this->render('agingarsummary',['data'=>$query->all(), 'date'=>$from]);
      }
 
-     public function actionTurnOver($id)
+     public function actionTurnOver($id, $location=12)
      {
      	$this->layout = 'stockmanagement';
      	
@@ -1133,21 +1133,21 @@ class ReportAccountingController extends Controller
 			    ->join('LEFT JOIN','product_pricelist as ppl','ppl.id = po.pricelist_id')
 			    ->where(['m.product_id'=>$id])
 			    ->andWhere(['m.state'=>'done'])
-			    ->andWhere(['or',['m.location_id'=>12], ['m.location_dest_id'=>12]])
+			    ->andWhere(['or',['m.location_id'=>$location], ['m.location_dest_id'=>$location]])
 			    ->addOrderBy(['m.date' => SORT_DESC]);
 
 			$data = $query->all();
 		
-
+		$site_active = \app\models\StockLocation::findOne($location);
 		foreach ($data as $value) {
 			$product[]=$value['name_template'];
 			$PN[]=$value['part_number'];
 		}
 
 		if ($data){
-			return $this->render('turnover',['data'=>$data,'nameproduct'=>'['.$PN[0].']'.$product[0]]);	
+			return $this->render('turnover',['status'=>true,'data'=>$data,'site_active'=>$site_active,'product_id'=>$id,'nameproduct'=>'['.$PN[0].']'.$product[0]]);	
 		}else{
-			echo '<center>Product Tidak Memilik Move</center>';
+			return $this->render('turnover',['status'=>false,'data'=>$data,'site_active'=>$site_active,'product_id'=>$id,'nameproduct'=>false]);	
 		}
      	
      }

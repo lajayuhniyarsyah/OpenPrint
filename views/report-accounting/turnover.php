@@ -1,10 +1,31 @@
-	<?php
-	use yii\db\Query;
+<?php
+namespace app\controllers;
+use Yii;
+use yii\helpers\Html;
+use yii\bootstrap\ActiveForm;
+use yii\bootstrap\Dropdown;
+use app\models\StockLocation;
+use yii\db\Query;
+use yii\web\Controller;
+use yii\web\NotFoundHttpException;
+use yii\filters\VerbFilter;
+use yii\helpers\Json;
+use yii\helpers\ArrayHelper;
+
+$location = StockLocation::find()->where(['location_id' =>49])->all();;
 ?>
+<style type="text/css">
+	.not_found{
+		 border: 1px solid #ccc;
+    font-weight: bold;
+    margin-top: 39px;
+    padding: 5px;
+    text-align: center;
+}
+	}
+</style>
 <?php
 	$jenisreport="out";
-	
-		/* ============================= Print out Untuk Surat Jalan  ===========================================  */
 		$headTable="
 					<tr>
 						<th>No</th>
@@ -111,13 +132,41 @@
 		$no++;
 		}
 
-	echo '<div class="judul">'.$nameproduct.'</div>';
 
-	echo "<table class='table table-striped table-bordered'>";
-	echo $headTable;
-	foreach ($body as $val) {
-		echo $val;
+
+	echo '<div class="judul">'.$nameproduct;
+	echo '</div>';
+	?>
+	<h4 style="float:right;margin-top:-20px; margin-right:50px;">
+		Location :
+		<span id="siteSelection" class="dropdown">
+			<a href="#"  data-toggle="dropdown" class="dropdown-toggle">
+				<?=Html::encode($site_active->name)?>
+			</a>
+			<?php
+				$items = [];
+				$items[] = ['label'=>'HEAD OFFICE','url'=>['','id'=>$product_id,'location'=>12]];
+				foreach($location as $loc):
+					$items[] = ['label'=>$loc['name'],'url'=>['','id'=>$product_id,'location'=>$loc['id']]];
+				endforeach;
+
+				echo Dropdown::widget([
+					'items' => $items,
+				]);
+			?>
+		</span>
+	</h4>
+
+	<?php
+	if($status==true){
+		echo "<table class='table table-striped table-bordered'>";
+		echo $headTable;
+		foreach ($body as $val) {
+			echo $val;
+		}
+		echo "</table>";
+	}else{
+		echo '<div class="not_found">Data Tidak Ditemukan</div>';
 	}
-	echo "</table>";
 
 ?>

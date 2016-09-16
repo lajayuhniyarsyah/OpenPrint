@@ -42,25 +42,36 @@ $location = StockLocation::find()->where(['location_id' =>49])->all();;
 		$no=1;
 		$body=[];
 
+		if(isset($_GET['location'])){
+			$loc =$_GET['location'];
+		}else{
+			$loc = 12;
+		}
 
 		foreach ($data as $value) {
-			$qty = $value['qty']; #set default is plus
-			if ($value['jenis']=="out"){
-				$qty='-'.$value['qty'];
-			}else if($value['jenis']=="internal"){
-				if($value['id_desc_location']==12){
-					$qty=$value['qty'];
-				}else{
-					$qty='-'.$value['qty'];
-				}
-
-			}else if($value['jenis']=="in"){
+			$qty = $value['qty'];
+			if($value['id_desc_location']==$loc){
 				$qty=$value['qty'];
 			}else{
-				if($value['id_desc_location']!=12){
-					$qty="-".$value['qty'];
-				}
+				$qty='-'.$value['qty'];
 			}
+
+			// if ($value['jenis']=="out"){
+			// 	$qty='-'.$value['qty'];
+			// }else if($value['jenis']=="internal"){
+			// 	if($value['id_desc_location']==$location){
+			// 		$qty=$value['qty'];
+			// 	}else{
+			// 		$qty='-'.$value['qty'];
+			// 	}
+
+			// }else if($value['jenis']=="in"){
+			// 	$qty=$value['qty'];
+			// }else{
+			// 	if($value['id_desc_location']!=$location){
+			// 		$qty="-".$value['qty'];
+			// 	}
+			// }
 
 			if(isset($value['note_id'])){
 				$no_surat=substr($value['dn'], 0,7);
@@ -131,8 +142,6 @@ $location = StockLocation::find()->where(['location_id' =>49])->all();;
 				 </tr>';
 		$no++;
 		}
-
-
 
 	echo '<div class="judul">'.$nameproduct;
 	echo '</div>';

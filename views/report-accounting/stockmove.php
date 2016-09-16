@@ -21,7 +21,8 @@
 						<td>Currency</td>
 						<td>SO</td>
 						<td>PO</td>
-						<td>Customer</td>
+						<td>Source Location</td>
+						<td>Desc Location</td>
 						<td>Status</td>
 					</tr>
 					";
@@ -42,6 +43,7 @@
 					<td>'.$value['pricelist'].'</td>
 					<td>'.substr($value['so_no'], 9,5).'</td>
 					<td>'.$value['poc'].'</td>
+					<td>'.$value['s_location'].'</td>
 					<td>'.$value['partner'].'</td>
 					<td>'.$value['state'].'</td>
 				 </tr>';

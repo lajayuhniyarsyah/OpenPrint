@@ -1145,9 +1145,9 @@ class ReportAccountingController extends Controller
 		}
 
 		if ($data){
-			return $this->render('turnover',['status'=>true,'data'=>$data,'site_active'=>$site_active,'product_id'=>$id,'nameproduct'=>'['.$PN[0].']'.$product[0]]);	
+			return $this->render('turnover',['status'=>true,'data'=>$data,'site_active'=>$site_active,'location'=>$location,'product_id'=>$id,'nameproduct'=>'['.$PN[0].']'.$product[0]]);	
 		}else{
-			return $this->render('turnover',['status'=>false,'data'=>$data,'site_active'=>$site_active,'product_id'=>$id,'nameproduct'=>false]);	
+			return $this->render('turnover',['status'=>false,'data'=>$data,'site_active'=>$site_active,'location'=>$location,'product_id'=>$id,'nameproduct'=>false]);	
 		}
      	
      }

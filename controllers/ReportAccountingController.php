@@ -75,6 +75,8 @@ class ReportAccountingController extends Controller
 			    ->where(['sm.location_id' => $location])
 			    ->andWhere(['sm.state'=>'done'])
 			    ->andWhere(['sp.type'=>'out'])
+			    ->andWhere(['>=','sp.date_done',$from])
+		     	->andWhere(['<=','sp.date_done',$to])
 			    ->andWhere(['not', ['p.default_code' => 'DUMMY01']])
 			    ->orderBy('sp.date_done ASC');
     	}
@@ -117,6 +119,8 @@ class ReportAccountingController extends Controller
 			    ->andWhere(['s.state'=>'done' ])
 			    ->andWhere(['s.type'=>'in'])
 			    ->andWhere(['pt.sale_ok'=>TRUE ])
+			    ->andWhere(['>=','s.date_done',$from])
+		     	->andWhere(['<=','s.date_done',$to])
 			    ->andWhere(['not', ['p.default_code' => null]])
 			    ->andWhere(['not', ['p.default_code' => 'DUMMY01']]);
     	}
@@ -158,6 +162,8 @@ class ReportAccountingController extends Controller
 			    ->andWhere(['like','s.name','IN' ])
 			    ->andWhere(['s.state'=>'done' ])
 			    ->andWhere(['s.type'=>'internal'])
+			    ->andWhere(['>=','s.date_done',$from])
+		     	->andWhere(['<=','s.date_done',$to])
 			    ->andWhere(['pt.sale_ok'=>TRUE ])
 			    ->andWhere(['not', ['p.default_code' => null]])
 			    ->andWhere(['not', ['p.default_code' => 'DUMMY01']]);

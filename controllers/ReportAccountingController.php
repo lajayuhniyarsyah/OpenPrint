@@ -153,7 +153,7 @@ class ReportAccountingController extends Controller
 			    ->join('LEFT JOIN','product_product as p','p.id=m.product_id')
 			    ->join('LEFT JOIN','product_template as pt','pt.id=m.product_id')
 			    ->join('JOIN','product_uom as u','u.id=m.product_uom')
-			    ->join('JOIN','res_partner as r','r.id=m.partner_id')
+			    ->join('LEFT JOIN','res_partner as r','r.id=m.partner_id')
 			    ->join('JOIN','stock_location as l','m.location_id=l.id')
 			    ->join('JOIN','stock_location as sl','m.location_dest_id=sl.id')
 			    ->join('LEFT JOIN','stock_production_lot as batch','batch.id=m.prodlot_id')

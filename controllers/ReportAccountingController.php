@@ -78,7 +78,7 @@ class ReportAccountingController extends Controller
 			    ->andWhere(['>=','sp.date_done',$from])
 		     	->andWhere(['<=','sp.date_done',$to])
 			    ->andWhere(['not', ['p.default_code' => 'DUMMY01']])
-			    ->orderBy('sp.date_done ASC');
+			    ->orderBy('sp.date_done ASC, sp.id ASC, sm.id ASC');
     	}
     	else if($jenisreport=="inc"){
 	    		$query
@@ -115,14 +115,14 @@ class ReportAccountingController extends Controller
 			    ->join('LEFT JOIN','stock_production_lot as batch','batch.id=m.prodlot_id')
 			    ->join('LEFT JOIN','product_pricelist as ppl','ppl.id = po.pricelist_id')
 			    ->where(['m.location_dest_id' => $location])
-			    // ->andWhere(['like','s.name','IN' ])
 			    ->andWhere(['s.state'=>'done' ])
 			    ->andWhere(['s.type'=>'in'])
 			    ->andWhere(['pt.sale_ok'=>TRUE ])
 			    ->andWhere(['>=','s.date_done',$from])
 		     	->andWhere(['<=','s.date_done',$to])
 			    ->andWhere(['not', ['p.default_code' => null]])
-			    ->andWhere(['not', ['p.default_code' => 'DUMMY01']]);
+			    ->andWhere(['not', ['p.default_code' => 'DUMMY01']])
+			    ->orderBy('s.date_done ASC, s.id ASC, m.id ASC');
     	}
     	else{
 	    		$query
@@ -166,7 +166,8 @@ class ReportAccountingController extends Controller
 		     	->andWhere(['<=','s.date_done',$to])
 			    ->andWhere(['pt.sale_ok'=>TRUE ])
 			    ->andWhere(['not', ['p.default_code' => null]])
-			    ->andWhere(['not', ['p.default_code' => 'DUMMY01']]);
+			    ->andWhere(['not', ['p.default_code' => 'DUMMY01']])
+			    ->orderBy('s.date_done ASC, s.id ASC, m.id ASC');;
     	}
     	return $this->render('stockmove',['data'=>$query->all(), 'jenis'=>$jenisreport, 'from'=>$from , 'to'=>$to, 'loc_active'=>$loc_active]);
     }

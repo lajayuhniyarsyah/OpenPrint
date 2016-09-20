@@ -146,6 +146,8 @@ class ReportAccountingController extends Controller
 	    				 po.name as po,
 	    				 s.origin as origin,
 	    				 s.state as state,
+	    				 m.id as move_id,
+	    				 m.date as date_move
 	    				')
 			    ->from('stock_move as m')
 			    ->join('LEFT JOIN','stock_picking as s','s.id=m.picking_id')
@@ -159,15 +161,15 @@ class ReportAccountingController extends Controller
 			    ->join('LEFT JOIN','stock_production_lot as batch','batch.id=m.prodlot_id')
 			    ->join('LEFT JOIN','product_pricelist as ppl','ppl.id = po.pricelist_id')
 			    ->where(['or', ['m.location_id' => $location], ['m.location_dest_id' => $location]])
-			    ->andWhere(['like','s.name','IN' ])
-			    ->andWhere(['s.state'=>'done' ])
-			    ->andWhere(['s.type'=>'internal'])
-			    ->andWhere(['>=','s.date_done',$from])
-		     	->andWhere(['<=','s.date_done',$to])
+			    // ->andWhere(['like','s.name','IN' ])
+			    ->andWhere(['m.state'=>'done' ])
+			    // ->andWhere(['s.type'=>'internal'])
+			    ->andWhere(['>=','m.date',$from])
+		     	->andWhere(['<=','m.date',$to])
 			    ->andWhere(['pt.sale_ok'=>TRUE ])
 			    ->andWhere(['not', ['p.default_code' => null]])
 			    ->andWhere(['not', ['p.default_code' => 'DUMMY01']])
-			    ->orderBy('s.date_done ASC, s.id ASC, m.id ASC');;
+			    ->orderBy('m.date ASC, s.id ASC, m.id ASC');;
     	}
     	return $this->render('stockmove',['data'=>$query->all(), 'jenis'=>$jenisreport, 'from'=>$from , 'to'=>$to, 'loc_active'=>$loc_active]);
     }

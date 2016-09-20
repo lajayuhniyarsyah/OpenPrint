@@ -187,29 +187,34 @@ tr:nth-child(even){background-color: #f2f2f2}
 				<td><center>Location</center></td>
 				<td><center>Dest Location</center></td>
 				<td><center>Type</center></td>
-				<td><center>PO</center></td>
 				<td><center>Origin</center></td>
 				<td><center>Status</center></td>
 			</tr>
 			";
 		foreach ($data as $value) {
-			$body[]='<tr>
-					<td>'.$value['jenis'].'</td>
-					<td>'.Yii::$app->formatter->asDatetime($value['date_done'], "php:d-m-Y").'</td>
-					<td>'.$value['lbm'].'</td>
-					<td>'.$value['part_number'].'</td>
-					<td>'.$value['name_template'].'</td>
-					<td>'.$value['name_input'].'</td>
-					<td>'.$value['qty'].'</td>
-					<td>'.$value['uom'].'</td>
-					<td>'.$value['batch'].'</td>
-					<td>'.$value['location'].'</td>
-					<td>'.$value['desc_location'].'</td>
-					<td>'.$value['type'].'</td>
-					<td>'.$value['po'].'</td>
-					<td>'.$value['origin'].'</td>
-					<td>'.$value['state'].'</td>
-				 </tr>';
+			if ($value['jenis'] == 'internal' or $value['jenis'] == null){
+				if($value['date_done']){
+					$datemove=$value['date_done'];
+				}else{
+					$datemove=$value['date_move'];
+				}
+				$body[]='<tr>
+						<td>internal</td>
+						<td>'.Yii::$app->formatter->asDatetime($datemove, "php:d-m-Y").'</td>
+						<td>'.$value['lbm'].'</td>
+						<td>'.$value['part_number'].'</td>
+						<td>'.$value['name_template'].'</td>
+						<td>'.$value['name_input'].'</td>
+						<td>'.$value['qty'].'</td>
+						<td>'.$value['uom'].'</td>
+						<td>'.$value['batch'].'</td>
+						<td>'.$value['location'].'</td>
+						<td>'.$value['desc_location'].'</td>
+						<td>'.$value['type'].'</td>
+						<td>'.$value['origin'].'</td>
+						<td>'.$value['state'].'</td>
+					 </tr>';
+			}
 		}
 	}
 	

@@ -35,6 +35,7 @@ use yii\helpers\Url;
 		background: red;
 		float: left;
 		margin-top: -5mm;
+		margin-top: '.$uid==100?'-4mm':'-5mm'.';
 		width: 130mm;
 		max-height: 36mm;
 	}

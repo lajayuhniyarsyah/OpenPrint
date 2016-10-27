@@ -476,7 +476,7 @@ class AccountInvoiceController extends Controller
 		$model = new OrderInvoiceReportForm();
 
 		$saleGroup = ResGroups::findOne(['name'=>'All Sales User']);
-		$saleUsers = ArrayHelper::map($saleGroup->users,'id','name');
+		$saleUsers = ArrayHelper::map($saleGroup->users,'id','login');
 		$aiSearch = new AccountInvoiceSearch();
 		$aiSearch->start_date = '2014-07-01'; #DEFAULT START DATE FROM JULLY 2014 CAUSE ERP START LIVE IN JULY 2014
 

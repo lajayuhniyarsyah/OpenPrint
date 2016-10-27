@@ -266,7 +266,7 @@ class DeliveryNoteController extends Controller
             if(array_key_exists('set', $l)){
                 $res[$no]['name'].='<br/>Consist Of : <ul style="margin:0;">';
                 foreach($l['set'] as $set){
-                    $res[$no]['name'] .= '<li>'.$set['name'].'</li>';
+                    $res[$no]['name'] .= '<li>'.nl2br($set['name']).'</li>';
                     if(array_key_exists('batches', $set) && count($set['batches'])>=1):
                         $res[$no]['name'].=$this->prepareBathesRender($set);
                     endif;
@@ -332,7 +332,7 @@ class DeliveryNoteController extends Controller
                                 $superNotes = SuperNotes::findOne($spnotes['super_note_id']);
                                 $printSp_note .= '<br/>'.$superNotes['template_note'];
                             }
-                            $res[$no]['name'] .= '<li>['.$modelprod['default_code'].'] ' .$modelprod['name_template'].' <strong>('.$line_material['qty'].' '.$uom['name'].'</strong>)<br/>'.$line_material['desc'].$printSp_note.'</li>';
+                            $res[$no]['name'] .= '<li>['.$modelprod['default_code'].'] ' .$modelprod['name_template'].' <strong>('.$line_material['qty'].' '.$uom['name'].'</strong>)<br/>'.nl2br($line_material['desc']).nl2br($printSp_note).'</li>';
                         }
                     }
                 }else if (count($l['note_line_material']) > 1) {
@@ -356,7 +356,7 @@ class DeliveryNoteController extends Controller
                             $printSp_note .=$superNotes['template_note'];
                         }
                         
-                        $res[$no]['name'] .= '<li>['.$modelprod['default_code'].'] ' .$modelprod['name_template'].' <strong>('.$line_material['qty'].' '.$uom['name'].'</strong>) <br/>'.$line_material['desc'].$batch.$printSp_note.'</li>';
+                        $res[$no]['name'] .= '<li>['.$modelprod['default_code'].'] ' .$modelprod['name_template'].' <strong>('.$line_material['qty'].' '.$uom['name'].'</strong>) <br/>'.nl2br($line_material['desc']).$batch.nl2br($printSp_note).'</li>';
                     }
                 }
             }            

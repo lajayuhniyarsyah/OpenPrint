@@ -1,3 +1,6 @@
+<?php 
+die('Print DN Hanya pada saat Submit!');
+?>
 <style type="text/css">
 	#container
 	{

@@ -367,7 +367,7 @@ $scr = '
 
 	function prepareRow(rowNo,data)
 	{
-		return "<tr class=\'cRows rows"+rowNo+"\'><td class=\'td1\'>"+data.no+"</td><td class=\'td2\'>"+data.qty+"</td><td class=\'td3\'>"+data.desc+"</td><td class=\'td4\'>"+data.weight+"</td><td class=\'td5\'>"+data.measurement+"</td></tr>";
+		return "<tr class=\'cRows rows"+rowNo+"\'><td class=\'td1\'>"+data.no+"</td><td class=\'td2\'>"+data.qty+"</td><td class=\'td3\'>"+data.product+"<br/>"+data.desc+"</td><td class=\'td4\'>"+data.weight+"</td><td class=\'td5\'>"+data.measurement+"</td></tr>";
 	}
 	var totalPageBox = [];
 	var packData = [];

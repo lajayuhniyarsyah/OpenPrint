@@ -90,7 +90,7 @@
 					</td>
 				</table>
 				
-				<center><b>Quotation</b></center>
+				<center><b>QUOTATION</b></center>
 				<center><b><?=$model->quotation_no?></b></center>
 				<br/>
 			
@@ -111,6 +111,27 @@
 		</div>
 		
 	</body>
+
+	<?php
+		if($model->attention0){
+			$alamat =   $model->attention0->street.' 
+					  '.$model->attention0->street2.' 
+					  '.$model->attention0->city.' 
+					  '.$model->attention0->state.'
+					  '.$model->attention0->zip.'
+					  '.$model->attention0->country;			
+		}
+		else{
+			$alamat =   $model->partner->street.' 
+					  '.$model->partner->street2.' 
+					  '.$model->partner->city.' 
+					  '.$state.'
+					  '.$model->partner->zip.'
+					  '.$country;			
+		}
+		$alamat =preg_replace( "/\r|\n/", "", $alamat);
+
+	?>
 	<script type="text/javascript">
 		jQuery(function(){
 			
@@ -128,7 +149,7 @@
 			contentheader = jQuery('page#page-'+cursor+' .contentHeader');
 			number = jQuery('page#page-'+cursor+' .number .no');
 			number.append("Page "+cursor)
-			var contentHeader ="<table width='100%' class='tableHeader'><td witdh='50%' valign='top'><table width='100%'><tr><td width='119'>To</td><td width='5'>:</td><td width='275'>"+'<?=$AttentionName?>'+"</td></tr><tr valign='top'><td width='119'>Company</td><td>:</td><td height='54'>"+'<?=$model->partner->name?>'+"<br/>"+'<?=$model->partner->street?><?=$model->partner->street2?><?=$model->partner->city?><?=$state?><?=$model->partner->zip?><?=$country?>'+"</td></tr><tr><td>Phone</td><td>:</td><td>"+'<?= $AttentionPhone?>'+"</td></tr><tr><td>Fax</td><td>:</td><td>"+'<?=$fax ?>'+"</td></tr><tr><td>Email</td><td>:</td><td>"+'<?= $email?>'+"</td></tr></table></td><td width='50%' valign='top'><table width='100%' ><tr><td width='150'>Date</td><td width='5'>:</td>	<td>"+"<?=date('d/m/Y', strtotime($model->date_order));?>"+"</td></tr><tr><td>Sales Contact</td><td>:</td><td>"+"<?=$model->user->login ?>"+"</td></tr><tr><td>Phone</td><td>:</td><td>"+"<?=$model->user->partner->phone?>"+"</td></tr><tr><td>Mobile</td><td>:</td><td>"+"<?=$model->user->partner->mobile?>"+"</td></tr><tr><td>Fax</td><td>:</td><td>"+"<?=$model->user->partner->fax?>"+"</td></tr><tr><td>Email</td><td>:</td><td>"+"<?=$model->user->partner->email?>"+"</td></tr></table></td></table>"
+			var contentHeader ="<table width='100%' class='tableHeader'><td witdh='50%' valign='top'><table width='100%'><tr><td width='119'>To</td><td width='5'>:</td><td width='275'>"+'<?=$AttentionName?>'+"</td></tr><tr valign='top'><td width='119'>Company</td><td>:</td><td height='54'>"+'<?=$model->partner->name?>'+"<br/>"+'<?=$alamat?>'+"</td></tr><tr><td>Phone</td><td>:</td><td>"+'<?= $AttentionPhone?>'+"</td></tr><tr><td>Fax</td><td>:</td><td>"+'<?=$fax ?>'+"</td></tr><tr><td>Email</td><td>:</td><td>"+'<?= $email?>'+"</td></tr></table></td><td width='50%' valign='top'><table width='100%' ><tr><td width='150'>Date</td><td width='5'>:</td>	<td>"+"<?=date('d/m/Y', strtotime($model->date_order));?>"+"</td></tr><tr><td>Sales Contact</td><td>:</td><td>"+"<?=$model->user->login ?>"+"</td></tr><tr><td>Phone</td><td>:</td><td>"+"<?=$model->user->partner->phone?>"+"</td></tr><tr><td>Mobile</td><td>:</td><td>"+"<?=$model->user->partner->mobile?>"+"</td></tr><tr><td>Fax</td><td>:</td><td>"+"<?=$model->user->partner->fax?>"+"</td></tr><tr><td>Email</td><td>:</td><td>"+"<?=$model->user->partner->email?>"+"</td></tr></table></td></table>"
 
 			contentheader.append(contentHeader)
 			// headerElement.append(headerTable)

@@ -87,6 +87,7 @@ tr:nth-child(even){background-color: #f2f2f2}
 						<td>Date</td>
 						<td>DN</td>
 						<td>OP</td>
+						<td>Category</td>
 						<td>Part Number</td>
 						<td>Product Name</td>
 						<td>Product Desc</td>
@@ -109,6 +110,7 @@ tr:nth-child(even){background-color: #f2f2f2}
 					<td>'.Yii::$app->formatter->asDatetime($value['tanggal'], "php:d-m-Y").'</td>
 					<td>'.substr($value['dn_no'], 0,6).'</td>
 					<td>'.substr($value['no_op'], 0,6).'</td>
+					<td>'.$value['category_name'].'</td>
 					<td>'.$value['part_number'].'</td>
 					<td>'.$value['name_template'].'</td>
 					<td>'.$value['name_input'].'</td>
@@ -132,6 +134,7 @@ tr:nth-child(even){background-color: #f2f2f2}
 				<td>Type</td>
 				<td>Date</td>
 				<td>LBM No</td>
+				<td>Category</td>
 				<td>Part Number</td>
 				<td>Product Name</td>
 				<td>Product Desc</td>
@@ -154,6 +157,7 @@ tr:nth-child(even){background-color: #f2f2f2}
 					<td>'.$value['jenis'].'</td>
 					<td>'.Yii::$app->formatter->asDatetime($value['date_done'], "php:d-m-Y").'</td>
 					<td>'.$value['lbm'].'</td>
+					<td>'.$value['category_name'].'</td>
 					<td>'.$value['part_number'].'</td>
 					<td>'.$value['name_template'].'</td>
 					<td>'.$value['name_input'].'</td>
@@ -178,6 +182,7 @@ tr:nth-child(even){background-color: #f2f2f2}
 				<td><center>Type</center></td>
 				<td><center>Date</center></td>
 				<td><center>LBM</center></td>
+				<td><center>Category</center></td>
 				<td><center>Part Number</center></td>
 				<td><center>Product Name</center></td>
 				<td><center>Product Desc</center></td>
@@ -202,6 +207,7 @@ tr:nth-child(even){background-color: #f2f2f2}
 						<td>internal</td>
 						<td>'.Yii::$app->formatter->asDatetime($datemove, "php:d-m-Y").'</td>
 						<td>'.$value['lbm'].'</td>
+						<td>'.$value['category_name'].'</td>
 						<td>'.$value['part_number'].'</td>
 						<td>'.$value['name_template'].'</td>
 						<td>'.$value['name_input'].'</td>

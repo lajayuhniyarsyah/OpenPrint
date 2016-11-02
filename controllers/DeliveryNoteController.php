@@ -332,7 +332,7 @@ class DeliveryNoteController extends Controller
                             $res[$no]['name'] .= '<li>['.$modelprod['default_code'].'] ' .$modelprod['name_template'].' <strong>('.$line_material['qty'].' '.$uom['name'].'</strong>)<br/>'.nl2br($line_material['desc']).nl2br($printSp_note).'</li>';
                         }
                         else{
-                            $res[$no]['name'] = nl2br($line_material['desc']);
+                            $res[$no]['name'] =  '['.$prod['default_code'].'] ' .$prod['name_template'].'<br/>'.nl2br($line_material['desc']);
                         }
                     }
                 }else if (count($l['note_line_material']) > 1) {

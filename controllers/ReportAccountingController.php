@@ -58,6 +58,7 @@ class ReportAccountingController extends Controller
 	    				 r.name as partner,
 	    				 dn.poc as poc,
 	    				 so.name as so_no,
+	    				 pc.name as category_name,
 	    				 sp.state as state
 	    				')
 			    ->from('stock_move as sm')
@@ -65,8 +66,10 @@ class ReportAccountingController extends Controller
 			    ->join('JOIN', 'order_preparation as op', 'op.picking_id=sp.id')
 			    ->join('LEFT JOIN', 'delivery_note as dn', 'dn.id=sp.note_id')
 			    ->join('LEFT JOIN', 'product_product as p', 'p.id=sm.product_id')
+			    ->join('LEFT JOIN','product_template as pt','pt.id=p.id')
 			    ->join('LEFT JOIN','sale_order_line as sol','sol.id=sm.sale_line_id')
 			    ->join('LEFT JOIN', 'sale_order as so', 'so.id=op.sale_id')
+			    ->join('JOIN', 'product_category as pc', 'pc.id=pt.categ_id')
 			    ->join('JOIN', 'product_uom as u', 'u.id=sm.product_uom')
 			    ->join('JOIN', 'stock_location as sl', 'sl.id=sm.location_id')
 			    ->join('JOIN', 'res_partner as r', 'r.id=dn.partner_id')
@@ -101,6 +104,7 @@ class ReportAccountingController extends Controller
 	    				 s.name as type,
 	    				 po.name as po,
 	    				 s.origin as origin,
+	    				 pc.name as category_name,
 	    				 s.state as state,
 	    				')
 			    ->from('stock_move as m')
@@ -108,6 +112,7 @@ class ReportAccountingController extends Controller
 			    ->join('LEFT JOIN','purchase_order as po','po.id=s.purchase_id')
 			    ->join('LEFT JOIN','product_product as p','p.id=m.product_id')
 			    ->join('LEFT JOIN','product_template as pt','pt.id=m.product_id')
+			    ->join('JOIN', 'product_category as pc', 'pc.id=pt.categ_id')
 			    ->join('JOIN','product_uom as u','u.id=m.product_uom')
 			    ->join('JOIN','res_partner as r','r.id=m.partner_id')
 			    ->join('JOIN','stock_location as l','m.location_id=l.id')
@@ -147,6 +152,7 @@ class ReportAccountingController extends Controller
 	    				 s.origin as origin,
 	    				 s.state as state,
 	    				 m.id as move_id,
+	    				 pc.name as category_name,
 	    				 m.date as date_move
 	    				')
 			    ->from('stock_move as m')
@@ -154,6 +160,7 @@ class ReportAccountingController extends Controller
 			    ->join('LEFT JOIN','purchase_order as po','po.id=s.purchase_id')
 			    ->join('LEFT JOIN','product_product as p','p.id=m.product_id')
 			    ->join('LEFT JOIN','product_template as pt','pt.id=m.product_id')
+			    ->join('JOIN', 'product_category as pc', 'pc.id=pt.categ_id')
 			    ->join('JOIN','product_uom as u','u.id=m.product_uom')
 			    ->join('LEFT JOIN','res_partner as r','r.id=m.partner_id')
 			    ->join('JOIN','stock_location as l','m.location_id=l.id')

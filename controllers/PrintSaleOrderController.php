@@ -4,6 +4,7 @@ namespace app\controllers;
 use Yii;
 use app\models\SaleOrder;
 use app\models\ResPartner;
+use app\models\HrEmployee;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\helpers\Json;
@@ -21,6 +22,10 @@ class PrintSaleOrderController extends Controller
 		if ($model===null){
 			throw new NotFoundHttpException('Data that youve searched not exists');
 		}
+
+		$user = HrEmployee::find()->where(['id' => $model->user->id])->one();
+
+		$sales = $user->name_related;
 
 		$dataContent=[];
 		$dataContentModel=$model->saleOrderLines;
@@ -232,7 +237,8 @@ class PrintSaleOrderController extends Controller
 			'city_invoice'=>$city_invoice,
 			'state_invoice'=>$state_invoice,
 			'country_invoice'=>$country_invoice,
-			'dataContent'=>$dataContent
+			'dataContent'=>$dataContent,
+			'sales'=>$sales
 
 			]
 			);
@@ -260,6 +266,9 @@ class PrintSaleOrderController extends Controller
 				 array_push($TermCondition,$value_split_term );
 			}
 		}
+		$user = HrEmployee::find()->where(['id' => $model->user->id])->one();
+
+		$sales = $user->name_related;
 
 		$NoteMurni = preg_replace('#\R+#','<br/>',$model->note);
 		$NoteEnter = explode("<br/>", $NoteMurni);
@@ -389,7 +398,8 @@ class PrintSaleOrderController extends Controller
 			'email'=>$email,
 			'AttentionName'=>$AttentionName,
 			'AttentionPhone'=>$AttentionPhone,
-			'dataContent'=>$dataContent
+			'dataContent'=>$dataContent,
+			'sales'=>$sales
 			]
 			);
 	

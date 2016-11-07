@@ -258,11 +258,11 @@ use yii\helpers\Url;
 				$barangsupplai = '';
 				
 
-				/**if ($value->sale_line_id){
+				if ($value->sale_line_id){
 					if($value->saleLine->product_id<>$value->product_id && $value->saleLine->product->mrpBoms == false){
 						$barangsupplai = '<br/>u/ supply barang ['.$value->saleLine->product->default_code.'] '.$value->saleLine->product->name_template;
 					}	
-				}*/
+				}
 				// echo $barangsupplai;
 				foreach ($value->orderPreparationBatches as $index=>$batch) {
 					if($index<6):

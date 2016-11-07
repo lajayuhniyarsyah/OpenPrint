@@ -117,9 +117,8 @@
 			$alamat =   $model->attention0->street.' 
 					  '.$model->attention0->street2.' 
 					  '.$model->attention0->city.' 
-					  '.$model->attention0->state.'
-					  '.$model->attention0->zip.'
-					  '.$model->attention0->country;			
+					  '.(isset($model->attention0->state->name) ? $model->attention0->state->name:null).'
+					  '.$model->attention0->zip;			
 		}
 		else{
 			$alamat =   $model->partner->street.' 

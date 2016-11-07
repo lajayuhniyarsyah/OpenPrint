@@ -126,7 +126,7 @@
 			contentheader = jQuery('page#page-'+cursor+' .contentHeader');
 			number = jQuery('page#page-'+cursor+' .number .no');
 			number.append("Page "+cursor)
-			var contentHeader ="<table width=100% class=tableHeader><td valign=top witdh=50%><table width=100%><tr><td width=119>Company<td width=5>:<td width=275><?=$model->partner->name?><tr><td>Attn<td>:<td><?=$AttentionName?><tr valign=top><td>Delivery Address<td>:<td height=54><?=$street_shipping.' '?><?=$street_shipping_2.' '?><?=$city_shipping.' '?><?=$state_shipping.' '?><?=$country_shipping.' '?><tr valign=top><td>Invoice Address<td>:<td height=54><?=$street_invoice.' '?><?=$street_invoice_2.' '?><?=$city_invoice.' '?><?=$state_invoice.' '?><?=$country_invoice.' '?><tr><td>Phone<td>:<td><?= $AttentionPhone?><tr><td>Fax<td>:<td><?=$fax ?><tr><td>Email<td>:<td><?= $email?></table><td width=50% valign=top><table width=100%><tr><td width=140>Quotation#<td width=5>:<td width=253><?=$model->quotation_no?><tr><td>Customer Reference#<td>:<td><?=$model->client_order_ref?><tr><td>Date<td>:<td><?=date('d/m/Y', strtotime($model->date_order));?><tr><td>Sales Contact<td>:<td><?=$model->user->login ?><tr><td>Sales Group<td>:<td><?=strtoupper($model->group->name);?><tr><td>Fax<td>:<td><?=$model->user->partner->fax?><tr><td>Email<td>:<td><?=$model->user->partner->email?></table></table>"
+			var contentHeader ="<table width=100% class=tableHeader><td valign=top witdh=50%><table width=100%><tr><td width=119>Company<td width=5>:<td width=275><?=$model->partner->name?><tr><td>Attn<td>:<td><?=$AttentionName?><tr valign=top><td>Delivery Address<td>:<td height=54><?=$street_shipping.' '?><?=$street_shipping_2.' '?><?=$city_shipping.' '?><?=$state_shipping.' '?><?=$country_shipping.' '?><tr valign=top><td>Invoice Address<td>:<td height=54><?=$street_invoice.' '?><?=$street_invoice_2.' '?><?=$city_invoice.' '?><?=$state_invoice.' '?><?=$country_invoice.' '?><tr><td>Phone<td>:<td><?= $AttentionPhone?><tr><td>Fax<td>:<td><?=$fax ?><tr><td>Email<td>:<td><?= $email?></table><td width=50% valign=top><table width=100%><tr><td width=140>Quotation#<td width=5>:<td width=253><?=$model->quotation_no?><tr><td>Customer Reference#<td>:<td><?=$model->client_order_ref?><tr><td>Date<td>:<td><?=date('d/m/Y', strtotime($model->date_order));?><tr><td>Sales Contact<td>:<td><?=$sales ?><tr><td>Sales Group<td>:<td><?=strtoupper($model->group->name);?><tr><td>Fax<td>:<td><?=$model->user->partner->fax?><tr><td>Email<td>:<td><?=$model->user->partner->email?></table></table>"
 			contentheader.append(contentHeader)
 			// headerElement.append(headerTable)
 			jQuery.each(data,function(index,value){
@@ -395,7 +395,7 @@
 	
 			})
 			var contentfooter= jQuery('page#page-'+cursor+' .footer');
-			contentfooter.append("<table><tr> <td valign='top' style='text-align:center' height='80'>Thank you and best regards</td></tr><tr><td valign='top' style='text-align:center'>"+"<?=$model->user->login ?>"+"</td></tr></table>")
+			contentfooter.append("<table><tr> <td valign='top' style='text-align:center' height='80'>Thank you and best regards</td></tr><tr><td valign='top' style='text-align:center'>"+"<?=$sales ?>"+"</td></tr></table>")
 		  jQuery(".number .noTotal").html(" of "+cursor);
 		});
 	</script>

@@ -23,9 +23,9 @@ class PrintSaleOrderController extends Controller
 			throw new NotFoundHttpException('Data that youve searched not exists');
 		}
 
-		$user = HrEmployee::find()->where(['id' => $model->user->id])->one();
+		$user = ResPartner::find()->where(['id' => $model->user->partner_id])->one();
 
-		$sales = $user->name_related;
+		$sales = $user->name;
 
 		$dataContent=[];
 		$dataContentModel=$model->saleOrderLines;
@@ -266,9 +266,9 @@ class PrintSaleOrderController extends Controller
 				 array_push($TermCondition,$value_split_term );
 			}
 		}
-		$user = HrEmployee::find()->where(['id' => $model->user->id])->one();
+		$user = ResPartner::find()->where(['id' => $model->user->partner_id])->one();
 
-		$sales = $user->name_related;
+		$sales = $user->name;
 
 		$NoteMurni = preg_replace('#\R+#','<br/>',$model->note);
 		$NoteEnter = explode("<br/>", $NoteMurni);

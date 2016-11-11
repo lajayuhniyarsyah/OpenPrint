@@ -203,7 +203,7 @@ class SaleOrderLine extends \yii\db\ActiveRecord
      */
     public function getMaterialLines()
     {
-        return $this->hasMany(SaleOrderMaterialLine::className(), ['sale_order_line_id' => 'id']);
+        return $this->hasMany(SaleOrderMaterialLine::className(), ['sale_order_line_id' => 'id'])->orderBy('no ASC');
     }
 
     /**

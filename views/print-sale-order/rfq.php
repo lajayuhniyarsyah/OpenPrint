@@ -82,7 +82,7 @@
 							Jl. Danau Sunter Utara Blok A No. 9 <br/>
 							Jakarta Utara - 14350 14350, Indonesia<br/>
 							Phone 021-658 33666 Fax 021-65831666 <br/>
-							www.belcare.com email: info@belcare.com
+							www.beltcare.com email: info@beltcare.com
 						</p>
 					   
 					</td>

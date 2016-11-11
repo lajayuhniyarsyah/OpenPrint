@@ -12,6 +12,7 @@ use Yii;
  * @property string $create_date
  * @property string $write_date
  * @property integer $write_uid
+ * @property integer $no
  * @property integer $product_id
  * @property integer $picking_location
  * @property integer $sale_order_line_id
@@ -44,7 +45,7 @@ class SaleOrderMaterialLine extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['create_uid', 'write_uid', 'product_id', 'picking_location', 'sale_order_line_id', 'uom'], 'integer'],
+            [['create_uid', 'write_uid', 'no', 'product_id', 'picking_location', 'sale_order_line_id', 'uom'], 'integer'],
             [['create_date', 'write_date'], 'safe'],
             [['product_id', 'picking_location', 'uom', 'qty'], 'required'],
             [['desc'], 'string'],
@@ -64,6 +65,7 @@ class SaleOrderMaterialLine extends \yii\db\ActiveRecord
             'create_date' => 'Create Date',
             'write_date' => 'Write Date',
             'write_uid' => 'Write Uid',
+            'no' => 'No',
             'product_id' => 'Product ID',
             'picking_location' => 'Picking Location',
             'sale_order_line_id' => 'Sale Order Line ID',

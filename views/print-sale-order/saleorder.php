@@ -207,22 +207,22 @@
 						})
 						noMaterial++
 					}
-						else if(value.material_line.length==1){
-							var materialElement = jQuery(' .isi-'+noMaterial); 	
+					else if(value.material_line.length==1){
+						var materialElement = jQuery(' .isi-'+noMaterial); 	
 
-							jQuery.each(value.material_line,function(indexMaterial,valueMaterial){ 
-								// console.log(value.name_product+"==================="+valueMaterial.product_id)
-								if (value.name_product!==valueMaterial.product_id){
-									// console.log("sip")
-									materialElement.append("Consist of:<ul style='margin-top:0px'><li>"+"["+valueMaterial.partNumber+"]"+valueMaterial.product_id+"("+valueMaterial.qty+" "+valueMaterial.uom+")"+"<br/>"+valueMaterial.descriptionMaterial+"</li></ul>")
+						jQuery.each(value.material_line,function(indexMaterial,valueMaterial){ 
+							// console.log(value.name_product+"==================="+valueMaterial.product_id)
+							if (value.name_product!==valueMaterial.product_id){
+								// console.log("sip")
+								materialElement.append("Consist of:<ul style='margin-top:0px'><li>"+"["+valueMaterial.partNumber+"]"+valueMaterial.product_id+"("+valueMaterial.qty+" "+valueMaterial.uom+")"+"<br/>"+valueMaterial.descriptionMaterial+"</li></ul>")
 
-								}
-							});
-							noMaterial++
+							}
+						});
+						noMaterial++
 
 						
 					}
-					}
+				}
 				else{
 					var cursorLama = cursor
 					cursor++
@@ -243,7 +243,7 @@
 			var contentElement = jQuery('page#page-'+cursor+' .content');
 			var tinggiContent = contentElement.height();
 
-			// console.log(tinggiContent)
+			console.log(tinggiContent)
 			if (tinggiContent <=400){
 				var isi_table = jQuery('page#page-'+cursor+' .content table');
 				isi_table.append(footerTable);
@@ -268,7 +268,7 @@
 			var contentfooter= jQuery('page#page-'+cursor+' .footer');
 			// console.log(tinggiContent)
 			if (tinggiContent<500){
-				
+				console.log('aaaaa');
 				contentfooter.append("<table width='100%'><tr><td width='18%'><b>Term Of Payment</b></td><td width='3%'><b>:</b></td><td><?php if($model->paymentTerm!==null){echo $model->paymentTerm->name;}?></td></tr><tr><td valign='top'><b>Term Condition</b></td><td valign='top'><b>:</b></td><td><div id='term_condition-"+cursor+"'></div></tr><tr id='note-"+cursor+"'><td valign='top' ><b>Note</b></td><td valign='top'><b>:</b></td><td id='isi_note-"+cursor+"'></td></tr></table><br/>");
 				
 				// di mulai dari sini pengkondisian untuk mengatur enter term of payment
@@ -278,9 +278,11 @@
 					var contentfooter= jQuery('page#page-'+cursor+' .footer');
 					var tinggiContentFooter = contentfooter.height()+contentElement.height();
 					if (tinggiContentFooter<850){
+						// untuk term condition
 						jQuery("#term_condition-"+cursor).append(value+"<br/>")
 					}
 					else{
+
 						jQuery("#note-"+cursor).remove()
 						var cursorLama = cursor
 						cursor++
@@ -305,7 +307,9 @@
 				
 					var contentfooter= jQuery('page#page-'+cursor+' .footer');
 					var tinggiContentFooter = contentfooter.height()+contentElement.height();
-					if (tinggiContentFooter<850){
+					if (tinggiContentFooter<700){
+						console.log(tinggiContentFooter);
+						console.log(value);
 						jQuery('#isi_note-'+cursor).append(value+"<br/>")
 					}
 					else{
@@ -360,6 +364,7 @@
 			// });
 			}
 			else{
+				console.log('bbb');
 				var cursorLama = cursor
 				cursor++
 				jQuery('page#page-'+cursorLama).after(template);

@@ -82,7 +82,7 @@
 							Jl. Danau Sunter Utara Blok A No. 9 <br/>
 							Jakarta Utara - 14350 14350, Indonesia<br/>
 							Phone 021-658 33666 Fax 021-65831666 <br/>
-							www.belcare.com email: info@belcare.com
+							www.beltcare.com email: info@beltcare.com
 						</p>
 					   
 					</td>
@@ -228,7 +228,6 @@
 					cursor++
 					jQuery('page#page-'+cursorLama).after(template);
 					jQuery('page:last').attr('id','page-'+cursor);
-					// var headerTable="<table width='100%' border='1px' style='border-collapse:collapse; margin-top:0px;'><tr><td width='5%''><center><b>No</b></center></td><td width='10%''><center><b>Qty</b></center></td><td width='5%'><center><b>Unit</b></center></td><td width='45%'><center><b>Description</b></center></td><td width='15%'><center><b>Price Unit</b></center></td><td width='20%'><center><b>Price Sub</b></center></td></tr></table>"
 					var isi_table = jQuery('page#page-'+cursor+' .content table');
 					// headerElement = jQuery('page#page-'+cursor+' .header');
 					// headerElement.append(headerTable)
@@ -253,7 +252,7 @@
 					cursor++
 					jQuery('page#page-'+cursorLama).after(template);
 					jQuery('page:last').attr('id','page-'+cursor);
-					// var headerTable="<table width='100%' border='1px' style='border-collapse:collapse; margin-top:0px;'><tr><td width='5%''><center><b>No</b></center></td><td width='10%''><center><b>Qty</b></center></td><td width='5%'><center><b>Unit</b></center></td><td width='45%'><center><b>Description</b></center></td><td width='15%'><center><b>Price Unit</b></center></td><td width='20%'><center><b>Price Sub</b></center></td></tr></table>"
+
 					var isi_table = jQuery('page#page-'+cursor+' .content table');
 					headerElement = jQuery('page#page-'+cursor+' .header');
 					// headerElement.append(headerTable)
@@ -307,6 +306,7 @@
 				
 					var contentfooter= jQuery('page#page-'+cursor+' .footer');
 					var tinggiContentFooter = contentfooter.height()+contentElement.height();
+
 					if (tinggiContentFooter<700){
 						console.log(tinggiContentFooter);
 						console.log(value);
@@ -331,37 +331,6 @@
 						jQuery("#isi_note-"+cursor).append(value+"<br/>")
 					}
 				});
-				// di akhiri dari sini pengkondisian untuk mengatur enter Note
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-			// 	jQuery.each(data[0]['TermCondition'][0],function(index,value){
-			// 	// console.log(value)
-			// 	// var contentElement = jQuery('page#page-'+cursor+' .content');
-			// 	// var tinggiContent = contentElement.height();
-			// 	// var contentfooter= jQuery('page#page-'+cursor+' .footer');
-			// 	// console.log(tinggiContent)
-			// 	jQuery("#term_condition").append(value+'<br/>');
-			// 	// jQuery.each(value.TermCondition,function(index_TermCondition,value_TermCondition){
-			// 	// 		console.log(value_TermCondition,index_TermCondition,index)
-			// 		// jQuery.each(value_TermCondition,function(idx_TermCondition,val_TermCondition){
-			// 		//  jQuery("#term_condition").append(val_TermCondition);
-			// 		//  console.log(val_TermCondition)
-			// 		// });
-				
-			// });
 			}
 			else{
 				console.log('bbb');

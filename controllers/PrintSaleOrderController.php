@@ -301,14 +301,19 @@ class PrintSaleOrderController extends Controller
 			$dataContent[$key]['TermCondition']=$TermCondition;
 			$dataContent[$key]['material_line']=[];
 
+
+			
 			foreach ($value->materialLines as $keyM => $vM) {
+
 				if ($vM->desc===null){
 					$descriptionMaterial ="";
 				}
 				else{
 					$descriptionMaterial = $vM->desc;
 				}
+
 				$dataContent[$key]['material_line'][] = [
+					'no'=>$vM->no,
 					'product_id'=>$vM->product->name_template,
 					'partNumber'=>$vM->product->default_code,
 					'descriptionMaterial'=>$descriptionMaterial,
@@ -316,11 +321,9 @@ class PrintSaleOrderController extends Controller
 					'uom'=>$vM->uom0->name
 				];
 			}
-		
+
 			$no++;
 		}
-
-
 
 		if ($model->partner->state===null){
 			$state="";

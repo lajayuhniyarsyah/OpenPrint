@@ -330,7 +330,7 @@ class MovesController extends Controller
 					$desc = $detail->product->name_template;
 					if($detail->stock_prod_lot_id):
 						$desc .= '<br/>B/N : '.$detail->stockProdLot->name.'.<br/>'.$line->desc;
-						if($detail->desc):
+						if($detail->desc && $detail->desc != 'False'):
 							$desc .= '&nbsp;'.$detail->desc;
 						endif;
 						
@@ -414,7 +414,10 @@ class MovesController extends Controller
 				endif;
 
 				$detailField.="<li>";
-				$detailField.=$detail->product->name_template.' '.($detail->desc ? '<br/>'.$detail->desc.($detail->stock_prod_lot_id ? "<br/>B/N :".$detail->stockProdLot->name." - ".$detail->qty." ".$detail->uom->name:null):null).($sNoteDetail ? $sNoteDetail:null);
+				if($detail->desc=='False'){
+					$detail->desc==false;
+				}
+				$detailField.=$detail->product->name_template.' '.($detail->desc ? '<br/>'.($detail->desc != 'False' ? $detail->desc:null).($detail->stock_prod_lot_id ? "<br/>B/N :".$detail->stockProdLot->name." - ".$detail->qty." ".$detail->uom->name:null):null).($sNoteDetail ? $sNoteDetail:null);
 				$detailField.="</li>";
 			endforeach;
 			$productField.=$detailField;

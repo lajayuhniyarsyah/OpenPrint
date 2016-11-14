@@ -30,7 +30,7 @@ class PrintSaleOrderController extends Controller
 		$dataContent=[];
 		$dataContentModel=$model->saleOrderLines;
 		$no=1;
-		$TermCondition_murni = preg_replace('#\R+#','<br/>',$model->internal_notes);
+		$TermCondition_murni = preg_replace('/[\n\r]+/','<br/>',$model->internal_notes);
 		$TermCondition_enter = explode("<br/>", $TermCondition_murni);
 		$TermCondition =[];
 		foreach ($TermCondition_enter as $key => $value) {

@@ -23,14 +23,14 @@ class PrintSaleOrderController extends Controller
 			throw new NotFoundHttpException('Data that youve searched not exists');
 		}
 
-		$user = HrEmployee::find()->where(['id' => $model->user->id])->one();
+		$user = ResPartner::find()->where(['id' => $model->user->partner_id])->one();
 
-		$sales = $user->name_related;
+		$sales = $user->name;
 
 		$dataContent=[];
 		$dataContentModel=$model->saleOrderLines;
 		$no=1;
-		$TermCondition_murni = preg_replace('#\R+#','<br/>',$model->internal_notes);
+		$TermCondition_murni = preg_replace('/[\n\r]+/','<br/>',$model->internal_notes);
 		$TermCondition_enter = explode("<br/>", $TermCondition_murni);
 		$TermCondition =[];
 		foreach ($TermCondition_enter as $key => $value) {
@@ -266,9 +266,9 @@ class PrintSaleOrderController extends Controller
 				 array_push($TermCondition,$value_split_term );
 			}
 		}
-		$user = HrEmployee::find()->where(['id' => $model->user->id])->one();
+		$user = ResPartner::find()->where(['id' => $model->user->partner_id])->one();
 
-		$sales = $user->name_related;
+		$sales = $user->name;
 
 		$NoteMurni = preg_replace('#\R+#','<br/>',$model->note);
 		$NoteEnter = explode("<br/>", $NoteMurni);
@@ -301,14 +301,19 @@ class PrintSaleOrderController extends Controller
 			$dataContent[$key]['TermCondition']=$TermCondition;
 			$dataContent[$key]['material_line']=[];
 
+
+			
 			foreach ($value->materialLines as $keyM => $vM) {
+
 				if ($vM->desc===null){
 					$descriptionMaterial ="";
 				}
 				else{
 					$descriptionMaterial = $vM->desc;
 				}
+
 				$dataContent[$key]['material_line'][] = [
+					'no'=>$vM->no,
 					'product_id'=>$vM->product->name_template,
 					'partNumber'=>$vM->product->default_code,
 					'descriptionMaterial'=>$descriptionMaterial,
@@ -316,11 +321,9 @@ class PrintSaleOrderController extends Controller
 					'uom'=>$vM->uom0->name
 				];
 			}
-		
+
 			$no++;
 		}
-
-
 
 		if ($model->partner->state===null){
 			$state="";

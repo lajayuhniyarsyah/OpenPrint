@@ -4,6 +4,25 @@ use yii\helpers\Url;
 
 ?>
 <style type="text/css">
+	#watermark_status_background{
+	    background: none !important;
+	    display: block;
+	    margin-left: 142px;
+   		margin-top: 399px;
+	    position: absolute;
+	    z-index: 0;
+	}
+	#bg-text
+	{
+	    color:lightgrey;
+	    background: none !important;
+	    font-size:60px;
+	    opacity: 0.2;
+	    color: BLACK;
+	    letter-spacing: 30px;
+	    transform:rotate(316deg);
+	    -webkit-transform:rotate(316deg);
+	}
 	#pageContainer{
 		width: 200mm;
 		margin-left: auto; margin-right: auto;
@@ -317,6 +336,17 @@ use yii\helpers\Url;
 	?>
 <div id="pageContainer">
 <div class="pages">
+	<?php
+	if($model->is_postpone){
+		$back_text = "TO POSTPONE";
+	}else{
+		$back_text = "";
+	}
+	$watermark= '<div id=\'watermark_status_background\'><p id=bg-text>'.$back_text.'</p></div>';
+	if($back_text){
+		echo $watermark;
+	}
+	?>
 	<table>
 		<tr style="vertical-align:top;">
 			<td>
@@ -326,7 +356,7 @@ use yii\helpers\Url;
 							<div class="logo">
 								<img style="width:85px; float:left" src="<?= Url::base() ?>/img/logo.png">
 								<div style="clear:both;"></div>
-								<div class="dataiso">SMB-F-SA-04b/01<br/>
+								<div class="dataiso">SBM-F-SA-04b/01<br/>
 									12/09/10</div>
 								<div class="judul"><strong><h3>PT.SUPRABAKTI MANDIRI</h3></strong></div>
 							</div>

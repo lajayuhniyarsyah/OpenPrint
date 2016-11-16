@@ -100,7 +100,9 @@
 				<div class="content">
 					<p contenteditable='true'>We would like to offer our product as your requirement as following :</p>	<div class="number"><span class="no"></span> <span class = "noTotal"></span></div>
 					<table id="TableSo" width="100%" border='1px' style='border-collapse:collapse;'>
-						<tr><td width='5%''><center><b>No</b></center></td><td width='10%''><center><b>Qty</b></center></td><td width='5%'><center><b>Unit</b></center></td><td width='45%'><center><b>Description</b></center></td><td width='15%'><center><b>Price Unit</b></center></td><td width='20%'><center><b>Price Sub</b></center></td></tr>
+						<tr><td width='5%''><center><b>No</b></center></td><td width='10%''><center><b>Qty</b></center></td><td width='5%'><center><b>Unit</b></center></td><td width='45%'><center><b>Description</b></center></td><td width='15%'><center><b>Price Unit
+						<br/>
+						<?php echo $model->pricelist->name; ?></b></center></td><td width='20%'><center><b>Price Sub<br/><?php echo $model->pricelist->name; ?></b></center></td></tr>
 					</table>
 				</div>
 				<div class="footer">

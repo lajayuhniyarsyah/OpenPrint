@@ -461,7 +461,7 @@ $this->registerJs('jQuery(".fittext").fitText(0.9);');
 												<div class="almt">
 													<?php
 														$address = "";
-														if(!$model->attention0->use_parent_address){
+														if(isset($model->attention0) && !$model->attention0->use_parent_address){
 															$address = $model->attention0->fullAddress;
 														}else{
 															$address = $model->partner->fullAddress;

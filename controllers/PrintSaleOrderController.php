@@ -59,7 +59,9 @@ class PrintSaleOrderController extends Controller
 				$deskription_orderline = $value->name;
 			}
 			$dataContent[$key]['no']=$no;	
+			$dataContent[$key]['product_id']=$value->product_id;	
 			$dataContent[$key]['product_uom_qty']=$value->product_uom_qty;
+			$dataContent[$key]['product_uom_id']=$value->product_uom;
 			$dataContent[$key]['unit']=$value->productUom->name;
 			$dataContent[$key]['default_code']=$value->product->default_code;
 			$dataContent[$key]['name_product']=$value->product->name_template;
@@ -71,20 +73,26 @@ class PrintSaleOrderController extends Controller
 			$dataContent[$key]['material_line']=[];
 
 			foreach ($value->materialLines as $keyM => $vM) {
+
 				if ($vM->desc===null){
 					$descriptionMaterial ="";
 				}
 				else{
 					$descriptionMaterial = $vM->desc;
 				}
+
 				$dataContent[$key]['material_line'][] = [
-					'product_id'=>$vM->product->name_template,
+					'no'=>$vM->no,
+					'product_id'=>$vM->product_id,
+					'product_uom_id'=>$vM->uom,
+					'ProductName'=>$vM->product->name_template,
 					'partNumber'=>$vM->product->default_code,
 					'descriptionMaterial'=>$descriptionMaterial,
 					'qty'=>$vM->qty,
 					'uom'=>$vM->uom0->name
 				];
 			}
+			
 			$material=[];
 			foreach ($value->materialLines as $key_material => $valueMaterial) {
 				$material[]= "<li>".$valueMaterial->product->name_template."</li>";
@@ -290,7 +298,9 @@ class PrintSaleOrderController extends Controller
 				$deskription_orderline = $value->name;
 			}
 			$dataContent[$key]['no']=$no;	
+			$dataContent[$key]['product_id']=$value->product_id;	
 			$dataContent[$key]['product_uom_qty']=$value->product_uom_qty;
+			$dataContent[$key]['product_uom_id']=$value->product_uom;
 			$dataContent[$key]['unit']=$value->productUom->name;
 			$dataContent[$key]['default_code']=$value->product->default_code;
 			$dataContent[$key]['name_product']=$value->product->name_template;
@@ -302,7 +312,8 @@ class PrintSaleOrderController extends Controller
 			$dataContent[$key]['material_line']=[];
 
 
-			
+			$jml_material =  count($value->materialLines);
+
 			foreach ($value->materialLines as $keyM => $vM) {
 
 				if ($vM->desc===null){
@@ -314,7 +325,9 @@ class PrintSaleOrderController extends Controller
 
 				$dataContent[$key]['material_line'][] = [
 					'no'=>$vM->no,
-					'product_id'=>$vM->product->name_template,
+					'product_id'=>$vM->product_id,
+					'product_uom_id'=>$vM->uom,
+					'ProductName'=>$vM->product->name_template,
 					'partNumber'=>$vM->product->default_code,
 					'descriptionMaterial'=>$descriptionMaterial,
 					'qty'=>$vM->qty,

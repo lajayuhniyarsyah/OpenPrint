@@ -318,6 +318,7 @@ class DeliveryNoteController extends Controller
                 $prod = ProductProduct::findOne($l['product_id']);
                 
                 if (count($l['note_line_material']) == 1){
+
                     foreach ($l['note_line_material'] as $line_material) {
                         if ($l['product_id'] <> $line_material['product_id']){
                             $modelprod = ProductProduct::findOne($line_material['product_id']);
@@ -332,9 +333,16 @@ class DeliveryNoteController extends Controller
                             $res[$no]['name'] .= '<li>['.$modelprod['default_code'].'] ' .$modelprod['name_template'].' <strong>('.$line_material['qty'].' '.$uom['name'].'</strong>)<br/>'.$line_material['desc'].$printSp_note.'</li>';
                         }
                         else{
-                            $res[$no]['name'] =  '['.$prod['default_code'].'] ' .$prod['name_template'].'<br/>'.nl2br($line_material['desc']);
+                            $modelprod = ProductProduct::findOne($line_material['product_id']);
+                            $printSp_note = '';
+                            foreach ($modelprod->superNoteProductRels as $spnotes){
+                                $superNotes = SuperNotes::findOne($spnotes['super_note_id']);
+                                $printSp_note .= '<br/>'.$superNotes['template_note'];
+                            }
+                            $res[$no]['name'] =  '['.$prod['default_code'].'] ' .$prod['name_template'].'<br/>'.nl2br($line_material['desc'].$printSp_note);
                         }
                     }
+
                 }else if (count($l['note_line_material']) > 1) {
                     $res[$no]['name'].='<br/>Consist Of : <ul style="margin:0;">';
                     $batch = "";

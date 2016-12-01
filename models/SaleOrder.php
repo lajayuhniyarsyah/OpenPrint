@@ -979,5 +979,10 @@ class SaleOrder extends \yii\db\ActiveRecord
         return $this->hasOne(GroupSales::className(), ['id' => 'group_id']);
     }
 
-    //6e575b3e9f3d9722f8876b42b01a8db27609940f
+    
+
+    public function getPolicyCaption(){
+        $caps = ["manual"=>"On Demand","picking"=>"On Delivery Order","prepaid"=>"Before Delivery"];
+        return $caps[$this->order_policy];
+    }
 }

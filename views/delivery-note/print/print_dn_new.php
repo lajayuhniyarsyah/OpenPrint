@@ -23,7 +23,7 @@
 
 	.headers
 	{
-		
+		border-top: 1px solid black;	
 		/*border-bottom: 1px solid black;*/
 		height: 65mm;
 	}
@@ -113,10 +113,16 @@
 		#container{
 			border: none;
 		}
+		.headers{
+			border-top: 0px !important;
+		}
 		.nama_atasan{
 	    	float: right;
 	    	margin-right: 20px;
 	    	margin-top: -30px;
+	    }
+	    .pageAction, .btnCopyPage{
+	    	display: none;
 	    }
 	}
 	pre{
@@ -188,6 +194,8 @@ if($uid==25){ ?>
 <?php } ?>
 <div id="container">
 	<div class="pages">
+		<a href="#" class="btnCopyPage">Duplicate Page</a>
+
 		<div class="headers">
 			<div class="attnTo">
 				<p class="partnerName"><?=$model->partner->name?></p>
@@ -368,3 +376,20 @@ if($model->terms){
 
 // echo $model->terms;
 ?>
+
+
+<?php
+		$this->registerJs(new \yii\web\JsExpression("
+			$('.btnCopyPage').on('click', function(){
+				console.log($(this).parent().attr('class'));
+				var pageParent = $(this).parent();
+
+				var copyHtml = pageParent.html();
+				// console.log(copyHtml);
+				console.log('trying to copy page');
+				$('<div class=\"pages\">'+copyHtml+'</div>').insertAfter(pageParent);
+				console.log('After Dupicating Page');
+				return false;
+			})
+		"));
+		?>

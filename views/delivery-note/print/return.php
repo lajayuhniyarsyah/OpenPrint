@@ -240,16 +240,12 @@ use yii\helpers\Url;
 		margin-left: 2px;
 	}
 </style>
-<?php 
-		
-		$no=1;
-		foreach ($model->stockMoves as $value) {
-			$data2[]=array($no, $value->product_qty. ' '.$value->productUom->name ,'['.$value->product->default_code.'] '.$value->name,'');
-
-			$no++;
-		}
-
-	
+<?php	
+	$no=1;
+	foreach ($model->stockMoves as $value) {
+		$data2[]=array($no, $value->product_qty. ' '.$value->productUom->name ,'['.$value->product->default_code.'] '.$value->name,$value->cancel_notes);
+		$no++;
+	}
  ?>
 <div id="pageContainer">
 <div class="pages">
@@ -262,8 +258,6 @@ use yii\helpers\Url;
 							<div class="logo">
 								<img style="width:115px; float:left" src="<?= Url::base() ?>/img/logo.png">
 								<div style="clear:both;"></div>
-								<div class="dataiso">SMB-F-SA-04b/01<br/>
-									12/09/10</div>
 							</div>
 							<div class="do"><center>RETURN NOTES</center></div>
 							<div class="no_return"><center> <?php echo $return_no; ?></center></div>
@@ -400,7 +394,7 @@ $this->registerJs('
 	function prepareRow(rowNo,data)
 	{
 		console.log(data[0]);
-		return "<tr class=\'cRows rows"+rowNo+"\'><td contenteditable=\'true\' style=\"width:50px; text-align:center;\">"+data[0]+"</td><td style=\"width:80px; text-align:center;\">"+data[1]+"</td><td style=\"width:350px; text-align:left;\"><div class=\"leftdata\">"+data[2]+"</div></td><td style=\"width:210px; text-align:center;\"><div class=\"rightdata\">"+data[3]+"</div></td></tr>";
+		return "<tr class=\'cRows rows"+rowNo+"\'><td contenteditable=\'true\' style=\"width:50px; text-align:center;\">"+data[0]+"</td><td style=\"width:80px; text-align:center;\">"+data[1]+"</td><td style=\"width:350px; text-align:left;\"><div class=\"leftdata\">"+data[2]+"</div></td><td style=\"width:210px; text-align:left;\"><div style=\"padding-left:5px;\">"+data[3]+"</div></td></tr>";
 	}
 
 	var rowPage = 0;
@@ -426,7 +420,7 @@ $this->registerJs('
 			// alert(pageHeight);
 			var setLineHeight=439-pageHeight;
 			
-			var resLine = "<tr><td style=\"width:50px; height:"+setLineHeight+"px;  text-align:center;\"></td><td style=\"width:80px; text-align:center;\"></td><td><div class=\"leftdata\"></div><div class=\"rightdata\"></div></td><td><div class=\"leftdata\"></div><div class=\"rightdata\"></div></td></tr>";
+			var resLine = "<tr><td style=\"width:50px; height:"+setLineHeight+"px;  text-align:center;\"></td><td style=\"width:80px; text-align:center;\"></td><td><div class=\"leftdata\"></div><div class=\"rightdata\"></div></td><td><div class=\"leftdata\"></div><div></div></td></tr>";
 			jQuery(\'#lines\'+currPage+\' tr:last\').after(resLine);
 
 			// add new page container
@@ -452,7 +446,7 @@ $this->registerJs('
 		var SetHeight=HeightTable-cektable+35;
 
 		if (cektable < HeightTable){
-			var res = "<tr><td style=\"width:50px; height:"+SetHeight+"px;  text-align:center;\"></td><td style=\"width:80px; text-align:center;\"></td><td><div class=\"leftdata\"></div><div class=\"rightdata\"></div></td><td><div class=\"leftdata\"></div><div class=\"rightdata\"></div></td></tr>";
+			var res = "<tr><td style=\"width:50px; height:"+SetHeight+"px;  text-align:center;\"></td><td style=\"width:80px; text-align:center;\"></td><td><div class=\"leftdata\"></div><div class=\"rightdata\"></div></td><td><div class=\"leftdata\"></div><div></div></td></tr>";
 			jQuery(\'#lines\'+currPage+\' tr:last\').after(res);
 		}
 	// end loop

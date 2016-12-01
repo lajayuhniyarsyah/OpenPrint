@@ -47,6 +47,10 @@ use Yii;
  * @property string $desc
  * @property integer $no
  * @property integer $set_id
+ * @property string $cancel_notes
+ * @property integer $internal_move_line_detail_id 
+ * @property integer $internal_move_line_id 
+ * @property integer $sale_material_id 
  *
  * @property StockMoveHistoryIds[] $stockMoveHistoryIds
  * @property StockReturnPickingMemory[] $stockReturnPickingMemories
@@ -78,6 +82,9 @@ use Yii;
  * @property MrpProductionMoveIds[] $mrpProductionMoveIds
  * @property ProcurementOrder[] $procurementOrders
  * @property MrpProduction[] $mrpProductions
+ * @property StockMoveHistoryIds[] $stockMoveHistoryIds0
+ * @property StockSplitItem[] $stockSplitItems
+ * @property StockSplitItem[] $stockSplitItems0
  */
 class StockMove extends \yii\db\ActiveRecord
 {
@@ -99,7 +106,7 @@ class StockMove extends \yii\db\ActiveRecord
             [['create_date', 'write_date', 'date_expected', 'date'], 'safe'],
             [['product_uos_qty', 'price_unit', 'product_qty', 'weight', 'weight_net'], 'number'],
             [['date_expected', 'product_uom', 'date', 'product_qty', 'product_id', 'location_id', 'company_id', 'location_dest_id', 'weight_uom_id'], 'required'],
-            [['note', 'priority', 'state', 'name', 'desc'], 'string'],
+            [['note', 'priority', 'state', 'name', 'desc','cancel_notes'], 'string'],
             [['auto_validate'], 'boolean'],
             [['origin'], 'string', 'max' => 64],
             [['no_moved1'], 'string', 'max' => 3]
@@ -152,6 +159,11 @@ class StockMove extends \yii\db\ActiveRecord
             'desc' => 'Desc',
             'no' => 'No',
             'set_id' => 'Set Product',
+            'set_id' => 'Set ID',
+            'cancel_notes' => 'Cancel Notes',
+            'internal_move_line_detail_id' => 'Internal Move Line Detail ID',
+            'internal_move_line_id' => 'Internal Move Line ID',
+            'sale_material_id' => 'Sale Material ID',
         ];
     }
 
@@ -195,6 +207,19 @@ class StockMove extends \yii\db\ActiveRecord
         return $this->hasMany(StockPartialMoveLine::className(), ['move_id' => 'id']);
     }
 
+    public function getInternalMoveLineDetail() 
+    { 
+       return $this->hasOne(InternalMoveLineDetail::className(), ['id' => 'internal_move_line_detail_id']); 
+    }
+
+    public function getInternalMoveLine() 
+    { 
+       return $this->hasOne(InternalMoveLine::className(), ['id' => 'internal_move_line_id']); 
+    }
+    public function getSaleMaterial() 
+    { 
+       return $this->hasOne(SaleOrderMaterialLine::className(), ['id' => 'sale_material_id']); 
+    }
     /**
      * @return \yii\db\ActiveQuery
      */

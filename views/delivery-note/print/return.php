@@ -258,8 +258,6 @@ use yii\helpers\Url;
 							<div class="logo">
 								<img style="width:115px; float:left" src="<?= Url::base() ?>/img/logo.png">
 								<div style="clear:both;"></div>
-								<div class="dataiso">SMB-F-SA-04b/01<br/>
-									12/09/10</div>
 							</div>
 							<div class="do"><center>RETURN NOTES</center></div>
 							<div class="no_return"><center> <?php echo $return_no; ?></center></div>

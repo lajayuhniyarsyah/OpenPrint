@@ -534,6 +534,7 @@ $css='
                             rp.name as partner,
                             pol.product_id as product_id,
                             pp.name_template as product,
+                            pp.default_code as product_code,
                             pol.price_unit as price_unit,
                             pol.state as state,
                             pol.product_qty as product_qty,

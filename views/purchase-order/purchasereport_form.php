@@ -23,6 +23,7 @@ use yii\bootstrap\Tabs;
 use yii\bootstrap\Dropdown;
 use nirvana\infinitescroll\InfiniteScrollPager;
 use kartik\grid\GridView;
+use kartik\export\ExportMenu;
 ?>
 
 <?php
@@ -281,10 +282,21 @@ SCRIPT;
 				<div class="panel-body">
 				<?php  
 					if($groupBy=='nogroup'){
+							// die();
+							echo ExportMenu::widget([
+								'dataProvider'=>$dataProvider,
+							]);
 							echo GridView::widget([
 								'id'=>'prospectGrid',
 								'dataProvider'=>$dataProvider,
 								'showPageSummary'=>true,
+								'toolbar'=>[
+									'{exportss}',
+									'{toggleData}'
+								],
+								'export'=>[
+									'fontAwesome'=>true
+								],
 								'columns'=>[
 									[
 										'class'=>'kartik\grid\ExpandRowColumn',
@@ -304,8 +316,16 @@ SCRIPT;
 											return Yii::$app->formatter->asDatetime($model['date_order'], "php:d-m-Y");
 										}
 									],
+									[
+										'attribute'=>'product_code',
+										'header'=>'PN',
+									],
 									'product',
-									'pol_desc',
+
+									[
+										'attribute'=>'pol_desc',
+										'header'=>'Description',
+									],
 									[
 										'attribute'=>'product_qty',
 										'header'=>'Qty',

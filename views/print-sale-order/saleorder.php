@@ -282,9 +282,9 @@
 					}
 					else{
 
-						jQuery("#note-"+cursor).remove()
-						var cursorLama = cursor
-						cursor++
+						jQuery("#note-"+cursor).remove();
+						var cursorLama = cursor;
+						cursor++;
 						jQuery('page#page-'+cursorLama).after(template);
 						jQuery('page:last').attr('id','page-'+cursor);
 						jQuery("page#page-"+cursor+' .content p').remove()

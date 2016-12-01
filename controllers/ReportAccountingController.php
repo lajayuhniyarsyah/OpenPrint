@@ -63,7 +63,7 @@ class ReportAccountingController extends Controller
 	    				')
 			    ->from('stock_move as sm')
 			    ->join('JOIN','stock_picking as sp','sm.picking_id=sp.id')
-			    ->join('JOIN', 'order_preparation as op', 'op.picking_id=sp.id')
+			    ->join('LEFT JOIN', 'order_preparation as op', 'op.picking_id=sp.id')
 			    ->join('LEFT JOIN', 'delivery_note as dn', 'dn.id=sp.note_id')
 			    ->join('LEFT JOIN', 'product_product as p', 'p.id=sm.product_id')
 			    ->join('LEFT JOIN','product_template as pt','pt.id=p.id')

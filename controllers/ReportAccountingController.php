@@ -39,49 +39,111 @@ class ReportAccountingController extends Controller
     	$jenisreport=$_GET['jenis'];
     	$query = new Query;
     	if ($jenisreport=="del"){
-	    		$query
-	    		->select(
-	    				'
-	    				 dn.create_date as cretae_date, 
-	    				 sp.date_done as tanggal,
-	    				 dn.name as dn_no,
-	    				 op.name as no_op,
-	    				 p.default_code as part_number,
-	    				 p.name_template as name_template,
-	    				 sm.name as name_input,
-	    				 sm.product_qty as qty,
-	    				 u.name as uom,
-	    				 batch.name as batch,
-	    				 sol.price_unit as price,
-	    				 ppl.name as pricelist,          
-	    				 sl.name as s_location,
-	    				 r.name as partner,
-	    				 dn.poc as poc,
-	    				 so.name as so_no,
-	    				 pc.name as category_name,
-	    				 sp.state as state
-	    				')
-			    ->from('stock_move as sm')
-			    ->join('JOIN','stock_picking as sp','sm.picking_id=sp.id')
-			    ->join('LEFT JOIN', 'order_preparation as op', 'op.picking_id=sp.id')
-			    ->join('LEFT JOIN', 'delivery_note as dn', 'dn.id=sp.note_id')
-			    ->join('LEFT JOIN', 'product_product as p', 'p.id=sm.product_id')
-			    ->join('LEFT JOIN','product_template as pt','pt.id=p.id')
-			    ->join('LEFT JOIN','sale_order_line as sol','sol.id=sm.sale_line_id')
-			    ->join('LEFT JOIN', 'sale_order as so', 'so.id=op.sale_id')
-			    ->join('JOIN', 'product_category as pc', 'pc.id=pt.categ_id')
-			    ->join('JOIN', 'product_uom as u', 'u.id=sm.product_uom')
-			    ->join('JOIN', 'stock_location as sl', 'sl.id=sm.location_id')
-			    ->join('JOIN', 'res_partner as r', 'r.id=dn.partner_id')
-			    ->join('LEFT JOIN', 'stock_production_lot as batch', 'batch.id=sm.prodlot_id')
-			    ->join('JOIN', 'product_pricelist as ppl', 'ppl.id = so.pricelist_id')
-			    ->where(['sm.location_id' => $location])
-			    ->andWhere(['sm.state'=>'done'])
-			    ->andWhere(['sp.type'=>'out'])
-			    ->andWhere(['>=','sp.date_done',$from])
-		     	->andWhere(['<=','sp.date_done',$to])
-			    ->andWhere(['not', ['p.default_code' => 'DUMMY01']])
-			    ->orderBy('sp.date_done ASC, sp.id ASC, sm.id ASC');
+
+    			$query=StockMove::find()
+    				->innerJoin('product_uom','product_uom.id=stock_move.product_uom')
+    				->innerJoin('product_product',
+    					'product_product.id=stock_move.product_id'
+    				)
+    				
+    				->innerJoin('product_template',
+    					'product_template.id=product_product.product_tmpl_id'
+    				)
+
+    				->innerJoin('product_category',
+    					'product_category.id=product_template.categ_id'
+    				)
+
+    				->innerJoin('stock_location',
+    					'stock_location.id=stock_move.location_id'
+    				)
+
+
+    				->innerJoin(
+    					'stock_picking', 'stock_picking.id=stock_move.picking_id')
+    				->leftJoin(
+    					'delivery_note',
+    				'delivery_note.id=stock_picking.note_id')
+
+    				->leftJoin(
+    					'res_partner',
+    				'res_partner.id=delivery_note.partner_id')
+
+
+    				->leftJoin('order_preparation','order_preparation.id=delivery_note.prepare_id')
+    				->leftJoin('sale_order','sale_order.id=order_preparation.sale_id')
+    				->leftJoin('product_pricelist','product_pricelist.id=sale_order.pricelist_id')
+
+    				->leftJoin('stock_production_lot','stock_production_lot.id=stock_move.prodlot_id')
+    				->leftJoin('sale_order_line','sale_order_line.id=stock_move.sale_line_id')
+
+    				
+    				
+
+    				
+    				
+    				->select([
+    					'stock_move.name as name_input',
+    					'stock_move.product_qty as qty',
+
+    					'product_product.name_template as name_template',
+    					'product_product.default_code as part_number',
+
+    					'product_category.name as category_name',
+						
+						'product_uom.name as uom',
+
+						'stock_location.name as s_location',
+
+
+    					'stock_picking.date_done as tanggal',
+    					'stock_picking.state as state',
+
+    					'delivery_note.name as dn_no',
+    					'delivery_note.create_date as create_date',
+    					'delivery_note.poc as poc',
+						
+						'res_partner.name as partner',
+
+    					'order_preparation.name as no_op',
+
+    					'sale_order.name as so_no',
+
+    					'sale_order_line.price_unit as price',
+						
+
+
+    					'stock_production_lot.name as batch',	
+    					'product_pricelist.name as pricelist',
+
+
+    				])
+
+    				->andWhere(['stock_move.state'=>'done' ])
+				    ->andWhere(['stock_picking.type'=>'out'])
+				    ->andWhere(['product_template.sale_ok'=>TRUE ])
+				    ->andWhere(['>=','stock_picking.date_done',$from])
+			     	->andWhere(['<=','stock_picking.date_done',$to])
+				    ->andWhere(['not', ['product_product.default_code' => null]])
+				    ->andWhere(['not', ['product_product.default_code' => 'DUMMY01']])
+				    ->orderBy('stock_picking.date_done ASC, stock_move.id ASC, stock_picking.id ASC')
+    				->limit(900)
+    				->asArray();
+    			/*$dp = new \yii\data\ArrayDataProvider([
+    				'allModels'=>$query->all(),
+    				'pagination'=>[
+    					'pageSize'=>0,
+    				]
+    			]);*/
+
+    			/*echo \yii\grid\GridView::widget([
+    				'dataProvider'=>$dp,
+    				
+    			]);*/
+    			// $deb = clone $query;
+		    	// \yii\helpers\VarDumper::dump($deb->createCommand()->sql);
+		    	// echo $deb->createCommand()->getRawSql();
+    			// die();
     	}
     	else if($jenisreport=="inc"){
 	    		$query
@@ -178,6 +240,7 @@ class ReportAccountingController extends Controller
 			    ->andWhere(['not', ['p.default_code' => 'DUMMY01']])
 			    ->orderBy('m.date ASC, s.id ASC, m.id ASC');;
     	}
+    	
     	return $this->render('stockmove',['data'=>$query->all(), 'jenis'=>$jenisreport, 'from'=>$from , 'to'=>$to, 'loc_active'=>$loc_active]);
     }
 

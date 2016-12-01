@@ -1,4 +1,3 @@
-
 <html>
 	<head>
 	
@@ -118,9 +117,10 @@
 		if($model->attention0){
 			$alamat =   $model->attention0->street.' 
 					  '.$model->attention0->street2.' 
+
 					  '.$model->attention0->city.'
 					  '.$model->attention0->zip.'
-					  '.(isset($model->attention0->country) ? $model->attention0->country->name:"");			
+					  '.$model->attention0->country;
 		}
 		else{
 			$alamat =   $model->partner->street.' 
@@ -428,6 +428,4 @@
 		  jQuery(".number .noTotal").html(" of "+cursor);
 		});
 	</script>
-
-
 </html>

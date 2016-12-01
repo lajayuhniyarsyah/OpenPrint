@@ -1,4 +1,3 @@
-
 <html>
 	<head>
 	
@@ -207,9 +206,8 @@
 						})
 						noMaterial++
 					}
-						else if(value.material_line.length==1){
-							var materialElement = jQuery(' .isi-'+noMaterial); 	
-
+					else if(value.material_line.length==1){
+						var materialElement = jQuery(' .isi-'+noMaterial); 	
 							jQuery.each(value.material_line,function(indexMaterial,valueMaterial){
 
 								if (value.product_id==valueMaterial.ProductName)
@@ -223,10 +221,8 @@
 								}
 							});
 							noMaterial++
-
-						
 					}
-					}
+				}
 				else{
 					var cursorLama = cursor
 					cursor++
@@ -246,7 +242,7 @@
 			var contentElement = jQuery('page#page-'+cursor+' .content');
 			var tinggiContent = contentElement.height();
 
-			// console.log(tinggiContent)
+			console.log(tinggiContent)
 			if (tinggiContent <=400){
 				var isi_table = jQuery('page#page-'+cursor+' .content table');
 				isi_table.append(footerTable);
@@ -272,7 +268,7 @@
 			// console.log(tinggiContent)
 			if (tinggiContent<500){
 				
-				contentfooter.append("<table width='100%'><tr><td width='18%'><b>Term Of Payment</b></td><td width='3%'><b>:</b></td><td><?php if($model->paymentTerm!==null){echo $model->paymentTerm->name;}?></td></tr><tr><td valign='top'><b>Term Condition</b></td><td valign='top'><b>:</b></td><td><div id='term_condition-"+cursor+"'></div></tr><tr id='note-"+cursor+"'><td valign='top' ><b>Note</b></td><td valign='top'><b>:</b></td><td id='isi_note-"+cursor+"'></td></tr></table><br/>");
+				contentfooter.append("<table width='100%'><tr><td width='18%'><b>Term Of Payment</b></td><td width='3%'><b>:</b></td><td><?php if($model->paymentTerm!==null){echo $model->paymentTerm->name;}?></td></tr><tr><td valign='top'><b>Term Condition</b></td><td valign='top'><b>:</b></td><td><div id='term_condition-"+cursor+"'></div></tr><tr id='note-"+cursor+"'><td valign='top' ><b>Note</b></td><td valign='top'><b>:</b></td><td id='isi_note-"+cursor+"'></td></tr><tr><td valign='top'><b>Scope of Work PT.Suprabakti Mandiri</b></td><td valign='top'><b>:</b></td><td valign='top'><?= preg_replace('#\R+#','<br/>',$model->scope_work_supra_text)?></td></tr><tr><td valign='top'><b>Scope of Work Customer</b></td><td valign='top'><b>:</b></td><td valign='top'><?= preg_replace('#\R+#','<br/>',$model->scope_work_customer_text)?></td></tr></table><br/>");
 				
 				// di mulai dari sini pengkondisian untuk mengatur enter term of payment
 				jQuery.each(data[0]['TermCondition'],function(index,value){
@@ -281,9 +277,11 @@
 					var contentfooter= jQuery('page#page-'+cursor+' .footer');
 					var tinggiContentFooter = contentfooter.height()+contentElement.height();
 					if (tinggiContentFooter<850){
+						// untuk term condition
 						jQuery("#term_condition-"+cursor).append(value+"<br/>")
 					}
 					else{
+
 						jQuery("#note-"+cursor).remove()
 						var cursorLama = cursor
 						cursor++
@@ -308,8 +306,10 @@
 				
 					var contentfooter= jQuery('page#page-'+cursor+' .footer');
 					var tinggiContentFooter = contentfooter.height()+contentElement.height();
-					// alert(tinggiContentFooter);
-					if (tinggiContentFooter<710){
+
+					if (tinggiContentFooter<700){
+						console.log(tinggiContentFooter);
+						console.log(value);
 						jQuery('#isi_note-'+cursor).append(value+"<br/>")
 					}
 					else{
@@ -333,6 +333,7 @@
 				});
 			}
 			else{
+				console.log('bbb');
 				var cursorLama = cursor
 				cursor++
 				jQuery('page#page-'+cursorLama).after(template);
@@ -342,7 +343,7 @@
 				var contentfooter= jQuery('page#page-'+cursor+' .footer');
 				var isi_table = jQuery('page#page-'+cursor+' .content table');
 				isi_table.remove()
-				contentfooter.append("<table width='100%'><tr><td width='18%'><b>Term Of Payment</b></td><td width='3%'><b>:</b></td><td><?php if($model->paymentTerm!==null){echo $model->paymentTerm->name;}?></td></tr><tr><td valign='top'><b>Term Condition</b></td><td valign='top'><b>:</b></td><td><?php echo preg_replace('#\R+#','<br/>',$model->internal_notes)?></td></tr><tr><td valign='top'><b>Note</b></td><td valign='top'><b>:</b></td><td><?= preg_replace('#\R+#','<br/>',$model->note)?></td></tr>");
+				contentfooter.append("<table width='100%'><tr><td width='18%'><b>Term Of Payment</b></td><td width='3%'><b>:</b></td><td><?php if($model->paymentTerm!==null){echo $model->paymentTerm->name;}?></td></tr><tr><td valign='top'><b>Term Condition</b></td><td valign='top'><b>:</b></td><td><?php echo preg_replace('#\R+#','<br/>',$model->internal_notes)?></td></tr><tr><td valign='top'><b>Note</b></td><td valign='top'><b>:</b></td><td><?= preg_replace('#\R+#','<br/>',$model->note)?></td></tr></tr><tr><td valign='top'><b>Scope of Work PT.Suprabakti Mandiri</b></td><td valign='top'><b>:</b></td><td valign='top'><?= preg_replace('#\R+#','<br/>',$model->scope_work_supra_text)?></td></tr><tr><td valign='top'><b>Scope of Work Customer</b></td><td valign='top'><b>:</b></td><td valign='top'><?= preg_replace('#\R+#','<br/>',$model->scope_work_customer_text)?></td></tr>");
 
 
 			}

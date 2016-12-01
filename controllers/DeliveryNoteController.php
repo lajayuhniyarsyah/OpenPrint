@@ -13,6 +13,7 @@ use app\models\ResPartner;
 use app\models\OrderPreparation;
 use app\models\SaleOrder;
 use app\models\StockPicking;
+use app\models\StockMove;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -138,6 +139,25 @@ class DeliveryNoteController extends Controller
         }
     }
 
+
+    public function actionPrintreturn($id){
+        $this->layout = 'printout';
+            
+
+        $model = StockPicking::findOne($id);
+        $query = new Query;
+        $query ->select('return_no')
+               ->from('delivery_note_line_material_return')
+               ->where(['stock_picking_id'=>$model->id]);
+
+        $data = $query->one();
+        $return_no ='';
+        foreach ($data as $val) {
+            $return_no = $val;
+        }
+        $model = StockPicking::findOne($id);
+        return $this->render('print/return',['model'=>$model,'return_no'=>$return_no]);
+    }
 
     // action print
     public function actionPrint($id,$test=0){

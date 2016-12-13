@@ -81,6 +81,7 @@ class PrintSaleOrderController extends Controller
 					$descriptionMaterial = $vM->desc;
 				}
 
+				
 				$dataContent[$key]['material_line'][] = [
 					'no'=>$vM->no,
 					'product_id'=>$vM->product_id,
@@ -92,7 +93,6 @@ class PrintSaleOrderController extends Controller
 					'uom'=>$vM->uom0->name
 				];
 			}
-			
 			$material=[];
 			foreach ($value->materialLines as $key_material => $valueMaterial) {
 				$material[]= "<li>".$valueMaterial->product->name_template."</li>";

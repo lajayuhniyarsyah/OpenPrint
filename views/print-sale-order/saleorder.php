@@ -156,7 +156,7 @@
 				var contentElement = jQuery('page#page-'+cursor+' .content');
 				var isi_table = jQuery('page#page-'+cursor+' .content table');
 				var tinggiContent = contentElement.height();
-				var elTable = "<tr><td valign='top' width='5%' align='center'>"+value.no +"</td>"+"<td valign='top' width='10%' align='center'>"+value.product_uom_qty +"</td>"+"<td valign='top' width='5%'>"+value.unit +"</td>"+"<td width=45%>"+"["+value.default_code+"]"+value.name_product+"<br/>"+value.deskription_orderline+"<div class='isi-"+noMaterial+"'></div>"+"</td>"+"<td width='15%' valign='top' align='right'>"+value.unit_price +"</td>"+"<td width='20%' valign='top' align='right'>"+value.price_sub +"<div class='hideOnPrint'><img class='buttonAddRowBefore' src='up.png' alt='upRow' height='20px'width='20px' style='cursor:pointer;position: absolute; right:248px'><br/><img class='buttonAddRowAfter' src='down.png' alt='downRow' height='20px'width='20px' style='cursor:pointer;position: absolute; right:248px'></div> </td>"+"</tr>";
+				var elTable = "<tr><td valign='top' width='5%' align='center'>"+value.no +"</td>"+"<td valign='top' width='10%' align='center'>"+value.product_uom_qty +"</td>"+"<td valign='top' width='5%'>"+value.unit +"</td>"+"<td width=45%>"+"["+value.default_code+"]"+value.name_product+"<br/>"+ value.deskription_orderline+"<div class='isi-"+noMaterial+"'></div>"+"</td>"+"<td width='15%' valign='top' align='right'>"+value.unit_price +"</td>"+"<td width='20%' valign='top' align='right'>"+value.price_sub +"<div class='hideOnPrint'><img class='buttonAddRowBefore' src='up.png' alt='upRow' height='20px'width='20px' style='cursor:pointer;position: absolute; right:248px'><br/><img class='buttonAddRowAfter' src='down.png' alt='downRow' height='20px'width='20px' style='cursor:pointer;position: absolute; right:248px'></div> </td>"+"</tr>";
 				
 				if (tinggiContent<500){
 					isi_table.append(elTable)
@@ -226,10 +226,12 @@
 
 							jQuery.each(value.material_line,function(indexMaterial,valueMaterial){
 
-								if (value.product_id==valueMaterial.ProductName)
+								if (value.product_id==valueMaterial.product_id)
 								{
 									if (value.product_uom_id != valueMaterial.product_uom_id || value.product_uom_qty != valueMaterial.qty){
 											materialElement.append("<b>Detail Product: </b><ul style='margin-top:0px'><li>"+"["+valueMaterial.partNumber+"]"+valueMaterial.ProductName+"<br/>"+valueMaterial.descriptionMaterial+"<b> ("+valueMaterial.qty+" "+valueMaterial.uom+")</b></li></ul>")
+									}else{
+										materialElement.append(valueMaterial.descriptionMaterial)
 									}
 
 								}else{
@@ -356,7 +358,7 @@
 				var contentfooter= jQuery('page#page-'+cursor+' .footer');
 				var isi_table = jQuery('page#page-'+cursor+' .content table');
 				isi_table.remove()
-				contentfooter.append("<table width='100%'><tr><td width='18%'><b>Term Of Payment</b></td><td width='3%'><b>:</b></td><td><?php if($model->paymentTerm!==null){echo $model->paymentTerm->name;}?></td></tr><tr><td valign='top'><b>Term Condition</b></td><td valign='top'><b>:</b></td><td><?php echo preg_replace('#\R+#','<br/>',$model->internal_notes)?></td></tr><tr><td valign='top'><b>Note</b></td><td valign='top'><b>:</b></td><td><?= preg_replace('#\R+#','<br/>',$model->note)?></td></tr>");
+				contentfooter.append("<table width='100%'><tr><td width='18%'><b>Term Of Payment</b></td><td width='3%'><b>:</b></td><td><?php if($model->paymentTerm!==null){echo $model->paymentTerm->name;}?></td></tr><tr><td valign='top'><b>Term Condition</b></td><td valign='top'><b>:</b></td><td><?php echo preg_replace('#\R+#','<br/>',$model->internal_notes)?></td></tr><tr><td valign='top'><b>Note</b></td><td valign='top'><b>:</b></td><td></td></tr>");
 
 
 			}

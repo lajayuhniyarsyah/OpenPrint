@@ -309,11 +309,19 @@ SCRIPT;
 									],
 									'partner',
 									'no_po',
+									'origin',
 									[
 										'attribute'=>'date_order',
 										'header'=>'Date',
 										'value'=>function($model,$key,$index,$grid){
 											return Yii::$app->formatter->asDatetime($model['date_order'], "php:d-m-Y");
+										}
+									],
+									[
+										'attribute'=>'duedate',
+										'header'=>'Due Date',
+										'value'=>function($model,$key,$index,$grid){
+											return Yii::$app->formatter->asDatetime($model['duedate'], "php:d-m-Y");
 										}
 									],
 									[

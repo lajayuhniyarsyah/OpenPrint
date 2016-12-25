@@ -156,7 +156,7 @@
 				var contentElement = jQuery('page#page-'+cursor+' .content');
 				var isi_table = jQuery('page#page-'+cursor+' .content table');
 				var tinggiContent = contentElement.height();
-				var elTable = "<tr><td valign='top' width='5%' align='center'>"+value.no +"</td>"+"<td valign='top' width='10%' align='center'>"+value.product_uom_qty +"</td>"+"<td valign='top' width='5%'>"+value.unit +"</td>"+"<td width=45%>"+"["+value.default_code+"]"+value.name_product+"<br/>"+value.deskription_orderline+"<div class='isi-"+noMaterial+"'></div>"+"</td>"+"<td width='15%' valign='top' align='right'>"+value.unit_price +"</td>"+"<td width='20%' valign='top' align='right'>"+value.price_sub +"<div class='hideOnPrint'><img class='buttonAddRowBefore' src='up.png' alt='upRow' height='20px'width='20px' style='cursor:pointer;position: absolute; right:248px'><br/><img class='buttonAddRowAfter' src='down.png' alt='downRow' height='20px'width='20px' style='cursor:pointer;position: absolute; right:248px'></div> </td>"+"</tr>";
+				var elTable = "<tr><td valign='top' width='5%' align='center'>"+value.no +"</td>"+"<td valign='top' width='10%' align='center'>"+value.product_uom_qty +"</td>"+"<td valign='top' width='5%'>"+value.unit +"</td>"+"<td width=45%>"+"["+value.default_code+"]"+value.name_product+"<br/>"+ value.deskription_orderline+"<div class='isi-"+noMaterial+"'></div>"+"</td>"+"<td width='15%' valign='top' align='right'>"+value.unit_price +"</td>"+"<td width='20%' valign='top' align='right'>"+value.price_sub +"<div class='hideOnPrint'><img class='buttonAddRowBefore' src='up.png' alt='upRow' height='20px'width='20px' style='cursor:pointer;position: absolute; right:248px'><br/><img class='buttonAddRowAfter' src='down.png' alt='downRow' height='20px'width='20px' style='cursor:pointer;position: absolute; right:248px'></div> </td>"+"</tr>";
 				
 				if (tinggiContent<500){
 					isi_table.append(elTable)
@@ -230,6 +230,8 @@
 								{
 									if (value.product_uom_id != valueMaterial.product_uom_id || value.product_uom_qty != valueMaterial.qty){
 											materialElement.append("<b>Detail Product: </b><ul style='margin-top:0px'><li>"+"["+valueMaterial.partNumber+"]"+valueMaterial.ProductName+"<br/>"+valueMaterial.descriptionMaterial+"<b> ("+valueMaterial.qty+" "+valueMaterial.uom+")</b></li></ul>")
+									}else{
+										materialElement.append(valueMaterial.descriptionMaterial)
 									}
 
 								}else{
@@ -283,10 +285,9 @@
 			var contentElement = jQuery('page#page-'+cursor+' .content');
 			var tinggiContent = contentElement.height();
 			var contentfooter= jQuery('page#page-'+cursor+' .footer');
-			// console.log(tinggiContent)
+			console.log(tinggiContent)
 			if (tinggiContent<500){
-				
-				contentfooter.append("<table width='100%'><tr><td width='18%'><b>Term Of Payment</b></td><td width='3%'><b>:</b></td><td><?php if($model->paymentTerm!==null){echo ucfirst($model->paymentTerm->name).' - '.$model->getPolicyCaption();}?></td></tr><tr><td valign='top'><b>Term Condition</b></td><td valign='top'><b>:</b></td><td><div id='term_condition-"+cursor+"'></div></tr><tr id='note-"+cursor+"'><td valign='top' ><b>Note</b></td><td valign='top'><b>:</b></td><td id='isi_note-"+cursor+"'></td></tr><tr><td valign='top'><b>Scope of Work PT.Suprabakti Mandiri</b></td><td valign='top'><b>:</b></td><td valign='top'><?= preg_replace('#\R+#','<br/>',$model->scope_work_supra_text)?></td></tr><tr><td valign='top'><b>Scope of Work Customer</b></td><td valign='top'><b>:</b></td><td valign='top'><?= preg_replace('#\R+#','<br/>',$model->scope_work_customer_text)?></td></tr></table><br/>");
+				contentfooter.append("<table width='100%'><tr><td width='18%'><b>Term Of Payment</b></td><td width='3%'><b>:</b></td><td><?php if($model->paymentTerm!==null){echo $model->paymentTerm->name;}?></td></tr><tr><td valign='top'><b>Term Condition</b></td><td valign='top'><b>:</b></td><td><div id='term_condition-"+cursor+"'></div></tr><tr id='note-"+cursor+"'><td valign='top' ><b>Note</b></td><td valign='top'><b>:</b></td><td id='isi_note-"+cursor+"'></td></tr><tr id='scope_of_work_supra-"+cursor+"'><td valign='top'><b>Scope of Work PT.Suprabakti Mandiri</b></td><td valign='top'><b>:</b></td><td valign='top'><?= preg_replace('#\R+#','<br/>',$model->scope_work_supra_text)?></td></tr><tr id='scope_of_work_customer-"+cursor+"'><td valign='top'><b>Scope of Work Customer</b></td><td valign='top'><b>:</b></td><td valign='top'><?= preg_replace('#\R+#','<br/>',$model->scope_work_customer_text)?></td></tr></table><br/>");
 				
 				// di mulai dari sini pengkondisian untuk mengatur enter term of payment
 				jQuery.each(data[0]['TermCondition'],function(index,value){
@@ -294,14 +295,16 @@
 				
 					var contentfooter= jQuery('page#page-'+cursor+' .footer');
 					var tinggiContentFooter = contentfooter.height()+contentElement.height();
-					if (tinggiContentFooter<850){
+					if (tinggiContentFooter<830){
 						jQuery("#term_condition-"+cursor).append(value+"<br/>")
 					}
 					else{
+						jQuery("#note-"+cursor).remove()
+						jQuery("#scope_of_work_supra-"+cursor).remove()
+						jQuery("#scope_of_work_customer-"+cursor).remove()
 
-						jQuery("#note-"+cursor).remove();
-						var cursorLama = cursor;
-						cursor++;
+						var cursorLama = cursor
+						cursor++
 						jQuery('page#page-'+cursorLama).after(template);
 						jQuery('page:last').attr('id','page-'+cursor);
 						jQuery("page#page-"+cursor+' .content p').remove()
@@ -310,7 +313,7 @@
 						number.append("Page "+cursor)
 						var tinggiContent = contentElement.height();
 						var contentfooter= jQuery('page#page-'+cursor+' .footer');
-						contentfooter.append("<table width='100%'><tr><td valign='top'><b>Term Condition</b></td><td valign='top'><b>:</b></td><td><div id='term_condition-"+cursor+"'></div></tr><tr id='note-"+cursor+"'><td valign='top' ><b>Note</b></td><td valign='top'><b>:</b></td><td id='isi_note-"+cursor+"'></td></tr></table><br/>");
+						contentfooter.append("<table width='100%'><tr><td valign='top'><b>Term Condition</b></td><td valign='top'><b>:</b></td><td><div id='term_condition-"+cursor+"'></div></tr><tr id='note-"+cursor+"'><td valign='top' ><b>Note</b></td><td valign='top'><b>:</b></td><td id='isi_note-"+cursor+"'></td></tr><tr id='scope_of_work_supra-"+cursor+"'><td valign='top'><b>Scope of Work PT.Suprabakti Mandiri</b></td><td valign='top'><b>:</b></td><td valign='top'><?= preg_replace('#\R+#','<br/>',$model->scope_work_supra_text)?></td></tr><tr id='scope_of_work_customer-"+cursor+"'><td valign='top'><b>Scope of Work Customer</b></td><td valign='top'><b>:</b></td><td valign='top'><?= preg_replace('#\R+#','<br/>',$model->scope_work_customer_text)?></td></tr></table><br/>");
 						jQuery("#term_condition-"+cursor).append(value+"<br/>")
 					}
 				});
@@ -327,8 +330,8 @@
 						jQuery('#isi_note-'+cursor).append(value+"<br/>")
 					}
 					else{
-
-						
+						jQuery("#scope_of_work_supra-"+cursor).remove()
+						jQuery("#scope_of_work_customer-"+cursor).remove()
 
 						var cursorLama = cursor
 						cursor++
@@ -341,7 +344,7 @@
 						number.append("Page "+cursor)
 						var tinggiContent = contentElement.height();
 						var contentfooter= jQuery('page#page-'+cursor+' .footer');
-						contentfooter.append("<table width='100%'><tr id='note-"+cursor+"'><td valign='top' ><b>Note</b></td><td valign='top'><b>:</b></td><td id='isi_note-"+cursor+"'></td></tr></table><br/>");
+						contentfooter.append("<table width='100%'><tr id='note-"+cursor+"'><td valign='top' ><b>Note</b></td><td valign='top'><b>:</b></td><td id='isi_note-"+cursor+"'></td></tr><tr id='scope_of_work_supra-"+cursor+"'><td valign='top'><b>Scope of Work PT.Suprabakti Mandiri</b></td><td valign='top'><b>:</b></td><td valign='top'><?= preg_replace('#\R+#','<br/>',$model->scope_work_supra_text)?></td></tr><tr id='scope_of_work_customer-"+cursor+"'><td valign='top'><b>Scope of Work Customer</b></td><td valign='top'><b>:</b></td><td valign='top'><?= preg_replace('#\R+#','<br/>',$model->scope_work_customer_text)?></td></tr></table><br/>");
 						jQuery("#isi_note-"+cursor).append(value+"<br/>")
 					}
 				});
@@ -357,8 +360,6 @@
 				var isi_table = jQuery('page#page-'+cursor+' .content table');
 				isi_table.remove()
 				contentfooter.append("<table width='100%'><tr><td width='18%'><b>Term Of Payment</b></td><td width='3%'><b>:</b></td><td><?php if($model->paymentTerm!==null){echo $model->paymentTerm->name;}?></td></tr><tr><td valign='top'><b>Term Condition</b></td><td valign='top'><b>:</b></td><td><?php echo preg_replace('#\R+#','<br/>',$model->internal_notes)?></td></tr><tr><td valign='top'><b>Note</b></td><td valign='top'><b>:</b></td><td></td></tr>");
-
-
 			}
 			
 			jQuery('.buttonAddRowAfter').click(function(){

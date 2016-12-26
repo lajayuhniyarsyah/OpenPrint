@@ -297,7 +297,7 @@ use yii\helpers\Url;
 											<td width="100px">Customer</td>
 											<td>:</td>
 											<td width="500px">
-												<?php echo $model->partner->name; ?>
+												<?=isset($model->note0->partner->name) ? $model->note0->partner->name:null?>
 											</td>
 
 

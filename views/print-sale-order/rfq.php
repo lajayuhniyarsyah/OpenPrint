@@ -156,14 +156,13 @@
 			contentheader.append(contentHeader)
 			// headerElement.append(headerTable)
 			jQuery.each(data,function(index,value){
-
 				var contentElement = jQuery('page#page-'+cursor+' .content');
 				var isi_table = jQuery('page#page-'+cursor+' .content table');
 				var tinggiContent = contentElement.height();
 				var elTable = "<tr><td valign='top' width='5%' align='center'>"+value.no +"</td>"+"<td valign='top' width='10%' align='center'>"+value.product_uom_qty +"</td>"+"<td valign='top' width='5%'>"+value.unit +"</td>"+"<td width=45%>"+"["+value.default_code+"]"+value.name_product+"<br/>"+value.deskription_orderline+"<div class='isi-"+noMaterial+"'></div>"+"</td>"+"<td width='15%' valign='top' align='right'>"+value.unit_price +"</td>"+"<td width='20%' valign='top' align='right'>"+value.price_sub +"<div class='hideOnPrint'><img class='buttonAddRowBefore' src='up.png' alt='upRow' height='20px'width='20px' style='cursor:pointer;position: absolute; right:248px'><br/><img class='buttonAddRowAfter' src='down.png' alt='downRow' height='20px'width='20px' style='cursor:pointer;position: absolute; right:248px'></div> </td>"+"</tr>";
-				// console.log(value.material_line);
+				console.log(tinggiContent);
 				
-				if (tinggiContent<500){
+				if (tinggiContent<550){
 					isi_table.append(elTable)
 					if(value.material_line.length>1){
 						jQuery.each(value.material_line,function(indexMaterial,valueMaterial){
@@ -188,8 +187,6 @@
 									isi_table.append("<tr><td valign='top' width='5%'>"+"</td>"+"<td valign='top' width='10%' >"+"</td>"+"<td valign='top' width='5%'>"+"</td>"+"<td contenteditable='True' width=45%>"+"<div class='isi-"+noMaterial+"'></div>"+"</td>"+"<td width='15%' valign='top'>"+"</td>"+"<td width='20%' valign='top'>"+"</td>"+"</tr>")
 									var materialElement = jQuery('page#page-'+cursor+' .content'+' .isi-'+noMaterial);
 									materialElement.append("Consist of:<ul style='margin-top:0px'><li>"+"["+valueMaterial.partNumber+"]"+valueMaterial.ProductName+"("+valueMaterial.qty+" "+valueMaterial.uom+")"+"<br/>"+valueMaterial.descriptionMaterial+"</li></ul>")
-
-
 								}
 							}
 							else{
@@ -229,11 +226,11 @@
 						})
 						noMaterial++
 					}
-						else if(value.material_line.length==1){
+					else if(value.material_line.length==1){
+
 							var materialElement = jQuery(' .isi-'+noMaterial); 	
 
 							jQuery.each(value.material_line,function(indexMaterial,valueMaterial){
-
 								if (value.product_id==valueMaterial.product_id)
 								{
 									if (value.product_uom_id != valueMaterial.product_uom_id || value.product_uom_qty != valueMaterial.qty){
@@ -247,20 +244,98 @@
 								}
 							});
 							noMaterial++
-
-						
 					}
 				}
 				else{
+
 					var cursorLama = cursor
 					cursor++
 					jQuery('page#page-'+cursorLama).after(template);
 					jQuery('page:last').attr('id','page-'+cursor);
-					// var headerTable="<table width='100%' border='1px' style='border-collapse:collapse; margin-top:0px;'><tr><td width='5%''><center><b>No</b></center></td><td width='10%''><center><b>Qty</b></center></td><td width='5%'><center><b>Unit</b></center></td><td width='45%'><center><b>Description</b></center></td><td width='15%'><center><b>Price Unit</b></center></td><td width='20%'><center><b>Price Sub</b></center></td></tr></table>"
 					var isi_table = jQuery('page#page-'+cursor+' .content table');
-					// headerElement = jQuery('page#page-'+cursor+' .header');
-					// headerElement.append(headerTable)
 					isi_table.append(elTable);
+					if(value.material_line.length>1){
+						jQuery.each(value.material_line,function(indexMaterial,valueMaterial){
+
+							var materialElement = jQuery('page#page-'+cursor+' .content'+' .isi-'+noMaterial);
+							if (indexMaterial==0){
+								var contentElement = jQuery('page#page-'+cursor+' .content');
+								var tinggiContent = contentElement.height();
+								if (tinggiContent<460){
+										materialElement.append("Consist of:<ul style='margin-top:0px'><li>"+"["+valueMaterial.partNumber+"]"+valueMaterial.ProductName+"("+valueMaterial.qty+" "+valueMaterial.uom+")"+"<br/>"+valueMaterial.descriptionMaterial+"</li></ul>")
+								}
+								else{
+									var cursorLama = cursor
+									cursor++
+									jQuery('page#page-'+cursorLama).after(template);
+									jQuery('page:last').attr('id','page-'+cursor);
+									
+									number = jQuery('page#page-'+cursor+' .number .no');
+									number.append("Page "+cursor)
+									var contentElement = jQuery('page#page-'+cursor+' .content');
+									var isi_table = jQuery('page#page-'+cursor+' .content table');
+									isi_table.append("<tr><td valign='top' width='5%'>"+"</td>"+"<td valign='top' width='10%' >"+"</td>"+"<td valign='top' width='5%'>"+"</td>"+"<td contenteditable='True' width=45%>"+"<div class='isi-"+noMaterial+"'></div>"+"</td>"+"<td width='15%' valign='top'>"+"</td>"+"<td width='20%' valign='top'>"+"</td>"+"</tr>")
+									var materialElement = jQuery('page#page-'+cursor+' .content'+' .isi-'+noMaterial);
+									materialElement.append("Consist of:<ul style='margin-top:0px'><li>"+"["+valueMaterial.partNumber+"]"+valueMaterial.ProductName+"("+valueMaterial.qty+" "+valueMaterial.uom+")"+"<br/>"+valueMaterial.descriptionMaterial+"</li></ul>")
+								}
+							}
+							else{
+
+								var contentElement = jQuery('page#page-'+cursor+' .content');
+								var tinggiContent = contentElement.height();
+								if (tinggiContent<460){
+									materialElement.append("<ul  style='margin-top:-16px'><li>"+"["+valueMaterial.partNumber+"]"+valueMaterial.ProductName+"("+valueMaterial.qty+" "+valueMaterial.uom+")"+"<br/>"+valueMaterial.descriptionMaterial+"</li></ul>")
+								}
+								else{
+									var cursorLama = cursor
+									cursor++
+									jQuery('page#page-'+cursorLama).after(template);
+									jQuery('page:last').attr('id','page-'+cursor);
+
+									
+									var contentElement = jQuery('page#page-'+cursor+' .content');
+									var isi_table = jQuery('page#page-'+cursor+' .content table');
+									number = jQuery('page#page-'+cursor+' .number .no');
+									number.append("Page "+cursor)
+									isi_table.append("<tr><td valign='top' width='5%'>"+"</td>"+"<td valign='top' width='10%' >"+"</td>"+"<td valign='top' width='5%'>"+"</td>"+"<td contenteditable='True' width=45%>"+"<div class='isi-"+noMaterial+"'></div>"+"</td>"+"<td width='15%' valign='top'>"+"</td>"+"<td width='20%' valign='top'>"+"</td>"+"</tr>")
+									if (indexMaterial==0){
+										materialElement.append("Consist of:<ul style='margin-top:0px'><li>"+"["+valueMaterial.partNumber+"]"+valueMaterial.ProductName+"("+valueMaterial.qty+" "+valueMaterial.uom+")"+"<br/>"+valueMaterial.descriptionMaterial+"</li></ul>")
+									}
+									else{
+										var contentElement = jQuery('page#page-'+cursor+' .content');
+										var tinggiContent = contentElement.height();
+									
+										materialElement.append("<ul><li>"+"["+valueMaterial.partNumber+"]"+valueMaterial.ProductName+"("+valueMaterial.qty+" "+valueMaterial.uom+")"+"<br/>"+valueMaterial.descriptionMaterial+"</li></ul>")
+
+									}
+
+								}
+							}
+
+							
+						})
+						noMaterial++
+					}
+					else if(value.material_line.length==1){
+
+							var materialElement = jQuery(' .isi-'+noMaterial); 	
+
+							jQuery.each(value.material_line,function(indexMaterial,valueMaterial){
+								if (value.product_id==valueMaterial.product_id)
+								{
+									if (value.product_uom_id != valueMaterial.product_uom_id || value.product_uom_qty != valueMaterial.qty){
+											materialElement.append("<b>Detail Product: </b><ul style='margin-top:0px'><li>"+"["+valueMaterial.partNumber+"]"+valueMaterial.ProductName+"<br/>"+valueMaterial.descriptionMaterial+"<b> ("+valueMaterial.qty+" "+valueMaterial.uom+")</b></li></ul>")
+									}else{
+										materialElement.append(valueMaterial.descriptionMaterial)
+									}
+
+								}else{
+									materialElement.append("Consist of:<ul style='margin-top:0px'><li>"+"["+valueMaterial.partNumber+"]"+valueMaterial.ProductName+"("+valueMaterial.qty+" "+valueMaterial.uom+")"+"<br/>"+valueMaterial.descriptionMaterial+"</li></ul>")
+								}
+							});
+							noMaterial++
+					}
+
 					number = jQuery('page#page-'+cursor+' .number .no');
 					number.append("Page "+cursor)
 				

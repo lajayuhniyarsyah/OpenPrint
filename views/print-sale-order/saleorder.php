@@ -367,7 +367,7 @@
 			var contentfooter= jQuery('page#page-'+cursor+' .footer');
 			console.log(tinggiContent)
 			if (tinggiContent<500){
-				contentfooter.append("<table width='100%'><tr><td width='115px'><b>Term Of Payment</b></td><td width='3%'><b>:</b></td><td><?php if($model->paymentTerm!==null){echo $model->paymentTerm->name;}?></td></tr><tr><td valign='top' width='115px'><b>Term Condition</b></td><td valign='top'><b>:</b></td><td><div id='term_condition-"+cursor+"'></div></tr><tr id='note-"+cursor+"'><td valign='top' width='115px'><b>Note</b></td><td valign='top'><b>:</b></td><td id='isi_note-"+cursor+"'></td></tr><tr id='scope_of_work_supra-"+cursor+"'><td valign='top' width='115px'><b>Scope of Work PT.Suprabakti Mandiri</b></td><td valign='top'><b>:</b></td><td valign='top'><?= preg_replace('#\R+#','<br/>',$model->scope_work_supra_text)?></td></tr><tr id='scope_of_work_customer-"+cursor+"'><td valign='top' width='115px'><b>Scope of Work Customer</b></td><td valign='top'><b>:</b></td><td valign='top'><?= preg_replace('#\R+#','<br/>',$model->scope_work_customer_text)?></td></tr></table><br/>");
+				contentfooter.append("<table width='100%'><tr><td width='115px'><b>Term Of Payment</b></td><td width='3%'><b>:</b></td><td><?php if($model->paymentTerm!==null){echo $model->paymentTerm->name;} if($invoice!==null){echo ' - '.$invoice;}?></td></tr><tr><td valign='top' width='115px'><b>Term Condition</b></td><td valign='top'><b>:</b></td><td><div id='term_condition-"+cursor+"'></div></tr><tr id='note-"+cursor+"'><td valign='top' width='115px'><b>Note</b></td><td valign='top'><b>:</b></td><td id='isi_note-"+cursor+"'></td></tr><tr id='scope_of_work_supra-"+cursor+"'><td valign='top' width='115px'><b>Scope of Work PT.Suprabakti Mandiri</b></td><td valign='top'><b>:</b></td><td valign='top'><?= preg_replace('#\R+#','<br/>',$model->scope_work_supra_text)?></td></tr><tr id='scope_of_work_customer-"+cursor+"'><td valign='top' width='115px'><b>Scope of Work Customer</b></td><td valign='top'><b>:</b></td><td valign='top'><?= preg_replace('#\R+#','<br/>',$model->scope_work_customer_text)?></td></tr></table><br/>");
 				
 				// di mulai dari sini pengkondisian untuk mengatur enter term of payment
 				jQuery.each(data[0]['TermCondition'],function(index,value){
@@ -469,7 +469,7 @@
 				var contentfooter= jQuery('page#page-'+cursor+' .footer');
 				var isi_table = jQuery('page#page-'+cursor+' .content table');
 				isi_table.remove()
-				contentfooter.append("<table width='100%'><tr><td width='18%'><b>Term Of Payment</b></td><td width='3%'><b>:</b></td><td><?php if($model->paymentTerm!==null){echo $model->paymentTerm->name;}?></td></tr><tr><td valign='top'><b>Term Condition</b></td><td valign='top'><b>:</b></td><td><?php echo preg_replace('#\R+#','<br/>',$model->internal_notes)?></td></tr><tr><td valign='top'><b>Note</b></td><td valign='top'><b>:</b></td><td><?php echo preg_replace('#\R+#','<br/>',$model->note)?></td></tr>");
+				contentfooter.append("<table width='100%'><tr><td width='18%'><b>Term Of Payment</b></td><td width='3%'><b>:</b></td><td><?php if($model->paymentTerm!==null){echo $model->paymentTerm->name;} if($invoice!==null){echo ' - '.$invoice;}?></td></tr><tr><td valign='top'><b>Term Condition</b></td><td valign='top'><b>:</b></td><td><?php echo preg_replace('#\R+#','<br/>',$model->internal_notes)?></td></tr><tr><td valign='top'><b>Note</b></td><td valign='top'><b>:</b></td><td><?php echo preg_replace('#\R+#','<br/>',$model->note)?></td></tr>");
 			}
 			
 			jQuery('.buttonAddRowAfter').click(function(){

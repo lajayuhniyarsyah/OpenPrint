@@ -226,10 +226,22 @@ class PrintSaleOrderController extends Controller
 		}
 
 		
+		if ($model->order_policy == 'manual'){
+			$invoice = 'On Demand';
+		}else if ($model->order_policy == 'picking'){
+			$invoice = 'On Delivery Order';
+		}
+		else if ($model->order_policy == 'prepaid'){
+			$invoice = 'Before Order';
+		}else{
+			$invoice = '';
+		}
+
 		return $this->render('saleorder',
 			[
 			'model'=>$model,
 			'state'=>$state,
+			'invoice'=>$invoice,
 			'country'=>$country,
 			'fax'=>$fax,
 			'email'=>$email,
@@ -260,7 +272,6 @@ class PrintSaleOrderController extends Controller
 		if ($model===null){
 			throw new NotFoundHttpException;
 		}
-
 
 		$dataContent=[];
 		$dataContentModel=$model->saleOrderLines;
@@ -391,10 +402,20 @@ class PrintSaleOrderController extends Controller
 		$TermCondition_enter = explode("<br/>", $TermCondition_murni);
 		$TermCondition =[];
 		foreach ($TermCondition_enter as $key => $value) {
-			// echo $value.'<br/>';
 			array_push($TermCondition, (str_split($value, 50)));
 		}
-		// var_dump($TermCondition);	
+		
+		if ($model->order_policy == 'manual'){
+			$invoice = 'On Demand';
+		}else if ($model->order_policy == 'picking'){
+			$invoice = 'On Delivery Order';
+		}
+		else if ($model->order_policy == 'prepaid'){
+			$invoice = 'Before Order';
+		}else{
+			$invoice = '';
+		}
+
 
 		$NoteMurni = preg_replace('#\R+#','<br/>',$model->internal_notes);
 		$NoteEnter = explode("<br/>", $NoteMurni);
@@ -406,6 +427,7 @@ class PrintSaleOrderController extends Controller
 		return $this->render('rfq',
 			[
 			'Note'=>$Note,
+			'invoice'=>$invoice,
 			'TermCondition'=>$TermCondition,
 			'model'=>$model,
 			'state'=>$state,

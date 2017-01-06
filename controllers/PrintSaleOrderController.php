@@ -67,7 +67,7 @@ class PrintSaleOrderController extends Controller
 			$dataContent[$key]['name_product']=$value->product->name_template;
 			$dataContent[$key]['unit_price']=$unit;
 			$dataContent[$key]['price_sub']=$price_sub;
-			$dataContent[$key]['deskription_orderline']=$deskription_orderline;
+			$dataContent[$key]['deskription_orderline']=nl2br($deskription_orderline);
 			$dataContent[$key]['Note']=$Note;
 			$dataContent[$key]['TermCondition']=$TermCondition;
 			$dataContent[$key]['material_line']=[];
@@ -88,7 +88,7 @@ class PrintSaleOrderController extends Controller
 					'product_uom_id'=>$vM->uom,
 					'ProductName'=>$vM->product->name_template,
 					'partNumber'=>$vM->product->default_code,
-					'descriptionMaterial'=>$descriptionMaterial,
+					'descriptionMaterial'=>nl2br($descriptionMaterial),
 					'qty'=>$vM->qty,
 					'uom'=>$vM->uom0->name
 				];
@@ -340,7 +340,7 @@ class PrintSaleOrderController extends Controller
 					'product_uom_id'=>$vM->uom,
 					'ProductName'=>$vM->product->name_template,
 					'partNumber'=>$vM->product->default_code,
-					'descriptionMaterial'=>$descriptionMaterial,
+					'descriptionMaterial'=>nl2br($descriptionMaterial),
 					'qty'=>$vM->qty,
 					'uom'=>$vM->uom0->name
 				];

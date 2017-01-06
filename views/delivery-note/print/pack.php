@@ -2,7 +2,7 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 // echo $printer;
-if($model->state!='submited'){
+if($model->state!='submited' && !$forced){
 	echo 'Status == <b>'.strtoupper($model->state).'</b><br/>';
 	die('Print Hanya pada saat Submit!');
 }

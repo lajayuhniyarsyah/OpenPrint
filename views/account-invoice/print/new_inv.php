@@ -377,7 +377,7 @@ use yii\helpers\Url;
 					<br/>
 					Bank Mandiri Cab. Sunter Mall, Jakarta -> A/C : 120-000-991-1988 (EUR)
 					<br/>
-					Bank CIMB Niaga Cab. Wahid Hasyim, Jakarta -> A/C : 4230-3000-02-008 (AUD)
+					Bank CIMB Niaga Cab. Wahid Hasyim, Jakarta -> A/C : 8000 9719 4550 (AUD)
 				</div>
 				<div class="signName" contenteditable="true"><?=strtoupper($model->approver0->partner->name)?></div>
 			</div>

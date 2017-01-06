@@ -206,7 +206,7 @@ class DeliveryNoteController extends Controller
     /**
      * Print Action For Packing List
     **/
-    public function actionPrintPack($id,$printer=null,$uid=null)
+    public function actionPrintPack($id,$printer=null,$uid=null,$forced=0)
     {
         $this->layout = 'printout';
         
@@ -253,7 +253,7 @@ class DeliveryNoteController extends Controller
         }
         
         // echo $printer;
-        return $this->render('print/pack',['model'=>$model,'pagesData'=>$linesData,'printer'=>$printer,'uid'=>$uid]);
+        return $this->render('print/pack',['model'=>$model,'pagesData'=>$linesData,'printer'=>$printer,'uid'=>$uid,'forced'=>$forced]);
     }
 
 

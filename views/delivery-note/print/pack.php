@@ -336,7 +336,7 @@ if($model->state!='submited' && !$forced){
 				</div>
 				<div class="colorCode"></div>
 			</div>
-			<div class="sign" contenteditable="true"><?php echo $model->signature0->name_related; ?></div>
+			<div class="sign" contenteditable="true"><?php echo $model->signature0 ? $model->signature0->name_related:null; ?></div>
 		</div>
 	</div>
 </div>

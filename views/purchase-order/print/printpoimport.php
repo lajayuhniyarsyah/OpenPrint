@@ -101,7 +101,7 @@ footer{
 	height: 150px;
 }
 .thead{
-    height: 190px;
+    height: 165px;
 }
 .kotak{
 	border:1px solid #000;
@@ -134,7 +134,7 @@ footer{
     
     .thead{
     	page-break-before: always;
-    	height: 200px;
+    	height: 170px;
     }
     .breakfooter{
     	page-break-before: always;

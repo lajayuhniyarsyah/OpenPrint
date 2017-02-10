@@ -229,10 +229,10 @@ class PrintSaleOrderController extends Controller
 		if ($model->order_policy == 'manual'){
 			$invoice = 'On Demand';
 		}else if ($model->order_policy == 'picking'){
-			$invoice = 'On Delivery Order';
+			$invoice = 'On Delivery';
 		}
 		else if ($model->order_policy == 'prepaid'){
-			$invoice = 'Before Order';
+			$invoice = 'Before Delivery';
 		}else{
 			$invoice = '';
 		}
@@ -408,10 +408,10 @@ class PrintSaleOrderController extends Controller
 		if ($model->order_policy == 'manual'){
 			$invoice = 'On Demand';
 		}else if ($model->order_policy == 'picking'){
-			$invoice = 'On Delivery Order';
+			$invoice = 'On Delivery';
 		}
 		else if ($model->order_policy == 'prepaid'){
-			$invoice = 'Before Order';
+			$invoice = 'Before Delivery';
 		}else{
 			$invoice = '';
 		}

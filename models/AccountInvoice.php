@@ -373,6 +373,36 @@ class AccountInvoice extends \yii\db\ActiveRecord
 		}
 	}
 
+	private function getItemDescriptionMaterial($soLine){
+		$res = $soLine->name;
+
+		if(!$res){
+			$res = '';
+			foreach($soLine->materialLines as $mat){
+				$res .= $mat->desc.'<br/>';
+			}
+			/*var_dump($res);
+			die('aaxx');*/
+		}
+
+		return $res;
+		
+	}
+
+
+	private function getPartialItemDescriptions($soLine, $printForFaktur=false,$priceUnitMainCurr=null){
+		$res = (isset($soLine->product->name_template) ? $soLine->product->name_template.'<br/>'.nl2br($soLine->name).'<br/>P/N : '.$soLine->product->default_code.($printForFaktur ? '<br/>Rp<b>'.$this->formatValue($priceUnitMainCurr).' x '.$soLine->product_uom_qty.'</b>':'&nbsp;'):nl2br($soLine->name).($printForFaktur ? '<br/>'.$this->formatValue($priceUnitMainCurr).' x '.$soLine->product_uom_qty:'&nbsp;'));
+
+
+		if(isset($soLine->product->name_template)){
+			$res = $soLine->product->name_template.'<br/>'.nl2br($this->getItemDescriptionMaterial($soLine)).'<br/>P/N : '.$soLine->product->default_code.($printForFaktur ? '<br/>Rp<b>'.$this->formatValue($priceUnitMainCurr).' x '.$soLine->product_uom_qty.'</b>':'&nbsp;');
+		}else{
+			$res = nl2br($soLine->name).($printForFaktur ? '<br/>'.$this->formatValue($priceUnitMainCurr).' x '.$soLine->product_uom_qty:'&nbsp;');			
+		}
+
+		return $res;
+	}
+
 
 	public function getInvoiceMapData($printForFaktur=false){
 		// $this->printForFaktur = $printForFaktur;
@@ -650,8 +680,7 @@ class AccountInvoice extends \yii\db\ActiveRecord
 						'id'=>$soLine->id,
 
 						'no'=>($this->payment_for =='dp' || $this->payment_for =='completion' ? $no:$soLine->sequence),
-						'name'=>(isset($soLine->product->name_template) ? $soLine->product->name_template.'<br/>'.nl2br($soLine->name).'<br/>P/N : '.$soLine->product->default_code.($printForFaktur ? '<br/>Rp<b>'.$this->formatValue($priceUnitMainCurr).' x '.$soLine->product_uom_qty.'</b>':'&nbsp;'):nl2br($soLine->name).($printForFaktur ? '<br/>'.$this->formatValue($priceUnitMainCurr).' x '.$soLine->product_uom_qty:'&nbsp;')),
-
+						'name'=>$this->getPartialItemDescriptions($soLine, $printForFaktur,$priceUnitMainCurr),
 
 						'priceUnit'=>$soLine->price_unit,
 						'priceUnitMainCurr'=>$priceUnitMainCurr,

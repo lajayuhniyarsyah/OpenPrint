@@ -969,7 +969,7 @@ EOQ;
 		if(isset($params['state']) && $params['state']){
 			
 			if ($params['state']=="order"){
-				$cekstate = 'confirmed, approved, done';
+				$cekstate = 'confirmed,approved,done';
 				if($params['state']!='0')
 				{
 					$query->andWhere(['sol.state'=>explode(',', $cekstate)]); 

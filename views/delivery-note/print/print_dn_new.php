@@ -347,7 +347,7 @@ $scr = '
 $this->registerJs($scr);
 
 if($model->terms){
-	$scr2='jQuery(\'.contentLines tr:last\').after(getNotes(\''.preg_replace('/\n/', '', nl2br($model->terms)).'\'));
+	$scr2='jQuery(\'.contentLines tr:last\').after(getNotes(\''.preg_replace('/\n/', '', $model->terms).'\'));
 	currLineHeight = jQuery(\'#tdLine\'+currPage).height();
 	console.log(currLineHeight);
 	if(currLineHeight>maxLinesHeight){

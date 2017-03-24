@@ -835,6 +835,14 @@ EOQ;
 			'pagination' => [
 				'pageSize' => 100,
 			],
+			'sort'=>[
+				'attributes'=>[
+					'partner'=>[
+						'asc'=>['partner'=>SORT_ASC],
+						'desc'=>['partner'=>SORT_DESC],
+					]
+				]
+			]
 		]);
 
 		if($groupBy){
@@ -897,7 +905,12 @@ EOQ;
 
 		// jika group
 		if($groupBy){
-			$query->select(['CONCAT("pc"."id", \'/\', "pid"."id", \'/\', "pc"."name", \'/\', "pid"."name",\'/\',\''.$category.'\',\'/\',\''.$partner.'\',\'/\',\''.$product.'\',\'/\',\''.$pricelist.'\',\'/\',\''.$state.'\',\'/\',\''.$dattefrom.'\',\'/\',\''.$dateto.'\') as id,
+			
+			/*var_dump($partner);
+			var_dump($product);
+			var_dump($pricelist);
+			die();*/
+			$query->select(['CONCAT("pc"."id", \'/\', "pid"."id", \'/\', "pc"."name", \'/\', "pid"."name",\'/\',\''.$category.'\',\'/\',\''.$partner.'\',\'/\',\''.implode('-', $product).'\',\'/\',\''.$pricelist.'\',\'/\',\''.$state.'\',\'/\',\''.$dattefrom.'\',\'/\',\''.$dateto.'\') as id,
 					pc.name as category,
 					SUM(sol.price_unit*sol.product_uom_qty) as total,
 					pid.name as pricelist']);
@@ -999,7 +1012,7 @@ EOQ;
 
 		$query->andWhere(['not', ['sol.product_id' => null]]); 
 		if(!$groupBy){
-			$query->addOrderBy(['so.date_order' => SORT_DESC]);
+			// $query->addOrderBy(['so.date_order' => SORT_DESC]);
 		}
 		return $query;
 	}

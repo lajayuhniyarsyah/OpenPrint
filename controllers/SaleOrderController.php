@@ -833,7 +833,8 @@ EOQ;
 			'query' => $query,
 			'key'=>'id',
 			'pagination' => [
-				'pageSize' => 100,
+				'pageSize' => (Yii::$app->request->get('report-activity') ? 500:5000),
+
 			],
 			'sort'=>[
 				'attributes'=>[

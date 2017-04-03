@@ -2,7 +2,7 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 // echo $printer;
-if($model->state!='submited'){
+if($model->state!='submited' && !$forced){
 	echo 'Status == <b>'.strtoupper($model->state).'</b><br/>';
 	die('Print Hanya pada saat Submit!');
 }
@@ -336,7 +336,7 @@ if($model->state!='submited'){
 				</div>
 				<div class="colorCode"></div>
 			</div>
-			<div class="sign" contenteditable="true"><?php echo $model->signature0->name_related; ?></div>
+			<div class="sign" contenteditable="true"><?php echo $model->signature0 ? $model->signature0->name_related:null; ?></div>
 		</div>
 	</div>
 </div>

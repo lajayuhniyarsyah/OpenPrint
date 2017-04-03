@@ -96,7 +96,7 @@ use kartik\widgets\DatePicker;
 	])->textInput()->label('Group')*/ ?>
 	<?php 
 	// $data = ArrayHelper::getColumn(ResUsers::find()->select('login')->distinct()->all(),'login');
-	if(!$model->['tag_user']){
+	if(!$model['tag_user']){
 		$model['tag_user']=[];
 	}
 

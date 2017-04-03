@@ -150,6 +150,15 @@ use yii\helpers\Html;
 	.cursorPointer{
 		cursor: pointer;
 	}
+
+	@media print{
+		.not-printed{
+			display: none !important;
+		}
+		.border0{
+			border: 0px solid !important;
+		}
+	}
 </style>
 <table id="tblMain">
 	<thead>
@@ -184,7 +193,24 @@ use yii\helpers\Html;
 						<tr>
 							<td class="info1">Kepada</td>
 							<td class="info2">:</td>
-							<td class="info3"><?=Html::encode($model->destination0->name)?><br/><?=nl2br($model->destination0->comment)?></td>
+							<td class="info3">
+								<?=Html::encode($model->destination0->name)?><br/><?=nl2br($model->destination0->comment)?>
+								<?php
+								$this->registerJs(new \yii\web\JsExpression("
+									$('#btnAddMark').on('click',function(){
+										$('#markBox').toggle();
+										$('#markBox').focus();
+										return false;
+									})
+								"));
+								?>
+								<a href="#" class="not-printed" id="btnAddMark">Add Mark</a>
+							</td>
+						</tr>
+						<tr>
+							<td contenteditable="true" id="markBox" class="hidden border0" colspan="3" style="width: 200px;border: 1px solid black;">
+								
+							</td>
 						</tr>
 					</table>
 				</div>

@@ -352,7 +352,14 @@ $this->registerJs('jQuery(".fittext").fitText(0.9);');
 
         		if ($model->pricelist_id==2){
         			$product_qty=app\components\NumericLib::indoStyle($value->product_qty,2,',','.');
-        			$price_unit=app\components\NumericLib::indoStyle($value->price_unit,0,',','.');
+        			$pu_integer = round($value->price_unit);
+        			if($pu_integer<$value->price_unit){
+        				$price_unit=app\components\NumericLib::indoStyle($value->price_unit,2,',','.');
+        			}else{
+        				// die('aaa');
+        				$price_unit=app\components\NumericLib::indoStyle($value->price_unit,0,',','.');
+        			}
+        			
         			$subtotal1=app\components\NumericLib::indoStyle($value->price_unit*$value->product_qty,0,',','.');
         		}else{
 					$product_qty=app\components\NumericLib::indoStyle($value->product_qty,2,',','.');
@@ -411,7 +418,7 @@ $this->registerJs('jQuery(".fittext").fitText(0.9);');
 		}else{
 			$watermark="";
 		}
-		echo $watermark;
+		// echo $watermark;
 	?>
 	<table>
 		<tr style="vertical-align:top;">

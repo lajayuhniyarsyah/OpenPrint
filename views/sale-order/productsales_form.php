@@ -25,6 +25,8 @@ use miloschuman\highcharts\Highcharts;
 use nirvana\infinitescroll\InfiniteScrollPager;
 use kartik\grid\GridView;
 
+use kartik\export\ExportMenu;
+
 ?>
 
 <?php
@@ -108,7 +110,7 @@ $initScriptpricelist = <<< SCRIPT
 		}
 	}
 SCRIPT;
-?> 
+?>
 <div class="oe_view_manager oe_view_manager_current">
 	<div class="oe_view_manager_header">
 		<h3 class="judul">
@@ -123,6 +125,11 @@ SCRIPT;
 					<div class="subjudul">SALES REPORT</div>
 					<br/>
 					<br/>
+					<?php
+					echo ExportMenu::widget([
+						'dataProvider'=>$dataProvider,
+					]);
+					?>
 					<div class="dropdown">
 					  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
 					    Group Data

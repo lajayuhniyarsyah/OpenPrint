@@ -269,7 +269,7 @@ class OpenERPLib extends Component{
             return ( $resp->value() );
     }
 
-
+    
     public function price_get($ids, $product_id, $qty, $partner_id) {
         $client = new Client($this->server."object");
         //   ['execute','userid','password','module.name',{values....}]
@@ -298,6 +298,36 @@ class OpenERPLib extends Component{
         else
             return $resp->value();
     }
+
+    public function update_att_yest($ids, $date, $aksi) {
+        $client = new Client($this->server."object");
+        //   ['execute','userid','password','module.name',{values....}]
+        $client->return_type = 'phpvals';
+
+        $id_val = array();
+        $count = 0;
+        foreach ($ids as $id)
+            $id_val[$count++] = new Value($id, "int");
+
+        $msg = new Request('execute');
+        $msg->addParam(new Value($this->database, "string"));  //* database name */
+        $msg->addParam(new Value($this->uid, "int")); /* useid */
+        $msg->addParam(new Value($this->password, "string"));/** password */
+        $msg->addParam(new Value('hr.attendance.log', "string"));/** model name where operation will held * */
+        $msg->addParam(new Value("update_date_manual", "string"));/** method which u like to execute */
+        $msg->addParam(new Value($id_val, "array"));/** ids of record which to be updting..   this array must be Value array */
+        $msg->addParam(new Value($date, "string"));
+        $msg->addParam(new Value($aksi, "string"));
+       
+
+        $resp = $client->send($msg);
+        //print_r($resp);
+        if ($resp->faultCode())
+            return $resp;  /* if the record is not writable or not existing the ids or not having permissions  */
+        else
+            return $resp->value();
+    }
+
     public function get_fields($model){
         $client = new Client($this->server."object");
         $client->return_type = 'phpvals';

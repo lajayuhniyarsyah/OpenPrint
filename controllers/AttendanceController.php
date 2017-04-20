@@ -8,6 +8,9 @@ use app\models\HrAttendanceMinMaxLogSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use PhpXmlRpc\Value;
+use PhpXmlRpc\Request;
+use PhpXmlRpc\Client;
 
 /**
  * AttendanceController implements the CRUD actions for HrAttendanceMinMaxLog model.
@@ -23,6 +26,22 @@ class AttendanceController extends Controller
                     'delete' => ['post'],
                 ],
             ],
+            'access'=>[
+                'class'=>\yii\filters\AccessControl::className(),
+                'rules'=>[
+
+                    [
+                        'allow'=>true,
+                        'roles'=>['@'],
+                        // 'actions'=>['index']
+                    ],
+                    [
+                        'allow'=>false,
+                        'roles'=>['?'],
+                        
+                    ],
+                ]
+            ]
         ];
     }
 
@@ -117,7 +136,283 @@ class AttendanceController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+    public function actionExtraHours($employee_id, $day, $month, $year){
+        if(Yii::$app->request->isAjax){
+            \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            date_default_timezone_set('UTC');  // optional
+            $first_date_time = mktime( 0, 0, 0, $month, $day, $year);
+            $last_date_time = mktime( 0, 0, 0, $month, $day+1, $year);
+            $dbTarget = "LIVE_2014";
+            $ipTarget = Yii::$app->request->serverName.':10001';
+            $query = <<<query
+    SELECT 
+      datetime_log, date_extra_out, id
+    from 
+        hr_attendance_log 
+    where 
+        employee_id = {$employee_id}
+    and
+        datetime_log >= {$first_date_time}
+    and 
+        datetime_log < {$last_date_time}
+query;
+            $connection = Yii::$app->db;
+            $res = $connection->createCommand($query)->cache(40)->queryAll();
+
+            $jam_masuk = mktime(8, 0, 0, $month, $day, $year );
+            $jam_pulang = mktime(17, 0, 0, $month, $day, $year );
+            $extra_time = mktime(17, 0, 0, $month, $day, $year );
+            $result = array();
+            $before_8 = [];
+            $after_17 = [];
+            $office_hour = [];
+            $all = [];
+            $date_extra_out = null;
+            foreach ($res as $key => $value) {
+                if(!$value['date_extra_out']){
+                     if($value['datetime_log'] <= $jam_masuk){
+                        array_push($before_8, $value['datetime_log']);
+                     }elseif($value['datetime_log'] >= $jam_pulang){
+                        if($after_17){
+                            if($value['datetime_log'] >= $after_17[0]+ 1800){
+                                array_push($after_17, $value['datetime_log']);
+                            }else{
+                                array_splice($after_17, count($before_8) - 1, 1);
+                                array_push($after_17, $value['datetime_log']);
+                            }
+                        }
+                        else{
+                            array_push($after_17, $value['datetime_log']);
+                        }
+                        
+                     }else{
+                        array_push($office_hour, $value['datetime_log']);
+                     }
+                  }
+                 $epoch = $value['datetime_log'];
+                 $dt = new \DateTime("@$epoch");
+                 // $link = '<a href=http://'.$ipTarget.'/?db='.$dbTarget.'#id='.$value['id'].'&view_type=form&model=hr.attendance.log&menu_id=682&action=812 target=_blank>'. $dt->format('H:i') .'</a>';
+
+                  $link = '<a data-id='.$value['id'].' onclick="editExtraHour(this)">'. $dt->format('H:i') .'</a>';
+
+                 array_push($all, $link);
+
+                 if($value['date_extra_out']){
+                     $date_extra_out = $value['date_extra_out'];
+                 }
+            
+                
+            }
+            sort($all);
+            sort($before_8);
+            sort($after_17);
+            sort($office_hour);
+          
+// =====================================================================================
+            if ($before_8){
+                $result['hour_1'] = $before_8[count($before_8) - 1];
+                array_splice($before_8, count($before_8) - 1, 1);
+              
+            }elseif ($office_hour) {
+                $result['hour_1'] = $office_hour[0];
+                array_splice($office_hour,0, 1);
+            }
+            elseif ($after_17) {
+                $result['hour_1'] = $after_17[0];
+                 array_splice($after_17,0, 1);
+            }else{
+                $result['hour_1'] = '<span class="not-set">(not set)</span>';
+                $result['minute_1'] = '<span class="not-set">(not set)</span>';
+            }
+         
+// ====================================================================================
+          if ($after_17){
+                $result['hour_2'] = $after_17[0];
+                array_splice($after_17, 0, 1);
+            }elseif ($office_hour) {
+                $result['hour_2'] = $office_hour[count($office_hour) - 1];
+                array_splice($office_hour,count($office_hour) - 1, 1);
+               
+            }
+            elseif ($before_8) {
+                $result['hour_2'] = $before_8[count($before_8) - 1];
+                array_splice($before_8, count($before_8) - 1, 1);
+            }else{
+                $result['hour_2'] = '<span class="not-set">(not set)</span>';
+                $result['minute_2'] = '<span class="not-set">(not set)</span>';
+            }
+// =====================================================================================
+            if ($after_17){
+              $result['ext_hour_1'] = $after_17[0];
+              array_splice($after_17, 0, 1);
+           }
+           else{
+                $result['ext_hour_1'] = '<span class="not-set">(not set)</span>';
+                $result['ext_min_1'] = '<span class="not-set">(not set)</span>';
+            }
+            if ($after_17){
+              $result['ext_hour_2'] = $after_17[count($after_17)-1];
+             
+           } 
+           else{
+                $result['ext_hour_2'] = '<span class="not-set">(not set)</span>';
+                $result['ext_min_2'] = '<span class="not-set">(not set)</span>';
+            }
+
+
+// =====================================================================================
+           if ($result['hour_1'] != '<span class="not-set">(not set)</span>'){
+            $epoch =  $result['hour_1'];
+            $dt = new \DateTime("@$epoch");
+            $result['hour_1'] = $dt->format('H');
+            $result['minute_1'] = $dt->format('i');
+           }
+            
+           if ($result['hour_2'] != '<span class="not-set">(not set)</span>'){
+            $epoch =  $result['hour_2'];
+            $dt = new \DateTime("@$epoch");
+            $result['hour_2'] = $dt->format('H');
+            $result['minute_2'] = $dt->format('i');
+            }
+
+
+           if ($result['ext_hour_1'] != '<span class="not-set">(not set)</span>'){
+            $epoch =  $result['ext_hour_1'];
+            $dt = new \DateTime("@$epoch");
+            $result['ext_hour_1'] = $dt->format('H');
+            $result['ext_min_1'] = $dt->format('i');
+            }
+          if ($result['ext_hour_2'] != '<span class="not-set">(not set)</span>'){
+            $epoch =  $result['ext_hour_2'];
+            $dt = new \DateTime("@$epoch");
+            $result['ext_hour_2'] = $dt->format('H');
+            $result['ext_min_2'] = $dt->format('i');
+        }
+          $result['log_list'] = implode(",",$all);
+          if(!$all){
+             $result['log_list'] = '<span class="not-set">(not set)</span>';
+           }
+// =====================================================================================
+        
+             $query = <<<query
+    SELECT 
+      datetime_log
+    from 
+        hr_attendance_log 
+    where 
+        date_extra_out = '{$year}-{$month}-{$day}'
+    and
+        employee_id = {$employee_id}
+   
+query;
+            $connection = Yii::$app->db;
+            $res = $connection->createCommand($query)->queryAll();
+            if($res){
+                $epoch =  $res[0]['datetime_log'];
+                $dt = new \DateTime("@$epoch");
+                $result['ext_hour_2'] = $dt->format('H');
+                $result['ext_min_2'] = $dt->format('i');
+
+               
+            }
+// =======================================================================================
+           $query = <<<query
+    SELECT 
+      datetime_log
+    from 
+        hr_attendance_log 
+    where 
+        date_extra_in = '{$year}-{$month}-{$day}'
+    and
+        employee_id = {$employee_id}
+   
+query;
+            $connection = Yii::$app->db;
+            $res = $connection->createCommand($query)->queryAll();
+            if($res){
+                $epoch =  $res[0]['datetime_log'];
+                $dt = new \DateTime("@$epoch");
+                $result['ext_hour_1'] = $dt->format('H');
+                $result['ext_min_1'] = $dt->format('i');
+
+               
+            }
+// =======================================================================================
+      $query = <<<query
+    SELECT 
+      datetime_log
+    from 
+        hr_attendance_log 
+    where 
+        date_in = '{$year}-{$month}-{$day}'
+    and
+        employee_id = {$employee_id}
+   
+query;
+            $connection = Yii::$app->db;
+            $res = $connection->createCommand($query)->queryAll();
+            if($res){
+                $epoch =  $res[0]['datetime_log'];
+                $dt = new \DateTime("@$epoch");
+                $result['hour_1'] = $dt->format('H');
+                $result['minute_1'] = $dt->format('i');
+
+               
+            }
+// =======================================================================================
+      $query = <<<query
+    SELECT 
+      datetime_log
+    from 
+        hr_attendance_log 
+    where 
+        date_out = '{$year}-{$month}-{$day}'
+    and
+        employee_id = {$employee_id}
+   
+query;
+            $connection = Yii::$app->db;
+            $res = $connection->createCommand($query)->queryAll();
+            if($res){
+                $epoch =  $res[0]['datetime_log'];
+                $dt = new \DateTime("@$epoch");
+                $result['hour_2'] = $dt->format('H');
+                $result['minute_2'] = $dt->format('i');
+
+               
+            }
+// =======================================================================================
+
+           return $result; 
+            
+        }
+    }
+
+
+    public function actionUpdateExtraHours($id, $date, $aksi){
+         if(Yii::$app->request->isAjax){
+            \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            $data_user = Yii::$app->user->identity;
+            $database = "erp_baru";
+            $username = $data_user->login;
+            $password = $data_user->password;
+            $oe =  Yii::$app->openERPLib;
+            $login = $oe->login($username, $password, $database, 'http://10.36.15.55:8069/xmlrpc/');
+            $function = $oe->update_att_yest([$id], $date, $aksi);
+            return $function;
+         }
+    }
     public function actionFirstAndLastScan($site=1792,$year=null,$month=null,$department=null){
+        // $data_user = Yii::$app->user->identity;
+        // $database = "erp_baru";
+        // $username = $data_user->login;
+        // $password = $data_user->password;
+        // $test = Yii::$app->openERPLib->login($username, $password, $database, 'http://10.36.15.55:8069/xmlrpc/');
+        // $coba = Yii::$app->openERPLib->search(['name'], 'hr.attendance.log');
+        // var_dump($coba);
+        // var_dump($test);
+        // die();
+        date_default_timezone_set('UTC');  // optional
         if(!$year){
             $year = date('Y');
         }
@@ -126,6 +421,9 @@ class AttendanceController extends Controller
         }
         $first = date('Y-m-d', mktime(0, 0, 0, $month, 1, $year));
         $last = date('Y-m-t', mktime(0, 0, 0, $month, 1, $year));
+  
+        // var_dump(mktime( 0, 0, 0, 4, 5, 2017 ));
+        // die();
         $dataToRender = [];
         $where = [
             'employee'=>'%%',
@@ -154,7 +452,7 @@ class AttendanceController extends Controller
 SELECT 
     date_series.i
     , r_p.name work_site
-    , h_emp.name_related employee
+    , h_emp.name_related employee, h_emp.id as employee_id
     --, att_log_min_max_pure.employee_id
     , (CASE WHEN att_log_min_max_pure.y IS NULL THEN date_series.year_series ELSE att_log_min_max_pure.y END) "year"
     , (CASE WHEN att_log_min_max_pure.m IS NULL THEN date_series.month_series ELSE att_log_min_max_pure.m END) "month"

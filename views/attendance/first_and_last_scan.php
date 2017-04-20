@@ -195,11 +195,7 @@ use yii\bootstrap\Dropdown;
  	$default_td = '<td class="ext_hour_1"></td><td class="ext_min_1"></td><td class="ext_hour_2"></td><td class="ext_min_2"></td><td class="log_list"></td>';
  	$img_loader = '<img src="'.$loader.'"" />';
     $this->registerJs(new \yii\web\JsExpression("
-    var tables = $('table').tableExport();
-    tables.update({
-	    position: 'top' 
-	});
-	$.fn.tableExport.defaultFileName = 'absensi';
+    var tables = $('table').tableExport({headings: true, footers: true, formats: ['xls', 'csv', 'txt'], fileName: 'Attendance-log', bootstrap: true, position: 'top',ignoreRows: null, ignoreCols: null, ignoreCSS: '.tableexport-ignore'});
 
 	var tr_selector;
     function editExtraHour(selector){

@@ -397,7 +397,8 @@ query;
             $username = $data_user->login;
             $password = $data_user->password;
             $oe =  Yii::$app->openERPLib;
-            $login = $oe->login($username, $password, $database, 'http://10.36.15.55:8069/xmlrpc/');
+            // $login = $oe->login($username, $password, $database, 'http://10.36.15.55:8069/xmlrpc/');
+            $login = $oe->login($username, $password);
             $function = $oe->update_att_yest([$id], $date, $aksi);
             return $function;
          }

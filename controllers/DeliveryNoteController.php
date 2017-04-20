@@ -532,7 +532,7 @@ class DeliveryNoteController extends Controller
                         $bomId = $moveDest->product->mrpBoms[0]->id;
                         $bomObj = \app\models\MrpBom::find()->where('product_id=:prodId AND bom_id = :bomId')
                             ->addParams([':prodId'=>$line->product_id,':bomId'=>$bomId])->one();
-                            $res[$moveDest->id]['qty'] = $line->product_qty/$bomObj->product_qty;
+                        $res[$moveDest->id]['qty'] = $line->product_qty/$bomObj->product_qty;
                     }
 
                 }
@@ -601,13 +601,36 @@ class DeliveryNoteController extends Controller
   private function prepareLinenew($line,$printHead=true)
 	{   
 		$res = [];
+
+        $qtyMat = $line->product_qty;
+
+        // count qty
+        $method = false;
+        // if product line is batch
+        if($line->product->track_outgoing){
+            foreach($line->deliveryNoteLineMaterials as $mat){
+                //
+                if($mat->prodlot_id && $mat->product_id==$line->product_id){
+                    $qtyMat += $mat->qty;
+                }
+            }
+        }else{
+            foreach($line->deliveryNoteLineMaterials as $mat){
+                if(!$mat->prodlot_id && $mat->product_id==$line->product_id){
+                    $qtyMat = $mat->qty;
+                }
+            }
+        }
+        // end of count qty
+
+
 		if(isset($line->opLine->orderPreparationBatches) && $line->opLine->orderPreparationBatches)
 		{
 			if($printHead==true):
 				$res =[
 					'product_id'=>$line->product_id,
 					'no'=>$line->no,
-					'qty'=>$line->product_qty,
+					'qty'=>$qtyMat,
 					'uom'=>$line->productUom->name,
 					'name'=>nl2br($line->name),
 					'part_no'=>$line->product->default_code,
@@ -624,7 +647,7 @@ class DeliveryNoteController extends Controller
 				$res=[
 					'product_id'=>$line->product_id,
 					'no'=>$line->no,
-					'qty'=>$line->product_qty,
+					'qty'=>$qtyMat,
 					'uom'=>(isset($line->productUom->name) ? $line->productUom->name:'-'),
 					'name'=>nl2br($line->name),
 					'part_no'=>(isset($line->product->default_code) ? $line->product->default_code:'-'),

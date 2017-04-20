@@ -1,3 +1,6 @@
+<?php
+$this->title = 'Delivery Note / Surat Jalan #'.$model->name;
+?>
 <style type="text/css">
 	#container
 	{

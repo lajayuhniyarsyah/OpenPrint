@@ -103,10 +103,10 @@ use yii\bootstrap\Dropdown;
 
 	])?>
 	<?php
-	 // preg_match("/site/", strtolower(Html::encode($site_active->name)), $matches, PREG_OFFSET_CAPTURE);
-	 // if($matches){
+	 preg_match("/site/", strtolower(Html::encode($site_active->name)), $matches, PREG_OFFSET_CAPTURE);
+	 if($matches){
 	 	echo '<button id="extra_hours" class="btn">With Extra Hours</button>';
-	 // }
+	 }
 	?>
 	
 	<script type="text/javascript">

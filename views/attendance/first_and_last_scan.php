@@ -198,6 +198,10 @@ use yii\bootstrap\Dropdown;
     var tables = $('table').tableExport({headings: true, footers: true, formats: ['xls', 'csv', 'txt'], fileName: 'Attendance-log', bootstrap: true, position: 'top',ignoreRows: null, ignoreCols: null, ignoreCSS: '.tableexport-ignore'});
 
 	var tr_selector;
+	$('button').click(function(){
+		tables.reset();
+	})
+	
     function editExtraHour(selector){
 
     		
@@ -312,7 +316,7 @@ use yii\bootstrap\Dropdown;
 			        },
 
 			       success: function (data) {
-			      	tables.reset();
+			      	
 			       	tr.find('.hour_1').html(data['hour_1'])
 					tr.find('.hour_2').html(data['hour_2'])
 					tr.find('.minute_1').html(data['minute_1'])

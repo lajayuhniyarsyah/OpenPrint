@@ -106,12 +106,12 @@ class SaleOrderController extends Controller
 		
 		$searchModel = new SaleOrderSearch();
 
+
 		// var_dump($show_uids);
 		if($onlyShowByCreateUid){
 			$show_uids = false;
 		}
 		$dataProvider = $searchModel->searchTrack(Yii::$app->request->queryParams, $uid, $onlyShowByCreateUid, $show_uids);
-		// die();
 		return $this->render('index', [
 			'searchModel' => $searchModel,
 			'dataProvider' => $dataProvider,
@@ -691,6 +691,45 @@ EOQ;
 		elseif ($id > 0) {
 			
 			$out['results'] = ['id' => $id, 'text' => ResUsers::find()->where(['id'=>$id])->with('partner')->one()->partner->name];
+		}
+		else {
+			$out['results'] = ['id' => 0, 'text' => 'No matching records found'];
+		}
+		echo \yii\helpers\Json::encode($out);
+	}
+
+
+
+	public function actionGetAllLines($search = null, $id = null) {
+		$out = ['more' => false];
+		$q = new \yii\db\Query;
+		if (!is_null($search)) {
+				$lines = Yii::$app->db->createCommand("
+								SELECT 
+									sol.order_id as id,
+									concat_ws(' ',so.name::text, sol.name::text, sol_line.desc::text) as text
+								FROM 
+									sale_order_line as sol
+									LEFT JOIN 
+										product_product as pp ON pp.id = sol.product_id
+									LEFT JOIN 
+										sale_order as so ON so.id = sol.order_id
+									LEFT JOIN 
+										sale_order_material_line as sol_line ON sol_line.sale_order_line_id = sol.id
+								WHERE 
+									lower(sol.name) LIKE '%".strtolower($search)."%' OR 
+									lower(pp.default_code) LIKE '%".strtolower($search)."%' OR
+									lower(pp.name_template) LIKE '%".strtolower($search)."%' OR
+									lower(sol_line.desc) LIKE '%".strtolower($search)."%' OR
+									lower(so.name) LIKE '%".strtolower($search)."%'
+								LIMIT 20
+							")->queryAll();
+
+			// var_dump($lines);
+			$out['results'] = array_values($lines);
+		}
+		elseif ($id > 0) {
+			$out['results'] = ['id' => $id, 'text' => 'AAA'];
 		}
 		else {
 			$out['results'] = ['id' => 0, 'text' => 'No matching records found'];

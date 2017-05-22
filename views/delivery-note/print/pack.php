@@ -267,7 +267,7 @@ if($model->state!='submited' && !$forced){
     					 margin-top: 3mm;
     				}';
 			}
-			elseif($uid==23){
+			elseif($uid==23 || $uid == 256){
 				echo '
 					.POInfo{
 						margin-top: 5mm;

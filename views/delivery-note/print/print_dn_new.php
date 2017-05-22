@@ -137,7 +137,7 @@ $this->title = 'Delivery Note / Surat Jalan #'.$model->name;
 <?php
 $uid = Yii::$app->request->getQueryParam('uid');
 // hadi or sri / ika // mike
-if( $uid == 23 || $uid == 101 || $uid == 173 || $uid==25):
+if( $uid == 23 || $uid == 101 || $uid == 173 || $uid==25 || $uid == 256):
 	?>
 	<style type="text/css">
 	.attnTo{

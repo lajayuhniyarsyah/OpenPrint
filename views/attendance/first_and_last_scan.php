@@ -2,9 +2,11 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Dropdown;
+use kartik\date\DatePicker;
 ?>
 
 <div class="form">
+
 	<h1>
 		Attendance Log
 		<span id="yearTitle" class="dropdown">
@@ -165,6 +167,18 @@ use yii\bootstrap\Dropdown;
         </div>
         <div class="modal-body">
 	        <form id="#myForm">
+	          <?php 
+					echo 'Date';
+					echo DatePicker::widget([
+					'id' => "test_picker",
+					'name' => 'dp_1',
+					'type' => DatePicker::TYPE_INPUT,
+					 'pluginOptions' => [
+					      'autoclose'=>true,
+					      'format' => 'yyyy-mm-dd',
+					  ]
+					]);
+				?>
 	          <input type="radio" name="pilih_aksi" class="pilih_aksi" value="date_in"> Hours In <br/>
 			  <input type="radio" name="pilih_aksi" class="pilih_aksi" value="date_out"> Hours Out <br/>
 			  <input type="radio" name="pilih_aksi" class="pilih_aksi" value="date_extra_in"> Hours Ext In <br/>
@@ -179,6 +193,7 @@ use yii\bootstrap\Dropdown;
     </div>
  </div>
  <?php
+ 	 $reload = '<a onclick="reload(this)">Reload</a>';
  	 $this->registerCssFile("@web/css/tableexport.min.css");
  	 $this->registerJsFile(
 	    '@web/js/FileSaver.min.js',
@@ -202,40 +217,39 @@ use yii\bootstrap\Dropdown;
 		tables.reset();
 	})
 	
-    function editExtraHour(selector){
+	    function reload(selector){
+
+				tr_selector = selector;
+	    		tr =  $(selector).closest('tr')
+	      		getAtt(tr, true);
+			}
+
+		function editExtraHour(selector){
 
     		
     		$('#myModal').modal('show')
 			tr_selector = selector;
-    		// function hideModal(){
-    		// 	 $('#myModal').modal('hide')
-    		// 	 alert('aaaaaaaaa')
-    		// }
-			// $('#save_modal').click(function(){
-			// 	// updateExtraHours(selector)
-			   
-
-			    
-			// });
-			// var x;
-		 //    if (confirm('apakah anda yakin mengubah ke ext hour out tanggal sebelumnya!') == true) {
-		 //       updateExtraHours(selector)
-		 //    } else {
-		 //        x = 'You pressed Cancel!';
-		 //    }
+    		tr =  $(selector).closest('tr')
+      		var startDate = tr.data('year')+'-'+tr.data('month')+'-'+(tr.data('day')-1)
+      		var endDate = tr.data('year')+'-'+tr.data('month')+'-'+(tr.data('day')+1)
+      		$('#test_picker').kvDatepicker('update', tr.data('year')+'-'+tr.data('month')+'-'+(tr.data('day')));
+      		$('#test_picker').kvDatepicker('setStartDate', startDate);
+      		$('#test_picker').kvDatepicker('setEndDate', endDate);
 		}
 
 	  $('#save_modal').on('click', function(){
 		$('#myModal').modal('hide')
 		aksi = $('.pilih_aksi:checked').val()
-		
-		updateExtraHours(tr_selector,aksi)
+		var date = $('#test_picker').val()
+		console.log(date)
+		updateExtraHours(tr_selector,aksi, date)
 	  })
-      function updateExtraHours(selector, aksi){
+      function updateExtraHours(selector, aksi, date){
       		var id_att = $(selector).data('id')
       		tr =  $(selector).closest('tr')
       		prev_tr = tr.prev()
-      		var date = tr.data('year')+'-'+tr.data('month')+'-'+tr.data('day')
+      		next_tr = tr.next()
+      		// var date = tr.data('year')+'-'+tr.data('month')+'-'+tr.data('day')
 		
 			$.ajax({
 				       url: '$urlUpdate',
@@ -255,6 +269,7 @@ use yii\bootstrap\Dropdown;
 				       success: function (data) {
 				       getAtt(prev_tr, true);
 				       getAtt(tr, true);
+				       getAtt(next_tr, true);
 				       	
 				          
 				  		
@@ -332,7 +347,7 @@ use yii\bootstrap\Dropdown;
 			          
 			       },
 			        error: function (request, status, error) {
-				       	tr.find('.hour_1').html('error')
+				       	tr.find('.hour_1').html('$reload')
 				    }
 			   })
 		 	}
@@ -340,7 +355,15 @@ use yii\bootstrap\Dropdown;
 
  
 
-    "),yii\web\View::POS_END)
+    "),yii\web\View::POS_END);
+ //    $this->registerJs(
+	//     '//$("document").ready(function(){
+			
+	// 		// console.log(jQuery(\'#test_picker\').data(\'kvDatepicker\'));
+	// 		console.log(jQuery(\'#test_picker\').kvDatepicker())
+	// 		 $("#test_picker").kvDatepicker("setStartDate", "5-May-2017");
+	//      //});'
+	// );
 
 
   ?>

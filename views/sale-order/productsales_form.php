@@ -339,7 +339,7 @@ SCRIPT;
 			                        'partner',
 			                        'category',
 			                        'product',
-                                    'product_desc',
+			                        'product_desc',
 			                        [
 			                        	'attribute'=>'qty',
 			                            'header'=>'Qty',
@@ -428,7 +428,7 @@ SCRIPT;
 		                        'so_no',
 		                        'category',
 		                        'product',
-                                'product_desc',
+		                        'product_desc',
 		                        [
 		                        	'attribute'=>'qty',
 		                            'header'=>'Qty',

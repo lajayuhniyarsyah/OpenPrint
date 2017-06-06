@@ -549,8 +549,12 @@ class DeliveryNoteController extends Controller
                 // not set
                 
                 $res[$line->id]=$this->prepareLinenew($line);
+                /*var_dump($res);
+                echo '<br/><br/><br/>';*/
             }
         endforeach;
+
+        // die();
 
         
         return $res;
@@ -608,11 +612,17 @@ class DeliveryNoteController extends Controller
         $method = false;
         // if product line is batch
         if($line->product->track_outgoing){
+            $pid = $line->product_id;
             foreach($line->deliveryNoteLineMaterials as $mat){
-                //
+                if($mat->product_id!=$pid){
+                    $notSameBetweenMaterial = true;
+                }
                 if($mat->prodlot_id && $mat->product_id==$line->product_id){
                     $qtyMat += $mat->qty;
                 }
+            }
+            if(isset($notSameBetweenMaterial) && $notSameBetweenMaterial==true){
+                $qtyMat = $mat->qty;
             }
         }else{
             foreach($line->deliveryNoteLineMaterials as $mat){
@@ -653,9 +663,8 @@ class DeliveryNoteController extends Controller
 					'part_no'=>(isset($line->product->default_code) ? $line->product->default_code:'-'),
 					'note_line_material'=>$line->deliveryNoteLineMaterials
 				];
+                // var_dump($qtyMat);
 		}
-
-		
 		if($line->product->superNotes):
 			foreach($line->product->superNotes as $notes):
 				if($notes->show_in_do_line) $res['name'].='<br/>'.$notes->template_note; #SHOW ETRA NOTES PRODUCT INTO LINE

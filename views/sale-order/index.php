@@ -31,6 +31,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
 	$url2 = \yii\helpers\Url::to(['sale-order/get-all-creator-list']);
 
+	$url_lines = \yii\helpers\Url::to(['sale-order/get-all-lines']);
+
 	// Script to initialize the selection based on the value of the select2 element
 
 	$script = function($uri){
@@ -154,7 +156,6 @@ $this->params['breadcrumbs'][] = $this->title;
 			// 'create_date',
 			// 'write_date',
 			// 'write_uid',
-			// 'origin',
 			'client_order_ref',
 			[
 				'attribute'=>'user_id',
@@ -181,7 +182,6 @@ $this->params['breadcrumbs'][] = $this->title;
 			],
 			// 'order_policy',
 			// 'shop_id',
-			
 			'date_order:date',
 			[
 				'attribute'=>'partner.name',
@@ -189,7 +189,6 @@ $this->params['breadcrumbs'][] = $this->title;
 			],
 			// 'note:ntext',
 			// 'fiscal_position',
-			
 			// 'payment_term',
 			// 'company_id',
 			// 'amount_tax',
@@ -218,6 +217,64 @@ $this->params['breadcrumbs'][] = $this->title;
 					'No','Yes'
 				]
 			],*/
+			[
+				'attribute'=>'lines',
+				'label'=>'Lines',
+				'format'=>'raw',   
+				// // 'value'=>function($model,$key,$index,$column){
+				'value'=>function($model,$key,$index,$grid){
+					$res = '<ul>';
+					foreach ($model->saleOrderLines as  $line) {
+						if ($line->name){
+							$res .='<li>'.$line->name.'</li>';
+						}else{
+							$res .='<li>'.'['.$line->product->default_code.'] '.$line->product->name_template.'</li>';	
+						}
+						
+					}
+					return $res;
+				},
+				'filterType'=>GridView::FILTER_SELECT2,
+				// 'filterWidgetOptions'=>[
+				// 	'pluginOptions' => [
+				// 		'allowClear' => true,
+				// 		'minimumInputLength'=>2,
+				// 		'ajax'=>[
+				// 			'url'=>Url::to(['service/search-lines']),
+				// 			'dataType'=>'json',
+				// 			'data'=>new JsExpression('function(term,page){
+				// 				return {search:term.term}; 
+				// 			}'),
+				// 			'results'=>new JsExpression('function(data,page){ return {results:data.results}; }'),
+				// 		],
+				// 		'initSelection' => new JsExpression(
+				// 				'function (element, callback) {
+				// 				var id=$(element).val();
+				// 				if (id !== "") {
+				// 					$.ajax("'.Url::to(['service/search-lines']).'&id=" + id, {
+				// 						dataType: "json"
+				// 						}).done(function(data) {
+				// 							callback(data.results);
+				// 						}
+				// 					);
+				// 				}
+				// 			}')
+				// 		],
+				// ],
+				'filterWidgetOptions'=>[
+					'pluginOptions' => [
+						'allowClear' => true,
+						'minimumInputLength'=>3,
+						'ajax'=>[
+							'url'=>$url_lines,
+							'dataType'=>'json',
+							'data'=>new JsExpression('function(term,page){return {search:term.term}; }'),
+							'results'=>new JsExpression('function(data,page){ return {results:data.results}; }'),
+						],
+						'initSelection' => new JsExpression($script($url))
+					],
+				],
+			],
 			[
 				'attribute'=>'amount_total',
 				'value'=>function($model,$key,$index,$column){

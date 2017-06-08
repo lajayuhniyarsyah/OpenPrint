@@ -197,6 +197,9 @@ use yii\helpers\Url;
 		.tglkirim{
 			width: 203px !important;
 		}
+		.btnclose{
+			display: none;
+		}
 /*		.tablettd{
 			margin-top: -48px !important;
 		}	*/
@@ -263,6 +266,23 @@ use yii\helpers\Url;
 		float: left;
 		font-size: 9px;
 		margin-left: 2px;
+	}
+	.kotak{
+		border: 1px solid #000;
+		min-height: 30px;
+		padding: 5px;
+		margin-top: 5px;
+	}
+	.btnclose{
+		background-color: #b4b4b4;
+	    border-radius: 37px;
+	    cursor: pointer;
+	    font-size: 8px;
+	    margin-left: -9px;
+	    margin-top: -17px;
+	    padding-left: 3px;
+	    padding-right: 3px;
+	    position: absolute;
 	}
 </style>
 	<?php 
@@ -333,7 +353,27 @@ use yii\helpers\Url;
 
 		}
 		$data2[]=array('','','<br/><br/>'.$model->terms,'');
+		// $data2[]=array('','','<br/><br/>'.$model->partnerShipping,'');
+		if($model->partnerShipping->state){
+
+			$state = $model->partnerShipping->state->name;
+		}
+		else{
+			$state = '';
+		}
+		$Shipping = '<div class="kotak">
+					 <div class="btnclose">X</div>
+					 '.$model->partnerShipping->street.' 
+					 '.$model->partnerShipping->street2.'<br/>
+					 '.$model->partnerShipping->city.' 
+					 '.$state.' 
+					 '.$model->partnerShipping->zip.'
+					 </div>';
+
 	?>
+
+
+
 <div id="pageContainer">
 <div class="pages">
 	<?php
@@ -535,9 +575,9 @@ $this->registerJs('
 
 	// data to render
 	var lines = '.\yii\helpers\Json::encode($data2).';
+	var Shipping = '.\yii\helpers\Json::encode($Shipping).';
 	var maxLinesHeight = jQuery(\'.tdLines:last\').height();
 	
-
 	var currRow = 0;
 
 	console.log(maxLinesHeight);
@@ -598,8 +638,16 @@ $this->registerJs('
 
 		if (cektable < HeightTable){
 			var res = "<tr><td style=\"width:50px; height:"+SetHeight+"px;  text-align:center;\"></td><td style=\"width:130px; text-align:center;\"></td><td><div class=\"leftdata\"></div><div class=\"rightdata\"></div></td></tr>";
+
+			var res = "<tr><td style=\"width:50px; height:"+SetHeight+"px;  text-align:center;\"></td><td style=\"width:130px; text-align:center;\"></td><td><div class=\"leftdata\">"+Shipping+"</div></td></tr>";
+
 			jQuery(\'#lines\'+currPage+\' tr:last\').after(res);
 		}
 	// end loop
+
+	jQuery(\'.btnclose\').click(function(){
+		jQuery(\'.kotak\').hide();
+	});
+
 ');
 ?>

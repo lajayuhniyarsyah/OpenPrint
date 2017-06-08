@@ -363,11 +363,13 @@ use yii\helpers\Url;
 		}
 		$Shipping = '<div class="kotak">
 					 <div class="btnclose">X</div>
-					 '.$model->partnerShipping->street.' 
+					 <p><b>Alamat Pengiriman: </b><br/>
+					 <b>'.$model->partnerShipping->name.'</b> <br/>'
+					 .$model->partnerShipping->street.' 
 					 '.$model->partnerShipping->street2.'<br/>
 					 '.$model->partnerShipping->city.' 
 					 '.$state.' 
-					 '.$model->partnerShipping->zip.'
+					 '.$model->partnerShipping->zip.'</p>
 					 </div>';
 
 	?>

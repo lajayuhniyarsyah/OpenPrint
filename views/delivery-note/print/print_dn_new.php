@@ -65,7 +65,7 @@ $this->title = 'Delivery Note / Surat Jalan #'.$model->name;
 	}
 	.opNo
 	{
-		margin-top: 9%;
+		margin-top: 6px;
 		padding-left: 61%;
 		font-size: 12pt;
 
@@ -170,7 +170,7 @@ if( $uid == 23 || $uid == 101 || $uid == 173 || $uid==25 || $uid == 256):
 
 	.opNo{
 		padding-left: 64% !important;
-		margin-top: 6% !important;
+		margin-top: 5% !important;
 		font-size: 10pt;
 	}
 	.headers{
@@ -235,12 +235,22 @@ if($uid==25){ ?>
 
 				</div>
 				<div class="opNo">
-
-					<?php
-						$fullOp=$model->prepare->name;
-						$explOp = explode('/', $fullOp);
-						echo $explOp[0];
-					?>
+					<div class="">
+						<?php
+							// echo date('d-M-Y');
+							$dateTanggal  = DateTime::createFromFormat('Y-m-d',$model->doc_date);
+							echo $dateTanggal->format('d-M-Y');
+						?>
+					</div>
+					<div style="margin-top: 4px;">
+						
+						<?php
+							$fullOp=$model->prepare->name;
+							$explOp = explode('/', $fullOp);
+							echo $explOp[0];
+						?>
+					</div>
+					
 					
 				</div>
 				

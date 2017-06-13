@@ -334,6 +334,7 @@ class DeliveryNoteController extends Controller
 
                 $res[$no]['name'] = '['.$prod['default_code'].'] ' .$prod['name_template'].'<br/>'.$l['name'];
             }
+            // var_dump($res[$no]['name']);
             if (isset($l['note_line_material'])){
                 $prod = ProductProduct::findOne($l['product_id']);
                 
@@ -359,7 +360,7 @@ class DeliveryNoteController extends Controller
                                 $superNotes = SuperNotes::findOne($spnotes['super_note_id']);
                                 $printSp_note .= '<br/>'.$superNotes['template_note'];
                             }
-                            $res[$no]['name'] =  '['.$prod['default_code'].'] ' .$prod['name_template'].'<br/>'.nl2br($line_material['desc'].$printSp_note);
+                            $res[$no]['name'] =  '['.$prod['default_code'].'] ' .$prod['name_template'].'<br/>'.nl2br($l['name']).'<br/>'.nl2br($line_material['desc'].$printSp_note);
                         }
                     }
 
@@ -386,7 +387,9 @@ class DeliveryNoteController extends Controller
                         
                         $res[$no]['name'] .= '<li>['.$modelprod['default_code'].'] ' .$modelprod['name_template'].' <strong>('.$line_material['qty'].' '.$uom['name'].'</strong>) <br/>'.nl2br($line_material['desc']).$batch.nl2br($printSp_note).'</li>';
                     }
+
                 }
+
             }            
 
             

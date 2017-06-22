@@ -606,9 +606,9 @@ class DeliveryNoteController extends Controller
 
 
   private function prepareLinenew($line,$printHead=true)
-	{   
+	{
 		$res = [];
-
+        // var_dump($line);
         $qtyMat = $line->product_qty;
 
         // count qty
@@ -616,16 +616,43 @@ class DeliveryNoteController extends Controller
         // if product line is batch
         if($line->product->track_outgoing){
             $pid = $line->product_id;
+            $lineUom = $line->product_uom;
             foreach($line->deliveryNoteLineMaterials as $mat){
-                if($mat->product_id!=$pid){
-                    $notSameBetweenMaterial = true;
+                // check wheter isset another pid
+                if($mat->product_id!=$line->product_id){
+                    $hasNotSameProduct=true;
                 }
-                if($mat->prodlot_id && $mat->product_id==$line->product_id){
-                    $qtyMat += $mat->qty;
+
+                if($mat->product_id == $line->product_id && $mat->product_uom!=$line->product_uom){
+                    $sameProductNotSameUom=true;
                 }
             }
-            if(isset($notSameBetweenMaterial) && $notSameBetweenMaterial==true){
+
+            if(!isset($sameProductNotSameUom) && !isset($sameProductNotSameUom)){
+                foreach($line->deliveryNoteLineMaterials as $mat){
+                    if($lineUom != $mat->product_uom){
+                        $notSameUom = true;
+                    }
+
+
+                    if($mat->product_id!=$pid){
+                        $notSameBetweenMaterial = true;
+                    }
+                    if($mat->prodlot_id && $mat->product_id==$line->product_id){
+                        $qtyMat += $mat->qty;
+                    }
+                    
+
+
+                }
+            }
+
+
+            
+            if(isset($notSameBetweenMaterial) && $notSameBetweenMaterial==true && isset($notSameUom)){
                 $qtyMat = $mat->qty;
+                // var_dump($qtyMat);
+                // die();
             }
         }else{
             foreach($line->deliveryNoteLineMaterials as $mat){

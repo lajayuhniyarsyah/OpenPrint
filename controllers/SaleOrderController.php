@@ -971,11 +971,14 @@ EOQ;
 					sol.product_uom_qty as qty,
 					sol.name as product_desc,
 					(sol.product_uom_qty*sol.price_unit) as total,
-					so.name as so_no
+					so.name as so_no,
+					salesman.login as sales_name
+
 				");
 		}
 		$query->from('sale_order_line as sol')
 			->join('LEFT JOIN','sale_order as so','so.id=sol.order_id')
+			->join('LEFT JOIN', 'res_users as salesman', 'so.user_id=salesman.id' )
 			->join('LEFT JOIN','product_template as pp','pp.id=sol.product_id')
 			->join('LEFT JOIN','product_product as pt', 'pt.product_tmpl_id=pp.id')
 			->join('LEFT JOIN','res_partner as rp','rp.id=so.partner_id')

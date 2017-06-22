@@ -427,6 +427,7 @@ SCRIPT;
 		                        'partner',
 		                        'so_no',
 		                        'category',
+		                        'sales_name',
 		                        'product',
 		                        'product_desc',
 		                        [

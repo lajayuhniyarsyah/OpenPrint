@@ -34,6 +34,14 @@ class ReportAccountingController extends Controller
 
     public function actionStockMove($jenis,$from,$to,$location=12)
     {
+    	$dateFrom = new \DateTime($from);
+    	// $dateFrom->modify('-1 day');
+
+		$dateTo = new \DateTime($to);
+		$dateTo->modify('+1day');
+
+		$from = $dateFrom->format('Y-m-d');
+		$to = $dateTo->format('Y-m-d +1d');
     	$loc_active = \app\models\StockLocation::findOne($location);
     	$this->layout = 'report';
     	$jenisreport=$_GET['jenis'];
@@ -122,13 +130,15 @@ class ReportAccountingController extends Controller
     				->andWhere(['stock_move.state'=>'done' ])
 				    ->andWhere(['stock_picking.type'=>'out'])
 				    ->andWhere(['product_template.sale_ok'=>TRUE ])
-				    ->andWhere(['>=','stock_picking.date_done',$from])
-			     	->andWhere(['<=','stock_picking.date_done',$to])
+				    /*->andWhere(['>=','stock_picking.date_done',$from])
+			     	->andWhere(['<=','stock_picking.date_done',$to])*/
+			     	->andWhere(['between','stock_picking.date_done',$from,$to])
 				    ->andWhere(['not', ['product_product.default_code' => null]])
 				    ->andWhere(['not', ['product_product.default_code' => 'DUMMY01']])
 				    ->orderBy('stock_picking.date_done ASC, stock_move.id ASC, stock_picking.id ASC')
-    				->limit(900)
+    				->limit(2000)
     				->asArray();
+    			// var_dump($query->createCommand()->getRawSql());
     			/*$dp = new \yii\data\ArrayDataProvider([
     				'allModels'=>$query->all(),
     				'pagination'=>[
@@ -185,8 +195,9 @@ class ReportAccountingController extends Controller
 			    ->andWhere(['s.state'=>'done' ])
 			    ->andWhere(['s.type'=>'in'])
 			    ->andWhere(['pt.sale_ok'=>TRUE ])
-			    ->andWhere(['>=','s.date_done',$from])
-		     	->andWhere(['<=','s.date_done',$to])
+			    // ->andWhere(['>=','s.date_done',$from])
+		     // 	->andWhere(['<=','s.date_done',$to])
+			    ->andWhere(['between','s.date_done',$from,$to])
 			    ->andWhere(['not', ['p.default_code' => null]])
 			    ->andWhere(['not', ['p.default_code' => 'DUMMY01']])
 			    ->orderBy('s.date_done ASC, s.id ASC, m.id ASC');
@@ -233,8 +244,9 @@ class ReportAccountingController extends Controller
 			    // ->andWhere(['like','s.name','IN' ])
 			    ->andWhere(['m.state'=>'done' ])
 			    // ->andWhere(['s.type'=>'internal'])
-			    ->andWhere(['>=','m.date',$from])
-		     	->andWhere(['<=','m.date',$to])
+			    // ->andWhere(['>=','m.date',$from])
+		     	// ->andWhere(['<=','m.date',$to])
+		     	->andWhere(['between','m.date',$from,$to])
 			    ->andWhere(['pt.sale_ok'=>TRUE ])
 			    ->andWhere(['not', ['p.default_code' => null]])
 			    ->andWhere(['not', ['p.default_code' => 'DUMMY01']])

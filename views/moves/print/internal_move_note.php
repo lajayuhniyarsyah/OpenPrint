@@ -217,9 +217,14 @@ use yii\helpers\Html;
 				<div class="rightInfo">
 					<table style="width:100%">
 						<tr>
+							<td class="info1" style="width: 50px;">Print Ke</td>
+							<td class="info2">:</td>
+							<td class="info3"><?=Html::encode($model->print_delivery_count)?></td>
+						</tr>
+						<tr>
 							<td class="info1">Tanggal</td>
 							<td class="info2">:</td>
-							<td class="info3"><?=Html::encode(Yii::$app->formatter->asDateTime($model->date_transfered,"php:d-M-Y"))?></td>
+							<td class="info3"><?=Html::encode(Yii::$app->formatter->asDateTime(($model->date_transfered ? $model->date_transfered:date('Y-m-d')),"php:d-M-Y"))?></td>
 						</tr>
 						<tr>
 							<td class="info1R">No PB.</td>
@@ -262,8 +267,6 @@ use yii\helpers\Html;
 				</table>
 			</td>
 		</tr>
-	</tbody>
-	<tfoot>
 		<tr>
 			<!-- footer container -->
 			<td>
@@ -285,15 +288,15 @@ use yii\helpers\Html;
 									?>
 									<td id="rightFooter1">
 										<table id="expeditionInfo">
-											<tr>
-												<td class="expInfoHead">Jumlah Coli</td>
+											<!-- <tr>
+												<td class="expInfoHead">Jumlah Koli</td>
 												<td class="doubleDot">:</td>
 												<td class="expInfoVal"><?=Html::encode($underLine)?></td>
-											</tr>
+											</tr> -->
 											<tr>
-												<td>Dimensi</td>
+												<td>Koli/Dimensi</td>
 												<td>:</td>
-												<td><?=Html::encode($underLine)?></td>
+												<td><?=Html::decode(nl2br($model->packing_notes))?></td>
 											</tr>
 											<tr>
 												<td>Expedisi</td>
@@ -333,6 +336,6 @@ use yii\helpers\Html;
 				</table>
 			</td>
 		</tr>
-	</tfoot>
+	</tbody>
 	
 </table>

@@ -375,7 +375,8 @@
 				
 					var contentfooter= jQuery('page#page-'+cursor+' .footer');
 					var tinggiContentFooter = contentfooter.height()+contentElement.height();
-					if (tinggiContentFooter<1300){
+					console.log('ccaaaaalll');
+					if (tinggiContentFooter<1000){
 						jQuery("#term_condition-"+cursor).append(value+"<br/>")
 					}
 					else{
@@ -383,8 +384,8 @@
 						jQuery("#scope_of_work_supra-"+cursor).remove()
 						jQuery("#scope_of_work_customer-"+cursor).remove()
 
-						var cursorLama = cursor
-						cursor++
+						var cursorLama = cursor;
+						cursor++;
 						jQuery('page#page-'+cursorLama).after(template);
 						jQuery('page:last').attr('id','page-'+cursor);
 						jQuery("page#page-"+cursor+' .content p').remove()

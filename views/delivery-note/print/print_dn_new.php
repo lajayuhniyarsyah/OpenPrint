@@ -65,7 +65,7 @@ $this->title = 'Delivery Note / Surat Jalan #'.$model->name;
 	}
 	.opNo
 	{
-		margin-top: 6px;
+		margin-top: 5%;
 		padding-left: 61%;
 		font-size: 12pt;
 
@@ -137,7 +137,8 @@ $this->title = 'Delivery Note / Surat Jalan #'.$model->name;
 <?php
 $uid = Yii::$app->request->getQueryParam('uid');
 // hadi or sri / ika // mike
-if( $uid == 23 || $uid == 101 || $uid == 173 || $uid==25 || $uid == 256):
+$printerHadiUsers = [23,101,173,25,256];
+if(in_array($uid, $printerHadiUsers)):
 	?>
 	<style type="text/css">
 	.attnTo{
@@ -170,7 +171,7 @@ if( $uid == 23 || $uid == 101 || $uid == 173 || $uid==25 || $uid == 256):
 
 	.opNo{
 		padding-left: 64% !important;
-		margin-top: 5% !important;
+		margin-top: 6% !important;
 		font-size: 10pt;
 	}
 	.headers{

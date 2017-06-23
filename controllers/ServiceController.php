@@ -141,14 +141,15 @@ class ServiceController extends Controller{
 			/*\yii\helpers\VarDumper::dump($maped);
 			die();*/
 			$filename = 'INVOICES-'.(isset($maped['OUT']) ? 'OUT':'IN').'-'.implode('+', array_keys($maped[(isset($maped['OUT']) ? 'OUT':'IN')])).'.csv';
+
 			header( "Content-Type: text/csv;charset=UTF-8" );
 			header( "Content-Disposition: attachment;filename=\"$filename\"" );
 			header("Pragma: no-cache");
 			header("Expires: 0");
 
 			$output = fopen('php://output','w');
+			
 			// $ctn = '';
-			// 
 			if(isset($maped['OUT'])){
 				fputcsv(
 					$output, 
@@ -180,26 +181,31 @@ class ServiceController extends Controller{
 					),
 					','
 				);
-				
-				
+
+
+
 				foreach($maped['OUT'] as $invId=>$map){
 					/*echo count($map['fk']).'-';
 					echo count($map['fapr']).'-';
 					echo count($map['of'][0]).'-';*/
+					
 					fputcsv(
 						$output, 
 						array_map(
 							function($e){
-								return mb_convert_encoding(utf8_encode($e), 'ISO-8859-1', 'UTF-8');
+								// return mb_convert_encoding(utf8_encode($e), 'ISO-8859-1', 'UTF-8');
+								return $e;
 							},
 							$map['fk']
 						),','
 					);
+
 					fputcsv(
 						$output, 
 						array_map(
 							function($e){
-								return mb_convert_encoding(utf8_encode($e), 'ISO-8859-1', 'UTF-8');
+								// return mb_convert_encoding(utf8_encode($e), 'ISO-8859-1', 'UTF-8');
+								return $e;
 							},
 							$map['fapr']
 						),','
@@ -210,16 +216,18 @@ class ServiceController extends Controller{
 							$output, 
 							array_map(
 								function($e){
-									return mb_convert_encoding(utf8_encode($e), 'ISO-8859-1', 'UTF-8');
+									// return mb_convert_encoding(utf8_encode($e), 'ISO-8859-1', 'UTF-8');
+									return $e;
 								},
 								$of
 							),','
 						);
 					}
 				}
+
+
 			}
 			else{
-
 				fputcsv($output, [
 					"FM",
 					"KD_JENIS_TRANSAKSI",
@@ -242,7 +250,6 @@ class ServiceController extends Controller{
 				endforeach;
 
 			}
-			
 			
 			
 			fclose($output);

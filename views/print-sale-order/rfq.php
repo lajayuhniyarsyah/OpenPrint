@@ -470,6 +470,7 @@
 				var isi_table = jQuery('page#page-'+cursor+' .content table');
 				isi_table.remove()
 				contentfooter.append("<table width='100%'><tr><td width='18%'><b>Term Of Payment</b></td><td width='3%'><b>:</b></td><td><?php if($model->paymentTerm!==null){echo ucwords($model->paymentTerm->name);} if($invoice!==null){echo ' - '.$invoice;}?></td></tr><tr><td valign='top'><b>Term Condition</b></td><td valign='top'><b>:</b></td><td><?php echo preg_replace('#\R+#','<br/>',$model->internal_notes)?></td></tr><tr><td valign='top'><b>Note</b></td><td valign='top'><b>:</b></td><td><?php echo preg_replace('#\R+#','<br/>',$model->note)?></td></tr>");
+				contentfooter.append("<table width='100%'><tr id='scope_of_work_supra-"+cursor+"'><td valign='top' width='115px'><b>Scope of Work PT.Suprabakti Mandiri</b></td><td valign='top'><b>:</b></td><td valign='top'><?= preg_replace('#\R+#','<br/>',$model->scope_work_supra_text)?></td></tr><tr id='scope_of_work_customer-"+cursor+"'><td valign='top'><b>Scope of Work Customer</b></td><td valign='top'><b>:</b></td><td valign='top'><?= preg_replace('#\R+#','<br/>',$model->scope_work_customer_text)?></td></tr></table><br/>");
 			}
 			
 			jQuery('.buttonAddRowAfter').click(function(){

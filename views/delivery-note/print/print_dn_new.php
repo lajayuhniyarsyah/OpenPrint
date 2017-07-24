@@ -44,7 +44,7 @@ $this->title = 'Delivery Note / Surat Jalan #'.$model->name;
 	}
 	.tdLines
 	{
-		min-height: 134mm;
+		min-height: 100mm;
 		/*border-bottom: 1px solid blue;*/
 		font-size: 11pt;
 		padding-top: 9mm;
@@ -298,6 +298,7 @@ $scr = '
 	// data to render
 	var lines = '.\yii\helpers\Json::encode($linesData).';
 	var maxLinesHeight = jQuery(\'.tdLines:last\').height();
+	// var maxLinesHeight = 600;
 	
 	console.log(lines);
 	var currRow = 0;
@@ -318,6 +319,7 @@ $scr = '
 
 
 	jQuery.each(lines,function(key,line){
+
 		var getRow = prepareRow(currRow,line);
 		if(key==0)
 		{
@@ -330,7 +332,12 @@ $scr = '
 		rowPage = rowPage+1;
 
 		var currLineHeight = jQuery(\'#tdLine\'+currPage).height();
+		console.log("render line "+key)
+		console.log([currLineHeight,maxLinesHeight]);
+		
+
 		if(currLineHeight>maxLinesHeight){
+			console.log("callllling mx");
 			// remove last row
 			jQuery(\'#lines\'+currPage+\' tr:last\').remove();
 			// add new page container
@@ -346,7 +353,7 @@ $scr = '
 			jQuery(\'#lines\'+currPage).html(getRow);
 			currLineHeight = jQuery(\'#tdLine\'+currPage).height();
 			// jQuery(\'.pager:last\').html(currPage);
-			// console.log(tmpl);
+			console.log(tmpl);
 			
 		}		
 		console.log(\'Rendering Page \'+currPage+\' Row \'+currRow+\' Height => \'+currLineHeight);

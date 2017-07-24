@@ -12,7 +12,7 @@ use yii\filters\VerbFilter;
 use yii\helpers\Json;
 use yii\helpers\ArrayHelper;
 
-$location = StockLocation::find()->where(['location_id' =>49])->all();;
+$location = StockLocation::find()->where(['location_id' =>49])->all();
 ?>
 <style>
 table {
@@ -234,7 +234,8 @@ tr:nth-child(even){background-color: #f2f2f2}
 		echo "</table>";
 	}else{
 		echo $judul.'<br/>';
-		echo '<center>Stock Move di Location '.$loc['name'].' Tidak Ditemukan</center>';
+		// var_dump($location);
+		echo '<center>Stock Move di Location '.$loc_active->name.' Tidak Ditemukan</center>';
 	}
 	
 	

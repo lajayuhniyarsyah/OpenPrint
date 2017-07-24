@@ -364,12 +364,21 @@ class DeliveryNoteController extends Controller
                         }
                     }
 
-                }else if (count($l['note_line_material']) > 1) {
+                }
+                else if (count($l['note_line_material']) > 1) {
                     $res[$no]['name'].='<br/>Consist Of : <ul style="margin:0;">';
                     $batch = "";
 
-                    foreach ($l['note_line_material'] as $line_material) {
-
+                    foreach ($l['note_line_material'] as $ii=>$line_material) {
+                        if($ii==3 || $ii==8){
+                            $no++;
+                            $res[$no]=[
+                                'qty'=>''.' <div style="clear:both;"></div>',
+                                
+                                'part_no'=>'',
+                            ];
+                            $res[$no]['name']='';
+                        }
                         if ($line_material['prodlot_id']){
                             $prodlot = StockProductionLot::findOne($line_material['prodlot_id']);
                             $batch = '<strong>SN:</strong> '.$prodlot['name'].' '. $line_material['desc'];
@@ -552,13 +561,8 @@ class DeliveryNoteController extends Controller
                 // not set
                 
                 $res[$line->id]=$this->prepareLinenew($line);
-                /*var_dump($res);
-                echo '<br/><br/><br/>';*/
             }
         endforeach;
-
-        // die();
-
         
         return $res;
     }
@@ -628,39 +632,45 @@ class DeliveryNoteController extends Controller
                 }
             }
 
-            if(!isset($sameProductNotSameUom) && !isset($sameProductNotSameUom)){
+            if(!isset($sameProductNotSameUom) && !isset($hasNotSameProduct)){
                 foreach($line->deliveryNoteLineMaterials as $mat){
                     if($lineUom != $mat->product_uom){
                         $notSameUom = true;
                     }
 
 
+
                     if($mat->product_id!=$pid){
                         $notSameBetweenMaterial = true;
                     }
                     if($mat->prodlot_id && $mat->product_id==$line->product_id){
-                        $qtyMat += $mat->qty;
+                        $qtyMat = $mat->qty;
+                        // var_dump($mat->qty);
                     }
                     
 
 
                 }
+                // die('xmmmm');
             }
 
 
             
             if(isset($notSameBetweenMaterial) && $notSameBetweenMaterial==true && isset($notSameUom)){
                 $qtyMat = $mat->qty;
-                // var_dump($qtyMat);
-                // die();
+
             }
+            // var_dump($qtyMat);
+            // die('aaaxx');
         }else{
+        	// die('aaa');
             foreach($line->deliveryNoteLineMaterials as $mat){
                 if(!$mat->prodlot_id && $mat->product_id==$line->product_id){
                     $qtyMat = $mat->qty;
                 }
             }
         }
+        
         // end of count qty
 
 

@@ -78,6 +78,14 @@ class AccountInvoiceSearch extends AccountInvoice
 				$expl = explode('To', $this->date_invoice);
 				$start_date=$expl[0];
 				$end_date=$expl[1];
+			}else{
+				if(Yii::$app->request->get('start_date') && Yii::$app->request->get('end_date')){
+					$start_date = Yii::$app->request->get('start_date');
+					$end_date = Yii::$app->request->get('end_date');
+					/*var_dump($start_date);
+					var_dump($end_date);
+					die();*/
+				}
 			}
 		}else{
 			$start_date=$this->start_date;
@@ -141,6 +149,7 @@ class AccountInvoiceSearch extends AccountInvoice
 			ORDER BY
 				{$orderSection}
 SQL;
+
 		return $conn->createCommand($sql)->queryAll();
 
 	}
@@ -159,6 +168,9 @@ SQL;
 		
 		$dataProvider = new ActiveDataProvider([
 			'query' => $query,
+			'pagination'=>[
+				'pageSize'=>400,
+			],
 			'sort'  => [
 				'defaultOrder'=>[
 					'date_invoice'=>SORT_DESC,
@@ -226,6 +238,8 @@ SQL;
 			->andFilterWhere(['like', 'kmk', $this->kmk])
 			->andFilterWhere(['like', 'faktur_pajak_no', $this->faktur_pajak_no])
 			->andFilterWhere(['like', 'kwitansi', $this->kwitansi]);
+		/*var_dump($query->createCommand()->rawSql);
+		die('aaaa');*/
 
 		return $dataProvider;
 	}

@@ -615,6 +615,7 @@ class DeliveryNoteController extends Controller
         // var_dump($line);
         $qtyMat = $line->product_qty;
 
+
         // count qty
         $method = false;
         // if product line is batch
@@ -667,6 +668,16 @@ class DeliveryNoteController extends Controller
             foreach($line->deliveryNoteLineMaterials as $mat){
                 if(!$mat->prodlot_id && $mat->product_id==$line->product_id){
                     $qtyMat = $mat->qty;
+
+                    /*var_dump(!$mat->prodlot_id);
+                    var_dump($mat->product_id);
+                    var_dump($line->product_id);
+                    var_dump($qtyMat);
+                    var_dump($mat->qty);*/
+                    // die();
+                    if($line->product_uom!=$mat->product_uom){
+                        $qtyMat = $line->product_qty;
+                    }
                 }
             }
         }

@@ -1,4 +1,43 @@
+<?php
+use yii\helpers\Html;
+?>
+
+<?php
+				$breakInernalNotes = explode('<br />', nl2br($model->internal_notes));
+				$max[0] = 8;
+				$max[1] = 25;
+				$max[2] = 25;
+				$max[3] = 25;
+				$max[4] = 25;
+				$max[5] = 25;
+				$max[6] = 25;
+				$max[7] = 25;
+				$max[8] = 25;
+				$max[9] = 25;
+				$max[10] = 25;
+
+				$terms[0] = '';
+				$page=0;
+				$countVal = count($breakInernalNotes)-1;
+				// var_dump(count($breakInernalNotes));
+				$curr=0;
+				// do{
+					foreach($breakInernalNotes as $key=>$val){
+						if($key<$max[$page]){
+							$terms[$page][] = $val;
+						}else{
+							$page++;
+							$terms[$page][] = $val;
+						}
+					}
+					// $curr++;
+				// }while($curr<=$countVal);
+				// var_dump($terms);
+				// die();
+				?>
 <html>
+
+
 	<head>
 	
 		<title><?=$model->name?></title>
@@ -38,7 +77,7 @@
 		page .footer{
 			margin: auto;
 			width: 780px;
-			max-height: 1000px;
+			max-height: 600px;
 			/*background-color: green;*/
 		} 
 		.content table tr td {
@@ -378,7 +417,7 @@
 					var contentfooter= jQuery('page#page-'+cursor+' .footer');
 					var tinggiContentFooter = contentfooter.height()+contentElement.height();
 					console.log('ccaaaaalll');
-					if (tinggiContentFooter<1000){
+					if (tinggiContentFooter<600){
 						jQuery("#term_condition-"+cursor).append(value+"<br/>")
 						console.log('1111')
 					}
@@ -476,8 +515,24 @@
 				number.append("Page "+	cursor)
 				var contentfooter= jQuery('page#page-'+cursor+' .footer');
 				var isi_table = jQuery('page#page-'+cursor+' .content table');
-				isi_table.remove()
-				contentfooter.append("<table width='100%'><tr><td width='18%'><b>Term Of Payment</b></td><td width='3%'><b>:</b></td><td><?php if($model->paymentTerm!==null){echo ucwords($model->paymentTerm->name);} if($invoice!==null){echo ' - '.$invoice;}?></td></tr><tr><td valign='top'><b>Term Condition</b></td><td valign='top'><b>:</b></td><td><?php echo preg_replace('#\R+#','<br/>',$model->internal_notes)?></td></tr><tr><td valign='top'><b>Note</b></td><td valign='top'><b>:</b></td><td><?php echo preg_replace('#\R+#','<br/>',str_replace('"', '\\"', $model->note))?></td></tr>");
+				isi_table.remove();
+				<?php
+				if(count($terms)>1){
+					?>
+					contentfooter.append("<table width='100%'><tr><td width='18%'><b>Term Of Payment</b></td><td width='3%'><b>:</b></td><td><?php if($model->paymentTerm!==null){echo ucwords($model->paymentTerm->name);} if($invoice!==null){echo ' - '.$invoice;}?></td></tr><tr><td valign='top'><b>Term Condition</b></td><td valign='top'><b>:</b></td><td><?php echo preg_replace('#\R+#','<br/>',Html::encode('<?=$terms[0]?>'))?></td></tr><tr><td valign='top'><b>Note</b></td><td valign='top'><b>:</b></td><td><?php echo preg_replace('#\R+#','<br/>',str_replace('"', '\\"', $model->note))?></td></tr>");
+
+
+					<?php
+				}else{
+
+					?>
+
+						contentfooter.append("<table width='100%'><tr><td width='18%'><b>Term Of Payment</b></td><td width='3%'><b>:</b></td><td><?php if($model->paymentTerm!==null){echo ucwords($model->paymentTerm->name);} if($invoice!==null){echo ' - '.$invoice;}?></td></tr><tr><td valign='top'><b>Term Condition</b></td><td valign='top'><b>:</b></td><td><?php echo preg_replace('#\R+#','<br/>',Html::encode($model->internal_notes))?></td></tr><tr><td valign='top'><b>Note</b></td><td valign='top'><b>:</b></td><td><?php echo preg_replace('#\R+#','<br/>',str_replace('"', '\\"', $model->note))?></td></tr>");
+					<?php
+
+				}
+				?>
+				
 
 				contentfooter.append("<table width='100%'><tr id='scope_of_work_supra-"+cursor+"'><td valign='top' width='115px'><b>Scope of Work PT.Suprabakti Mandiri</b></td><td valign='top'><b>:</b></td><td valign='top'><?= preg_replace('#\R+#','<br/>',$model->scope_work_supra_text)?></td></tr><tr id='scope_of_work_customer-"+cursor+"'><td valign='top'><b>Scope of Work Customer</b></td><td valign='top'><b>:</b></td><td valign='top'><?= preg_replace('#\R+#','<br/>',$model->scope_work_customer_text)?></td></tr></table><br/>");
 			}

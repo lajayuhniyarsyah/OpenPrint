@@ -6,6 +6,7 @@ if($model->state!='submited' && !$forced){
 	echo 'Status == <b>'.strtoupper($model->state).'</b><br/>';
 	die('Print Hanya pada saat Submit!');
 }
+$printer='lx300-novri';
 
 
 ?>
@@ -23,7 +24,7 @@ if($model->state!='submited' && !$forced){
 	.pages
 	{
 		
-		padding-top: 55mm;
+		padding-top: 238px;
 		page-break-after: always;
 		height: 283mm;
 		/*border-top: 1px solid green;*/
@@ -57,7 +58,8 @@ if($model->state!='submited' && !$forced){
 	{
 		
 		/*border-bottom: 1px solid black;*/
-		height: 75mm;
+		/*height: 75mm;*/
+		height: 289px;
 		padding-left: 25mm;
 	}
 	.hLine{
@@ -87,7 +89,9 @@ if($model->state!='submited' && !$forced){
 	}
 	.tdLines
 	{
-		min-height: 122mm;
+		min-height: 432px;
+		/*min-height: 120mm;*/
+		
 		/*border-bottom: 1px solid blue;*/
 		font-size: 10pt;
 	}
@@ -187,14 +191,7 @@ if($model->state!='submited' && !$forced){
 		.choosePrinter{
 			display: none;
 		}
-		<?php
-		if($uid==173){
-			echo '.sign{
-				margin-top: 28mm;
-				text-decoration: underline;
-			}';
-		}
-		?>
+		
 	}
 	
 </style>
@@ -235,13 +232,8 @@ if($model->state!='submited' && !$forced){
 			}
 
 			<?php
-			if($uid==173){
-				echo '.sign{
-					margin-top: 28mm;
-					text-decoration: underline;
-				}';
-			}
-			elseif($uid==101){
+			
+			if($uid==101){
 				echo '.pages
 					{
 						
@@ -267,13 +259,6 @@ if($model->state!='submited' && !$forced){
     					 margin-top: 3mm;
     				}';
 			}
-			elseif($uid==23 || $uid == 256){
-				echo '
-					.POInfo{
-						margin-top: 5mm;
-					}
-					';
-			}
 			else{
 				echo '.sign{
 					text-decoration: underline;
@@ -291,8 +276,9 @@ if($model->state!='submited' && !$forced){
 			<input type="hidden" value="<?=$model->id?>" name="id" />
 			<input type="hidden" value="<?=Yii::$app->request->get('uid')?>" name="uid" />
 		Print To : <select name="printer" onchange="jQuery('#formSelectPrinter').submit();">
-			<option <?=(strtolower($printer)=='lq300-hadi' ? 'selected ':null)?> value="lq300-hadi">Admin Hadi (LQ 300+II)</option>
-			<option <?=(strtolower($printer)=='lx300-novri' ? 'selected ':null)?> value="lx300-novri">Admin Novri (LX 300+II)</option>
+			<!-- <option <?=(strtolower($printer)=='lq300-hadi' ? 'selected ':null)?> value="lq300-hadi">Admin Hadi (LQ 300+II)</option> -->
+			<!-- selected karena printer hadi sudah tidak dipakai -->
+			<option <?=(strtolower($printer)=='lx300-novri' ? 'selected ':'selected')?> value="lx300-novri">Admin Novri (LX 300+II)</option>
 		</select>
 	</form>
 </div>

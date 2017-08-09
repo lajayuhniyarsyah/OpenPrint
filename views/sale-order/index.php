@@ -218,7 +218,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				]
 			],*/
 			[
-				'attribute'=>'lines',
+				// 'attribute'=>'lines',
 				'label'=>'Lines',
 				'format'=>'raw',   
 				// // 'value'=>function($model,$key,$index,$column){

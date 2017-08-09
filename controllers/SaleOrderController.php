@@ -876,7 +876,14 @@ EOQ;
 
 			],
 			'sort'=>[
+				'defaultOrder'=>[
+					'so_no'=>SORT_ASC,
+				],
 				'attributes'=>[
+					'so_no'=>[
+						'asc'=>['so_no'=>SORT_ASC],
+						'desc'=>['so_no'=>SORT_DESC],
+					],
 					'partner'=>[
 						'asc'=>['partner'=>SORT_ASC],
 						'desc'=>['partner'=>SORT_DESC],

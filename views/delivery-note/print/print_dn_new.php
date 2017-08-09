@@ -13,7 +13,7 @@ $this->title = 'Delivery Note / Surat Jalan #'.$model->name;
 	}
 	.pages
 	{
-		padding-top: 37mm;
+		padding-top: 170px;
 		page-break-after: always;
 		height: 240mm;
 		/*border-bottom: 1px solid red;*/
@@ -44,7 +44,7 @@ $this->title = 'Delivery Note / Surat Jalan #'.$model->name;
 	}
 	.tdLines
 	{
-		min-height: 100mm;
+		min-height: 134mm;
 		/*border-bottom: 1px solid blue;*/
 		font-size: 11pt;
 		padding-top: 9mm;
@@ -92,7 +92,7 @@ $this->title = 'Delivery Note / Surat Jalan #'.$model->name;
 	.footer{
         color: #000;
     	width: 100%;
-    	margin-top: 250px;
+    	margin-top: 270px;
     	/*position: absolute;*/
     }
     .btn_delete{
@@ -137,7 +137,8 @@ $this->title = 'Delivery Note / Surat Jalan #'.$model->name;
 <?php
 $uid = Yii::$app->request->getQueryParam('uid');
 // hadi or sri / ika // mike
-$printerHadiUsers = [23,101,173,25,256];
+// $printerHadiUsers = [23,101,173,25];
+$printerHadiUsers = [];
 if(in_array($uid, $printerHadiUsers)):
 	?>
 	<style type="text/css">
@@ -178,7 +179,7 @@ if(in_array($uid, $printerHadiUsers)):
 		height: 50mm !important;
 	}
 	.tdLines{
-		min-height: 110mm;
+		min-height: 100mm;
 		font-size: 10pt !important;
 		padding-top: 5mm;
 	}
@@ -223,6 +224,9 @@ if($uid==25){ ?>
 			</div>
 			<div class="dnInfo">
 				<div class="dnNo">
+					<div class="dnNoArea">
+						<?=$model->name?>
+					</div>
 					<div class="urgentCode" contenteditable="true">
 						<?php
 							if(isset($model->packingListLines[0])){
@@ -232,7 +236,7 @@ if($uid==25){ ?>
 							}
 						?>
 					</div>
-					<?=$model->name?>
+					
 
 				</div>
 				<div class="opNo">

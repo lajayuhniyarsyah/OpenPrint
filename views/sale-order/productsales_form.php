@@ -426,6 +426,7 @@ SCRIPT;
 		                        ],
 		                        'partner',
 		                        'so_no',
+		                        'date_order',
 		                        'category',
 		                        'sales_name',
 		                        'product',

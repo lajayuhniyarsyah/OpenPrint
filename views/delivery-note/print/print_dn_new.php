@@ -97,6 +97,7 @@ $this->title = 'Delivery Note / Surat Jalan #'.$model->name;
     }
     .btn_delete{
     	float: right;
+        margin-right:60px;
     }
     .nama_atasan{
     	float: right;
@@ -244,7 +245,8 @@ if($uid==25){ ?>
 						<?php
 							// echo date('d-M-Y');
 							$dateTanggal  = DateTime::createFromFormat('Y-m-d',$model->doc_date);
-							echo $dateTanggal->format('d-M-Y');
+							//echo $dateTanggal->format('d-M-Y');
+                            echo '&nbsp';
 						?>
 					</div>
 					<div style="margin-top: 4px;">
